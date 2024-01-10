@@ -178,7 +178,7 @@ const handleCreateTemplate = async () => {
   };
 
   try {
-    const response = await fetch('https://appcenteryes.appcenteryes.com/w/createTemplates', {
+    const response = await fetch('https://novaventa.appcenteryes.com/w/createTemplates', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -206,7 +206,7 @@ const handleCreateTemplate = async () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch('https://appcenteryes.appcenteryes.com/w/gupshup-templates');
+        const response = await fetch('https://novaventa.appcenteryes.com/w/gupshup-templates');
 
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -284,7 +284,7 @@ const handleCreateTemplate = async () => {
 //This is the application to delete the templates
   const handleDeleteTemplate = async (elementName) => {
     try {
-      const response = await axios.delete(`https://appcenteryes.appcenteryes.com/w/deleteTemplate/${elementName}`);
+      const response = await axios.delete(`https://novaventa.appcenteryes.com/w/deleteTemplate/${elementName}`);
 
       if (response.status === 200 && response.data.status === 'success') {
         const updatedTemplates = templates.filter((template) => template.elementName !== elementName);

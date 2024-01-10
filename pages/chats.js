@@ -50,7 +50,7 @@ useEffect(() => {
  const fetchTemplates = async () => {
    try {
      // Utilizar el servidor proxy en lugar de la URL directa
-     const response = await fetch('https://appcenteryes.appcenteryes.com/w/gupshup-templates');
+     const response = await fetch('https://novaventa.appcenteryes.com/w/gupshup-templates');
 
      if (!response.ok) {
        throw new Error(HTTP `error! Status: ${response.status}`);
@@ -117,9 +117,9 @@ const enviarSolicitud = async () => {
 
  const data = new URLSearchParams();
  data.append('channel', 'whatsapp');
- data.append('source', '573202482534');
+ data.append('source', '5718848135');
  data.append('destination', numericInputValue);
- data.append('src.name', 'YESVARIOS');
+ data.append('src.name', 'Pb1yes');
  data.append('template', JSON.stringify({
    id: selectedTemplate.id,
    params: Object.values(templateParams) || [] // Asegúrate de que tu plantilla tenga una propiedad params
@@ -196,9 +196,9 @@ const handleAgregarNumeroClick = () => {
       conection();
       setStatuschats('Pendientes')
     try {
-      const response = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-mensajes');
-      const responseChats = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
-      const responseUsers = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-usuarios');
+      const response = await fetch('https://novaventa.appcenteryes.com/dbn/obtener-mensajes');
+      const responseChats = await fetch('https://novaventa.appcenteryes.com/dbn/obtener-chats');
+      const responseUsers = await fetch('https://novaventa.appcenteryes.com/dbn/obtener-usuarios');
       // El usuario está autenticado, puedes acceder a la sesión
       
       if (!response.ok) {
@@ -222,9 +222,9 @@ const handleAgregarNumeroClick = () => {
     conection();
     setStatuschats('En gestion')
     try {
-      const response = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-mensajes');
-      const responseChats = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-chats');
-      const responseUsers = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-usuarios');
+      const response = await fetch('https://novaventa.appcenteryes.com/dbn/obtener-mensajes');
+      const responseChats = await fetch('https://novaventa.appcenteryes.com/dbn/obtener-chats');
+      const responseUsers = await fetch('https://novaventa.appcenteryes.com/dbn/obtener-usuarios');
       // El usuario está autenticado, puedes acceder a la sesión
       
       if (!response.ok) {
@@ -276,7 +276,7 @@ const handleFileChange = (e) => {
   const nuevoEstado = 'closed';
   const nuevoUserId = 0;
   try {
-    const response = await fetch('https://appcenteryes.appcenteryes.com/db/actualizar-estado-chat', {
+    const response = await fetch('https://novaventa.appcenteryes.com/dbn/actualizar-estado-chat', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -307,7 +307,7 @@ const handleFileChange = (e) => {
       const idChat2 = numeroEspecifico; // Asegúrate de obtener el idChat2 según tu lógica
       const nuevoEstado = 'in process'; // Asegúrate de obtener el nuevoEstado según tu lógica
 
-      const response = await fetch('https://appcenteryes.appcenteryes.com/db/actualizar-estado-chat', {
+      const response = await fetch('https://novaventa.appcenteryes.com/dbn/actualizar-estado-chat', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -339,11 +339,11 @@ const handleFileChange = (e) => {
   
   
   const conection =()=> {
-    const socket = io('https://appcenteryes.appcenteryes.com/w');
+    const socket = io('https://novaventa.appcenteryes.com/w');
     socket.on( async(data) => {
   
         try {
-          const response = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-mensajes');
+          const response = await fetch('https://novaventa.appcenteryes.com/dbn/obtener-mensajes');
   
           if (!response.ok) {
            
@@ -352,7 +352,7 @@ const handleFileChange = (e) => {
           setMensajes1(data1);
           
             // Se ejecutará cada vez que el componente se monte o actualice
-            const audioElement = new Audio('https://appcenteryes.appcenteryes.com/w/uploads/short-success-sound-glockenspiel-treasure-video-game-6346.mp3');
+            const audioElement = new Audio('https://novaventa.appcenteryes.com/w/uploads/short-success-sound-glockenspiel-treasure-video-game-6346.mp3');
           
         } catch (error) {
           
@@ -426,7 +426,7 @@ const handleFileChange = (e) => {
         const formData = new FormData();
         formData.append('archivo', file);
 
-        const response = await fetch('https://appcenteryes.appcenteryes.com/w/subir-archivo', {
+        const response = await fetch('https://novaventa.appcenteryes.com/w/subir-archivo', {
           method: 'POST',
           body: formData,
         });
@@ -435,7 +435,7 @@ const handleFileChange = (e) => {
           throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
         }
         else{
-          const base = "https://appcenteryes.appcenteryes.com"
+          const base = "https://novaventa.appcenteryes.com"
 
           const responseData = await response.json();
 
@@ -503,14 +503,14 @@ const handleFileChange = (e) => {
          // Preparar datos del mensaje
         const mensajeData = {
           channel: 'whatsapp',
-          source: '573202482534',
-          'src.name': 'YESVARIOS',
+          source: '5718848135',
+          'src.name': 'Pb1yes',
           destination: numeroEspecifico,
           message: JSON.stringify(tipoadjunto),
           disablePreview: true,
         };
         // Enviar mensaje a través de la API de envíos
-        const envioResponse = await fetch('https://appcenteryes.appcenteryes.com/w/api/envios', {
+        const envioResponse = await fetch('https://novaventa.appcenteryes.com/w/api/envios', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -525,7 +525,7 @@ const handleFileChange = (e) => {
         console.log('Respuesta del servidor de envíos:',documentUrl );
         const idMessage = envioData.messageId;
         // Actualizar el mensaje enviado en el servidor
-        const guardarMensajeResponse = await fetch('https://appcenteryes.appcenteryes.com/db/guardar-mensajes', {
+        const guardarMensajeResponse = await fetch('https://novaventa.appcenteryes.com/dbn/guardar-mensajes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -562,8 +562,8 @@ const handleFileChange = (e) => {
     try {
       const mensajeData = {
         channel: 'whatsapp',
-        source: '3202482534',
-        'src.name': 'YESVARIOS',
+        source: '5718848135',
+        'src.name': 'Pb1yes',
         destination: numeroEspecifico,
         message: inputValue,
         disablePreview: true,
@@ -589,7 +589,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
           },
         ]
       ));
-      const response = await fetch('https://appcenteryes.appcenteryes.com/w/api/envios', {
+      const response = await fetch('https://novaventa.appcenteryes.com/w/api/envios', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -605,7 +605,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       const idMessage = responseData.messageId;
 
       // Actualiza el mensaje en el servidor
-      const actualizarMensajeResponse = await fetch('https://appcenteryes.appcenteryes.com/db/mensajeenviado', {
+      const actualizarMensajeResponse = await fetch('https://novaventa.appcenteryes.com/dbn/mensajeenviado', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -621,7 +621,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
             } else {
         
           // Guarda el mensaje en el servidor
-    const guardarMensajeResponse = await fetch('https://appcenteryes.appcenteryes.com/db/guardar-mensajes', {
+    const guardarMensajeResponse = await fetch('https://novaventa.appcenteryes.com/dbn/guardar-mensajes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -660,7 +660,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     const nuevoDato = 'Activo'; // Reemplaza con el nuevo valor que deseas asignar
     
       try {
-        const response = await fetch('https://appcenteryes.appcenteryes.com/db/obtener-mensajes');
+        const response = await fetch('https://novaventa.appcenteryes.com/dbn/obtener-mensajes');
 
         if (!response.ok) {
           

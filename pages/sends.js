@@ -74,7 +74,7 @@ const Sends = (props) => {
   };
 
   useEffect(() => {
-    const apiUrl2 = 'https://appcenteryes.appcenteryes.com/w/api/templates';
+    const apiUrl2 = 'https://novaventa.appcenteryes.com/w/api/templates';
     axios.get(apiUrl2)
       .then(response => {
         setTemplates(response.data);
@@ -185,8 +185,8 @@ const Sends = (props) => {
         
         const data = {
           channel: 'whatsapp',
-          source: '573202482534',
-          'src.name': 'YESVARIOS',
+          source: '5718848135',
+          'src.name': 'Pb1yes',
           destination: formattedDestination,
           template: JSON.stringify({
             id: selectedTemplateId ? selectedTemplateId : '',
@@ -277,7 +277,7 @@ const Sends = (props) => {
           };
         
           try {
-            const response = await fetch( 'https://appcenteryes.appcenteryes.com/db/guardar-mensajes', {
+            const response = await fetch( 'https://novaventa.appcenteryes.com/dbn/guardar-mensajes', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -309,7 +309,7 @@ const Sends = (props) => {
               };
               try {
                 console.log(titleCampaign)
-                const responseguardar = await fetch('https://appcenteryes.appcenteryes.com/db/insertar-datos-template', {
+                const responseguardar = await fetch('https://novaventa.appcenteryes.com/dbn/insertar-datos-template', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',

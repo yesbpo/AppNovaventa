@@ -15,7 +15,7 @@ function Reports() {
   const fetchData = async () => {
     try {
       // Construir la URL con los parámetros necesarios
-      const url = `https://appcenteryes.appcenteryes.com/db/generar-informe?campaign=${campaign}&fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
+      const url = `https://novaventa.appcenteryes.com/dbn/generar-informe?campaign=${campaign}&fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
       
       // Realizar la solicitud GET al servidor
       const response = await fetch(url);
@@ -51,7 +51,7 @@ function Reports() {
         return;
       }
   
-      const response = await fetch(`https://appcenteryes.appcenteryes.com/db/obtener-mensajes-por-fecha?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`);
+      const response = await fetch(`https://novaventa.appcenteryes.com/dbn/obtener-mensajes-por-fecha?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`);
   
       if (!response.ok) {
         throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
