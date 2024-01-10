@@ -77,7 +77,9 @@ const Sends = (props) => {
     const apiUrl2 = 'https://novaventa.appcenteryes.com/w/api/templates';
     axios.get(apiUrl2)
       .then(response => {
-        setTemplates(response.data);
+        // Filtra solo las plantillas aprobadas
+        const approvedTemplates = response.data.filter(template => template.status === 'APPROVED');
+        setTemplates(approvedTemplates);
       })
       .catch(error => {
         console.error('Error:', error);
@@ -156,6 +158,30 @@ const Sends = (props) => {
 
 
   const enviar = () => {
+    if (sheetname.length === 0) {
+      console.log('No hay datos masivos.');
+      alert('No hay ningún archivo cargado.');
+      return;
+    }
+  
+    if (!selectedTemplate) {
+      console.log('Selecciona una plantilla.');
+      alert('Selecciona una plantilla.');
+      return;
+    }
+  
+    if (!selectvar) {
+      console.log('Elige la columna que contiene el numero destino.');
+      alert('Elige la columna que contiene el numero destino.');
+      return;
+    }
+
+    if (Object.keys(variableColumnMapping).length !== variableCount) {
+      console.log('Faltan variables seleccionadas.');
+      alert('Faltan variables seleccionadas.');
+      return;
+    }
+
     if (sheetname.length > 0) {
       sheetname.forEach( async (dest, rowIndex) => {
         const destinationNumber = String(dest[selectvar]);
