@@ -32,7 +32,7 @@ useEffect(() => {
 
       const asesores = data.filter((d) => d.type_user === 'Asesor');
       setAsesores(asesores);
-
+      console.log(asesores)
       const chatspendientes = chats.filter((valor) => valor.status === 'pending');
       const chatsengestion = chats.filter((valor) => valor.status === 'in process');
       const chatscerrados = chats.filter((valor) => valor.status === 'closed');
@@ -584,10 +584,6 @@ setWebhookData(webhookText);
   <>
     
       <Layout>
-      
-          
-      
-              
       <Box onLoad={updateuser()}>
         <ButtonContainer>
         <div className="p-2 border border-gray-300 rounded">
