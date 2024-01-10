@@ -1,0 +1,68 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+  relationMode = "prisma"
+}
+
+// users.prisma
+model User {
+  id            Int      @id @default(autoincrement())
+  type_user     String
+  createdAt     DateTime
+  updatedAt     DateTime
+  email         String
+  session       String
+  usuario       String
+  password      String
+  complete_name String
+  chats         Chat[]
+}
+
+// chat.prisma
+model Chat {
+  idChat2       String   @id
+  receivedDate  DateTime
+  assignedDate  DateTime
+  attendedDate  DateTime
+  closedDate    DateTime
+  resolved      Boolean
+  status        String
+  userId        Int
+  user          User     @relation(fields: [userId], references: [id])
+}
+
+// template.prisma
+model Template {
+  id            Int      @id @default(autoincrement())
+  status        String
+  attachments   Bytes
+  message       String
+}
+
+// distribution.prisma
+model Distribution {
+  id                     Int      @id @default(autoincrement())
+  sendDate               DateTime
+  massive                Boolean
+  successfulDistributions Int
+  failedDistributions     Int
+  templateId             Int
+}
+
+// mensajes.prisma
+model Mensaje {
+  idMessage     String   @id
+  content       String
+  type_comunication String
+  number        String
+  timestamp     DateTime
+  status        String
+  type_message  String
+}
