@@ -62,7 +62,7 @@ model Distribution {
 // mensajes.prisma
 model Mensaje {
   idMessage     String   @id
-  content       LongText?
+  content       String?
   type_comunication String
   number        String
   timestamp     DateTime
