@@ -30,20 +30,23 @@ model Chat {
   idChat2       String   @id
   receivedDate  DateTime
   assignedDate  DateTime
-  attendedDate  DateTime
-  closedDate    DateTime
-  resolved      Boolean
-  status        String
-  userId        Int
+  attendedDate  DateTime  null
+  closedDate    DateTime  null
+  resolved      Boolean 
+  status        String    null
+  userId        Int       null
   user          User     @relation(fields: [userId], references: [id])
 }
 
 // template.prisma
 model Template {
-  id            Int      @id @default(autoincrement())
-  status        String
-  attachments   Bytes
-  message       String
+  id                  Int      @id @default(autoincrement())
+  status              String
+  attachments         Bytes
+  message             String
+  timestamp           DateTime
+  idmessageTemplate   String
+  campaign            String
 }
 
 // distribution.prisma
@@ -59,7 +62,7 @@ model Distribution {
 // mensajes.prisma
 model Mensaje {
   idMessage     String   @id
-  content       String
+  content       Longtext null
   type_comunication String
   number        String
   timestamp     DateTime
