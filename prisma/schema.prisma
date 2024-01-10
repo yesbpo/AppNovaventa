@@ -30,11 +30,11 @@ model Chat {
   idChat2       String   @id
   receivedDate  DateTime
   assignedDate  DateTime
-  attendedDate  DateTime  null
-  closedDate    DateTime  null
+  attendedDate  DateTime?
+  closedDate    DateTime?
   resolved      Boolean 
-  status        String    null
-  userId        Int       null
+  status        String?
+  userId        Int?
   user          User     @relation(fields: [userId], references: [id])
 }
 
@@ -62,7 +62,7 @@ model Distribution {
 // mensajes.prisma
 model Mensaje {
   idMessage     String   @id
-  content       Longtext null
+  content       LongText?
   type_comunication String
   number        String
   timestamp     DateTime
