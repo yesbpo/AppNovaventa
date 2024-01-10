@@ -34,7 +34,7 @@ model Chat {
   closedDate    DateTime?
   resolved      Boolean 
   status        String?
-  userId        Int?
+  userId        Int
   user          User     @relation(fields: [userId], references: [id])
 }
 
