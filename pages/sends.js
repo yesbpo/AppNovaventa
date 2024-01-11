@@ -211,8 +211,8 @@ const Sends = (props) => {
         
         const data = {
           channel: 'whatsapp',
-          source: '5718848135',
-          'src.name': 'Pb1yes',
+          source: '573204573737',
+          'src.name': 'NOVAVENTA2024',
           destination: formattedDestination,
           template: JSON.stringify({
             id: selectedTemplateId ? selectedTemplateId : '',

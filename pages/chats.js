@@ -117,9 +117,9 @@ const enviarSolicitud = async () => {
 
  const data = new URLSearchParams();
  data.append('channel', 'whatsapp');
- data.append('source', '5718848135');
+ data.append('source', '573204573737');
  data.append('destination', numericInputValue);
- data.append('src.name', 'Pb1yes');
+ data.append('src.name', 'NOVAVENTA2024');
  data.append('template', JSON.stringify({
    id: selectedTemplate.id,
    params: Object.values(templateParams) || [] // Asegúrate de que tu plantilla tenga una propiedad params
@@ -503,8 +503,8 @@ const handleFileChange = (e) => {
          // Preparar datos del mensaje
         const mensajeData = {
           channel: 'whatsapp',
-          source: '5718848135',
-          'src.name': 'Pb1yes',
+          source: '573204573737',
+          'src.name': 'NOVAVENTA2024',
           destination: numeroEspecifico,
           message: JSON.stringify(tipoadjunto),
           disablePreview: true,
@@ -562,8 +562,8 @@ const handleFileChange = (e) => {
     try {
       const mensajeData = {
         channel: 'whatsapp',
-        source: '5718848135',
-        'src.name': 'Pb1yes',
+        source: '573204573737',
+        'src.name': 'NOVAVENTA2024',
         destination: numeroEspecifico,
         message: inputValue,
         disablePreview: true,
@@ -779,9 +779,10 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
 
           // Mapea y renderiza los mensajes ordenados
           return mensajesFiltrados.map((mensaje, index) => (
+            
             <div
               key={index}
-              className={`mensaje ${mensaje.type_message} ${
+              className={`mensaje ${mensaje.type_message && console.log(mensajes1.length, mensajesFiltrados.length)} ${
                 mensaje.type_comunication === 'message-event' ? 'bg-white text-right shadow-lg p-4 bg-gray rounded-md' : 'bg-green text-left shadow-lg p-4 bg-gray rounded-md'
               } p-4 mb-4`}
             > 

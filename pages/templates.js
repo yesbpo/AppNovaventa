@@ -103,8 +103,8 @@ const Reports = (props) => {
   };
 
   const handleFileUpload = async () => {
-    const apiUrl = 'https://partner.gupshup.io/partner/app/cef6cd40-330f-4b25-8ff2-9c8fcc434d90/upload/media';
-    const partnerAppToken = 'sk_ce0c81f1783e4e86828863ebf2d9c3fa';
+    const apiUrl = 'https://partner.gupshup.io/partner/app/522e21b6-d83f-486c-ba0e-872180219095/upload/media';
+    const partnerAppToken = 'sk_3cf52c6b3c5d40e8b742d46c6ab3845d';
 
     const formData = new FormData();
     formData.append('file', selectedFile);

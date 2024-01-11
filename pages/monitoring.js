@@ -241,8 +241,8 @@ const [url, setUrl] = useState('');
         // Actualizar el mensajeData para incluir información del archivo
         const mensajeData = {
           channel: 'whatsapp',
-          source: '5718848135',
-          'src.name': 'Pb1yes',
+          source: '573204573737',
+          'src.name': 'NOVAVENTA2024',
           destination: numeroEspecifico,
           message: JSON.stringify({
             type: 'image', // Puedes ajustar esto según el tipo de archivo
@@ -426,8 +426,8 @@ setWebhookData(webhookText);
     try {
       const mensajeData = {
         channel: 'whatsapp',
-        source: '5718848135',
-        'src.name': 'Pb1yes',
+        source: '573204573737',
+        'src.name': 'NOVAVENTA2024',
         destination: numeroEspecifico,
         message: inputValue,
         disablePreview: true,
