@@ -7,6 +7,7 @@ import EmojiPicker from 'emoji-picker-react';
 import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon } from '@heroicons/react/solid';
 
 const Chats = () => {
+
   const messagelistRef = useRef(null);
 
   useEffect(() => {
@@ -156,6 +157,32 @@ const handleAgregarNumeroClick = () => {
  enviarSolicitud();
 };
   // logica chats
+  async function marcaLeido(id_chat2){
+    
+    try {
+      setNumeroEspecifico(id_chat2)
+      const idChat2 = id_chat2; // Reemplaza 'tu_id_chat2' con el valor real que deseas actualizar
+      const resolvedValue = true; // Reemplaza 'nuevo_valor_resolved' con el nuevo valor para 'resolved'
+    
+      const response = await fetch(`https://novaventa.appcenteryes.com/dbn/actualizar-chat/${idChat2}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ resolved: resolvedValue }),
+      });
+    
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+    
+      const data = await response.json();
+      console.log('Datos actualizados correctamente:', data);
+    } catch (error) {
+      console.error('Error al actualizar el chat:', error);
+    }
+    
+  }
   const [statuschats, setStatuschats] = useState('')
   
   const [pendientes, setPendientes] = useState('');
@@ -867,8 +894,12 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       <ul>
         {contactos1.map((contacto, index) => (
           <li key={index}>
-            <CustomButton onClick={() => setNumeroEspecifico(contacto.idChat2)}>
+            <CustomButton onClick={()=>marcaLeido(contacto.idChat2)}>
               <UserGroupIcon className="w-5 h-10"/> {contacto.idChat2}
+              {contacto.resolved ? 
+              <span className="text-green"> Resuelto </span> :
+              <span className="text-red"> No resuelto </span>
+            }
             </CustomButton>
           </li>
         ))}
