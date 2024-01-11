@@ -139,7 +139,7 @@ const enviarSolicitud = async () => {
    });
 
    const responseData = await response.json();
-   console.log('Respuesta:', responseData);
+   console.log('Respuesta:', Object.values(templateParams));
  } catch (error) {
    console.error('Error al enviar la solicitud:', error);
  }
