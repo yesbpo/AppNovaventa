@@ -294,7 +294,7 @@ const Sends = (props) => {
           
           const datos = {
             content: messageWithVariables,
-            type_comunication: 'message',
+            type_comunication: 'message-event',
             status: 'sent',
             number: data.destination,
             timestamp: `${anio}-${mes}-${dia} ${hora}:${minutos}:${segundos}`,
@@ -303,7 +303,7 @@ const Sends = (props) => {
           };
         
           try {
-            const response = await fetch( 'https://novaventa.appcenteryes.com/dbn/guardar-mensajes', {
+            const response = await fetch( process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json',
@@ -335,7 +335,7 @@ const Sends = (props) => {
               };
               try {
                 console.log(titleCampaign)
-                const responseguardar = await fetch('https://novaventa.appcenteryes.com/dbn/insertar-datos-template', {
+                const responseguardar = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/insertar-datos-template', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',

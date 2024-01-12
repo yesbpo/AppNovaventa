@@ -15,7 +15,7 @@ function Reports() {
   const fetchData = async () => {
     try {
       // Construir la URL con los parámetros necesarios
-      let url = `https://novaventa.appcenteryes.com/dbn/generar-informe`;
+      let url = `${process.env.NEXT_PUBLIC_BASE_DB}/generar-informe`;
   
       // Agregar el parámetro de campaña si está definido
       if (campaign) {
@@ -61,7 +61,7 @@ function Reports() {
         return;
       }
   
-      const response = await fetch(`https://novaventa.appcenteryes.com/dbn/obtener-mensajes-por-fecha?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_DB}/obtener-mensajes-por-fecha?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`);
   
       if (!response.ok) {
         throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);

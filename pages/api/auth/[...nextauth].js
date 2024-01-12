@@ -35,7 +35,7 @@ export const authOptions = {
           const nuevoDato = 'Activo'; // Reemplaza con el nuevo valor que deseas asignar
         
           try {
-            const response = await fetch('https://novaventa.appcenteryes.com/dbn/actualizar/usuario', {
+            const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/actualizar/usuario', {
               method: 'PUT',
               headers: {
                 'Content-Type': 'application/json',

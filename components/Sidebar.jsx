@@ -40,7 +40,7 @@ const Sidebar = (props) => {
     
     const fetchData = async () => {
       try {
-        const generalUsers = await fetch('https://novaventa.appcenteryes.com/dbn/obtener-usuarios');
+        const generalUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
         const usersData = await generalUsers.json();
         const currentUser = usersData.filter((u) => u.usuario == session.user.name)
         setUsers(currentUser[0]);
@@ -94,7 +94,7 @@ const Sidebar = (props) => {
     const nuevoDato = 'Inactivo'; // Reemplaza con el nuevo valor que deseas asignar
 
     try {
-      const response = await fetch('https://novaventa.appcenteryes.com/dbn/actualizar/usuario', {
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/actualizar/usuario', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

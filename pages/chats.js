@@ -164,7 +164,7 @@ const handleAgregarNumeroClick = () => {
       const idChat2 = id_chat2; // Reemplaza 'tu_id_chat2' con el valor real que deseas actualizar
       const resolvedValue = true; // Reemplaza 'nuevo_valor_resolved' con el nuevo valor para 'resolved'
     
-      const response = await fetch(`https://novaventa.appcenteryes.com/dbn/actualizar-chat/${idChat2}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_DB}/actualizar-chat/${idChat2}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -223,9 +223,9 @@ const handleAgregarNumeroClick = () => {
       conection();
       setStatuschats('Pendientes')
     try {
-      const response = await fetch('https://novaventa.appcenteryes.com/dbn/obtener-mensajes');
-      const responseChats = await fetch('https://novaventa.appcenteryes.com/dbn/obtener-chats');
-      const responseUsers = await fetch('https://novaventa.appcenteryes.com/dbn/obtener-usuarios');
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes');
+      const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-chats');
+      const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
       // El usuario está autenticado, puedes acceder a la sesión
       
       if (!response.ok) {
@@ -249,9 +249,9 @@ const handleAgregarNumeroClick = () => {
     conection();
     setStatuschats('En gestion')
     try {
-      const response = await fetch('https://novaventa.appcenteryes.com/dbn/obtener-mensajes');
-      const responseChats = await fetch('https://novaventa.appcenteryes.com/dbn/obtener-chats');
-      const responseUsers = await fetch('https://novaventa.appcenteryes.com/dbn/obtener-usuarios');
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes');
+      const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-chats');
+      const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
       // El usuario está autenticado, puedes acceder a la sesión
       
       if (!response.ok) {
@@ -303,7 +303,7 @@ const handleFileChange = (e) => {
   const nuevoEstado = 'closed';
   const nuevoUserId = 0;
   try {
-    const response = await fetch('https://novaventa.appcenteryes.com/dbn/actualizar-estado-chat', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/actualizar-estado-chat', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -334,7 +334,7 @@ const handleFileChange = (e) => {
       const idChat2 = numeroEspecifico; // Asegúrate de obtener el idChat2 según tu lógica
       const nuevoEstado = 'in process'; // Asegúrate de obtener el nuevoEstado según tu lógica
 
-      const response = await fetch('https://novaventa.appcenteryes.com/dbn/actualizar-estado-chat', {
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/actualizar-estado-chat', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -370,7 +370,7 @@ const handleFileChange = (e) => {
     socket.on( async(data) => {
   
         try {
-          const response = await fetch('https://novaventa.appcenteryes.com/dbn/obtener-mensajes');
+          const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes');
   
           if (!response.ok) {
            
@@ -552,7 +552,7 @@ const handleFileChange = (e) => {
         console.log('Respuesta del servidor de envíos:',documentUrl );
         const idMessage = envioData.messageId;
         // Actualizar el mensaje enviado en el servidor
-        const guardarMensajeResponse = await fetch('https://novaventa.appcenteryes.com/dbn/guardar-mensajes', {
+        const guardarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -632,7 +632,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       const idMessage = responseData.messageId;
 
       // Actualiza el mensaje en el servidor
-      const actualizarMensajeResponse = await fetch('https://novaventa.appcenteryes.com/dbn/mensajeenviado', {
+      const actualizarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/mensajeenviado', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -648,7 +648,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
             } else {
         
           // Guarda el mensaje en el servidor
-    const guardarMensajeResponse = await fetch('https://novaventa.appcenteryes.com/dbn/guardar-mensajes', {
+    const guardarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -687,7 +687,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     const nuevoDato = 'Activo'; // Reemplaza con el nuevo valor que deseas asignar
     
       try {
-        const response = await fetch('https://novaventa.appcenteryes.com/dbn/obtener-mensajes');
+        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes');
 
         if (!response.ok) {
           
