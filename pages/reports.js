@@ -23,6 +23,7 @@ function Reports() {
       } else {
         // Si la campaña no está especificada, agregar parámetros de fecha directamente
         url += `?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
+        console.log('URL de la solicitud:', url);
       }
   
       // Realizar la solicitud GET al servidor
