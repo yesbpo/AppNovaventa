@@ -15,12 +15,20 @@ function Reports() {
   const fetchData = async () => {
     try {
       // Construir la URL con los parámetros necesarios
-      const url = `https://novaventa.appcenteryes.com/dbn/generar-informe?campaign=${campaign}&fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
-      
+      let url = `https://novaventa.appcenteryes.com/dbn/generar-informe`;
+  
+      // Agregar el parámetro de campaña si está definido
+      if (campaign) {
+        url += `?campaign=${campaign}`;
+      } else {
+        // Si la campaña no está especificada, agregar parámetros de fecha directamente
+        url += `?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`;
+      }
+  
       // Realizar la solicitud GET al servidor
       const response = await fetch(url);
   
-      // Verificar si la respuesta es exitosa (código 200)
+      // El resto del código sigue igual...
       if (response.ok) {
         // Obtener la respuesta en formato JSON
         const data = await response.json();
@@ -43,6 +51,7 @@ function Reports() {
       console.error('Error en la solicitud:', error);
     }
   };
+  
   
   const generarReporte = async () => {
     try {
