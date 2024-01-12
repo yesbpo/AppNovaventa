@@ -149,7 +149,7 @@ function Reports() {
             >
               Generar Reporte mensajeria
             </button>
-            <form>
+            <form onSubmit={fetchData}>
         <label>Campaña:</label>
         <input type="text" value={campaign} onChange={(e) => setCampaign(e.target.value)} />
 
@@ -159,7 +159,7 @@ function Reports() {
         <label>Fecha de fin:</label>
         <input type="date" value={fechaFin} onChange={(e) => setFechaFin(e.target.value)} />
 
-        <button onClick={fetchData}>Generar Informe de campaña</button>
+        <button type="submit">Generar Reporte mensajería</button>
       </form>
           </div>
            {/* Formulario para ingresar los parámetros */}
