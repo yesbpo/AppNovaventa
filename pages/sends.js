@@ -74,7 +74,7 @@ const Sends = (props) => {
   };
 
   useEffect(() => {
-    const apiUrl2 = 'https://novaventa.appcenteryes.com/w/api/templates';
+    const apiUrl2 = process.env.NEXT_PUBLIC_BASE_API+'/api/templates';
     axios.get(apiUrl2)
       .then(response => {
         // Filtra solo las plantillas aprobadas
