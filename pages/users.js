@@ -61,7 +61,7 @@ const CrearUsuario = () => {
   useEffect(() => {
     const timeout = setTimeout(() => {
       setMensaje(null);
-    }, 5000);
+    }, 4000);
 
     return () => clearTimeout(timeout);
   }, [mensaje]);
