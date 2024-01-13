@@ -79,7 +79,7 @@ const CrearUsuario = () => {
               {mensaje.texto}
             </Mensaje>
           )}
-      <form>
+      <form onSubmit={handleCrearUsuario}>
         <div className="mb-5">
           <label htmlFor="usuario" className="form-label">Usuario:</label>
           <input type="text" className="form-control" id="usuario" value={usuario} onChange={(e) => setUsuario(e.target.value)} />
