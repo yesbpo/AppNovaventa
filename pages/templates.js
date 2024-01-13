@@ -379,13 +379,7 @@ const handleCreateTemplate = async () => {
           </label>
 
           <Separador />
-
-          <div>
-      <input type="file" onChange={handleFileChange} />
-      <button onClick={handleFileUpload}>Cargar Archivo</button>
-      {exampleMedia && <p>HandleId: {exampleMedia}</p>}
-    </div>
-
+          
           {(selectedTemplateType === 'IMAGE' || selectedTemplateType === 'VIDEO' || selectedTemplateType === 'DOCUMENT') && (
             <label>
               {selectedTemplateType === 'IMAGE' ? 'Imagen' : selectedTemplateType === 'VIDEO' ? 'Video' : 'Documento'}:
