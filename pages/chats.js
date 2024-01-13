@@ -118,9 +118,9 @@ const enviarSolicitud = async () => {
 
  const data = new URLSearchParams();
  data.append('channel', 'whatsapp');
- data.append('source', '573204573737');
+ data.append('source', process.env.NEXT_PUBLIC_CELLPHONE);
  data.append('destination', numericInputValue);
- data.append('src.name', 'NOVAVENTA2024');
+ data.append('src.name', process.env.NEXT_PUBLIC_NAMEAPP);
  data.append('template', JSON.stringify({
    id: selectedTemplate.id,
    params: Object.values(templateParams) || [] // Asegúrate de que tu plantilla tenga una propiedad params
@@ -462,7 +462,7 @@ const handleFileChange = (e) => {
           throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
         }
         else{
-          const base = "https://novaventa.appcenteryes.com"
+          const base = process.env.NEXT_PUBLIC_BASE_URL
 
           const responseData = await response.json();
 
@@ -530,8 +530,8 @@ const handleFileChange = (e) => {
          // Preparar datos del mensaje
         const mensajeData = {
           channel: 'whatsapp',
-          source: '573204573737',
-          'src.name': 'NOVAVENTA2024',
+          source: process.env.NEXT_PUBLIC_CELLPHONE,
+          'src.name': process.env.NEXT_PUBLIC_NAMEAPP,
           destination: numeroEspecifico,
           message: JSON.stringify(tipoadjunto),
           disablePreview: true,
@@ -589,8 +589,8 @@ const handleFileChange = (e) => {
     try {
       const mensajeData = {
         channel: 'whatsapp',
-        source: '573204573737',
-        'src.name': 'NOVAVENTA2024',
+        source: process.env.NEXT_PUBLIC_CELLPHONE,
+        'src.name': process.env.NEXT_PUBLIC_NAMEAPP,
         destination: numeroEspecifico,
         message: inputValue,
         disablePreview: true,
