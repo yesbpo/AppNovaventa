@@ -116,11 +116,11 @@ const handleFileUpload = async () => {
       setExampleMedia(response.data.handleId);
     } else {
       console.error('Invalid response:', response);
-      // Manejo de errores
+      showTemporaryMessage('Error al cargar el archivo. Por favor, inténtelo de nuevo.');
     }
   } catch (error) {
-    console.error('Error:', error.message || error);
-    // Manejo de errores
+    console.error('Error durante la carga del archivo:', error.message || error);
+    showTemporaryMessage('Error al cargar el archivo. Por favor, inténtelo de nuevo.');
   }
 };
 
@@ -199,7 +199,8 @@ const handleCreateTemplate = async () => {
       showTemporaryMessage('Error al crear la plantilla. Por favor, inténtelo de nuevo.');
     }
   } catch (error) {
-    console.error('Error:', error.message || error);
+    console.error('Error durante la creación de la plantilla:', error.message || error);
+    showTemporaryMessage('Error al crear la plantilla. Por favor, inténtelo de nuevo.');
   }
 };
 
