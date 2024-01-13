@@ -96,35 +96,34 @@ const Reports = (props) => {
   };
 
 //Function for uploading files, whether image, video or document and getting the handleId
-  const handleFileChange = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-    if (file) handleFileUpload();
-  };
+const handleFileUpload = async () => {
+  const apiUrl = 'https://partner.gupshup.io/partner/app/522e21b6-d83f-486c-ba0e-872180219095/upload/media';
+  const partnerAppToken = 'sk_3cf52c6b3c5d40e8b742d46c6ab3845d';
 
-  const handleFileUpload = async () => {
-    const apiUrl = 'https://partner.gupshup.io/partner/app/522e21b6-d83f-486c-ba0e-872180219095/upload/media';
-    const partnerAppToken = 'sk_3cf52c6b3c5d40e8b742d46c6ab3845d';
+  const formData = new FormData();
+  formData.append('file', selectedFile);
+  formData.append('file_type', 'image/png');
 
-    const formData = new FormData();
-    formData.append('file', selectedFile);
-    formData.append('file_type', 'image/png');
+  try {
+    const response = await axios.post(apiUrl, formData, {
+      headers: {
+        'Authorization': partnerAppToken,
+        'Content-Type': 'multipart/form-data',
+      },
+    });
 
-    try {
-      const response = await axios.post(apiUrl, formData, {
-        headers: {
-          'Authorization': partnerAppToken,
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-
-      setExampleMedia(response.data.handleId.message);
-    } catch (error) {
-      console.error('Error:', error.message || error);
+    if (response.status === 200 && response.data && response.data.handleId) {
+      // Extracting the handleId from the response
+      setExampleMedia(response.data.handleId);
+    } else {
+      console.error('Invalid response:', response);
       setMessage('Error al cargar el archivo. Por favor, inténtelo de nuevo.');
-
     }
-  };
+  } catch (error) {
+    console.error('Error:', error.message || error);
+    setMessage('Error al cargar el archivo. Por favor, inténtelo de nuevo.');
+  }
+};
 
 //Here we have the handling of the variables, so that you can count from the last one 
   const handleAddPlaceholder = () => {
