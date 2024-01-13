@@ -394,12 +394,7 @@ const handleCreateTemplate = async () => {
 
           <Separador />
           
-          {(selectedTemplateType === 'IMAGE' || selectedTemplateType === 'VIDEO' || selectedTemplateType === 'DOCUMENT') && (
-            <label>
-              {selectedTemplateType === 'IMAGE' ? 'Imagen' : selectedTemplateType === 'VIDEO' ? 'Video' : 'Documento'}:
-              <input type="file" accept={selectedTemplateType === 'IMAGE' ? '.jpg, .jpeg, .png' : selectedTemplateType === 'VIDEO' ? '.MP4, .MOV, .MKV, .AVI, .WMV' : ''} onChange={handleFileUpload} />
-            </label>
-          )}
+          <input type="file" accept={selectedTemplateType === 'IMAGE' ? '.jpg, .jpeg, .png' : selectedTemplateType === 'VIDEO' ? '.MP4, .MOV, .MKV, .AVI, .WMV' : ''} onChange={handleFileChange} />
 
 {selectedTemplateType === 'TEXT' && (
     <>
