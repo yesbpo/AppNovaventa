@@ -97,12 +97,19 @@ const Reports = (props) => {
 
 //Function for uploading files, whether image, video or document and getting the handleId
 const handleFileUpload = async () => {
+  // Verificar si se ha seleccionado un archivo
+  if (!selectedFile) {
+    console.error('No se ha seleccionado ningún archivo.');
+    showTemporaryMessage('Por favor, seleccione un archivo antes de cargarlo.');
+    return;
+  }
+
   const apiUrl = `https://partner.gupshup.io/partner/app/${process.env.NEXT_PUBLIC_APPID}/upload/media`;
   const partnerAppToken = process.env.NEXT_PUBLIC_PARTNERAPPTOKEN;
 
   const formData = new FormData();
   formData.append('file', selectedFile);
-  formData.append('file_type', 'image/png');
+  formData.append('file_type', 'image/png'); // Ajusta esto según tus necesidades
 
   try {
     const response = await axios.post(apiUrl, formData, {
@@ -113,9 +120,10 @@ const handleFileUpload = async () => {
     });
 
     if (response.status === 200 && response.data && response.data.handleId) {
-      setExampleMedia(response.data.handleId);
+      setExampleMedia(response.data.handleId.message);
+      console.log('Archivo cargado con éxito. HandleId:', response.data.handleId.message);
     } else {
-      console.error('Invalid response:', response);
+      console.error('Respuesta inválida durante la carga del archivo:', response);
       showTemporaryMessage('Error al cargar el archivo. Por favor, inténtelo de nuevo.');
     }
   } catch (error) {
