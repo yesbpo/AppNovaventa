@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import styled from 'styled-components';
 import { useSession, signIn } from 'next-auth/react';
+
 const CrearUsuario = () => {
   const { data: sesion } = useSession();
   const [usuario, setUsuario] = useState('');
@@ -10,6 +11,8 @@ const CrearUsuario = () => {
   const [session, setSession] = useState('');
   const [typeUser, setTypeUser] = useState('');
   const [complete_name, setComplete_name] = useState('');
+  const [mensaje, setMensaje] = useState(null); //pop up de creacion de usuario
+
   const handleCrearUsuario = async () => {
     try {
       const createdAt = new Date(); // Puedes ajustar cómo obtienes la fecha de creación
@@ -34,12 +37,23 @@ const CrearUsuario = () => {
       if (response.ok) {
         const data = await response.json();
         console.log(data); // Aquí puedes manejar la respuesta del servidor
+
+        setMensaje({ tipo: 'exito', texto: 'Usuario creado exitosamente.' });
+        // Limpiar los campos después de un éxito
+        setUsuario('');
+        setPassword('');
+        setEmail('');
+        setTypeUser('');
+        setComplete_name('');
+
          return <><h1>{data}</h1></>;
       } else {
         console.error('Error al crear el usuario:', response.statusText);
+        setMensaje({ tipo: 'error', texto: 'Error al crear el usuario.' });
       }
     } catch (error) {
       console.error('Error de red:', error.message);
+      setMensaje({ tipo: 'error', texto: 'Error de red al intentar crear el usuario.' });
       return <><h1>{error.message}</h1></>;
     }
   };
@@ -49,7 +63,13 @@ const CrearUsuario = () => {
     <Layout>
     <div className="flex items-center justify-center h-screen">
     <div className="w-full max-w-md">
-      <h1 className="text-dark text-center mb-6">Crear Usuario</h1>    <form>
+      <h1 className="text-dark text-center mb-6">Crear Usuario</h1>    
+      {mensaje && (
+            <Mensaje tipo={mensaje.tipo}>
+              {mensaje.texto}
+            </Mensaje>
+          )}
+      <form>
         <div className="mb-5">
           <label htmlFor="usuario" className="form-label">Usuario:</label>
           <input type="text" className="form-control" id="usuario" value={usuario} onChange={(e) => setUsuario(e.target.value)} />
@@ -104,6 +124,15 @@ const CrearUsuario = () => {
       
         )
 };
+
+const Mensaje = styled.p`
+  padding: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  color: ${({ tipo }) => (tipo === 'exito' ? 'green' : 'red')};
+  background-color: ${({ tipo }) => (tipo === 'exito' ? '#d3f5e5' : '#f8d7da')};
+`;
+
 const BotonEnviar = styled.button`
 background-color: #4caf50;
 color: white;
