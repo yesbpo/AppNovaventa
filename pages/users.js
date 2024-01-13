@@ -102,9 +102,6 @@ const CrearUsuario = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <BotonMostrarPassword type="button" onClick={toggleMostrarPassword}>
-              {mostrarPassword ? 'Ocultar' : 'Mostrar'}
-            </BotonMostrarPassword>
           </div>
         </div>
         <div className="mb-3">
@@ -127,6 +124,11 @@ const CrearUsuario = () => {
         <div className="mb-3">
           <label htmlFor="completeName" className="form-label">Complete Name:</label>
           <input type="text" className="form-control" id="completeName" value={complete_name} onChange={(e) => setComplete_name(e.target.value)} />
+        </div>
+        <div className="mb-3">
+          <BotonMostrarPassword type="button" onClick={toggleMostrarPassword}>
+            {mostrarPassword ? 'Ocultar' : 'Mostrar'}
+          </BotonMostrarPassword>
         </div>
         <BotonEnviar type="button" onClick={handleCrearUsuario}>
           Crear Usuario
