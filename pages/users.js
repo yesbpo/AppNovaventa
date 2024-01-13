@@ -91,6 +91,7 @@ const CrearUsuario = () => {
                 <BotonMostrarPassword onClick={() => setMostrarPassword(!mostrarPassword)}>
                   {mostrarPassword ? 'Ocultar' : 'Mostrar'}
                 </BotonMostrarPassword>
+              </div>
         </div>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">Email:</label>
