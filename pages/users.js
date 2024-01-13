@@ -12,7 +12,6 @@ const CrearUsuario = () => {
   const [typeUser, setTypeUser] = useState('');
   const [complete_name, setComplete_name] = useState('');
   const [mensaje, setMensaje] = useState(null); //pop up de creacion de usuario
-  const [mostrarPassword, setMostrarPassword] = useState(false);
 
   const handleCrearUsuario = async () => {
     try {
@@ -79,20 +78,15 @@ const CrearUsuario = () => {
               {mensaje.texto}
             </Mensaje>
           )}
-      <form onSubmit={handleCrearUsuario}>
+      <form>
         <div className="mb-5">
           <label htmlFor="usuario" className="form-label">Usuario:</label>
           <input type="text" className="form-control" id="usuario" value={usuario} onChange={(e) => setUsuario(e.target.value)} />
         </div>
         <div className="mb-3">
-              <label htmlFor="password" className="form-label">Password:</label>
-              <div className="password-container">
-                <input type={mostrarPassword ? 'text' : 'password'} className="form-control" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-                <BotonMostrarPassword onClick={() => setMostrarPassword(!mostrarPassword)}>
-                  {mostrarPassword ? 'Ocultar' : 'Mostrar'}
-                </BotonMostrarPassword>
-              </div>
-            </div>
+          <label htmlFor="password" className="form-label">Password:</label>
+          <input type="password" className="form-control" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        </div>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">Email:</label>
           <input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -138,21 +132,6 @@ const CrearUsuario = () => {
       
         )
 };
-
-const BotonMostrarPassword = styled.button`
-  background-color: #3498db;
-  color: white;
-  padding: 8px;
-  margin-left: 5px;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-
-  &:hover {
-    background-color: #2980b9;
-  }
-`;
 
 const Mensaje = styled.p`
   padding: 10px;
