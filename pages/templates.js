@@ -125,7 +125,21 @@ const handleFileUpload = async () => {
 };
 
 const handleFileChange = (event) => {
-  setSelectedFile(event.target.files[0]);
+  const file = event.target.files[0];
+
+  // Verificar si se seleccionó un archivo
+  if (file) {
+    // Actualizar el estado selectedFile con el objeto de archivo
+    setSelectedFile(file);
+
+    // Obtener y mostrar el nombre del archivo
+    const fileName = file.name;
+    console.log('Archivo seleccionado:', fileName);
+  } else {
+    // Manejar el caso en el que no se selecciona ningún archivo
+    setSelectedFile(null);
+    console.log('Ningún archivo seleccionado');
+  }
 };
 
 //Here we have the handling of the variables, so that you can count from the last one 
