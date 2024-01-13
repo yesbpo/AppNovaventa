@@ -366,7 +366,7 @@ const handleFileChange = (e) => {
   
   
   const conection =()=> {
-    const socket = io('https://novaventa.appcenteryes.com/w');
+    const socket = io(process.env.NEXT_PUBLIC_BASE_API);
     socket.on( async(data) => {
   
         try {
