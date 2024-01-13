@@ -12,6 +12,7 @@ const CrearUsuario = () => {
   const [typeUser, setTypeUser] = useState('');
   const [complete_name, setComplete_name] = useState('');
   const [mensaje, setMensaje] = useState(null); //pop up de creacion de usuario
+  const [showMensaje, setShowMensaje] = useState(false); // Estado para controlar la visibilidad del mensaje
 
   const handleCrearUsuario = async () => {
     try {
@@ -39,6 +40,7 @@ const CrearUsuario = () => {
         console.log(data); // Aquí puedes manejar la respuesta del servidor
 
         setMensaje({ tipo: 'exito', texto: 'Usuario creado exitosamente.' });
+        setShowMensaje(true);
         // Limpiar los campos después de un éxito
         setUsuario('');
         setPassword('');
@@ -50,13 +52,25 @@ const CrearUsuario = () => {
       } else {
         console.error('Error al crear el usuario:', response.statusText);
         setMensaje({ tipo: 'error', texto: 'Error al crear el usuario.' });
+        setShowMensaje(true);
       }
     } catch (error) {
       console.error('Error de red:', error.message);
       setMensaje({ tipo: 'error', texto: 'Error de red al intentar crear el usuario.' });
+      setShowMensaje(true);
       return <><h1>{error.message}</h1></>;
     }
   };
+
+  useEffect(() => {
+    // Ocultar el mensaje después de 5 segundos (ajusta el tiempo según tus necesidades)
+    const timeout = setTimeout(() => {
+      setShowMensaje(false);
+    }, 5000);
+
+    return () => clearTimeout(timeout);
+  }, [showMensaje]);
+
   if (sesion){
   return (
     
