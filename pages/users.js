@@ -99,10 +99,9 @@ const CrearUsuario = () => {
               value={typeUser}
               onChange={(e) => setTypeUser(e.target.value)}
             >
+              <option value="">Seleccionar</option>
               <option value="Asesor">Asesor</option>
               <option value="Coordinador">Coordinador</option>
-              
-              {/* Agrega más opciones según sea necesario */}
             </select>
         </div>
         <div className="mb-3">
