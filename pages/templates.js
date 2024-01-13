@@ -109,7 +109,9 @@ const handleFileUpload = async () => {
 
   const formData = new FormData();
   formData.append('file', selectedFile);
-  formData.append('file_type', 'image/png'); // Ajusta esto según tus necesidades
+  // Add the file type and extension to formData
+  const fileType = selectedFile.type.split('/')[0];
+  formData.append('file_type', `${fileType}/${selectedFile.name.split('.').pop()}`); 
 
   try {
     const response = await axios.post(apiUrl, formData, {
@@ -172,6 +174,8 @@ const handleCreateTemplate = async () => {
     return;
   }
 
+  const fileType = exampleMedia.split('/')[0];
+
   const templateData = {
     elementName,
     languageCode,
@@ -181,11 +185,12 @@ const handleCreateTemplate = async () => {
     content,
     example: exampleContent,
     exampleMedia,
+    fileType, // Add file type to template data
     header,
     exampleHeader,
     footer,
     allowTemplateCategoryChange: false,
-    enableSample: true,
+    enableSample: false,
   };
 
   try {
