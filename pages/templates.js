@@ -97,8 +97,8 @@ const Reports = (props) => {
 
 //Function for uploading files, whether image, video or document and getting the handleId
 const handleFileUpload = async () => {
-  const apiUrl = 'https://partner.gupshup.io/partner/app/ecc54a1a-bff0-4f59-bde4-507d766acd92/upload/media';
-  const partnerAppToken = 'ecc54a1a-bff0-4f59-bde4-507d766acd92';
+  const apiUrl = `https://partner.gupshup.io/partner/app/${process.env.PARTNER_ID}/upload/media`;
+  const partnerAppToken = process.env.PARTNER_TOKEN;
 
   const formData = new FormData();
   formData.append('file', selectedFile);
@@ -113,16 +113,19 @@ const handleFileUpload = async () => {
     });
 
     if (response.status === 200 && response.data && response.data.handleId) {
-      // Extracting the handleId from the response
       setExampleMedia(response.data.handleId);
     } else {
       console.error('Invalid response:', response);
-      setMessage('Error al cargar el archivo. Por favor, inténtelo de nuevo.');
+      // Manejo de errores
     }
   } catch (error) {
     console.error('Error:', error.message || error);
-    setMessage('Error al cargar el archivo. Por favor, inténtelo de nuevo.');
+    // Manejo de errores
   }
+};
+
+const handleFileChange = (event) => {
+  setSelectedFile(event.target.files[0]);
 };
 
 //Here we have the handling of the variables, so that you can count from the last one 
@@ -375,6 +378,12 @@ const handleCreateTemplate = async () => {
           </label>
 
           <Separador />
+
+          <div>
+      <input type="file" onChange={handleFileChange} />
+      <button onClick={handleFileUpload}>Cargar Archivo</button>
+      {exampleMedia && <p>HandleId: {exampleMedia}</p>}
+    </div>
 
           {(selectedTemplateType === 'IMAGE' || selectedTemplateType === 'VIDEO' || selectedTemplateType === 'DOCUMENT') && (
             <label>
