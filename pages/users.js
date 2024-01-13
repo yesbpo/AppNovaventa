@@ -12,6 +12,7 @@ const CrearUsuario = () => {
   const [typeUser, setTypeUser] = useState('');
   const [complete_name, setComplete_name] = useState('');
   const [mensaje, setMensaje] = useState(null); //pop up de creacion de usuario
+  const [mostrarPassword, setMostrarPassword] = useState(false);
 
   const handleCrearUsuario = async () => {
     try {
@@ -84,8 +85,12 @@ const CrearUsuario = () => {
           <input type="text" className="form-control" id="usuario" value={usuario} onChange={(e) => setUsuario(e.target.value)} />
         </div>
         <div className="mb-3">
-          <label htmlFor="password" className="form-label">Password:</label>
-          <input type="password" className="form-control" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <label htmlFor="password" className="form-label">Password:</label>
+              <div className="password-container">
+                <input type={mostrarPassword ? 'text' : 'password'} className="form-control" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                <BotonMostrarPassword onClick={() => setMostrarPassword(!mostrarPassword)}>
+                  {mostrarPassword ? 'Ocultar' : 'Mostrar'}
+                </BotonMostrarPassword>
         </div>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">Email:</label>
