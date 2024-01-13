@@ -102,7 +102,7 @@ const CrearUsuario = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-            <BotonMostrarPassword onClick={toggleMostrarPassword}>
+            <BotonMostrarPassword type="button" onClick={toggleMostrarPassword}>
               {mostrarPassword ? 'Ocultar' : 'Mostrar'}
             </BotonMostrarPassword>
           </div>
@@ -167,6 +167,7 @@ const BotonMostrarPassword = styled.button`
     background-color: #2980b9;
   }
 `;
+
 
 
 const Mensaje = styled.p`
