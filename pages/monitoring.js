@@ -331,7 +331,7 @@ const [url, setUrl] = useState('');
   const [inputValue, setInputValue] = useState('')
   const [msg, setMsg] = useState([]);
  const conection = () =>{
-  const socket = io('https://novaventa.appcenteryes.com/w'); 
+  const socket = io(NEXT_PUBLIC_SOCKET); 
   socket.on( async (data) => { 
     
     
