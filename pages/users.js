@@ -15,7 +15,7 @@ const CrearUsuario = () => {
       const createdAt = new Date(); // Puedes ajustar cómo obtienes la fecha de creación
       const updatedAt = new Date(); // Puedes ajustar cómo obtienes la fecha de actualización
 
-      const response = await fetch('https://novaventa.appcenteryes.com/dbn/crear-usuario', {
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/crear-usuario', {
                method: 'POST',
         headers: {
           'Content-Type': 'application/json',

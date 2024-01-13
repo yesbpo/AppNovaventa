@@ -51,7 +51,7 @@ useEffect(() => {
  const fetchTemplates = async () => {
    try {
      // Utilizar el servidor proxy en lugar de la URL directa
-     const response = await fetch('https://novaventa.appcenteryes.com/w/gupshup-templates');
+     const response = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/gupshup-templates');
 
      if (!response.ok) {
        throw new Error(HTTP `error! Status: ${response.status}`);
@@ -379,7 +379,7 @@ const handleFileChange = (e) => {
           setMensajes1(data1);
           
             // Se ejecutará cada vez que el componente se monte o actualice
-            const audioElement = new Audio('https://novaventa.appcenteryes.com/w/uploads/short-success-sound-glockenspiel-treasure-video-game-6346.mp3');
+            const audioElement = new Audio(process.env.NEXT_PUBLIC_BASE_API+'/uploads/short-success-sound-glockenspiel-treasure-video-game-6346.mp3');
           
         } catch (error) {
           
@@ -453,7 +453,7 @@ const handleFileChange = (e) => {
         const formData = new FormData();
         formData.append('archivo', file);
 
-        const response = await fetch('https://novaventa.appcenteryes.com/w/subir-archivo', {
+        const response = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/subir-archivo', {
           method: 'POST',
           body: formData,
         });
@@ -537,7 +537,7 @@ const handleFileChange = (e) => {
           disablePreview: true,
         };
         // Enviar mensaje a través de la API de envíos
-        const envioResponse = await fetch('https://novaventa.appcenteryes.com/w/api/envios', {
+        const envioResponse = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/api/envios', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -616,7 +616,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
           },
         ]
       ));
-      const response = await fetch('https://novaventa.appcenteryes.com/w/api/envios', {
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/api/envios', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',

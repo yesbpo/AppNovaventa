@@ -241,8 +241,8 @@ const [url, setUrl] = useState('');
         // Actualizar el mensajeData para incluir información del archivo
         const mensajeData = {
           channel: 'whatsapp',
-          source: '573204573737',
-          'src.name': 'NOVAVENTA2024',
+          source: process.env.NEXT_PUBLIC_CELLPHONE,
+          'src.name': process.env.NEXT_PUBLIC_NAMEAPP,
           destination: numeroEspecifico,
           message: JSON.stringify({
             type: 'image', // Puedes ajustar esto según el tipo de archivo
@@ -253,7 +253,7 @@ const [url, setUrl] = useState('');
           disablePreview: true,
         };
 
-        const responseEnvio = await fetch('https://novaventa.appcenteryes.com/w/api/envios', {
+        const responseEnvio = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/api/envios', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -426,8 +426,8 @@ setWebhookData(webhookText);
     try {
       const mensajeData = {
         channel: 'whatsapp',
-        source: '573204573737',
-        'src.name': 'NOVAVENTA2024',
+        source: process.env.NEXT_PUBLIC_CELLPHONE,
+        'src.name': process.env.NEXT_PUBLIC_NAMEAPP,
         destination: numeroEspecifico,
         message: inputValue,
         disablePreview: true,
@@ -446,7 +446,7 @@ setWebhookData(webhookText);
           },
         ]
       ));
-      const response = await fetch('https://novaventa.appcenteryes.com/w/api/envios', {
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/api/envios', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -511,7 +511,7 @@ setWebhookData(webhookText);
   };
 
   useEffect(() => {
-    const apiUrl2 = "https://novaventa.appcenteryes.com/w/api/users";
+    const apiUrl2 = process.env.NEXT_PUBLIC_BASE_API+"/api/users";
     fetch(apiUrl2, {
       method: 'GET',
     })
