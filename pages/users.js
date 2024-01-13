@@ -14,9 +14,7 @@ const CrearUsuario = () => {
   const [mensaje, setMensaje] = useState(null); //pop up de creacion de usuario
   const [mostrarPassword, setMostrarPassword] = useState(false);
 
-  const toggleMostrarPassword = () => {
-    setMostrarPassword(!mostrarPassword);
-  };  
+
 
   const handleCrearUsuario = async () => {
     try {
@@ -70,6 +68,10 @@ const CrearUsuario = () => {
 
     return () => clearTimeout(timeout);
   }, [mensaje]);
+
+  const toggleMostrarPassword = () => {
+    setMostrarPassword(!mostrarPassword);
+  };  
 
   if (sesion){
   return (
