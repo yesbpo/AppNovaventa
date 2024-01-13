@@ -91,22 +91,22 @@ const CrearUsuario = () => {
           <input type="text" className="form-control" id="usuario" value={usuario} onChange={(e) => setUsuario(e.target.value)} />
         </div>
         <div className="mb-3">
-          <label htmlFor="password" className="form-label">
-            Password:
-          </label>
-          <div className="password-container">
-            <input
-              type={mostrarPassword ? 'text' : 'password'}
-              className="form-control"
-              id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <BotonMostrarPassword type="button" onClick={toggleMostrarPassword}>
-              {mostrarPassword ? 'Ocultar' : 'Mostrar'}
-            </BotonMostrarPassword>
-          </div>
-        </div>
+              <label htmlFor="password" className="form-label">
+                Password:
+              </label>
+              <div className="password-container">
+                <input
+                  type={mostrarPassword ? 'text' : 'password'}
+                  className="form-control password-input"  // Agregamos la clase "password-input"
+                  id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <BotonMostrarPassword type="button" onClick={toggleMostrarPassword}>
+                  {mostrarPassword ? 'Ocultar' : 'Mostrar'}
+                </BotonMostrarPassword>
+              </div>
+            </div>
         <div className="mb-3">
           <label htmlFor="email" className="form-label">Email:</label>
           <input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
@@ -168,8 +168,7 @@ const BotonMostrarPassword = styled.button`
   }
 `;
 
-
-
+// Agregamos estilos para el input de contraseña
 const Mensaje = styled.p`
   padding: 10px;
   border-radius: 5px;
@@ -179,17 +178,25 @@ const Mensaje = styled.p`
 `;
 
 const BotonEnviar = styled.button`
-background-color: #4caf50;
-color: white;
-padding: 10px 20px;
-font-size: 16px;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-transition: background-color 0.3s;
+  background-color: #4caf50;
+  color: white;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 
-&:hover {
-  background-color: #45a049;
-}
+  &:hover {
+    background-color: #45a049;
+  }
+`;
+
+// Agregamos estilos para el input de contraseña
+const EstilosAdicionales = styled.style`
+  /* Establecemos un ancho fijo para el input de contraseña */
+  .password-input {
+    width: 100%;
+  }
 `;
 export default CrearUsuario;
