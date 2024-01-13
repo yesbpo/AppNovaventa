@@ -97,8 +97,8 @@ const Reports = (props) => {
 
 //Function for uploading files, whether image, video or document and getting the handleId
 const handleFileUpload = async () => {
-  const apiUrl = 'https://partner.gupshup.io/partner/app/522e21b6-d83f-486c-ba0e-872180219095/upload/media';
-  const partnerAppToken = 'sk_3cf52c6b3c5d40e8b742d46c6ab3845d';
+  const apiUrl = 'https://partner.gupshup.io/partner/app/ecc54a1a-bff0-4f59-bde4-507d766acd92/upload/media';
+  const partnerAppToken = 'ecc54a1a-bff0-4f59-bde4-507d766acd92';
 
   const formData = new FormData();
   formData.append('file', selectedFile);
