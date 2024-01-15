@@ -106,7 +106,7 @@ const uploadSampleMedia = async () => {
       formData,
       {
         headers: {
-          Authorization: partnerAppToken,
+          Authorization: process.env.NEXT_PUBLIC_PARTNERAPPTOKEN,
           'Content-Type': 'multipart/form-data',
         },
       }
