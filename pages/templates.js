@@ -109,9 +109,9 @@ const handleFileUpload = async () => {
 
   const formData = new FormData();
   formData.append('file', selectedFile);
-  // Add the file type and extension to formData
+  // Agregar el tipo de archivo y la extensión a formData
   const fileType = selectedFile.type.split('/')[0];
-  formData.append('file_type', `${fileType}/${selectedFile.name.split('.').pop()}`); 
+  formData.append('file_type', `${fileType}/${selectedFile.name.split('.').pop()}`);
 
   try {
     const response = await axios.post(apiUrl, formData, {
@@ -127,7 +127,7 @@ const handleFileUpload = async () => {
     } else {
       console.error('Respuesta inválida durante la carga del archivo:', response);
       showTemporaryMessage('Error al cargar el archivo. Por favor, inténtelo de nuevo.');
-    }    
+    }
   } catch (error) {
     console.error('Error durante la carga del archivo:', error.message || error);
     showTemporaryMessage('Error al cargar el archivo. Por favor, inténtelo de nuevo.');
@@ -138,6 +138,7 @@ const handleFileChange = (event) => {
   const file = event.target.files[0];
   setSelectedFile(file);
 };
+
 
 //Here we have the handling of the variables, so that you can count from the last one 
   const handleAddPlaceholder = () => {
@@ -395,6 +396,9 @@ const handleCreateTemplate = async () => {
           <Separador />
           
           <input type="file" accept={selectedTemplateType === 'IMAGE' ? '.jpg, .jpeg, .png' : selectedTemplateType === 'VIDEO' ? '.MP4, .MOV, .MKV, .AVI, .WMV' : ''} onChange={handleFileChange} />
+
+          <button onClick={handleFileUpload}>Subir Archivo</button>
+
 
 {selectedTemplateType === 'TEXT' && (
     <>
