@@ -126,11 +126,19 @@ const uploadSampleMedia = async () => {
   }
 };
 
-// Function to handle file input change
-const handleFileChange = (e) => {
+ // Function to handle file input change
+ const handleFileChange = (e) => {
   setSelectedFile(e.target.files[0]);
-  uploadSampleMedia(); // Llama a uploadSampleMedia cuando se cambia el archivo
 };
+
+// Effect to trigger uploadSampleMedia when selectedFile changes
+useEffect(() => {
+  // Check if selectedFile is not null or undefined
+  if (selectedFile) {
+    // Call the uploadSampleMedia function
+    uploadSampleMedia();
+  }
+}, [selectedFile])
 
 
 //Here we have the handling of the variables, so that you can count from the last one 
@@ -383,9 +391,9 @@ const handleCreateTemplate = async () => {
           <Separador />
 
           <label>
-          Archivo Multimedia:
-          <input type="file" onChange={handleFileChange} />
-        </label>
+        Archivo Multimedia:
+        <input type="file" onChange={handleFileChange} />
+      </label>
           
 
 {selectedTemplateType === 'TEXT' && (
