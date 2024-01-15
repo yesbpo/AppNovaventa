@@ -96,6 +96,11 @@ const Reports = (props) => {
   };
 
 //Function for uploading files, whether image, video or document and getting the handleId
+const handleFileUploadSuccess = (handleId) => {
+  setExampleMedia(handleId);
+  console.log('Archivo cargado con éxito. HandleId:', handleId);
+};
+
 const handleFileUpload = async () => {
   // Verificar si se ha seleccionado un archivo
   if (!selectedFile) {
@@ -122,8 +127,8 @@ const handleFileUpload = async () => {
     });
 
     if (response.status === 200 && response.data && response.data.handleId) {
-      setExampleMedia(response.data.handleId);  // Suponiendo que handleId está directamente disponible
-      console.log('Archivo cargado con éxito. HandleId:', response.data.handleId);
+      // Use the separate function to handle the successful response
+      handleFileUploadSuccess(response.data.handleId);
     } else {
       console.error('Respuesta inválida durante la carga del archivo:', response);
       showTemporaryMessage('Error al cargar el archivo. Por favor, inténtelo de nuevo.');
@@ -175,7 +180,6 @@ const handleCreateTemplate = async () => {
     return;
   }
 
-  const fileType = exampleMedia.split('/')[0];
 
   const templateData = {
     elementName,
@@ -186,7 +190,6 @@ const handleCreateTemplate = async () => {
     content,
     example: exampleContent,
     exampleMedia,
-    fileType, // Add file type to template data
     header,
     exampleHeader,
     footer,
