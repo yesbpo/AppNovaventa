@@ -97,7 +97,7 @@ const Reports = (props) => {
 
 //Function for uploading files, whether image, video or document and getting the handleId
 const handleFileUploadSuccess = (handleId) => {
-  setExampleMedia(handleId);
+  ExampleMedia(handleId);
   console.log('Archivo cargado con éxito. HandleId:', handleId);
 };
 
