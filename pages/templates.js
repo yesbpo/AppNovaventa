@@ -122,12 +122,12 @@ const handleFileUpload = async () => {
     });
 
     if (response.status === 200 && response.data && response.data.handleId) {
-      setExampleMedia(response.data.handleId.message);
-      console.log('Archivo cargado con éxito. HandleId:', response.data.handleId.message);
+      setExampleMedia(response.data.handleId);  // Suponiendo que handleId está directamente disponible
+      console.log('Archivo cargado con éxito. HandleId:', response.data.handleId);
     } else {
       console.error('Respuesta inválida durante la carga del archivo:', response);
       showTemporaryMessage('Error al cargar el archivo. Por favor, inténtelo de nuevo.');
-    }
+    }    
   } catch (error) {
     console.error('Error durante la carga del archivo:', error.message || error);
     showTemporaryMessage('Error al cargar el archivo. Por favor, inténtelo de nuevo.');
