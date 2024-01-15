@@ -138,7 +138,7 @@ function Reports() {
                 onChange={(e) => setTipoMensajes(e.target.value)}
                 className="border rounded p-2 ml-2"
               >
-                <option value="ambos">Ambos</option>
+                <option value="ambos">Todos</option>
                 <option value="entrantes">Entrantes</option>
                 <option value="salientes">Salientes</option>
               </select>
@@ -147,7 +147,7 @@ function Reports() {
               onClick={generarReporte}
               className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
             >
-              Generar Reporte mensajeria
+              Generar reporte de mensajeria
             </button>
             <div>
         <label>Campaña:</label>
@@ -159,7 +159,7 @@ function Reports() {
         <label>Fecha de fin:</label>
         <input type="date" value={fechaFin} onChange={(e) => setFechaFin(e.target.value)} />
 
-        <button onClick={fetchData} >Generar Reporte mensajería</button>
+        <button onClick={fetchData} >Generar reporte de envios masivos </button>
       </div>
           </div>
            {/* Formulario para ingresar los parámetros */}
