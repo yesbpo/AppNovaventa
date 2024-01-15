@@ -176,8 +176,8 @@ const handleCreateTemplate = async () => {
     header,
     exampleHeader,
     footer,
-    allowTemplateCategoryChange: false,
-    enableSample: false,
+    allowTemplateCategoryChange: true,
+    enableSample: true,
   };
 
   try {
