@@ -126,8 +126,9 @@ const { data: session } = useSession();
       setContactos1(withoutGest);
       setStatuschats('Pendientes');
       try {
+        const status = 'in process'
         const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes');
-        const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-chats');
+        const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
         const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
         // El usuario está autenticado, puedes acceder a la sesión
         
@@ -136,8 +137,7 @@ const { data: session } = useSession();
         }
         const users = await responseUsers.json()
         const Id = iduser
-        const dataChats =  await responseChats.json();
-        const chatsPending = dataChats.filter(d=> d.status == 'in process')
+        const chatsPending = await responseChats.json();
         const withoutGest = chatsPending.filter(d => d.userId == Id )
         console.log(Id)
         const data = await response.json();
