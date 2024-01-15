@@ -163,10 +163,6 @@ const handleFileChange = (e) => {
 
 //This function is to alert the user that the indicated fields are missing.  
 const handleCreateTemplate = async () => {
-  if (!content || !exampleContent || !exampleMedia) {
-    showTemporaryMessage('Por favor, complete los campos de contenido, contenido de ejemplo y archivo multimedia.');
-    return;
-  }
 
   const templateData = {
     elementName,
@@ -176,7 +172,7 @@ const handleCreateTemplate = async () => {
     vertical: selectedTemplateType,
     content,
     example: exampleContent,
-    exampleMedia, // Utiliza el handleId obtenido
+    exampleMedia, 
     header,
     exampleHeader,
     footer,
