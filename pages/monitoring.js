@@ -107,18 +107,19 @@ const { data: session } = useSession();
       conection();
       
     try {
+      const status = 'pending'
       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes');
-      const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-chats');
-      const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
+      const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
+      
       // El usuario está autenticado, puedes acceder a la sesión
       
       if (!response.ok) {
         throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
       }
-      const users = await responseUsers.json()
+      
       const Id = iduser
-      const dataChats =  await responseChats.json();
-      const chatsPending = dataChats.filter(d=> d.status == 'pending')
+       
+      const chatsPending = await responseChats.json();
       const withoutGest = chatsPending.filter(d => d.userId == Id )
       console.log(Id)
       const data = await response.json();
@@ -126,18 +127,18 @@ const { data: session } = useSession();
       setContactos1(withoutGest);
       setStatuschats('Pendientes');
       try {
+        const status = 'in process'
         const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes');
-        const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-chats');
-        const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
+        const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
+       
         // El usuario está autenticado, puedes acceder a la sesión
         
         if (!response.ok) {
           throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
         }
-        const users = await responseUsers.json()
+        
         const Id = iduser
-        const dataChats =  await responseChats.json();
-        const chatsPending = dataChats.filter(d=> d.status == 'in process')
+        const chatsPending = await responseChats.json();
         const withoutGest = chatsPending.filter(d => d.userId == Id )
         console.log(Id)
         const data = await response.json();
@@ -606,7 +607,7 @@ setWebhookData(webhookText);
     </div>
         </ButtonContainer>
       </Box>
-      <Container>
+     {statuschats && <Container>
         <Box>
         <h2>Chat {numeroEspecifico}</h2>
           <ContainerBox>
@@ -689,7 +690,7 @@ setWebhookData(webhookText);
               ))}
             </ul>
           </div></Box>
-      </Container>
+      </Container>}
     </Layout>
       </>
   )}
