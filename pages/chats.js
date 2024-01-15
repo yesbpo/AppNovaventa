@@ -223,8 +223,9 @@ const handleAgregarNumeroClick = () => {
       conection();
       setStatuschats('Pendientes')
     try {
+      const status = 'pending';
       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes');
-      const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-chats');
+      const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
       const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
       // El usuario está autenticado, puedes acceder a la sesión
       
@@ -232,8 +233,8 @@ const handleAgregarNumeroClick = () => {
           }
       const users = await responseUsers.json()
       const Id = users.filter(d => d.usuario == session.user.name)
-      const dataChats =  await responseChats.json();
-      const chatsPending = dataChats.filter(d=> d.status == 'pending')
+      
+      const chatsPending = await responseChats.json();
       const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
       console.log(Id)
       const data = await response.json();
@@ -249,7 +250,8 @@ const handleAgregarNumeroClick = () => {
     conection();
     setStatuschats('En gestion')
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes');
+      const status = 'in process'
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
       const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-chats');
       const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
       // El usuario está autenticado, puedes acceder a la sesión
@@ -259,8 +261,8 @@ const handleAgregarNumeroClick = () => {
       }
       const users = await responseUsers.json()
       const Id = users.filter(d => d.usuario == session.user.name)
-      const dataChats =  await responseChats.json();
-      const chatsPending = dataChats.filter(d=> d.status == 'in process')
+       
+      const chatsPending = await responseChats.json();
       const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
       console.log(Id)
       const data = await response.json();
