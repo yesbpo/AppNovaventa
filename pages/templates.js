@@ -128,7 +128,10 @@ const handleFileUpload = async () => {
 
     if (response.status === 200 && response.data && response.data.handleId) {
       // Use the separate function to handle the successful response
-      handleFileUploadSuccess(response.data.handleId);
+      const handleFileUploadSuccess = (handleId) => {
+        setExampleMedia(handleId);
+        console.log('Archivo cargado con éxito. HandleId:', handleId);
+      };      
     } else {
       console.error('Respuesta inválida durante la carga del archivo:', response);
       showTemporaryMessage('Error al cargar el archivo. Por favor, inténtelo de nuevo.');
@@ -175,11 +178,10 @@ const handleFileChange = (event) => {
 
 //This function is to alert the user that the indicated fields are missing.  
 const handleCreateTemplate = async () => {
-  if (!content || !exampleContent) {
+  if (!content || !exampleContent || !exampleMedia) {
     showTemporaryMessage('Por favor, complete los campos de contenido, contenido de ejemplo y archivo multimedia.');
     return;
   }
-
 
   const templateData = {
     elementName,
@@ -189,7 +191,7 @@ const handleCreateTemplate = async () => {
     vertical: selectedTemplateType,
     content,
     example: exampleContent,
-    exampleMedia,
+    exampleMedia, // Utiliza el handleId obtenido
     header,
     exampleHeader,
     footer,
@@ -198,7 +200,7 @@ const handleCreateTemplate = async () => {
   };
 
   try {
-    const response = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/createTemplates', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BASE_API + '/createTemplates', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -221,6 +223,7 @@ const handleCreateTemplate = async () => {
     showTemporaryMessage('Error al crear la plantilla. Por favor, inténtelo de nuevo.');
   }
 };
+
 
 
 //Request to obtain the templates
