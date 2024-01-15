@@ -606,7 +606,7 @@ setWebhookData(webhookText);
     </div>
         </ButtonContainer>
       </Box>
-      <Container>
+     {statuschats && <Container>
         <Box>
         <h2>Chat {numeroEspecifico}</h2>
           <ContainerBox>
@@ -689,7 +689,7 @@ setWebhookData(webhookText);
               ))}
             </ul>
           </div></Box>
-      </Container>
+      </Container>}
     </Layout>
       </>
   )}
