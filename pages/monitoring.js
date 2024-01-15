@@ -110,13 +110,13 @@ const { data: session } = useSession();
       const status = 'pending'
       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes');
       const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
-      const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
+      
       // El usuario está autenticado, puedes acceder a la sesión
       
       if (!response.ok) {
         throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
       }
-      const users = await responseUsers.json()
+      
       const Id = iduser
        
       const chatsPending = await responseChats.json();
@@ -130,13 +130,13 @@ const { data: session } = useSession();
         const status = 'in process'
         const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes');
         const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
-        const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
+       
         // El usuario está autenticado, puedes acceder a la sesión
         
         if (!response.ok) {
           throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
         }
-        const users = await responseUsers.json()
+        
         const Id = iduser
         const chatsPending = await responseChats.json();
         const withoutGest = chatsPending.filter(d => d.userId == Id )
