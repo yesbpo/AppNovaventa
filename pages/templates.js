@@ -4,8 +4,8 @@ import axios from 'axios';
 import Layout from '../components/Layout';
 import styled from 'styled-components';
 import EmojiPicker from 'emoji-picker-react';
-
 import { useSession, signIn } from 'next-auth/react';
+
 const Reports = (props) => {
   const { data: session } = useSession()
   const [responseData, setResponseData] = useState(null);
@@ -96,56 +96,41 @@ const Reports = (props) => {
   };
 
 //Function for uploading files, whether image, video or document and getting the handleId
-const handleFileUploadSuccess = (handleId) => {
-  ExampleMedia(handleId);
-  console.log('Archivo cargado con éxito. HandleId:', handleId);
-};
-
-const handleFileUpload = async () => {
-  // Verificar si se ha seleccionado un archivo
-  if (!selectedFile) {
-    console.error('No se ha seleccionado ningún archivo.');
-    showTemporaryMessage('Por favor, seleccione un archivo antes de cargarlo.');
-    return;
-  }
-
-  const apiUrl = `https://partner.gupshup.io/partner/app/${process.env.NEXT_PUBLIC_APPID}/upload/media`;
-  const partnerAppToken = process.env.NEXT_PUBLIC_PARTNERAPPTOKEN;
-
-  const formData = new FormData();
-  formData.append('file', selectedFile);
-  // Agregar el tipo de archivo y la extensión a formData
-  const fileType = selectedFile.type.split('/')[0];
-  formData.append('file_type', `${fileType}/${selectedFile.name.split('.').pop()}`);
-
+const uploadSampleMedia = async () => {
   try {
-    const response = await axios.post(apiUrl, formData, {
-      headers: {
-        'Authorization': partnerAppToken,
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    const formData = new FormData();
+    formData.append('file', selectedFile);
 
-    if (response.status === 200 && response.data && response.data.handleId) {
-      // Use the separate function to handle the successful response
-      const handleFileUploadSuccess = (handleId) => {
-        setExampleMedia(handleId);
-        console.log('Archivo cargado con éxito. HandleId:', handleId);
-      };      
+    const response = await axios.post(
+      `https://partner.gupshup.io/partner/app/${appId}/upload/media`,
+      formData,
+      {
+        headers: {
+          Authorization: partnerAppToken,
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+
+    if (response.status === 200 && response.data.status === 'success') {
+      const handleId = response.data.handleId.message;
+      setExampleMedia(handleId);
+      console.log('HandleId:', handleId);
     } else {
-      console.error('Respuesta inválida durante la carga del archivo:', response);
-      showTemporaryMessage('Error al cargar el archivo. Por favor, inténtelo de nuevo.');
+      console.error('Error uploading sample media:', response.status, response.data);
+      showTemporaryMessage('Error uploading sample media. Please try again.');
     }
   } catch (error) {
-    console.error('Error durante la carga del archivo:', error.message || error);
-    showTemporaryMessage('Error al cargar el archivo. Por favor, inténtelo de nuevo.');
+    console.error('Error uploading sample media:', error.message || error);
+    showTemporaryMessage('Error uploading sample media. Please try again.');
   }
 };
 
-const handleFileChange = (event) => {
-  const file = event.target.files[0];
-  setSelectedFile(file);
+// Function to handle file input change
+const handleFileChange = (e) => {
+  setSelectedFile(e.target.files[0]);
 };
+
 
 
 //Here we have the handling of the variables, so that you can count from the last one 
@@ -400,11 +385,14 @@ const handleCreateTemplate = async () => {
           </label>
 
           <Separador />
+
+          <label>
+          Archivo Multimedia:
+          <input type="file" onChange={handleFileChange} />
+        </label>
+
+        <button onClick={uploadSampleMedia}>Subir Archivo Multimedia</button>
           
-          <input type="file" accept={selectedTemplateType === 'IMAGE' ? '.jpg, .jpeg, .png' : selectedTemplateType === 'VIDEO' ? '.MP4, .MOV, .MKV, .AVI, .WMV' : ''} onChange={handleFileChange} />
-
-          <button onClick={handleFileUpload}>Subir Archivo</button>
-
 
 {selectedTemplateType === 'TEXT' && (
     <>
