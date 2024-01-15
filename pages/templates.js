@@ -129,8 +129,8 @@ const uploadSampleMedia = async () => {
 // Function to handle file input change
 const handleFileChange = (e) => {
   setSelectedFile(e.target.files[0]);
+  uploadSampleMedia(); // Llama a uploadSampleMedia cuando se cambia el archivo
 };
-
 
 
 //Here we have the handling of the variables, so that you can count from the last one 
@@ -386,8 +386,6 @@ const handleCreateTemplate = async () => {
           Archivo Multimedia:
           <input type="file" onChange={handleFileChange} />
         </label>
-
-        <button onClick={uploadSampleMedia}>Subir Archivo Multimedia</button>
           
 
 {selectedTemplateType === 'TEXT' && (
