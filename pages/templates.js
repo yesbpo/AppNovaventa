@@ -114,8 +114,8 @@ const uploadSampleMedia = async () => {
 
     if (response.status === 200 && response.data.status === 'success') {
       const handleId = response.data.handleId.message;
-      console.log('HandleId:', handleId); // Muestra el handleId en la consola
-      setExampleMedia(handleId);
+      ExampleMedia(handleId);
+      console.log('HandleId:', handleId);
     } else {
       console.error('Error uploading sample media:', response.status, response.data);
       showTemporaryMessage('Error uploading sample media. Please try again.');
@@ -124,6 +124,12 @@ const uploadSampleMedia = async () => {
     console.error('Error uploading sample media:', error.message || error);
     showTemporaryMessage('Error uploading sample media. Please try again.');
   }
+};
+
+// Function to handle file input change
+const handleFileChange = (e) => {
+  setSelectedFile(e.target.files[0]);
+  uploadSampleMedia(); // Llama a uploadSampleMedia cuando se cambia el archivo
 };
 
 
