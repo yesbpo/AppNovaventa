@@ -102,7 +102,7 @@ const uploadSampleMedia = async () => {
     formData.append('file', selectedFile);
 
     const response = await axios.post(
-      `https://partner.gupshup.io/partner/app/${appId}/upload/media`,
+      `https://partner.gupshup.io/partner/app/${process.env.NEXT_PUBLIC_APPID}/upload/media`,
       formData,
       {
         headers: {
