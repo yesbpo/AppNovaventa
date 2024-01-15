@@ -384,7 +384,7 @@ const handleCreateTemplate = async () => {
 
           <label>
           Archivo Multimedia:
-          <input type="file" onChange={uploadSampleMedia} />
+          <input type="file" onChange={handleFileChange} />
         </label>
           
 
