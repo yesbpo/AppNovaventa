@@ -114,7 +114,7 @@ const uploadSampleMedia = async () => {
 
     if (response.status === 200 && response.data.status === 'success') {
       const handleId = response.data.handleId.message;
-      ExampleMedia(handleId);
+      setExampleMedia(handleId);
       console.log('HandleId:', handleId);
     } else {
       console.error('Error uploading sample media:', response.status, response.data);
@@ -384,7 +384,7 @@ const handleCreateTemplate = async () => {
 
           <label>
           Archivo Multimedia:
-          <input type="file" onChange={handleFileChange} />
+          <input type="file" onChange={uploadSampleMedia} />
         </label>
           
 
