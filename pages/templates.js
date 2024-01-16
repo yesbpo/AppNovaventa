@@ -80,7 +80,7 @@ const Reports = (props) => {
     setFooter('');
     setAllowCategoryChange(false);
     setSelectedFile(null);
-    setExampleMedia('4::ZG9jdW1lbnQvcGRm:ARb439XmQMvkLd-tlOqPGBNu8NrhlmiZeiNygvy-pmh7TLoRY6rNL79DaTGORHiP5CQ9Be1mzGxnYM1nbdmJmTOaLz61Qwv8UcveeqxfMO1U7g:e:1705765688:2281283925530161:100033655335566:ARY_VkyokhyDlcemWcg');
+    setExampleMedia('4::aW1hZ2UvcG5n:ARbK4bEe2c6EWD6PYrtEzSRDzDlNuebw3laHVczNNq9Oo6O9Iw-V43hCA7bHvg4o4OCuGPMAZv2syTYcg0SqeGX_CD94WutLwEa6GssnggAqjw:e:1705764594:2281283925530161:100033655335566:ARbl_D6bKV0xzTTxFqA');
   };
 
 //Handling of template type buttons and template creation 
