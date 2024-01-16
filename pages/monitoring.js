@@ -640,7 +640,7 @@ setWebhookData(webhookText);
         {resultados.map((resultado, index) => (
           <CustomButton className="cursor-pointer" key={index}
             onClick={()=>{handlePendientesClick(resultado.asesor.id)}}>
-            {resultado.asesor.complete_name},estado:{resultado.asesor.status}, N° Chats: {resultado.frecuencia}
+            {resultado.asesor.complete_name},estado:{resultado.asesor.sesion}, N° Chats: {resultado.frecuencia}
           </CustomButton>
         ))}
       
