@@ -114,7 +114,7 @@ function Reports() {
             <label className="block mb-4">
               Fecha de Inicio:
               <input
-                type="date"
+                type="datetime"
                 value={fechaInicio}
                 onChange={(e) => setFechaInicio(e.target.value)}
                 className="border rounded p-2 ml-2"
@@ -123,7 +123,7 @@ function Reports() {
             <label className="block mb-4">
               Fecha de Fin:
               <input
-                type="date"
+                type="datetime"
                 value={fechaFin}
                 onChange={(e) => setFechaFin(e.target.value)}
                 className="border rounded p-2 ml-2"
