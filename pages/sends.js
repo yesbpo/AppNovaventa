@@ -32,10 +32,23 @@ const Sends = (props) => {
   const handleVideoFileChange = async (e) => {
     const file = e.target.files[0];
     setFilename(file.name);
-  
+
     // Cargar el video y obtener la URL
-    const videoUrl = URL.createObjectURL(file);
-    setSelectedVideoUrl(videoUrl);
+    const formData = new FormData();
+    formData.append('archivo', file);
+
+    try {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_API}/w/subir-archivo`, formData);
+
+      if (response.data && response.data.url) {
+        const videoUrl = response.data.url;
+        setSelectedVideoUrl(videoUrl);
+      } else {
+        console.error('La respuesta del servidor no contiene una URL válida.');
+      }
+    } catch (error) {
+      console.error('Error al cargar el video:', error);
+    }
   };
 
   
