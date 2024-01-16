@@ -95,6 +95,10 @@ const Reports = (props) => {
     setShowTemplateButtons(false);
   };
 
+ // Function to handle file input change
+ const handleFileChange = (e) => {
+  setSelectedFile(e.target.files[0]);
+};
 //Function for uploading files, whether image, video or document and getting the handleId
 const uploadSampleMedia = async () => {
   try {
@@ -102,11 +106,11 @@ const uploadSampleMedia = async () => {
     formData.append('file', selectedFile);
 
     const response = await axios.post(
-      `https://partner.gupshup.io/partner/app/${process.env.NEXT_PUBLIC_APPID}/upload/media`,
+      `https://partner.gupshup.io/partner/app/${process.env.NEXT_PUBLIC_APPID}/upload/media`, // Replace :appId with your actual App Id
       formData,
       {
         headers: {
-          Authorization: process.env.NEXT_PUBLIC_PARTNERAPPTOKEN,
+          Authorization: process.env.NEXT_PUBLIC_PARTNERAPPTOKEN, // Replace with your actual Partner App Token
           'Content-Type': 'multipart/form-data',
         },
       }
@@ -118,18 +122,22 @@ const uploadSampleMedia = async () => {
       console.log('HandleId:', handleId);
     } else {
       console.error('Error uploading sample media:', response.status, response.data);
-      showTemporaryMessage('Error uploading sample media. Please try again.');
+      // Handle error cases
     }
   } catch (error) {
     console.error('Error uploading sample media:', error.message || error);
-    showTemporaryMessage('Error uploading sample media. Please try again.');
+    // Handle errors
   }
 };
 
- // Function to handle file input change
- const handleFileChange = (e) => {
-  setSelectedFile(e.target.files[0]);
-};
+// Effect to trigger uploadSampleMedia when selectedFile changes
+useEffect(() => {
+  // Check if selectedFile is not null or undefined
+  if (selectedFile) {
+    // Call the uploadSampleMedia function
+    uploadSampleMedia();
+  }
+}, [selectedFile]);
 
 // Effect to trigger uploadSampleMedia when selectedFile changes
 useEffect(() => {
@@ -389,11 +397,6 @@ const handleCreateTemplate = async () => {
           </label>
 
           <Separador />
-
-          <label>
-        Archivo Multimedia:
-        <input type="file" onChange={handleFileChange} />
-      </label>
           
 
 {selectedTemplateType === 'TEXT' && (
@@ -421,6 +424,20 @@ const handleCreateTemplate = async () => {
       </label>
     </>
   )}
+
+<div>
+      <label>
+        Archivo Multimedia:
+        <input type="file" onChange={handleFileChange} />
+      </label>
+
+      {/* Display handleId */}
+      {exampleMedia && (
+        <div>
+          <p>HandleId: {exampleMedia}</p>
+        </div>
+      )}
+    </div>
 
           <Separador />
         
