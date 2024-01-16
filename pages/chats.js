@@ -223,6 +223,8 @@ const handleAgregarNumeroClick = () => {
       conection();
       setStatuschats('Pendientes')
     try {
+       const fechaActual = new Date();
+const options = { timeZone: 'America/Bogota', hour12: false };
       const fechaInicio = new Date(fechaActual);
 fechaInicio.setHours(fechaInicio.getHours() - 24);
 
@@ -273,6 +275,8 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
     conection();
     setStatuschats('En gestion')
     try {
+       const fechaActual = new Date();
+const options = { timeZone: 'America/Bogota', hour12: false };
       const fechaInicio = new Date(fechaActual);
 fechaInicio.setHours(fechaInicio.getHours() - 24);
 
