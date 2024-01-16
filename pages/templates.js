@@ -484,7 +484,7 @@ const handleCreateTemplate = async () => {
             <option value="">Todos</option>
             <option value="APPROVED">Aprobada</option>
             <option value="PENDING">Pendiente</option>
-            <option value="REJECT">Rechazada</option>
+            <option value="REJECTED">Rechazada</option>
           </select>
         </label>
 
