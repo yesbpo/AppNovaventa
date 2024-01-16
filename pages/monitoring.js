@@ -146,7 +146,7 @@ const { data: session } = useSession();
       const withoutGest = chatsPending.filter(d => d.userId == Id )
       console.log(Id)
       const data = await response.json();
-      setMensajes1(data);
+      setMensajes1(Object.values(data)[0]);
       setContactos1(withoutGest);
       setStatuschats('Pendientes');
       try {   const fechaActual = new Date();
@@ -189,7 +189,7 @@ const { data: session } = useSession();
         const withoutGest = chatsPending.filter(d => d.userId == Id )
         console.log(Id)
         const data = await response.json();
-        setMensajes2(data);
+        setMensajes2(Object.values(data)[0]);
         setContactos2(withoutGest);
       } catch (error) {
         console.error('Error al obtener mensajes:', error);
