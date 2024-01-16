@@ -29,6 +29,33 @@ const Reports = (props) => {
   const [error, setError] = useState(null);
   const [deleteMessage, setDeleteMessage] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [filterStatus, setFilterStatus] = useState(''); // Nuevo estado para el filtro de estado
+  const [filterType, setFilterType] = useState(''); // Nuevo estado para el filtro de tipo de plantilla
+
+
+  const handleFilterChange = (event) => {
+    const { name, value } = event.target;
+    if (name === 'filterStatus') {
+      setFilterStatus(value);
+    } else if (name === 'filterType') {
+      setFilterType(value);
+    }
+  };
+
+  const filteredTemplates = useMemo(() => {
+    // Aplica filtros
+    let filtered = templates;
+
+    if (filterStatus) {
+      filtered = filtered.filter((template) => template.status === filterStatus);
+    }
+
+    if (filterType) {
+      filtered = filtered.filter((template) => template.templateType === filterType);
+    }
+
+    return filtered;
+  }, [templates, filterStatus, filterType]);
 
 //Constants buy page templates
   const templatesPerPage = 5;
@@ -139,8 +166,8 @@ const handleCreateTemplate = async () => {
     header,
     exampleHeader,
     footer,
-    allowTemplateCategoryChange: true,
-    enableSample: true,
+    allowTemplateCategoryChange: false,
+    enableSample: false,
   };
 
   try {
@@ -445,6 +472,37 @@ const handleCreateTemplate = async () => {
       }
 
 <span>{deleteMessage}</span>
+
+<FilterContainer>
+        <label>
+          Filtrar por Estado:
+          <select
+            name="filterStatus"
+            value={filterStatus}
+            onChange={handleFilterChange}
+          >
+            <option value="">Todos</option>
+            <option value="APPROVED">Aprobada</option>
+            <option value="PENDING">Pendiente</option>
+            <option value="REJECT">Rechazada</option>
+          </select>
+        </label>
+
+        <label>
+          Filtrar por Tipo:
+          <select
+            name="filterType"
+            value={filterType}
+            onChange={handleFilterChange}
+          >
+            <option value="">Todos</option>
+            <option value="TEXT">Texto</option>
+            <option value="IMAGE">Imagen</option>
+            <option value="VIDEO">Video</option>
+            <option value="DOCUMENT">Documento</option>
+          </select>
+        </label>
+      </FilterContainer>
 
 
 <div className='CreatedTemplates'>
