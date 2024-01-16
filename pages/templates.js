@@ -29,7 +29,35 @@ const Reports = (props) => {
   const [error, setError] = useState(null);
   const [deleteMessage, setDeleteMessage] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [filterStatus, setFilterStatus] = useState(''); // Default: display all templates
+
   
+  const handleStatusFilterChange = (newStatus) => {
+    setFilterStatus(newStatus);
+  };
+
+  // Filter templates based on the selected status
+const filteredTemplates = useMemo(() => {
+  if (!filterStatus) {
+    return currentTemplates;
+  }
+  return currentTemplates.filter((template) => template.status === filterStatus);
+}, [currentTemplates, filterStatus]);
+
+// Display templates based on the status filter
+{filteredTemplates.length > 0 ? (
+  <ul>
+    {filteredTemplates.map((template) => (
+      <li key={template.elementName}>
+        {/* ... (your template rendering logic) */}
+      </li>
+    ))}
+  </ul>
+) : (
+  <p>No templates match the selected status filter.</p>
+)}
+
+
 
 //Constants buy page templates
   const templatesPerPage = 5;
@@ -446,6 +474,19 @@ const handleCreateTemplate = async () => {
       }
 
 <span>{deleteMessage}</span>
+
+<label>
+  Filtrar por estado:
+  <select
+    value={filterStatus}
+    onChange={(e) => handleStatusFilterChange(e.target.value)}
+  >
+    <option value="">Todos</option>
+    <option value="APPROVED">Aprobadas</option>
+    <option value="PENDING">Pendientes</option>
+    <option value="REJECT">Rechazadas</option>
+  </select>
+</label>
 
 
 <div className='CreatedTemplates'>
