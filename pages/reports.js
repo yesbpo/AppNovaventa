@@ -114,7 +114,7 @@ function Reports() {
             <label className="block mb-4">
               Fecha de Inicio:
               <input
-                type="datetime"
+                type="datetime-local"
                 value={fechaInicio}
                 onChange={(e) => setFechaInicio(e.target.value)}
                 className="border rounded p-2 ml-2"
