@@ -38,6 +38,7 @@ const Sends = (props) => {
     setSelectedVideoUrl(videoUrl);
   };
 
+  
   const handleImageFileChange = async (e) => {
     const file = e.target.files[0];
     setFilename(file.name);
@@ -498,6 +499,32 @@ const Sends = (props) => {
         )}
       </Box>
 
+      <Box>
+        {variableCount > 0 && (
+          <div>
+            <p>Selecciona la columna para cada variable:</p>
+            {Array.from({ length: variableCount }).map((_, index) => (
+              <div key={index}>
+                <label>{`Variable ${index + 1}:`}</label>
+          
+                <select
+                  value={variableColumnMapping[index + 1] || ''}
+                  onChange={(e) => handleVariableColumnChange(index + 1, e.target.value)}
+                >
+                  <option value="">Selecciona una columna</option>
+                  {sheetname.length > 0 &&
+                    Object.keys(sheetname[0]).map((columnName, columnIndex) => (
+                      <option key={columnIndex} value={columnName}>
+                        {columnName}
+                      </option>
+                    ))}
+                </select>
+              </div>
+            ))}
+          </div>
+        )}
+      </Box>
+
       {selectedTemplateType === 'Video' && (
       <Box>
       <div>
@@ -543,32 +570,6 @@ const Sends = (props) => {
           </div>
         </Box>
       )}
-
-      <Box>
-        {variableCount > 0 && (
-          <div>
-            <p>Selecciona la columna para cada variable:</p>
-            {Array.from({ length: variableCount }).map((_, index) => (
-              <div key={index}>
-                <label>{`Variable ${index + 1}:`}</label>
-          
-                <select
-                  value={variableColumnMapping[index + 1] || ''}
-                  onChange={(e) => handleVariableColumnChange(index + 1, e.target.value)}
-                >
-                  <option value="">Selecciona una columna</option>
-                  {sheetname.length > 0 &&
-                    Object.keys(sheetname[0]).map((columnName, columnIndex) => (
-                      <option key={columnIndex} value={columnName}>
-                        {columnName}
-                      </option>
-                    ))}
-                </select>
-              </div>
-            ))}
-          </div>
-        )}
-      </Box>
 
       <Box>
         <button onClick={enviar}>Enviar</button>
