@@ -557,6 +557,16 @@ const handleCreateTemplate = async () => {
   </>)
 };
 
+const FilterContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+
+  label {
+    margin-right: 20px;
+  }
+`;
+
 const Pagination = styled.div`
   display: flex;
   justify-content: space-between;
