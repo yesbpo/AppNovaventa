@@ -263,7 +263,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
       console.log(Id)
       const data = await response.json();
-      setMensajes1(data);
+      setMensajes1(Object.values(data)[0]);
       setContactos1(withoutGest);
       setPendientes(withoutGest.length)
     } catch (error) {
@@ -316,7 +316,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
       console.log(Id)
       const data = await response.json();
-      setMensajes1(data);
+      setMensajes1(Object.values(data)[0]);
       setContactos1(withoutGest);
       setEngestion(withoutGest.length)
     } catch (error) {
