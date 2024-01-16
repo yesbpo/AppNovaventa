@@ -95,11 +95,12 @@ const Reports = (props) => {
     setShowTemplateButtons(false);
   };
 
- // Function to handle file input change
- const handleFileChange = (e) => {
+// Function to handle file input change
+const handleFileChange = (e) => {
   setSelectedFile(e.target.files[0]);
 };
-//Function for uploading files, whether image, video or document and getting the handleId
+
+// Function for uploading files, whether image, video, or document and getting the handleId
 const uploadSampleMedia = async () => {
   try {
     const formData = new FormData();
@@ -138,16 +139,6 @@ useEffect(() => {
     uploadSampleMedia();
   }
 }, [selectedFile]);
-
-// Effect to trigger uploadSampleMedia when selectedFile changes
-useEffect(() => {
-  // Check if selectedFile is not null or undefined
-  if (selectedFile) {
-    // Call the uploadSampleMedia function
-    uploadSampleMedia();
-  }
-}, [selectedFile])
-
 
 //Here we have the handling of the variables, so that you can count from the last one 
   const handleAddPlaceholder = () => {
