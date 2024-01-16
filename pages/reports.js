@@ -123,7 +123,7 @@ function Reports() {
             <label className="block mb-4">
               Fecha de Fin:
               <input
-                type="datetime"
+                type="datetime-local"
                 value={fechaFin}
                 onChange={(e) => setFechaFin(e.target.value)}
                 className="border rounded p-2 ml-2"
@@ -154,10 +154,10 @@ function Reports() {
         <input type="text" value={campaign} onChange={(e) => setCampaign(e.target.value)} />
 
         <label>Fecha de inicio:</label>
-        <input type="date" value={fechaInicio} onChange={(e) => setFechaInicio(e.target.value)} />
+        <input type="datetime-local" value={fechaInicio} onChange={(e) => setFechaInicio(e.target.value)} />
 
         <label>Fecha de fin:</label>
-        <input type="date" value={fechaFin} onChange={(e) => setFechaFin(e.target.value)} />
+        <input type="datetime-local" value={fechaFin} onChange={(e) => setFechaFin(e.target.value)} />
 
         <button onClick={fetchData} >Generar reporte de envios masivos </button>
       </div>
