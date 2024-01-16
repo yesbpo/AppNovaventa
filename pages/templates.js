@@ -399,6 +399,7 @@ const handleCreateTemplate = async () => {
 
           <button onClick={handleFileUpload}>Subir Archivo</button>
 
+
 {selectedTemplateType === 'TEXT' && (
     <>
       <label>
