@@ -38,7 +38,7 @@ const Sends = (props) => {
     formData.append('archivo', file);
   
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/w/subir-archivo`, {
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/subir-archivo', {
         method: 'POST',
         body: formData,
       });
