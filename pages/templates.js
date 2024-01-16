@@ -4,8 +4,8 @@ import axios from 'axios';
 import Layout from '../components/Layout';
 import styled from 'styled-components';
 import EmojiPicker from 'emoji-picker-react';
-
 import { useSession, signIn } from 'next-auth/react';
+
 const Reports = (props) => {
   const { data: session } = useSession()
   const [responseData, setResponseData] = useState(null);
@@ -83,7 +83,7 @@ const Reports = (props) => {
     setExampleMedia('');
   };
 
-//Handling of template type buttons and template creation
+//Handling of template type buttons and template creation 
   const handleToggleTemplateButtons = () => {
     resetFields();
     setShowTemplateButtons(!showTemplateButtons);
@@ -96,51 +96,52 @@ const Reports = (props) => {
   };
 
 //Function for uploading files, whether image, video or document and getting the handleId
-const handleFileUpload = async () => {
-  // Verificar si se ha seleccionado un archivo
-  if (!selectedFile) {
-    console.error('No se ha seleccionado ningún archivo.');
-    showTemporaryMessage('Por favor, seleccione un archivo antes de cargarlo.');
-    return;
-  }
-
-  const apiUrl = `https://partner.gupshup.io/partner/app/${process.env.NEXT_PUBLIC_APPID}/upload/media`;
-  const partnerAppToken = process.env.NEXT_PUBLIC_PARTNERAPPTOKEN;
-
-  const formData = new FormData();
-  formData.append('file', selectedFile);
-  // Agregar el tipo de archivo y la extensión a formData
-  const fileType = selectedFile.type.split('/')[0];
-  formData.append('file_type', `${fileType}/${selectedFile.name.split('.').pop()}`);
-
+const uploadSampleMedia = async () => {
   try {
-    const response = await axios.post(apiUrl, formData, {
-      headers: {
-        'Authorization': partnerAppToken,
-        'Content-Type': 'multipart/form-data',
-      },
-    });
+    const formData = new FormData();
+    formData.append('file', selectedFile);
 
-    if (response.status === 200 && response.data && response.data.handleId) {
-      setExampleMedia(response.data.handleId);  // Suponiendo que handleId está directamente disponible
-      console.log('Archivo cargado con éxito. HandleId:', response.data.handleId);
+    const response = await axios.post(
+      `https://partner.gupshup.io/partner/app/${process.env.NEXT_PUBLIC_APPID}/upload/media`,
+      formData,
+      {
+        headers: {
+          Authorization: process.env.NEXT_PUBLIC_PARTNERAPPTOKEN,
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+    );
+
+    if (response.status === 200 && response.data.status === 'success') {
+      const handleId = response.data.handleId.message;
+      setExampleMedia(handleId);
+      console.log('HandleId:', handleId);
     } else {
-      console.error('Respuesta inválida durante la carga del archivo:', response);
-      showTemporaryMessage('Error al cargar el archivo. Por favor, inténtelo de nuevo.');
+      console.error('Error uploading sample media:', response.status, response.data);
+      showTemporaryMessage('Error uploading sample media. Please try again.');
     }
   } catch (error) {
-    console.error('Error durante la carga del archivo:', error.message || error);
-    showTemporaryMessage('Error al cargar el archivo. Por favor, inténtelo de nuevo.');
+    console.error('Error uploading sample media:', error.message || error);
+    showTemporaryMessage('Error uploading sample media. Please try again.');
   }
 };
 
-const handleFileChange = (event) => {
-  const file = event.target.files[0];
-  setSelectedFile(file);
+ // Function to handle file input change
+ const handleFileChange = (e) => {
+  setSelectedFile(e.target.files[0]);
 };
 
+// Effect to trigger uploadSampleMedia when selectedFile changes
+useEffect(() => {
+  // Check if selectedFile is not null or undefined
+  if (selectedFile) {
+    // Call the uploadSampleMedia function
+    uploadSampleMedia();
+  }
+}, [selectedFile])
 
-//Here we have the handling of the variables, so that you can count from the last one
+
+//Here we have the handling of the variables, so that you can count from the last one 
   const handleAddPlaceholder = () => {
     if (!header.includes('{{1}}') && header.length + 7 <= 160) {
       setHeader(`${header}{{1}}`);
@@ -168,14 +169,8 @@ const handleFileChange = (event) => {
     setShowEmojiPicker(false);
   };
 
-//This function is to alert the user that the indicated fields are missing.
+//This function is to alert the user that the indicated fields are missing.  
 const handleCreateTemplate = async () => {
-  if (!content || !exampleContent) {
-    showTemporaryMessage('Por favor, complete los campos de contenido, contenido de ejemplo y archivo multimedia.');
-    return;
-  }
-
-  const fileType = exampleMedia.split('/')[0];
 
   const templateData = {
     elementName,
@@ -185,17 +180,16 @@ const handleCreateTemplate = async () => {
     vertical: selectedTemplateType,
     content,
     example: exampleContent,
-    exampleMedia,
-    fileType, // Add file type to template data
+    exampleMedia, 
     header,
     exampleHeader,
     footer,
-    allowTemplateCategoryChange: false,
-    enableSample: false,
+    allowTemplateCategoryChange: true,
+    enableSample: true,
   };
 
   try {
-    const response = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/createTemplates', {
+    const response = await fetch(process.env.NEXT_PUBLIC_BASE_API + '/createTemplates', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -218,6 +212,7 @@ const handleCreateTemplate = async () => {
     showTemporaryMessage('Error al crear la plantilla. Por favor, inténtelo de nuevo.');
   }
 };
+
 
 
 //Request to obtain the templates
@@ -325,7 +320,7 @@ const handleCreateTemplate = async () => {
   useEffect(() => {
     const deleteMessageTimer = setTimeout(() => {
       resetDeleteMessage();
-    }, 3000);
+    }, 3000); 
 
     return () => {
       clearTimeout(deleteMessageTimer);
@@ -350,7 +345,7 @@ const handleCreateTemplate = async () => {
 
       {(selectedTemplateType === 'TEXT' || selectedTemplateType === 'IMAGE' || selectedTemplateType === 'VIDEO' || selectedTemplateType === 'DOCUMENT') && (
         <>
-
+      
         <div className='templateStyle'>
           <label>
             Nombre plantilla:
@@ -395,10 +390,11 @@ const handleCreateTemplate = async () => {
 
           <Separador />
 
-          <input type="file" accept={selectedTemplateType === 'IMAGE' ? '.jpg, .jpeg, .png' : selectedTemplateType === 'VIDEO' ? '.MP4, .MOV, .MKV, .AVI, .WMV' : ''} onChange={handleFileChange} />
-
-          <button onClick={handleFileUpload}>Subir Archivo</button>
-
+          <label>
+        Archivo Multimedia:
+        <input type="file" onChange={handleFileChange} />
+      </label>
+          
 
 {selectedTemplateType === 'TEXT' && (
     <>
@@ -410,7 +406,7 @@ const handleCreateTemplate = async () => {
           onChange={(e) => setHeader(e.target.value)}
           maxLength={160}
         />
-
+       
       </label>
 
       <Separador />
@@ -427,14 +423,14 @@ const handleCreateTemplate = async () => {
   )}
 
           <Separador />
-
+        
           <StyledLabel>
             Content:
             <TextArea
               value={content}
               onChange={(e) => setContent(e.target.value)}
-            />
-            <button
+            />    
+            <button 
             onClick={handleAddVariable}>Agregar Variable</button>
           </StyledLabel>
           <div style={{display: 'flex'}}>
@@ -656,3 +652,5 @@ const TemplateItem = styled.div`
     margin-top: 15px;
   }
 `;
+
+export default Reports;
