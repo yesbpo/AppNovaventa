@@ -32,25 +32,35 @@ const Sends = (props) => {
   const handleVideoFileChange = async (e) => {
     const file = e.target.files[0];
     setFilename(file.name);
-
+  
     // Cargar el video y obtener la URL
     const formData = new FormData();
     formData.append('archivo', file);
-
+  
     try {
-      const response = await axios.post(`${process.env.NEXT_PUBLIC_BASE_API}/w/subir-archivo`, formData);
-
-      if (response.data && response.data.url) {
-        const videoUrl = response.data.url;
-        setSelectedVideoUrl(videoUrl);
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/subir-archivo`, {
+        method: 'POST',
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
+      }
+  
+      const responseData = await response.json();
+  
+      if (responseData.url) {
+        alert(`El archivo se cargó correctamente. URL: ${responseData.url}`);
+        // Set the obtained video URL in the state
+        setSelectedVideoUrl(responseData.url);
       } else {
-        console.error('La respuesta del servidor no contiene una URL válida.');
+        throw new Error('No se recibió una URL del servidor.');
       }
     } catch (error) {
       console.error('Error al cargar el video:', error);
     }
   };
-
+  
   
   const handleImageFileChange = async (e) => {
     const file = e.target.files[0];
