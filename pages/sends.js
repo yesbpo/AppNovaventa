@@ -27,8 +27,41 @@ const Sends = (props) => {
   const [customParams, setCustomParams] = useState({});
   const [selectedImageUrl, setSelectedImageUrl] = useState(""); // Agrega esta línea
   const [selectedVideoUrl, setSelectedVideoUrl] = useState("");
+  const [selectedDocumentUrl, setSelectedDocumentUrl] = useState("");
 
   const base = process.env.NEXT_PUBLIC_BASE_URL
+
+  const handleDocumentFileChange = async (e) => {
+    const file = e.target.files[0];
+    setFilename(file.name);
+  
+    // Cargar el archivo y obtener la URL
+    const formData = new FormData();
+    formData.append('archivo', file);
+  
+    try {
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/subir-archivo', {
+        method: 'POST',
+        body: formData,
+      });
+  
+      if (!response.ok) {
+        throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
+      }
+  
+      const responseData = await response.json();
+  
+      if (responseData.url) {
+        alert(`El archivo se cargó correctamente. URL: ${responseData.url}`);
+        // Set the obtained video URL in the state
+        setSelectedDocumentUrl(responseData.url);
+      } else {
+        throw new Error('No se recibió una URL del servidor.');
+      }
+    } catch (error) {
+      console.error('Error al cargar el video:', error);
+    }
+  };
 
 
   const handleVideoFileChange = async (e) => {
@@ -273,7 +306,7 @@ const Sends = (props) => {
           data.message = JSON.stringify({
             type: 'document',
             document: {
-              link: 'https://mail.google.com/mail/u/0?ui=2&ik=97abb4c14a&attid=0.1&permmsgid=msg-f:1786087961629059212&th=18c97589ba80688c&view=att&disp=safe',
+              link: base + selectedDocumentUrl,
             },
           });
           break;
@@ -553,28 +586,29 @@ const Sends = (props) => {
       {selectedTemplateType === 'Video' && (
       <Box>
       <div>
-  <p>Selecciona un Video</p>
-  <input
-    type="file"
-    onChange={handleVideoFileChange}
-    accept="video/*" // Limitar a archivos de video
-    placeholder="Selecciona tu Video"
-  />
-  {selectedVideoUrl && (
-    <div>
-      <h2>Video seleccionado:</h2>
-      <video width="400" controls>
-        <source src={selectedVideoUrl} type="video/mp4" />
-        Tu navegador no soporta el tag de video.
-      </video>
-    </div>
-  )}
-</div>
-</Box>
-)}
+
+      <p>Selecciona un Video</p>
+      <input
+        type="file"
+        onChange={handleVideoFileChange}
+        accept="video/*" // Limitar a archivos de video
+        placeholder="Selecciona tu Video"
+      />
+      {selectedVideoUrl && (
+        <div>
+          <h2>Video seleccionado:</h2>
+          <video width="400" controls>
+            <source src={selectedVideoUrl} type="video/mp4" />
+            Tu navegador no soporta el tag de video.
+          </video>
+        </div>
+            )}
+          </div>
+          </Box>
+          )}
 
 
-{selectedTemplateType === 'Imagen' && (
+        {selectedTemplateType === 'Imagen' && (
         <Box>
           <div>
             <p>Selecciona una Imagen</p>
@@ -590,6 +624,28 @@ const Sends = (props) => {
               <div>
                 <h2>Imagen seleccionada:</h2>
                 <img src={selectedImageUrl} alt="Selected" style={{ maxWidth: '100%' }} />
+              </div>
+            )}
+          </div>
+        </Box>
+      )}
+
+{selectedTemplateType === 'Documento' && (
+        <Box>
+          <div>
+            <p>Selecciona un archivo</p>
+
+            <input
+              type="file"
+              onChange={handleDocumentFileChange}
+              accept="document/*" // Limitar a archivos de imagen
+              placeholder="Selecciona tu archivo"
+            />
+
+            {selectedDocumentUrl && (
+              <div>
+                <h2>Archivo seleccionado:</h2>
+                <img src={selectedDocumentUrl} alt="Selected" style={{ maxWidth: '100%' }} />
               </div>
             )}
           </div>
