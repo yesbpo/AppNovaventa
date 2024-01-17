@@ -29,56 +29,6 @@ const Reports = (props) => {
   const [error, setError] = useState(null);
   const [deleteMessage, setDeleteMessage] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
-
-  // Fetch templates and filter them based on appId
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(process.env.NEXT_PUBLIC_BASE_API + '/gupshup-templates');
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.status === "success") {
-          const processedTemplates = data.templates.map(template => ({
-            // ... (template properties)
-          }));
-
-          // Filter templates based on the condition (appId === NEXT_PUBLIC_APPID)
-          const filteredTemplates = processedTemplates.filter(template => template.appId === process.env.NEXT_PUBLIC_APPID);
-
-          setTemplates(filteredTemplates);
-        } else {
-          setError(`Error: ${data.message}`);
-        }
-      } catch (error) {
-        setError(`Fetch error: ${error.message}`);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  // Render templates based on the condition
-  const renderTemplates = () => {
-    if (templates.length > 0) {
-      return (
-        <ul>
-          {templates.map((template) => (
-            <li key={template.appId}>
-              {/* ... (template details) */}
-            </li>
-          ))}
-        </ul>
-      );
-    } else {
-      return <p>No templates available.</p>;
-    }
-  };
-
   
 
 //Constants buy page templates
@@ -501,7 +451,6 @@ const handleCreateTemplate = async () => {
 
 <div className='CreatedTemplates'>
         {error && <p>{error}</p>}
-        {renderTemplates()}
         {currentTemplates.length > 0 && (
           <ul>
             {currentTemplates.map((template) => (
