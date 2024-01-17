@@ -185,6 +185,7 @@ const handleCreateTemplate = async () => {
 
         if (data.status === "success") {
           const processedTemplates = data.templates.map(template => ({
+            appId: template.appId,
             category: template.category,
             createdOn: template.createdOn,
             data: template.data,
