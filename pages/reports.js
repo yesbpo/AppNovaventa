@@ -104,7 +104,7 @@ function Reports() {
   };
   const ObtenerConversaciones = async () => {
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-conversaciones');
+      const response = await fetch('http://localhost:3000/obtener-conversaciones');
   
       if (!response.ok) {
         throw new Error(`Error en la solicitud: ${response.status}`);
@@ -112,40 +112,15 @@ function Reports() {
   
       const { conversaciones } = await response.json();
   
-      // Generar archivo Excel
-      const workbook = new ExcelJS.Workbook();
-      const worksheet = workbook.addWorksheet('Conversaciones');
+      // Crear un libro de Excel
+      const wb = XLSX.utils.book_new();
+      const ws = XLSX.utils.json_to_sheet(conversaciones);
   
-      // Encabezados
-      worksheet.columns = [
-        { header: 'ID', key: 'id', width: 5 },
-        { header: 'ID Chat', key: 'idchat', width: 15 },
-        { header: 'Asesor', key: 'asesor', width: 15 },
-        { header: 'Conversación', key: 'conversacion', width: 30 },
-        { header: 'Número', key: 'numero', width: 15 },
-        { header: 'Calificación', key: 'calificacion', width: 15 },
-        { header: 'Fecha Ingreso', key: 'fecha_ingreso', width: 20 },
-        { header: 'Fecha Última Gestión', key: 'fecha_ultimagestion', width: 20 },
-        { header: 'UserID', key: 'userid', width: 10 },
-      ];
+      // Agregar la hoja al libro
+      XLSX.utils.book_append_sheet(wb, ws, 'Conversaciones');
   
-      // Datos
-      conversaciones.forEach((conversacion, index) => {
-        worksheet.addRow({
-          id: index + 1,
-          idchat: conversacion.idchat,
-          asesor: conversacion.asesor,
-          conversacion: conversacion.conversacion,
-          numero: conversacion.numero,
-          calificacion: conversacion.calificacion,
-          fecha_ingreso: conversacion.fecha_ingreso,
-          fecha_ultimagestion: conversacion.fecha_ultimagestion,
-          userid: conversacion.userid,
-        });
-      });
-  
-      // Crear el blob del archivo Excel
-      const blob = await workbook.xlsx.writeBuffer();
+      // Crear un blob del archivo Excel
+      const blob = XLSX.write(wb, { bookType: 'xlsx', type: 'blob' });
   
       // Crear un objeto Blob
       const blobArchivo = new Blob([blob], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
@@ -154,7 +129,7 @@ function Reports() {
       const enlaceDescarga = document.createElement('a');
       enlaceDescarga.href = window.URL.createObjectURL(blobArchivo);
       enlaceDescarga.download = 'conversaciones.xlsx';
-      
+  
       // Agregar el enlace al documento y hacer clic en él
       document.body.appendChild(enlaceDescarga);
       enlaceDescarga.click();
