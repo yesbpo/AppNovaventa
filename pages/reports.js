@@ -109,7 +109,7 @@ function Reports() {
         <Layout>
           <div className="min-h-screen bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-black p-8 bg-opacity-80">
             <h1 className="text-4xl font-bold mb-4">
-              Generador de Reportes WhatsApp
+              Reportes Mensajeria WhatsApp
             </h1>
             <label className="block mb-4">
               Fecha de Inicio:
@@ -150,6 +150,9 @@ function Reports() {
               Generar reporte de mensajeria
             </button>
             <div>
+            <h1 className="text-4xl font-bold mb-4">
+              Reportes de campañas
+            </h1>
         <label>Campaña:</label>
         <input type="text" value={campaign} onChange={(e) => setCampaign(e.target.value)} />
 
