@@ -645,7 +645,7 @@ const Sends = (props) => {
             {selectedDocumentUrl && (
               <div>
                 <h2>Archivo seleccionado:</h2>
-                <img src={selectedDocumentUrl} alt="Selected" style={{ maxWidth: '100%' }} />
+                <p>{selectedDocumentUrl}</p>
               </div>
             )}
           </div>
