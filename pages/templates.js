@@ -455,6 +455,7 @@ const handleCreateTemplate = async () => {
           <ul>
             {currentTemplates.map((template) => (
               <li key={template.elementName}>
+                <strong>Id:</strong> {template.appId}<br />
                 <strong>Categoria:</strong> {template.category}<br />
                 <strong>Tipo de plantilla:</strong> {getTemplateType(template.templateType)}<br />
                 <strong>Fecha de creación:</strong> {new Date(template.createdOn).toLocaleString()}<br />
