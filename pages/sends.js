@@ -221,8 +221,8 @@ const Sends = (props) => {
 
       setCustomParams(updatedCustomParams);
 
-        const url = 'https://api.gupshup.io/wa/api/v1/template/msg';
-        const apiKey = 'thpuawjbidnbbbfrp9bw7qg03eci6rdz';
+        const url = process.env.NEXT_PUBLIC_URL_GUPSHUP;
+        const apiKey = process.env.NEXT_PUBLIC_APIKEY;
         var messageWithVariables = replaceVariables(selectedTemplateData, variableValues);
         console.log(messageWithVariables)
         // Reemplazar las variables con los valores de la columna seleccionada
