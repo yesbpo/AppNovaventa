@@ -189,11 +189,12 @@ function Reports() {
 
         <button onClick={fetchData} >Generar reporte de envios masivos </button>
       </div>
+      <div>
+      <button onClick={ObtenerConversaciones}>Obtener Conversaciones</button>
+    </div>
           </div>
            {/* Formulario para ingresar los parámetros */}
-           <div>
-      <button onClick={ObtenerConversaciones}>Generar Informe Excel</button>
-    </div>
+         
         </Layout>
       ) : (
         <div className="flex flex-col items-center justify-center h-screen">
