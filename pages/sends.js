@@ -52,7 +52,7 @@ const Sends = (props) => {
       if (responseData.url) {
         alert(`El archivo se cargó correctamente. URL: ${responseData.url}`);
         // Set the obtained video URL in the state
-        setSelectedVideoUrl(responseData.url);
+        setSelectedVideoUrl(selectedVideoUrl);
       } else {
         throw new Error('No se recibió una URL del servidor.');
       }
