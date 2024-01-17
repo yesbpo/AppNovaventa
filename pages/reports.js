@@ -102,7 +102,71 @@ function Reports() {
       console.error('Error al generar el reporte:', error);
     }
   };
+  const ObtenerConversaciones = async () => {
+    try {
+      const response = await fetch('http://localhost:3000/obtener-conversaciones');
   
+      if (!response.ok) {
+        throw new Error(`Error en la solicitud: ${response.status}`);
+      }
+  
+      const { conversaciones } = await response.json();
+  
+      // Generar archivo Excel
+      const workbook = new ExcelJS.Workbook();
+      const worksheet = workbook.addWorksheet('Conversaciones');
+  
+      // Encabezados
+      worksheet.columns = [
+        { header: 'ID', key: 'id', width: 5 },
+        { header: 'ID Chat', key: 'idchat', width: 15 },
+        { header: 'Asesor', key: 'asesor', width: 15 },
+        { header: 'Conversación', key: 'conversacion', width: 30 },
+        { header: 'Número', key: 'numero', width: 15 },
+        { header: 'Calificación', key: 'calificacion', width: 15 },
+        { header: 'Fecha Ingreso', key: 'fecha_ingreso', width: 20 },
+        { header: 'Fecha Última Gestión', key: 'fecha_ultimagestion', width: 20 },
+        { header: 'UserID', key: 'userid', width: 10 },
+      ];
+  
+      // Datos
+      conversaciones.forEach((conversacion, index) => {
+        worksheet.addRow({
+          id: index + 1,
+          idchat: conversacion.idchat,
+          asesor: conversacion.asesor,
+          conversacion: conversacion.conversacion,
+          numero: conversacion.numero,
+          calificacion: conversacion.calificacion,
+          fecha_ingreso: conversacion.fecha_ingreso,
+          fecha_ultimagestion: conversacion.fecha_ultimagestion,
+          userid: conversacion.userid,
+        });
+      });
+  
+      // Crear el blob del archivo Excel
+      const blob = await workbook.xlsx.writeBuffer();
+  
+      // Crear un objeto Blob
+      const blobArchivo = new Blob([blob], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+  
+      // Crear un enlace para descargar el archivo
+      const enlaceDescarga = document.createElement('a');
+      enlaceDescarga.href = window.URL.createObjectURL(blobArchivo);
+      enlaceDescarga.download = 'conversaciones.xlsx';
+      
+      // Agregar el enlace al documento y hacer clic en él
+      document.body.appendChild(enlaceDescarga);
+      enlaceDescarga.click();
+  
+      // Limpiar después de la descarga
+      document.body.removeChild(enlaceDescarga);
+  
+      console.log('Informe Excel generado y descargado correctamente.');
+    } catch (error) {
+      console.error('Error durante la solicitud:', error.message);
+    }
+  };
   return (
     <>
       {session ? (
@@ -166,7 +230,9 @@ function Reports() {
       </div>
           </div>
            {/* Formulario para ingresar los parámetros */}
-     
+           <div>
+      <button onClick={ObtenerConversaciones}>Generar Informe Excel</button>
+    </div>
         </Layout>
       ) : (
         <div className="flex flex-col items-center justify-center h-screen">
