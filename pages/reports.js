@@ -120,23 +120,9 @@ function Reports() {
       XLSX.utils.book_append_sheet(wb, ws, 'Conversaciones');
   
       // Crear un blob del archivo Excel
-      const blob = XLSX.write(wb, { bookType: 'xlsx', type: 'blob' });
+      XLSX.writeFile(wb, 'resporteconversaciones.xlsx');
   
-      // Crear un objeto Blob
-      const blobArchivo = new Blob([blob], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-  
-      // Crear un enlace para descargar el archivo
-      const enlaceDescarga = document.createElement('a');
-      enlaceDescarga.href = window.URL.createObjectURL(blobArchivo);
-      enlaceDescarga.download = 'conversaciones.xlsx';
-  
-      // Agregar el enlace al documento y hacer clic en él
-      document.body.appendChild(enlaceDescarga);
-      enlaceDescarga.click();
-  
-      // Limpiar después de la descarga
-      document.body.removeChild(enlaceDescarga);
-  
+      
       console.log('Informe Excel generado y descargado correctamente.');
     } catch (error) {
       console.error('Error durante la solicitud:', error.message);
