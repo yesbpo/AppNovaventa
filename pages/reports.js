@@ -104,7 +104,7 @@ function Reports() {
   };
   const ObtenerConversaciones = async () => {
     try {
-      const response = await fetch('http://localhost:3000/obtener-conversaciones');
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-conversaciones');
   
       if (!response.ok) {
         throw new Error(`Error en la solicitud: ${response.status}`);
