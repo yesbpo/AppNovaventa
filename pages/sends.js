@@ -28,6 +28,8 @@ const Sends = (props) => {
   const [selectedImageUrl, setSelectedImageUrl] = useState(""); // Agrega esta línea
   const [selectedVideoUrl, setSelectedVideoUrl] = useState("");
 
+  const base = process.env.NEXT_PUBLIC_BASE_URL
+
 
   const handleVideoFileChange = async (e) => {
     const file = e.target.files[0];
@@ -52,7 +54,7 @@ const Sends = (props) => {
       if (responseData.url) {
         alert(`El archivo se cargó correctamente. URL: ${responseData.url}`);
         // Set the obtained video URL in the state
-        setSelectedVideoUrl(selectedVideoUrl);
+        setSelectedVideoUrl(responseData.url);
       } else {
         throw new Error('No se recibió una URL del servidor.');
       }
@@ -263,7 +265,7 @@ const Sends = (props) => {
           data.message = JSON.stringify({
             type: 'video',
             video: {
-              link: selectedVideoUrl,
+              link: base + selectedVideoUrl,
             },
           });
           break;
