@@ -821,18 +821,19 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         className="mt-1 p-2 border border-gray-300 rounded-md"
       >
         <option value="" disabled>Select a template</option>
+        <button
+        onClick={handleAgregarNumeroClick}
+        className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Agregar Número
+      </button>
         {templates.map((template) => (
          
           <option key={template.id} value={template.id}>
             {template.data}{contarOcurrencias(template.data, '{{.*?}}')}
           </option>
         ))}
-          <button
-        onClick={handleAgregarNumeroClick}
-        className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >
-        Agregar Número
-      </button>
+         
       </select>
 
       {templates.map(
