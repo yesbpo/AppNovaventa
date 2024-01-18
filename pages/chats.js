@@ -140,8 +140,10 @@ const enviarSolicitud = async () => {
 
    const responseData = await response.json();
    console.log('Respuesta:', Object.values(templateParams));
-   setSelectedTemplateId('')
-   setNumericInputValue('')
+   alert('Mensaje enviado exitosamente');
+   setNumericInputValue('');
+  setSelectedTemplateId('');
+  setTemplateParams({});
  } catch (error) {
    console.error('Error al enviar la solicitud:', error);
  }
