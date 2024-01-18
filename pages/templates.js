@@ -31,6 +31,8 @@ const Reports = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   
 
+  const grupo = 'Cueros Velez';
+
 //Constants buy page templates
   const templatesPerPage = 5;
 
