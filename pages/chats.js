@@ -140,6 +140,8 @@ const enviarSolicitud = async () => {
 
    const responseData = await response.json();
    console.log('Respuesta:', Object.values(templateParams));
+   setSelectedTemplateId('')
+   setNumericInputValue('')
  } catch (error) {
    console.error('Error al enviar la solicitud:', error);
  }
@@ -155,6 +157,7 @@ const handleNumericInputChange = (value) => {
 const handleAgregarNumeroClick = () => {
  // Llamamos a la función enviarSolicitud al hacer clic en el botón
  enviarSolicitud();
+ 
 };
   // logica chats
   async function marcaLeido(id_chat2){
