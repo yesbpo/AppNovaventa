@@ -812,12 +812,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         onChange={(e) => handleNumericInputChange(e.target.value)}
         className="mt-1 p-2 border border-gray-300 rounded-md"
       />
-      <button
-        onClick={handleAgregarNumeroClick}
-        className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >
-        Agregar Número
-      </button>
+    
 
       <h2 className="mt-4 text-lg font-semibold">Plantillas:</h2>
       <select
@@ -832,6 +827,12 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
             {template.data}{contarOcurrencias(template.data, '{{.*?}}')}
           </option>
         ))}
+          <button
+        onClick={handleAgregarNumeroClick}
+        className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Agregar Número
+      </button>
       </select>
 
       {templates.map(
