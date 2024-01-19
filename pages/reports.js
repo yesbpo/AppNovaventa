@@ -173,8 +173,36 @@ function Reports() {
       console.error('Error durante la solicitud:', error.message);
     }
   };
-  
-  
+  const [fecha, setFecha] = useState(''); // Asigna el valor deseado
+  const [idchat, setIdchat] = useState(''); // Asigna el valor deseado
+  const [userid, setUserid] = useState(''); // Asigna el valor deseado
+  const [conversacion, setConversacion] = useState('');
+  const [mensaje, setMensaje] = useState('');
+  const consultarConversacion = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_DB}/consultar-conversacion?fecha=${fecha}&idchat=${idchat}&userid=${userid}`
+      );
+
+      if (!response.ok) {
+        throw new Error(`Error en la solicitud: ${response.status}`);
+      }
+
+      const data = await response.json();
+      
+      if (data.conversacion) {
+        setConversacion(data.conversacion);
+        setMensaje('');
+      } else {
+        setConversacion('');
+        setMensaje(data.mensaje || 'No se encontró ninguna conversación con los parámetros proporcionados.');
+      }
+    } catch (error) {
+      console.error('Error al consultar la conversación:', error);
+      setConversacion('');
+      setMensaje('Error al consultar la conversación. Consulta la consola para obtener más detalles.');
+    }
+  };
   
   
   
@@ -242,6 +270,13 @@ function Reports() {
       <div>
       <button onClick={ObtenerConversaciones}>Obtener Conversaciones</button>
     </div>
+    <h2>Consulta de Conversación</h2>
+      <p>Fecha: <input type="text" value={fecha} onChange={(e) => setFecha(e.target.value)} /></p>
+      <p>ID Chat: <input type="text" value={idchat} onChange={(e) => setIdchat(e.target.value)} /></p>
+      <p>User ID: <input type="text" value={userid} onChange={(e) => setUserid(e.target.value)} /></p>
+      <button onClick={consultarConversacion}>Consultar Conversación</button>
+      <div></div>
+    
           </div>
            {/* Formulario para ingresar los parámetros */}
          
