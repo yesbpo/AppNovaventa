@@ -230,6 +230,10 @@ const handleCreateTemplate = async () => {
     // Marcar que los filtros están aplicados
     setFiltersApplied(true);
   };
+
+  const handleApplyFilters = () => {
+    applyFilters();
+  };
   
   useEffect(() => {
     applyFilters();
