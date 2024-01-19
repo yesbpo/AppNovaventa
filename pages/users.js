@@ -128,7 +128,8 @@ const CrearUsuario = () => {
           <label htmlFor="completeName" className="form-label">Complete Name:</label>
           <input type="text" className="form-control" id="completeName" value={complete_name} onChange={(e) => setComplete_name(e.target.value)} />
         </div>
-        <BotonEnviar type="button" onClick={handleCrearUsuario}>
+        <p>Permiso de agregar numero</p><input type="checkbox" checked={isChecked} onChange={handleChange} />
+        <BotonEnviar type=  "button" onClick={handleCrearUsuario}>
           Crear Usuario
         </BotonEnviar>
       </form>
