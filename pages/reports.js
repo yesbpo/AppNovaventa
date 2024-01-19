@@ -114,22 +114,33 @@ function Reports() {
   
       // Crear un libro de Excel
       const wb = XLSX.utils.book_new();
-      const ws = XLSX.utils.aoa_to_sheet([['Conversacion']]); // Inicializar la hoja de cálculo con encabezado
+      const ws = XLSX.utils.aoa_to_sheet([
+        ['Campo1', 'Campo2', 'Campo3', 'Conversacion']
+      ]); // Reemplaza los campos con los nombres correctos
   
       // Agregar filas para cada conversación
       conversaciones.forEach((conversacion) => {
+        // Dividir la conversación en frases cuando se encuentra '['
         const frases = conversacion.conversacion.split('[');
   
-        // Asegurarse de que haya al menos una frase
-        if (frases.length > 0) {
-          // Agregar la primera frase
-          XLSX.utils.sheet_add_aoa(ws, [[frases[0].trim()]]);
-  
-          // Agregar el resto de las frases
-          frases.slice(1).forEach((frase) => {
-            XLSX.utils.sheet_add_aoa(ws, [['[' + frase.trim()]]);
-          });
-        }
+        // Crear una fila para cada frase
+        frases.forEach((frase, index) => {
+          // Ignorar la primera frase si no hay '[' al principio
+          if (index === 0 && !conversacion.conversacion.startsWith('[')) {
+            // Agregar una nueva fila con los campos correspondientes y la primera frase
+            XLSX.utils.sheet_add_aoa(ws, [
+              [
+                conversacion.campo1, // Reemplaza con el nombre correcto del campo
+                conversacion.campo2, // Reemplaza con el nombre correcto del campo
+                conversacion.campo3, // Reemplaza con el nombre correcto del campo
+                frase.trim()
+              ]
+            ]);
+          } else if (index > 0) {
+            // Agregar filas adicionales solo con la frase
+            XLSX.utils.sheet_add_aoa(ws, [[frase.trim()]]);
+          }
+        });
       });
   
       // Agregar la hoja al libro
