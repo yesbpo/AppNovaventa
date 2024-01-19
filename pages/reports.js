@@ -111,7 +111,7 @@ function Reports() {
       }
   
       const { conversaciones } = await response.json();
-      console.log('Conversaciones obtenidas:', conversaciones);
+  
       // Crear un libro de Excel
       const wb = XLSX.utils.book_new();
       const ws = XLSX.utils.aoa_to_sheet([
@@ -121,7 +121,7 @@ function Reports() {
       // Agregar filas para cada conversación
       conversaciones.forEach((conversacion) => {
         // Dividir la conversación en frases cuando se encuentra '['
-        const frases = conversacion.conversacion.split('[');
+        const frases = conversacion.conversacion.split('[').filter(Boolean);  // Eliminar elementos vacíos
   
         // Agregar una fila por cada frase
         frases.forEach((frase, index) => {
@@ -129,7 +129,7 @@ function Reports() {
             conversacion.id,
             conversacion.idchat,
             conversacion.asesor,
-            index === 0 ? frase.trim() : '', // solo en la primera fila se agrega la frase completa
+            index === 0 ? frase.trim() : '',
             conversacion.numero,
             conversacion.calificacion,
             conversacion.fecha_ingreso,
@@ -153,6 +153,7 @@ function Reports() {
       console.error('Error durante la solicitud:', error.message);
     }
   };
+  
   
   
   
