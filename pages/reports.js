@@ -126,15 +126,15 @@ function Reports() {
         // Agregar una fila por cada frase
         frases.forEach((frase, index) => {
           const fila = [
-            conversacion.id,
-            conversacion.idchat,
-            conversacion.asesor,
+            conversacion.campos.id,
+            conversacion.campos.idchat,
+            conversacion.campos.asesor,
             index === 0 ? frase.trim() : '',
-            conversacion.numero,
-            conversacion.calificacion,
-            conversacion.fecha_ingreso,
-            conversacion.fecha_ultimagestion,
-            conversacion.userid
+            conversacion.campos.numero,
+            conversacion.campos.calificacion,
+            conversacion.campos.fecha_ingreso,
+            conversacion.campos.fecha_ultimagestion,
+            conversacion.campos.userid
           ];
   
           // Agregar la fila a la hoja de cálculo
@@ -153,6 +153,7 @@ function Reports() {
       console.error('Error durante la solicitud:', error.message);
     }
   };
+  
   
   
   
