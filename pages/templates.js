@@ -238,7 +238,7 @@ const handleCreateTemplate = async () => {
         return 'Aprobada';
       case 'PENDING':
         return 'Pendiente';
-      case 'REJECT':
+      case 'REJECTED':
         return 'Rechazada';
       default:
         return status;
