@@ -550,12 +550,10 @@ const Sends = (props) => {
           <div>
             <p>Contenido de la plantilla:</p>
             <PhoneContainer>
-      <PhoneScreen>
-        <MessageContainer>
-          <p>{message}</p>
-        </MessageContainer>
-      </PhoneScreen>
-    </PhoneContainer>
+              <PhoneScreen>
+                <WhatsAppMessage message={selectedTemplateData} />
+              </PhoneScreen>
+            </PhoneContainer>
           </div>
         )}
 
