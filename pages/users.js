@@ -7,7 +7,10 @@ const CrearUsuario = () => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleChange = () => {
-    setIsChecked(!isChecked);
+    setIsChecked(isChecked);
+  };
+  const handleCheckboxChange = () => {
+    setTypeUser(prevTypeUser => prevTypeUser + 1); // Suma 1 al valor existente
   };
   const { data: sesion } = useSession();
   const [usuario, setUsuario] = useState('');
@@ -32,7 +35,7 @@ const CrearUsuario = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          type_user: typeUser,
+          type_user: isChecked ? typeUser + '1' : typeUser,
           email:email,
           session:'Inactivo',
           usuario: usuario,
