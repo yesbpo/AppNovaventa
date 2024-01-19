@@ -7,7 +7,7 @@ const CrearUsuario = () => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleChange = () => {
-    setIsChecked(isChecked);
+    setIsChecked(!isChecked);
   };
   const [usuarios, setUsuarios] = useState([]);
   const [error, setError] = useState(null);
