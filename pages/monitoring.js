@@ -699,7 +699,7 @@ setWebhookData(webhookText);
           return mensajesFiltrados.map((mensaje, index) => (
             <div
               key={index}
-              className={`mensaje ${mensaje.type_message} ${
+              className={`mensaje ${mensaje.type_message && console.log(mensajes1.length, mensajesFiltrados.length)} ${
                 mensaje.type_comunication === 'message-event' ? 'bg-white text-right shadow-lg p-4 bg-gray rounded-md' : 'bg-green text-left shadow-lg p-4 bg-gray rounded-md'
               } p-4 mb-4`}
             > 
