@@ -114,32 +114,10 @@ function Reports() {
   
       // Crear un libro de Excel
       const wb = XLSX.utils.book_new();
-      const ws = XLSX.utils.aoa_to_sheet([
-        ['id', 'idchat', 'asesor', 'conversacion', 'numero', 'calificacion', 'fecha_ingreso', 'fecha_ultimagestion', 'userid']
-      ]);
   
-      // Agregar filas para cada conversación
-      conversaciones.forEach((conversacion) => {
-        // Dividir la conversación en frases cuando se encuentra '['
-        const frases = conversacion.conversacion.split('[').filter(Boolean);  // Eliminar elementos vacíos
-  
-        // Agregar una fila por cada frase
-        frases.forEach((frase, index) => {
-          const fila = [
-            conversacion.campos.id,
-            conversacion.campos.idchat,
-            conversacion.campos.asesor,
-            index === 0 ? frase.trim() : '',
-            conversacion.campos.numero,
-            conversacion.campos.calificacion,
-            conversacion.campos.fecha_ingreso,
-            conversacion.campos.fecha_ultimagestion,
-            conversacion.campos.userid
-          ];
-  
-          // Agregar la fila a la hoja de cálculo
-          XLSX.utils.sheet_add_aoa(ws, [fila]);
-        });
+      // Crear una hoja de cálculo con los encabezados
+      const ws = XLSX.utils.json_to_sheet(conversaciones, {
+        header: ['id', 'idchat', 'asesor', 'conversacion', 'numero', 'calificacion', 'fecha_ingreso', 'fecha_ultimagestion', 'userid'],
       });
   
       // Agregar la hoja al libro
@@ -153,6 +131,7 @@ function Reports() {
       console.error('Error durante la solicitud:', error.message);
     }
   };
+  
   
   
   
