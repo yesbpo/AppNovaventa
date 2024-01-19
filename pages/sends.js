@@ -138,6 +138,8 @@ const Sends = (props) => {
       .then(response => {
         // Filtra solo las plantillas aprobadas
         const approvedTemplates = response.data.filter(template => template.status === 'APPROVED');
+        const sortedTemplates = approvedTemplates.sort((a, b) => a.elementName.localeCompare(b.elementName));
+
         setTemplates(approvedTemplates);
       })
       .catch(error => {
