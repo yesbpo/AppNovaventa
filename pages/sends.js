@@ -707,7 +707,7 @@ const PhoneContainer = styled.div`
   border-radius: 40px; /* Aumentar el radio para que sea más redondeado */
   position: relative;
   width: 375px; /* Cambiar el ancho para que sea similar al iPhone */
-  height: 812px; /* Cambiar la altura para que sea similar al iPhone */
+  height: 760px; /* Cambiar la altura para que sea similar al iPhone */
   margin: 20px auto;
   overflow: hidden;
 `;
