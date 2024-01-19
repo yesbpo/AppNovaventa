@@ -104,7 +104,7 @@ function Reports() {
   };
   const ObtenerConversaciones = async () => {
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-conversaciones');
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-conversaciones');
   
       if (!response.ok) {
         throw new Error(`Error en la solicitud: ${response.status}`);
@@ -112,15 +112,19 @@ function Reports() {
   
       const { conversaciones } = await response.json();
   
-      // Limpiar espacios en blanco al principio de cada campo de conversación
-      const conversacionesLimpias = conversaciones.map(conversacion => ({
-        ...conversacion,
-        conversacion: conversacion.conversacion.trimLeft()
-      }));
-  
       // Crear un libro de Excel
       const wb = XLSX.utils.book_new();
-      const ws = XLSX.utils.json_to_sheet(conversacionesLimpias);
+      const ws = XLSX.utils.aoa_to_sheet([['Conversacion']]); // Inicializar la hoja de cálculo con encabezado
+  
+      // Agregar filas para cada conversación
+      conversaciones.forEach((conversacion) => {
+        const frases = conversacion.conversacion.split('[').filter(Boolean);
+  
+        frases.forEach((frase) => {
+          // Crear una nueva fila con la frase
+          XLSX.utils.sheet_add_aoa(ws, [[frase.trim()]]);
+        });
+      });
   
       // Agregar la hoja al libro
       XLSX.utils.book_append_sheet(wb, ws, 'Conversaciones');
@@ -133,6 +137,7 @@ function Reports() {
       console.error('Error durante la solicitud:', error.message);
     }
   };
+  
   return (
     <>
       {session ? (
