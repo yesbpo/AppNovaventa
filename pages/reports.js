@@ -115,8 +115,8 @@ function Reports() {
       // Crear un libro de Excel
       const wb = XLSX.utils.book_new();
       const ws = XLSX.utils.aoa_to_sheet([
-        ['Campo1', 'Campo2', 'Campo3', 'Conversacion']
-      ]); // Reemplaza los campos con los nombres correctos
+        ['id', 'idchat', 'asesor', 'conversacion', 'numero', 'calificacion', 'fecha_ingreso', 'fecha_ultimagestion', 'userid']
+      ]);
   
       // Agregar filas para cada conversación
       conversaciones.forEach((conversacion) => {
@@ -130,15 +130,32 @@ function Reports() {
             // Agregar una nueva fila con los campos correspondientes y la primera frase
             XLSX.utils.sheet_add_aoa(ws, [
               [
-                conversacion.campo1, // Reemplaza con el nombre correcto del campo
-                conversacion.campo2, // Reemplaza con el nombre correcto del campo
-                conversacion.campo3, // Reemplaza con el nombre correcto del campo
-                frase.trim()
+                conversacion.id,
+                conversacion.idchat,
+                conversacion.asesor,
+                conversacion.conversacion,
+                conversacion.numero,
+                conversacion.calificacion,
+                conversacion.fecha_ingreso,
+                conversacion.fecha_ultimagestion,
+                conversacion.userid
               ]
             ]);
           } else if (index > 0) {
             // Agregar filas adicionales solo con la frase
-            XLSX.utils.sheet_add_aoa(ws, [[frase.trim()]]);
+            XLSX.utils.sheet_add_aoa(ws, [
+              [
+                '', // dejar los campos adicionales vacíos en las filas adicionales
+                '',
+                '',
+                frase.trim(),
+                '',
+                '',
+                '',
+                '',
+                ''
+              ]
+            ]);
           }
         });
       });
