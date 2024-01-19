@@ -701,13 +701,16 @@ const WhatsAppMessage = ({ message }) => {
 };
 
 const PhoneContainer = styled.div`
+  background-image: url('https://media.istockphoto.com/id/1409540606/es/vector/vector-de-entrarnos-en-contacto-con-patr%C3%B3n-entrarnos-en-contacto-con-fondo-transparente.jpg?s=612x612&w=0&k=20&c=5zg7sKC_9MfdudJVkhUCwwWuNOG6d22Sa5_vLeuxRoY='); 
+  background-size: cover; /* Ajusta el tamaño de la imagen para cubrir completamente el contenedor */
+  background-position: center; /* Centra la imagen dentro del contenedor */
   background-color: #f0f0f0;
   border: 16px solid #333;
   border-top-width: 32px;
-  border-radius: 40px; /* Aumentar el radio para que sea más redondeado */
+  border-radius: 40px;
   position: relative;
-  width: 375px; /* Cambiar el ancho para que sea similar al iPhone */
-  height: 650px; /* Cambiar la altura para que sea similar al iPhone */
+  width: 375px;
+  height: 650px;
   margin: 20px auto;
   overflow: hidden;
 `;
