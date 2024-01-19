@@ -183,29 +183,31 @@ function Reports() {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_DB}/consultar-conversacion?fecha=${fecha}&idchat=${idchat}&userid=${userid}`
       );
-
+  
       if (!response.ok) {
         throw new Error(`Error en la solicitud: ${response.status}`);
       }
-
+  
       const data = await response.json();
-      
+  
       if (data.conversacion) {
+        // Actualiza el estado
         setConversacion(data.conversacion);
-
-          try {
-            const pdf = new jsPDF();
-            pdf.text(`Fecha: ${fecha}`, 20, 20);
-            pdf.text(`ID Chat: ${idchat}`, 20, 30);
-            pdf.text(`User ID: ${userid}`, 20, 40);
-            pdf.text('Conversación:', 20, 50);
-            pdf.text(conversacion || mensaje, 20, 60);
-      
-            pdf.save('informe_conversacion.pdf');
-          } catch (error) {
-            console.error('Error al generar el PDF:', error);
-          }
-        
+  
+        // Utiliza el valor actualizado después de la actualización del estado
+        try {
+          const pdf = new jsPDF();
+          pdf.text(`Fecha: ${fecha}`, 20, 20);
+          pdf.text(`ID Chat: ${idchat}`, 20, 30);
+          pdf.text(`User ID: ${userid}`, 20, 40);
+          pdf.text('Conversación:', 20, 50);
+          pdf.text(data.conversacion || mensaje, 20, 60); // Utiliza data.conversacion
+  
+          pdf.save('informe_conversacion.pdf');
+        } catch (error) {
+          console.error('Error al generar el PDF:', error);
+        }
+  
         setMensaje('');
       } else {
         setConversacion('');
@@ -217,6 +219,7 @@ function Reports() {
       setMensaje('Error al consultar la conversación. Consulta la consola para obtener más detalles.');
     }
   };
+  
   
   
   
@@ -285,7 +288,7 @@ function Reports() {
       <button onClick={ObtenerConversaciones}>Obtener Conversaciones</button>
     </div>
     <h2>Consulta de Conversación</h2>
-      <p>Fecha: <input type="text" value={fecha} onChange={(e) => setFecha(e.target.value)} /></p>
+      <p>Fecha: <input type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} /></p>
       <p>ID Chat: <input type="text" value={idchat} onChange={(e) => setIdchat(e.target.value)} /></p>
       <p>User ID: <input type="text" value={userid} onChange={(e) => setUserid(e.target.value)} /></p>
       <button onClick={consultarConversacion}>Consultar Conversación</button>
