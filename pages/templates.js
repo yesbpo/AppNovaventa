@@ -29,6 +29,8 @@ const Reports = (props) => {
   const [error, setError] = useState(null);
   const [deleteMessage, setDeleteMessage] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedStatus, setSelectedStatus] = useState(''); // Estado seleccionado
+  const [selectedType, setSelectedType] = useState('');
   
 
   const grupo = 'Cueros Velez';
@@ -211,6 +213,18 @@ const handleCreateTemplate = async () => {
 
     fetchData();
   }, []);
+
+  const applyFilters = (templates) => {
+    // Filtrar por tipo de plantilla
+    const filteredByType = selectedType ? templates.filter(template => template.templateType === selectedType) : templates;
+  
+    // Filtrar por estado
+    const filteredByStatus = selectedStatus ? filteredByType.filter(template => template.status === selectedStatus) : filteredByType;
+  
+    // Ordenar y establecer las plantillas filtradas en el estado
+    const sortedTemplates = filteredByStatus.sort((a, b) => a.elementName.localeCompare(b.elementName));
+    setTemplates(sortedTemplates);
+  };
 
   const getLanguageText = (languageCode) => {
     switch (languageCode) {
@@ -451,6 +465,35 @@ const handleCreateTemplate = async () => {
       }
 
 <span>{deleteMessage}</span>
+
+<div>
+  <label>
+    Filtrar por Estado:
+    <select
+      value={selectedStatus}
+      onChange={(e) => setSelectedStatus(e.target.value)}
+    >
+      <option value="">Todos</option>
+      <option value="APPROVED">Aprobada</option>
+      <option value="PENDING">Pendiente</option>
+      <option value="REJECT">Rechazada</option>
+    </select>
+  </label>
+
+  <label>
+    Filtrar por Tipo de Plantilla:
+    <select
+      value={selectedType}
+      onChange={(e) => setSelectedType(e.target.value)}
+    >
+      <option value="">Todos</option>
+      <option value="TEXT">Texto</option>
+      <option value="IMAGE">Imagen</option>
+      <option value="VIDEO">Video</option>
+      <option value="DOCUMENT">Documento</option>
+    </select>
+  </label>
+</div>
 
 
 <div className='CreatedTemplates'>
