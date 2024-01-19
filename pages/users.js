@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import { useSession, signIn } from 'next-auth/react';
 
 const CrearUsuario = () => {
+  
   const [isChecked, setIsChecked] = useState(false);
 
   const handleChange = () => {
@@ -11,7 +12,7 @@ const CrearUsuario = () => {
   };
   const [usuarios, setUsuarios] = useState([]);
   const [error, setError] = useState(null);
-
+  const [usuarioSeleccionado, setUsuarioSeleccionado] = useState(null);
   useEffect(() => {
     const obtenerUsuarios = async () => {
       try {
@@ -101,92 +102,59 @@ const CrearUsuario = () => {
     setMostrarPassword(!mostrarPassword);
   };  
 
-  if (sesion){
-  return (
-    
-    <Layout>
-    <div className="flex items-center justify-center h-screen">
-    <div className="w-full max-w-md">
-      <h1 className="text-dark text-center mb-6">Crear Usuario</h1>    
-      {mensaje && (
-            <Mensaje tipo={mensaje.tipo}>
-              {mensaje.texto}
-            </Mensaje>
-          )}
-      <form>
-        <div className="mb-5">
-          <label htmlFor="usuario" className="form-label">Usuario:</label>
-          <input type="text" className="form-control" id="usuario" value={usuario} onChange={(e) => setUsuario(e.target.value)} />
-        </div>
-        <div className="mb-3">
-              <label htmlFor="password" className="form-label">
-                Password:
-              </label>
-              <div className="password-container">
-                <input
-                  type={mostrarPassword ? 'text' : 'password'}
-                  className="form-control password-input"  // Agregamos la clase "password-input"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <BotonMostrarPassword type="button" onClick={toggleMostrarPassword}>
-                  {mostrarPassword ? 'Ocultar' : 'Mostrar'}
-                </BotonMostrarPassword>
+  if (sesion) {
+    return (
+      <Layout>
+        <div className="flex items-center justify-center h-screen">
+          <div className="w-full max-w-md">
+            {usuarioSeleccionado ? (
+              <div>
+                <h1 className="text-dark text-center mb-6">Modificar Usuario</h1>
+                {/* Mostrar detalles del usuario seleccionado */}
+                <p>{usuarioSeleccionado.usuario} - {usuarioSeleccionado.email}</p>
+                {/* ... Agregar más detalles según sea necesario ... */}
               </div>
-            </div>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email:</label>
-          <input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        </div>
-        <div className="mb-3">
-            <label htmlFor="typeUser" className="form-label">Type User:</label>
-            <select
-              id="typeUser"
-              className="form-select"
-              value={typeUser}
-              onChange={(e) => setTypeUser(e.target.value)}
-            >
-              <option value="">Seleccionar</option>
-              <option value="Asesor">Asesor</option>
-              <option value="Coordinador">Coordinador</option>
-            </select>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="completeName" className="form-label">Complete Name:</label>
-          <input type="text" className="form-control" id="completeName" value={complete_name} onChange={(e) => setComplete_name(e.target.value)} />
-        </div>
-        <p>Permiso de agregar numero</p><input type="checkbox" checked={isChecked} onChange={handleChange} />
-        <BotonEnviar type=  "button" onClick={handleCrearUsuario}>
-          Crear Usuario
-        </BotonEnviar>
-      </form>
-      <ul>
-        {usuarios.map((usuario) => (
-          <li key={usuario.id}>
-            {usuario.usuario} - {usuario.email}
-          </li>
-        ))}
-      </ul>
-    </div>
-  </div>
-</Layout>
+            ) : (
+              <div>
+                <h1 className="text-dark text-center mb-6">Crear Usuario</h1>
+                {mensaje && (
+                  <Mensaje tipo={mensaje.tipo}>
+                    {mensaje.texto}
+                  </Mensaje>
+                )}
+                <form>
+                  {/* Resto del formulario de creación ... */}
 
-      )}
-      return (
-        <>
-        <div className="flex flex-col items-center justify-center h-screen">
-          <p className="mb-4">Not signed in</p>
-          <button
-            onClick={() => signIn()}
-            className="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
-          >
-            Sign in
-          </button>
+                  {/* Lista de usuarios */}
+                  <ul>
+                    {usuarios.map((usuario) => (
+                      <li key={usuario.id} onClick={() => handleUsuarioSeleccionado(usuario)}>
+                        {usuario.usuario} - {usuario.email}
+                      </li>
+                    ))}
+                  </ul>
+                </form>
+              </div>
+            )}
+          </div>
         </div>
-      </>
-      
-        )
+      </Layout>
+    );
+  }
+
+  return (
+    <>
+      <div className="flex flex-col items-center justify-center h-screen">
+        <p className="mb-4">Not signed in</p>
+        <button
+          onClick={() => signIn()}
+          className="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
+        >
+          Sign in
+        </button>
+      </div>
+    </>
+  );
 };
 
 const BotonMostrarPassword = styled.button`
