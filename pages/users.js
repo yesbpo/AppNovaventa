@@ -4,6 +4,11 @@ import styled from 'styled-components';
 import { useSession, signIn } from 'next-auth/react';
 
 const CrearUsuario = () => {
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleChange = () => {
+    setIsChecked(!isChecked);
+  };
   const { data: sesion } = useSession();
   const [usuario, setUsuario] = useState('');
   const [password, setPassword] = useState('');
