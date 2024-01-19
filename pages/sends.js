@@ -550,10 +550,12 @@ const Sends = (props) => {
           <div>
             <p>Contenido de la plantilla:</p>
             <PhoneContainer>
-              <PhoneScreen>
-                <WhatsAppMessage message={selectedTemplateData} />
-              </PhoneScreen>
-            </PhoneContainer>
+      <PhoneScreen>
+        <MessageContainer>
+          <p>{message}</p>
+        </MessageContainer>
+      </PhoneScreen>
+    </PhoneContainer>
           </div>
         )}
 
@@ -688,6 +690,7 @@ const MessageContainer = styled.div`
   padding: 10px;
   margin: 10px;
   max-width: 300px;
+  word-wrap: break-word; /* Agregado para envolver palabras */
 `;
 
 const WhatsAppMessage = ({ message }) => {
@@ -707,6 +710,7 @@ const PhoneContainer = styled.div`
   width: 360px;
   height: 640px;
   margin: 20px auto;
+  overflow: hidden; /* Agregado para ocultar el desbordamiento */
 `;
 
 const PhoneScreen = styled.div`
@@ -714,6 +718,8 @@ const PhoneScreen = styled.div`
   border-radius: 10px;
   overflow: hidden;
   height: 100%;
+  padding: 10px; /* Añadido espacio interno */
+  box-sizing: border-box; /* Asegura que el relleno no afecte al tamaño total */
 `;
 
 export default Sends;
