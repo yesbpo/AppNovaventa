@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import * as XLSX from 'xlsx';
 import Layout from '../components/Layout';
 import { useSession, signIn } from 'next-auth/react';
-import jsPDF from 'jspdf';
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
 function Reports() {
   const { data: session } = useSession();
   const [informes, setInformes] = useState([]);
@@ -178,36 +179,21 @@ function Reports() {
   const [userid, setUserid] = useState(''); // Asigna el valor deseado
   const [conversacion, setConversacion] = useState('');
   const [mensaje, setMensaje] = useState('');
+ 
   const consultarConversacion = async () => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BASE_DB}/consultar-conversacion?fecha=${fecha}&idchat=${idchat}&userid=${userid}`
       );
-  
+
       if (!response.ok) {
         throw new Error(`Error en la solicitud: ${response.status}`);
       }
-  
+
       const data = await response.json();
-  
+
       if (data.conversacion) {
-        // Actualiza el estado
         setConversacion(data.conversacion);
-  
-        // Utiliza el valor actualizado después de la actualización del estado
-        try {
-          const pdf = new jsPDF();
-          pdf.text(`Fecha: ${fecha}`, 20, 20);
-          pdf.text(`ID Chat: ${idchat}`, 20, 30);
-          pdf.text(`User ID: ${userid}`, 20, 40);
-          pdf.text('Conversación:', 20, 50);
-          pdf.text(data.conversacion || mensaje, 20, 60); // Utiliza data.conversacion
-  
-          pdf.save('informe_conversacion.pdf');
-        } catch (error) {
-          console.error('Error al generar el PDF:', error);
-        }
-  
         setMensaje('');
       } else {
         setConversacion('');
@@ -219,8 +205,24 @@ function Reports() {
       setMensaje('Error al consultar la conversación. Consulta la consola para obtener más detalles.');
     }
   };
-  
-  
+
+  const descargarPDF = () => {
+    try {
+      const documentDefinition = {
+        content: [
+          { text: `Fecha: ${fecha}`, margin: [20, 20] },
+          { text: `ID Chat: ${idchat}`, margin: [20, 10] },
+          { text: `User ID: ${userid}`, margin: [20, 10] },
+          { text: 'Conversación:', margin: [20, 10] },
+          { text: conversacion || mensaje, margin: [20, 10] },
+        ],
+      };
+
+      pdfMake.createPdf(documentDefinition).download('informe_conversacion.pdf');
+    } catch (error) {
+      console.error('Error al generar el PDF:', error);
+    }
+  };
   
   
   return (
@@ -292,6 +294,12 @@ function Reports() {
       <p>ID Chat: <input type="text" value={idchat} onChange={(e) => setIdchat(e.target.value)} /></p>
       <p>User ID: <input type="text" value={userid} onChange={(e) => setUserid(e.target.value)} /></p>
       <button onClick={consultarConversacion}>Consultar Conversación</button>
+      <button onClick={descargarPDF}>Descargar PDF</button>
+      <div>
+        <h3>Resultado:</h3>
+        {conversacion && <pre>{conversacion}</pre>}
+        {mensaje && <p>{mensaje}</p>}
+      </div>
       <div></div>
     
           </div>
