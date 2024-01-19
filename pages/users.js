@@ -108,7 +108,7 @@ const CrearUsuario = () => {
   return (
     
     <Layout>
-      
+        <div className="flex items-center justify-center h-screen">
     <div className="flex items-center justify-center h-screen">
     {usuarioSeleccionado ? (
             <div>
@@ -185,6 +185,7 @@ const CrearUsuario = () => {
                   ))}
       </ul>
     </div>)}
+  </div>
   </div>
 </Layout>
 
