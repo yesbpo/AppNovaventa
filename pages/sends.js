@@ -667,6 +667,12 @@ const Sends = (props) => {
   );
 };
 
+const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+`;
+
 const Box = styled.div`
   padding: 30px;
   margin: 30px;
@@ -701,13 +707,16 @@ const WhatsAppMessage = ({ message }) => {
 };
 
 const PhoneContainer = styled.div`
+  background-image: url('ruta-de-tu-imagen');
+  background-size: cover;
+  background-position: center;
   background-color: #f0f0f0;
   border: 16px solid #333;
   border-top-width: 32px;
-  border-radius: 40px; /* Aumentar el radio para que sea más redondeado */
+  border-radius: 40px;
   position: relative;
-  width: 375px; /* Cambiar el ancho para que sea similar al iPhone */
-  height: 630px; /* Cambiar la altura para que sea similar al iPhone */
+  width: 375px;
+  height: 630px;
   margin: 20px auto;
   overflow: hidden;
 `;
@@ -719,6 +728,19 @@ const PhoneScreen = styled.div`
   height: 100%;
   padding: 10px;
   box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Alinea los elementos al final del contenedor */
 `;
+
+const Button = styled.button`
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: white;
+  cursor: pointer;
+`;
+
 
 export default Sends;
