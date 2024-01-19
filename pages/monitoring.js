@@ -706,9 +706,7 @@ setWebhookData(webhookText);
         
               { mensaje.type_message === 'image'  ? (
                 <img src={limpiarLink(mensaje.content) || mensaje.content}  alt="Imagen" className="w-15vw shadow-md p-4 bg-gray rounded-md" />
-              ) :mensaje.type_message === 'image' ? (
-                <img src={limpiarLink(mensaje.content)} alt="Imagen" className="w-15vw" />
-              ): mensaje.type_message === 'audio' ? (
+              ) : mensaje.type_message === 'audio' ? (
                 <audio controls>
                   <source src={mensaje.content} type="audio/mp3" />
                   Tu navegador no soporta el elemento de audio.
