@@ -216,7 +216,7 @@ const handleCreateTemplate = async () => {
     fetchData();
   }, []);
 
-  const applyFilters = (templates) => {
+  const applyFilters = () => {
     // Filtrar por tipo de plantilla
     const filteredByType = selectedType ? templates.filter(template => template.templateType === selectedType) : templates;
   
@@ -230,10 +230,11 @@ const handleCreateTemplate = async () => {
     // Marcar que los filtros están aplicados
     setFiltersApplied(true);
   };
-
-  const handleApplyFilters = () => {
-    applyFilters(processedTemplates);
-  };
+  
+  useEffect(() => {
+    applyFilters();
+  }, [selectedType, selectedStatus]);
+  
   
   const getLanguageText = (languageCode) => {
     switch (languageCode) {
