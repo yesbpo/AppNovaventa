@@ -544,25 +544,10 @@ const Sends = (props) => {
             ))}
           </select>
         </div>
-
-        {/* Lista desplegable junto al teléfono */}
-        <div>
-          <p>Selecciona la plantilla desde la lista:</p>
-          <select onChange={handleTemplateChange} value={selectedTemplate}>
-            <option value="" disabled>
-              Selecciona tu plantilla
-            </option>
-            {templates.map((template, index) => (
-              <option key={index} value={template.elementName}>
-                {template.elementName}
-              </option>
-            ))}
-          </select>
-        </div>
       </Box>
-
+      
       <Box>
-        {selectedTemplateData && (
+      {selectedTemplateData && (
           <div>
             <p>Contenido de la plantilla:</p>
             <PhoneContainer>
