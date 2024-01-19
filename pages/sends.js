@@ -563,6 +563,10 @@ const Sends = (props) => {
             <p>Tipo de la plantilla seleccionada: {selectedTemplateType}</p>
           </div>
         )}
+
+<MessageContainer>
+      <p>{selectedTemplateData}</p>
+    </MessageContainer>
       </Box>
 
       <Box>
@@ -689,7 +693,7 @@ const MessageContainer = styled.div`
   padding: 10px;
   margin: 10px;
   max-width: 300px;
-  word-wrap: break-word; /* Agregado para envolver palabras */
+  word-wrap: break-word;
 `;
 
 const WhatsAppMessage = ({ message }) => {
