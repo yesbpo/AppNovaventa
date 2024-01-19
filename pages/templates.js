@@ -31,6 +31,8 @@ const Reports = (props) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedStatus, setSelectedStatus] = useState(''); // Estado seleccionado
   const [selectedType, setSelectedType] = useState('');
+  const [filtersApplied, setFiltersApplied] = useState(false);
+
   
 
   const grupo = 'Cueros Velez';
@@ -224,8 +226,15 @@ const handleCreateTemplate = async () => {
     // Ordenar y establecer las plantillas filtradas en el estado
     const sortedTemplates = filteredByStatus.sort((a, b) => a.elementName.localeCompare(b.elementName));
     setTemplates(sortedTemplates);
+  
+    // Marcar que los filtros están aplicados
+    setFiltersApplied(true);
   };
 
+  const handleApplyFilters = () => {
+    applyFilters(processedTemplates);
+  };
+  
   const getLanguageText = (languageCode) => {
     switch (languageCode) {
       case 'es_MX':
@@ -494,6 +503,9 @@ const handleCreateTemplate = async () => {
     </select>
   </label>
 </div>
+
+<button onClick={handleApplyFilters}>Aplicar Filtros</button>
+
 
 
 <div className='CreatedTemplates'>
