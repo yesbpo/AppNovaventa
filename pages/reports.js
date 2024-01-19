@@ -123,40 +123,22 @@ function Reports() {
         // Dividir la conversación en frases cuando se encuentra '['
         const frases = conversacion.conversacion.split('[');
   
-        // Crear una fila para cada frase
+        // Agregar una fila por cada frase
         frases.forEach((frase, index) => {
-          // Ignorar la primera frase si no hay '[' al principio
-          if (index === 0 && !conversacion.conversacion.startsWith('[')) {
-            // Agregar una nueva fila con los campos correspondientes y la primera frase
-            XLSX.utils.sheet_add_aoa(ws, [
-              [
-                conversacion.id,
-                conversacion.idchat,
-                conversacion.asesor,
-                conversacion.conversacion,
-                conversacion.numero,
-                conversacion.calificacion,
-                conversacion.fecha_ingreso,
-                conversacion.fecha_ultimagestion,
-                conversacion.userid
-              ]
-            ]);
-          } else if (index > 0) {
-            // Agregar filas adicionales solo con la frase
-            XLSX.utils.sheet_add_aoa(ws, [
-              [
-                '', // dejar los campos adicionales vacíos en las filas adicionales
-                '',
-                '',
-                frase.trim(),
-                '',
-                '',
-                '',
-                '',
-                ''
-              ]
-            ]);
-          }
+          const fila = [
+            conversacion.id,
+            conversacion.idchat,
+            conversacion.asesor,
+            index === 0 ? frase.trim() : '', // solo en la primera fila se agrega la frase completa
+            conversacion.numero,
+            conversacion.calificacion,
+            conversacion.fecha_ingreso,
+            conversacion.fecha_ultimagestion,
+            conversacion.userid
+          ];
+  
+          // Agregar la fila a la hoja de cálculo
+          XLSX.utils.sheet_add_aoa(ws, [fila]);
         });
       });
   
@@ -171,6 +153,7 @@ function Reports() {
       console.error('Error durante la solicitud:', error.message);
     }
   };
+  
   
   
   return (
