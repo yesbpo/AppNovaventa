@@ -198,7 +198,9 @@ const handleCreateTemplate = async () => {
             modifiedOn: template.modifiedOn,
           }));
 
-          setTemplates(processedTemplates);
+          const sortedTemplates = processedTemplates.sort((a, b) => a.elementName.localeCompare(b.elementName));
+
+          setTemplates(sortedTemplates);
         } else {
           setError(`Error: ${data.message}`);
         }
@@ -457,7 +459,6 @@ const handleCreateTemplate = async () => {
           <ul>
             {currentTemplates.map((template) => (
               <li key={template.elementName}>
-                <strong>Id:</strong> {template.appId}<br />
                 <strong>Categoria:</strong> {template.category}<br />
                 <strong>Tipo de plantilla:</strong> {getTemplateType(template.templateType)}<br />
                 <strong>Fecha de creación:</strong> {new Date(template.createdOn).toLocaleString()}<br />
