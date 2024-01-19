@@ -216,29 +216,6 @@ const handleCreateTemplate = async () => {
     fetchData();
   }, []);
 
-  const applyFilters = () => {
-    // Filtrar por tipo de plantilla
-    const filteredByType = selectedType ? templates.filter(template => template.templateType === selectedType) : templates;
-  
-    // Filtrar por estado
-    const filteredByStatus = selectedStatus ? filteredByType.filter(template => template.status === selectedStatus) : filteredByType;
-  
-    // Ordenar y establecer las plantillas filtradas en el estado
-    const sortedTemplates = filteredByStatus.sort((a, b) => a.elementName.localeCompare(b.elementName));
-    setTemplates(sortedTemplates);
-  
-    // Marcar que los filtros están aplicados
-    setFiltersApplied(true);
-  };
-
-  const handleApplyFilters = () => {
-    applyFilters();
-  };
-  
-  useEffect(() => {
-    applyFilters();
-  }, [selectedType, selectedStatus]);
-  
   
   const getLanguageText = (languageCode) => {
     switch (languageCode) {
@@ -479,39 +456,6 @@ const handleCreateTemplate = async () => {
       }
 
 <span>{deleteMessage}</span>
-
-<div>
-  <label>
-    Filtrar por Estado:
-    <select
-      value={selectedStatus}
-      onChange={(e) => setSelectedStatus(e.target.value)}
-    >
-      <option value="">Todos</option>
-      <option value="APPROVED">Aprobada</option>
-      <option value="PENDING">Pendiente</option>
-      <option value="REJECT">Rechazada</option>
-    </select>
-  </label>
-
-  <label>
-    Filtrar por Tipo de Plantilla:
-    <select
-      value={selectedType}
-      onChange={(e) => setSelectedType(e.target.value)}
-    >
-      <option value="">Todos</option>
-      <option value="TEXT">Texto</option>
-      <option value="IMAGE">Imagen</option>
-      <option value="VIDEO">Video</option>
-      <option value="DOCUMENT">Documento</option>
-    </select>
-  </label>
-</div>
-
-<button onClick={handleApplyFilters}>Aplicar Filtros</button>
-
-
 
 <div className='CreatedTemplates'>
         {error && <p>{error}</p>}
