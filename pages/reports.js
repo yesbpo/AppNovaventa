@@ -118,12 +118,18 @@ function Reports() {
   
       // Agregar filas para cada conversación
       conversaciones.forEach((conversacion) => {
-        const frases = conversacion.conversacion.split('[').filter(Boolean);
+        const frases = conversacion.conversacion.split('[');
   
-        frases.forEach((frase) => {
-          // Crear una nueva fila con la frase
-          XLSX.utils.sheet_add_aoa(ws, [[frase.trim()]]);
-        });
+        // Asegurarse de que haya al menos una frase
+        if (frases.length > 0) {
+          // Agregar la primera frase
+          XLSX.utils.sheet_add_aoa(ws, [[frases[0].trim()]]);
+  
+          // Agregar el resto de las frases
+          frases.slice(1).forEach((frase) => {
+            XLSX.utils.sheet_add_aoa(ws, [['[' + frase.trim()]]);
+          });
+        }
       });
   
       // Agregar la hoja al libro
@@ -137,6 +143,7 @@ function Reports() {
       console.error('Error durante la solicitud:', error.message);
     }
   };
+  
   
   return (
     <>
