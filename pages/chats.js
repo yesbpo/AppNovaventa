@@ -881,7 +881,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     <BotonEnviar onClick={actualizarEstadoChatCerrados}>Cerrar</BotonEnviar>
     <ContainerBox  className='bg-primary'>
       <div ref={messagelistRef} className='messagelist overflow-y-auto'>
-        {(() => {
+      {(() => {
           // Filtra los mensajes por el número específico y contenido no vacío
           const mensajesFiltrados = mensajes1
             .filter((mensaje) => mensaje.number === numeroEspecifico && mensaje.content && mensaje.content.trim() !== '')
@@ -889,14 +889,14 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
 
           // Mapea y renderiza los mensajes ordenados
           return mensajesFiltrados.map((mensaje, index) => (
-            
+
             <div
               key={index}
               className={`mensaje ${mensaje.type_message && console.log(mensajes1.length, mensajesFiltrados.length)} ${
                 mensaje.type_comunication === 'message-event' ? 'bg-white text-right shadow-lg p-4 bg-gray rounded-md' : 'bg-green text-left shadow-lg p-4 bg-gray rounded-md'
               } p-4 mb-4`}
-            > 
-        
+            >
+
               { mensaje.type_message === 'image'  ? (
                 <img src={limpiarLink(mensaje.content) || mensaje.content}  alt="Imagen" className="w-15vw shadow-md p-4 bg-gray rounded-md" />
               ) :mensaje.type_message === 'image' ? (
@@ -923,11 +923,10 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
                   <span >{mensaje.status +" "+ mensaje.timestamp}</span>
                 </>
               )}
-              
+
             </div>
           ));
-        })()}
-      </div>
+        })()}      </div>
       
     </ContainerBox >
     {/* Contenedor de entrada y botones */}
