@@ -9,9 +9,29 @@ const CrearUsuario = () => {
   const handleChange = () => {
     setIsChecked(isChecked);
   };
-  const handleCheckboxChange = () => {
-    setTypeUser(prevTypeUser => prevTypeUser + 1); // Suma 1 al valor existente
-  };
+  const [usuarios, setUsuarios] = useState([]);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const obtenerUsuarios = async () => {
+      try {
+        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-usuarios');
+
+        if (!response.ok) {
+          throw new Error(`Error en la solicitud: ${response.status}`);
+        }
+
+        const data = await response.json();
+        setUsuarios(data);
+      } catch (error) {
+        console.error('Error al obtener usuarios:', error.message);
+        setError('Error al obtener usuarios. Consulta la consola para obtener más detalles.');
+      }
+    };
+
+    obtenerUsuarios();
+  }, []);
+
   const { data: sesion } = useSession();
   const [usuario, setUsuario] = useState('');
   const [password, setPassword] = useState('');
@@ -141,6 +161,13 @@ const CrearUsuario = () => {
           Crear Usuario
         </BotonEnviar>
       </form>
+      <ul>
+        {usuarios.map((usuario) => (
+          <li key={usuario.id}>
+            {usuario.usuario} - {usuario.email}
+          </li>
+        ))}
+      </ul>
     </div>
   </div>
 </Layout>
