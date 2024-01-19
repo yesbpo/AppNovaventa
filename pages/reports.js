@@ -112,9 +112,15 @@ function Reports() {
   
       const { conversaciones } = await response.json();
   
+      // Limpiar espacios en blanco al principio de cada campo de conversación
+      const conversacionesLimpias = conversaciones.map(conversacion => ({
+        ...conversacion,
+        conversacion: conversacion.conversacion.trimLeft()
+      }));
+  
       // Crear un libro de Excel
       const wb = XLSX.utils.book_new();
-      const ws = XLSX.utils.json_to_sheet(conversaciones);
+      const ws = XLSX.utils.json_to_sheet(conversacionesLimpias);
   
       // Agregar la hoja al libro
       XLSX.utils.book_append_sheet(wb, ws, 'Conversaciones');
@@ -122,7 +128,6 @@ function Reports() {
       // Crear un blob del archivo Excel
       XLSX.writeFile(wb, 'resporteconversaciones.xlsx');
   
-      
       console.log('Informe Excel generado y descargado correctamente.');
     } catch (error) {
       console.error('Error durante la solicitud:', error.message);
