@@ -119,7 +119,7 @@ function Reports() {
 const sheet = XLSX.utils.json_to_sheet(conversaciones);
 
 // Iterar sobre los datos para procesar el campo 'conversacion'
-data.forEach((item, index) => {
+conversaciones.forEach((item, index) => {
   // Buscar y dividir el campo 'conversacion' por el símbolo '['
   const conversacionArray = item.conversacion.split('[');
 
