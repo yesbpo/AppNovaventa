@@ -704,12 +704,12 @@ const PhoneContainer = styled.div`
   background-color: #f0f0f0;
   border: 16px solid #333;
   border-top-width: 32px;
-  border-radius: 20px;
+  border-radius: 40px; /* Aumentar el radio para que sea más redondeado */
   position: relative;
-  width: 360px;
-  height: 640px;
+  width: 375px; /* Cambiar el ancho para que sea similar al iPhone */
+  height: 812px; /* Cambiar la altura para que sea similar al iPhone */
   margin: 20px auto;
-  overflow: hidden; /* Agregado para ocultar el desbordamiento */
+  overflow: hidden;
 `;
 
 const PhoneScreen = styled.div`
@@ -717,8 +717,8 @@ const PhoneScreen = styled.div`
   border-radius: 10px;
   overflow: hidden;
   height: 100%;
-  padding: 10px; /* Añadido espacio interno */
-  box-sizing: border-box; /* Asegura que el relleno no afecte al tamaño total */
+  padding: 10px;
+  box-sizing: border-box;
 `;
 
 export default Sends;
