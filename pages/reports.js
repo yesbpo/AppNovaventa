@@ -192,8 +192,7 @@ function Reports() {
       
       if (data.conversacion) {
         setConversacion(data.conversacion);
-        descargarPDF()
-        const descargarPDF = () => {
+
           try {
             const pdf = new jsPDF();
             pdf.text(`Fecha: ${fecha}`, 20, 20);
@@ -206,7 +205,7 @@ function Reports() {
           } catch (error) {
             console.error('Error al generar el PDF:', error);
           }
-        };
+        
         setMensaje('');
       } else {
         setConversacion('');
