@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import * as XLSX from 'xlsx';
 import Layout from '../components/Layout';
 import { useSession, signIn } from 'next-auth/react';
-
+import jsPDF from 'jspdf';
 function Reports() {
   const { data: session } = useSession();
   const [informes, setInformes] = useState([]);
@@ -192,6 +192,21 @@ function Reports() {
       
       if (data.conversacion) {
         setConversacion(data.conversacion);
+        descargarPDF()
+        const descargarPDF = () => {
+          try {
+            const pdf = new jsPDF();
+            pdf.text(`Fecha: ${fecha}`, 20, 20);
+            pdf.text(`ID Chat: ${idchat}`, 20, 30);
+            pdf.text(`User ID: ${userid}`, 20, 40);
+            pdf.text('Conversación:', 20, 50);
+            pdf.text(conversacion || mensaje, 20, 60);
+      
+            pdf.save('informe_conversacion.pdf');
+          } catch (error) {
+            console.error('Error al generar el PDF:', error);
+          }
+        };
         setMensaje('');
       } else {
         setConversacion('');
