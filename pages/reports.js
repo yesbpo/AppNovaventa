@@ -113,49 +113,63 @@ function Reports() {
       const { conversaciones } = await response.json();
   
       // Crear un libro de Excel
-      const wb = XLSX.utils.book_new();
-  
-      // Crear una hoja de cálculo con los encabezados
-      const ws = XLSX.utils.aoa_to_sheet([
-        ['id', 'idchat', 'asesor', 'conversacion', 'numero', 'calificacion', 'fecha_ingreso', 'fecha_ultimagestion', 'userid']
-      ]);
-  
-      // Agregar filas para cada conversación
-      conversaciones.forEach((conversacion) => {
-        // Dividir la conversación en frases cuando se encuentra '['
-        const frases = conversacion.campos.conversacion.split('[').filter(Boolean);  // Eliminar elementos vacíos
-  
-        // Agregar una fila por cada frase
-        frases.forEach((frase, index) => {
-          const fila = [
-            conversacion.campos.id,
-            conversacion.campos.idchat,
-            conversacion.campos.asesor,
-            index === 0 ? frase.trim() : '',
-            conversacion.campos.numero,
-            conversacion.campos.calificacion,
-            conversacion.campos.fecha_ingreso,
-            conversacion.campos.fecha_ultimagestion,
-            conversacion.campos.userid
-          ];
-  
-          // Agregar la fila a la hoja de cálculo
-          XLSX.utils.sheet_add_aoa(ws, [fila]);
-        });
-      });
-  
-      // Agregar la hoja al libro
-      XLSX.utils.book_append_sheet(wb, ws, 'Conversaciones');
-  
-      // Crear un blob del archivo Excel
-      XLSX.writeFile(wb, 'resporteconversaciones.xlsx');
-  
+      const workbook = XLSX.utils.book_new();
+
+// Crear una hoja de Excel
+const sheet = XLSX.utils.json_to_sheet(conversaciones);
+
+// Iterar sobre los datos para procesar el campo 'conversacion'
+data.forEach((item, index) => {
+  // Buscar y dividir el campo 'conversacion' por el símbolo '['
+  const conversacionArray = item.conversacion.split('[');
+
+  // Crear una nueva fila en la hoja de Excel
+  conversacionArray.forEach((texto, i) => {
+    if (i === 0) {
+      // Añadir los campos específicos solo en la primera fila de cada conversación
+      XLSX.utils.sheet_add_json(sheet, [
+        {
+          id: item.id,
+          idchat: item.idchat,
+          asesor: item.asesor,
+          conversacion: texto.trim(),
+          numero: item.numero,
+          calificacion: item.calificacion,
+          fecha_ingreso: item.fecha_ingreso,
+          fecha_ultimagestion: item.fecha_ultimagestion,
+          userid: item.userid
+        }
+      ], { skipHeader: true, origin: `A${index + i + 1}` });
+    } else {
+      // Añadir el resto de los textos en nuevas filas
+      XLSX.utils.sheet_add_json(sheet, [
+        {
+          id: '',
+          idchat: '',
+          asesor: '',
+          conversacion: texto.trim(),
+          numero: '',
+          calificacion: '',
+          fecha_ingreso: '',
+          fecha_ultimagestion: '',
+          userid: ''
+        }
+      ], { skipHeader: true, origin: `A${index + i + 1}` });
+    }
+  });
+});
+
+// Añadir la hoja al libro
+XLSX.utils.book_append_sheet(workbook, sheet, 'Hoja1');
+
+// Guardar el libro como un archivo Excel
+XLSX.writeFile(workbook, 'informe.xlsx');
       console.log('Informe Excel generado y descargado correctamente.');
     } catch (error) {
       console.error('Error durante la solicitud:', error.message);
     }
   };
-  
+
   
   
   
