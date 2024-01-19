@@ -453,6 +453,14 @@ const Sends = (props) => {
     return replacedTemplate;
   };
 
+  const WhatsAppMessage = ({ message }) => {
+    return (
+      <MessageContainer>
+        <p>{message}</p>
+      </MessageContainer>
+    );
+  };
+
   return (
     <Layout>
       <Box>
@@ -546,12 +554,13 @@ const Sends = (props) => {
         </div>
       </Box>
       <Box>
-        {selectedTemplateData && (
-          <div>
-            <p>Contenido de la plantilla:</p>
-            <pre>{JSON.stringify(selectedTemplateData, null, 2)}</pre>
-          </div>
-        )}
+      {selectedTemplateData && (
+  <div>
+    <p>Contenido de la plantilla:</p>
+    <WhatsAppMessage message={selectedTemplateData} />
+  </div>
+)}
+
         {selectedTemplateType && (
           <div>
             <p>Tipo de la plantilla seleccionada: {selectedTemplateType}</p>
@@ -676,5 +685,13 @@ const styleName = {
   color: '#fff',
   textShadow: '-1px 0 #000, 0 1px #000, 1px 0 #000, 0 -1px #000',
 };
+
+const MessageContainer = styled.div`
+  background-color: #e4f8fb;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  max-width: 300px;
+`;
 
 export default Sends;
