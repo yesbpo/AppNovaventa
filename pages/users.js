@@ -108,87 +108,93 @@ const CrearUsuario = () => {
   return (
     
     <Layout>
-        <div className="flex items-center justify-center h-screen">
     <div className="flex items-center justify-center h-screen">
-    {usuarioSeleccionado ? (
-            <div>
-              <h1 className="text-dark text-center mb-6">Modificar Usuario</h1>
-              <p>{usuarioSeleccionado.usuario} - {usuarioSeleccionado.email}</p>
-              {/* Agregar más detalles según sea necesario */}
-            </div>
-          ) : (
-    <div className="w-full max-w-md">
-      
-       
-      {mensaje && (
-            <Mensaje tipo={mensaje.tipo}>
-              {mensaje.texto}
-            </Mensaje>
-          )}
-
-          <h1 className="text-dark text-center mb-6">Crear Usuario</h1>   
-      <form className="mr-8">
-        <div className="mb-5">
-          <label htmlFor="usuario" className="form-label">Usuario:</label>
-          <input type="text" className="form-control" id="usuario" value={usuario} onChange={(e) => setUsuario(e.target.value)} />
-        </div>
-        <div className="mb-3">
-              <label htmlFor="password" className="form-label">
-                Password:
-              </label>
-              <div className="password-container">
-                <input
-                  type={mostrarPassword ? 'text' : 'password'}
-                  className="form-control password-input"  // Agregamos la clase "password-input"
-                  id="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <BotonMostrarPassword type="button" onClick={toggleMostrarPassword}>
-                  {mostrarPassword ? 'Ocultar' : 'Mostrar'}
-                </BotonMostrarPassword>
-              </div>
-            </div>
-        <div className="mb-3">
-          <label htmlFor="email" className="form-label">Email:</label>
-          <input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-        </div>
-        <div className="mb-3">
-            <label htmlFor="typeUser" className="form-label">Type User:</label>
-            <select
-              id="typeUser"
-              className="form-select"
-              value={typeUser}
-              onChange={(e) => setTypeUser(e.target.value)}
-            >
-              <option value="">Seleccionar</option>
-              <option value="Asesor">Asesor</option>
-              <option value="Coordinador">Coordinador</option>
-            </select>
-        </div>
-        <div className="mb-3">
-          <label htmlFor="completeName" className="form-label">Complete Name:</label>
-          <input type="text" className="form-control" id="completeName" value={complete_name} onChange={(e) => setComplete_name(e.target.value)} />
-        </div>
-        <p>Permiso de agregar numero</p><input type="checkbox" checked={isChecked} onChange={handleChange} />
-        <BotonEnviar type=  "button" onClick={handleCrearUsuario}>
-          Crear Usuario
-        </BotonEnviar>
-      </form>
-       {/* Lista de usuarios */}
-       <h2 className="text-dark text-center mb-3">Modificar Usuarios</h2>
+      <div className="w-full max-w-md">
+        {usuarioSeleccionado ? (
+          <div>
+            <h1 className="text-dark text-center mb-6">Modificar Usuario</h1>
+            <p>{usuarioSeleccionado.usuario} - {usuarioSeleccionado.email}</p>
+            {/* Agregar más detalles según sea necesario */}
+          </div>
+        ) : (
+          <div>
+            {mensaje && (
+              <Mensaje tipo={mensaje.tipo}>
+                {mensaje.texto}
+              </Mensaje>
+            )}
+            <div className="flex">
+              <form className="mr-8">
+              <h1 className="text-dark text-center mb-6">Crear Usuario</h1>
+  {mensaje && (
+    <Mensaje tipo={mensaje.tipo}>
+      {mensaje.texto}
+    </Mensaje>
+  )}
+  <div className="mb-5">
+    <label htmlFor="usuario" className="form-label">Usuario:</label>
+    <input type="text" className="form-control" id="usuario" value={usuario} onChange={(e) => setUsuario(e.target.value)} />
+  </div>
+  <div className="mb-3">
+    <label htmlFor="password" className="form-label">
+      Password:
+    </label>
+    <div className="password-container">
+      <input
+        type={mostrarPassword ? 'text' : 'password'}
+        className="form-control password-input"
+        id="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <BotonMostrarPassword type="button" onClick={toggleMostrarPassword}>
+        {mostrarPassword ? 'Ocultar' : 'Mostrar'}
+      </BotonMostrarPassword>
+    </div>
+  </div>
+  <div className="mb-3">
+    <label htmlFor="email" className="form-label">Email:</label>
+    <input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+  </div>
+  <div className="mb-3">
+    <label htmlFor="typeUser" className="form-label">Type User:</label>
+    <select
+      id="typeUser"
+      className="form-select"
+      value={typeUser}
+      onChange={(e) => setTypeUser(e.target.value)}
+    >
+      <option value="">Seleccionar</option>
+      <option value="Asesor">Asesor</option>
+      <option value="Coordinador">Coordinador</option>
+    </select>
+  </div>
+  <div className="mb-3">
+    <label htmlFor="completeName" className="form-label">Complete Name:</label>
+    <input type="text" className="form-control" id="completeName" value={complete_name} onChange={(e) => setComplete_name(e.target.value)} />
+  </div>
+  <p>Permiso de agregar número</p><input type="checkbox" checked={isChecked} onChange={handleChange} />
+  <BotonEnviar type="button" onClick={handleCrearUsuario}>
+    Crear Usuario
+  </BotonEnviar>
+              </form>
+              {/* Lista de usuarios */}
+              <div>
+                <h2 className="text-dark text-center mb-3">Modificar Usuarios</h2>
                 <ul>
                   {usuarios.map((usuario) => (
                     <li key={usuario.id} onClick={() => handleUsuarioSeleccionado(usuario)}>
                       {usuario.usuario} - {usuario.email}
                     </li>
                   ))}
-      </ul>
-    </div>)}
-  </div>
-  </div>
-</Layout>
-
+                </ul>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </Layout>
       )}
       return (
         <>
