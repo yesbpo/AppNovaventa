@@ -207,6 +207,11 @@ function Reports() {
   };
 
   const descargarPDF = () => {
+    if (!fecha || !idchat || !userid || !conversacion) {
+      console.error('Datos incompletos para generar el PDF.');
+      return;
+    }
+  
     try {
       const documentDefinition = {
         content: [
@@ -214,16 +219,15 @@ function Reports() {
           { text: `ID Chat: ${idchat}`, margin: [20, 10] },
           { text: `User ID: ${userid}`, margin: [20, 10] },
           { text: 'Conversación:', margin: [20, 10] },
-          { text: conversacion || mensaje, margin: [20, 10] },
+          { text: conversacion, margin: [20, 10] },
         ],
       };
-
+  
       pdfMake.createPdf(documentDefinition).download('informe_conversacion.pdf');
     } catch (error) {
       console.error('Error al generar el PDF:', error);
     }
   };
-  
   
   return (
     <>
