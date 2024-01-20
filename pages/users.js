@@ -106,7 +106,7 @@ const CrearUsuario = () => {
   const handleUsuarioSeleccionado = (usuario) => {
     setUsuarioSeleccionado(usuario);
   };
-  handleUpdateUser = async () => {
+  const handleUpdateUser = async () => {
     const userId = usuarioSeleccionado.id; // Reemplaza esto con el ID del usuario que deseas actualizar
     const updateUserEndpoint = `${process.env.NEXT_PUBLIC_BASE_DB}/actualizar-usuario/${userId}`;
 
