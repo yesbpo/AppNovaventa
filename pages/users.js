@@ -259,20 +259,15 @@ const CrearUsuario = () => {
   </BotonEnviar>
               </form>}
               {/* Lista de usuarios */}
-              <div>
-                
-                <ul>
-                  {!showCrear && <h2 className="text-dark text-center mb-3">Modificar Usuarios</h2> && usuarios.map((usuario) => (
-                    
-                    <li key={usuario.id} >
-                      {usuario.complete_name}<button onClick={() => handleUsuarioSeleccionado(usuario)}>Modificar</button>
-                    </li>
-                    
-                  ))
-                  }
-                </ul>
-     
-              </div>
+              <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
+  <ul>
+    {!showCrear && <h2 className="text-dark text-center mb-3">Modificar Usuarios</h2> && usuarios.map((usuario) => (
+      <li key={usuario.id}>
+        {usuario.complete_name}<button onClick={() => handleUsuarioSeleccionado(usuario)}>Modificar</button>
+      </li>
+    ))}
+  </ul>
+</div>
             </div>
           </div>
         )}
