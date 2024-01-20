@@ -867,7 +867,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
             <CustomButton onClick={handleEngestionClick}>{"En gestion: "+engestion}</CustomButton>
              {/* Mostrar Activos si 'mostrarActivos' es true */}
             <CustomButton onClick={handlePendientesClick}>{"Pendientes: "+pendientes}</CustomButton>
-            {session.user.type_user=='Asesor1' &&<CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
+            {session.user.type_user=='Asesor1'|| 'Coordinador' &&<CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
           </ButtonContainer>
         </Box>
         <Container>
