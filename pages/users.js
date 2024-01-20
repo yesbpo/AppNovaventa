@@ -203,7 +203,7 @@ const CrearUsuario = () => {
               </Mensaje>
             )}
             <div className="flex">
-            {showCrear && <form className="mr-8">
+            {showCrear && <form>
               <h1 className="text-dark text-center mb-6">Crear Usuario</h1>
   {mensaje && (
     <Mensaje tipo={mensaje.tipo}>
