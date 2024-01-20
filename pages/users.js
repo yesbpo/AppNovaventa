@@ -4,9 +4,11 @@ import styled from 'styled-components';
 import { useSession, signIn } from 'next-auth/react';
 
 const CrearUsuario = () => {
-  
+  const [showCrear, setShowCrear] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
-
+  const handleChangeCrear = () => {
+    setShowCrear(true)
+  }
   const handleChange = () => {
     setIsChecked(!isChecked);
   };
@@ -104,6 +106,36 @@ const CrearUsuario = () => {
   const handleUsuarioSeleccionado = (usuario) => {
     setUsuarioSeleccionado(usuario);
   };
+  handleUpdateUser = async () => {
+    const userId = usuarioSeleccionado.id; // Reemplaza esto con el ID del usuario que deseas actualizar
+    const updateUserEndpoint = `${process.env.NEXT_PUBLIC_BASE_DB}/actualizar-usuario/${userId}`;
+
+    try {
+      const response = await fetch(updateUserEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          type_user: 'newType', // Reemplaza esto con los valores que deseas actualizar
+          email: 'newEmail@example.com',
+          session: 'newSessionToken',
+          usuario: 'newUsername',
+          password: 'newPassword',
+          complete_name: 'New Full Name',
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.mensaje); // Mensaje de éxito desde el servidor
+      } else {
+        console.error('Error al actualizar el usuario:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error en la solicitud:', error.message);
+    }
+  };
   if (sesion){
   return (
     
@@ -156,21 +188,23 @@ const CrearUsuario = () => {
     <label htmlFor="completeName" className="form-label">Complete Name:</label>
     <input type="text" className="form-control" id="completeName" value={complete_name} onChange={(e) => setComplete_name(e.target.value)} />
   </div>
-  <p>Permiso de agregar número</p><input type="checkbox" checked={isChecked} onChange={handleChange} />
-  <BotonEnviar type="button" onClick={handleCrearUsuario}>
+  <p>Permiso de agregar número</p><input type="checkbox" check
+  
+  ed={isChecked} onChange={handleChange} />
+  <BotonEnviar type="button" onClick={handleUpdateUser}>
     Actualizar Usuario
   </BotonEnviar>
             {/* Agregar más detalles según sea necesario */}
           </div>
         ) : (
-          <div>
+            <div>
             {mensaje && (
               <Mensaje tipo={mensaje.tipo}>
                 {mensaje.texto}
               </Mensaje>
             )}
             <div className="flex">
-              <form className="mr-8">
+            {showCrear && <form className="mr-8">
               <h1 className="text-dark text-center mb-6">Crear Usuario</h1>
   {mensaje && (
     <Mensaje tipo={mensaje.tipo}>
@@ -223,7 +257,7 @@ const CrearUsuario = () => {
   <BotonEnviar type="button" onClick={handleCrearUsuario}>
     Crear Usuario
   </BotonEnviar>
-              </form>
+              </form>}
               {/* Lista de usuarios */}
               <div>
                 <h2 className="text-dark text-center mb-3">Modificar Usuarios</h2>
