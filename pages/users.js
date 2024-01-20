@@ -142,6 +142,7 @@ const CrearUsuario = () => {
     <Layout>
     <div className="flex items-center justify-center h-screen">
       <div className="w-full max-w-md">
+        <BotonEnviar onClick={handleChangeCrear}></BotonEnviar>
         {usuarioSeleccionado ? (
           <div>
             <h1 className="text-dark text-center mb-6">Modificar Usuario</h1>
@@ -188,9 +189,7 @@ const CrearUsuario = () => {
     <label htmlFor="completeName" className="form-label">Complete Name:</label>
     <input type="text" className="form-control" id="completeName" value={complete_name} onChange={(e) => setComplete_name(e.target.value)} />
   </div>
-  <p>Permiso de agregar número</p><input type="checkbox" check
-  
-  ed={isChecked} onChange={handleChange} />
+  <p>Permiso de agregar número</p><input type="checkbox" checked={isChecked} onChange={handleChange} />
   <BotonEnviar type="button" onClick={handleUpdateUser}>
     Actualizar Usuario
   </BotonEnviar>
@@ -262,7 +261,7 @@ const CrearUsuario = () => {
               <div>
                 <h2 className="text-dark text-center mb-3">Modificar Usuarios</h2>
                 <ul>
-                  {usuarios.map((usuario) => (
+                  {!showCrear && usuarios.map((usuario) => (
                     <li key={usuario.id} onClick={() => handleUsuarioSeleccionado(usuario)}>
                       {usuario.complete_name}
                     </li>
