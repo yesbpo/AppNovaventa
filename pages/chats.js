@@ -949,14 +949,12 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
   }
   async function asignarChat(){
     const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
-    const users =  await responseUsers.json();
+    const users =  await responseUsers.json().find(u => u.type_user == 'Asesor' || 'Asesor1' && u.status == 'Activo' );
     setMsg(users) 
     console.log(users)
 
   }
   async function trasladarChat (usuarioid){
-    
-    
     const url = `${process.env.NEXT_PUBLIC_BASE_DB}/actualizar-usuario-chat`
     // Realiza la solicitud PUT a la ruta
     try {
@@ -1075,13 +1073,13 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     <BotonEnviar onClick={actualizarEstadoChatCerrados}>Cerrar</BotonEnviar>
     <div>
       <button onClick={asignarChat}>Trasladar Chat</button>
-      <ul>
+      {msg  && <ul>
         {msg.map(user => (
           <li key={user.id} onClick={() => trasladarChat(user.id)}>
-            {user.id}
+            {user.complete_name}
           </li>
         ))}
-      </ul>
+      </ul>}
       
     </div>
     <ContainerBox  className='bg-primary'>
