@@ -985,7 +985,6 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     } catch (error) {
       console.error('Error al realizar la solicitud:', error.message);
     }
-    setNumeroEspecifico('')
     setMsg('')
   }
   if(session){
