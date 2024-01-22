@@ -661,7 +661,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       date: fecha
 
     };
-    setMsg((prevMsg) => [...prevMsg, mensajes.inputValue]);
+    
     const nuevoMensajeEntrante = {
       numero: data.payload.source,
       tipo: data.type,
@@ -837,7 +837,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
         disablePreview: true,
       };
       
-      setMsg((prevMsg) => [...prevMsg, inputValue]);
+      
       const fechaActual = new Date();
 const options = { timeZone: 'America/Bogota', hour12: false };
 const anio = fechaActual.getFullYear();
@@ -947,7 +947,40 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     const match = dataString.match(/"file":"([^"]*)"/);
     return match ? match[1] : null;
   }
-  
+  async function asignarChat(){
+    const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
+    const users = responseUsers.json();
+    setMsg(users) 
+
+  }
+  async function trasladarChat (usuarioid){
+    
+    
+    
+    // Realiza la solicitud PUT a la ruta
+    try {
+      const requestBody = {
+        idChat2: numeroEspecifico,
+        nuevoUserId:usuarioid 
+      };
+      const response = await fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+      });
+    
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);  // Maneja la respuesta según tus necesidades
+      } else {
+        console.error('Error al realizar la solicitud:', response.status, response.statusText);
+      }
+    } catch (error) {
+      console.error('Error al realizar la solicitud:', error.message);
+    }
+  }
   if(session){
     return (
     <>
@@ -1039,6 +1072,17 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     <h2 className='text-white'>Chat {numeroEspecifico}</h2>
     <BotonEnviar onClick={actualizarEstadoChat}>Gestionar</BotonEnviar>
     <BotonEnviar onClick={actualizarEstadoChatCerrados}>Cerrar</BotonEnviar>
+    <div>
+      <button onClick={asignarChat}>Trasladar Chat</button>
+      <ul>
+        {msg.map(user => (
+          <li key={user.id} onClick={() => trasladarChat(user.id)}>
+            {user.id}
+          </li>
+        ))}
+      </ul>
+      
+    </div>
     <ContainerBox  className='bg-primary'>
       <div ref={messagelistRef} className='messagelist overflow-y-auto'>
       {(() => {
