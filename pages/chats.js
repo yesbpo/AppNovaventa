@@ -964,8 +964,10 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     try {
       const requestBody = {
         idChat2: numeroEspecifico,
-        nuevoUserId:usuarioid 
+        nuevoUserId: usuarioid 
+        
       };
+      console.log(requestBody.idChat2, requestBody.nuevoUserId )
       const response = await fetch(url, {
         method: 'PUT',
         headers: {
