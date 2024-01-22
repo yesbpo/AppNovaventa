@@ -10,8 +10,8 @@ const Chats = () => {
 
   const messagelistRef = useRef(null);
 
-  useEffect(async() => {
-    try {
+  useEffect( async() => {
+   
       const fechaActual = new Date();
 const options = { timeZone: 'America/Bogota', hour12: false };
      const fechaInicio = new Date(fechaActual);
@@ -64,10 +64,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
      setContactos1(withoutGest);
      setEngestion(withoutGest.length)
      setPendientes(withoutGest1.length)
-   } catch (error) {
-   
-     // Puedes manejar el error según tus necesidades
-   }
+  
     const messagelist = messagelistRef.current;
 
     // Verifica si la referencia es null
