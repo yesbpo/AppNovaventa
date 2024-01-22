@@ -1076,20 +1076,18 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     <div>
       <button onClick={asignarChat}>Trasladar Chat</button>
       {msg.length > 0 && (
-        <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
-          <div className="bg-white p-4 rounded-md">
-            <button className="absolute top-2 right-2 text-gray-500" onClick={() => setShowPopup(false)}>
-              X
-            </button>
-            <ul>
-              {msg.map(user => (
-                <li key={user.id} onClick={() => trasladarChat(user.id)}>
-                  {user.complete_name}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
+         <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 transition-opacity duration-300">
+         <div className="bg-white p-4 rounded-md relative">
+           <p>Selecciona un asesor para asignar el chat</p>
+           <ul>
+             {msg.map(user => (
+               <li key={user.id} onClick={() => trasladarChat(user.id)}>
+                 {user.complete_name}
+               </li>
+             ))}
+           </ul>
+         </div>
+       </div>
       )}
       
     </div>
