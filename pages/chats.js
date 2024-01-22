@@ -1082,14 +1082,18 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     <BotonEnviar onClick={actualizarEstadoChat}>Gestionar</BotonEnviar>
     <BotonEnviar onClick={actualizarEstadoChatCerrados}>Cerrar</BotonEnviar>
     <div>
-      {numeroEspecifico !== '' && <button onClick={asignarChat}>Trasladar Chat</button>}
+      {numeroEspecifico !== '' && <button onClick={asignarChat}>Transferir Chat</button>}
       {msg.length > 0 && (
          <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 transition-opacity duration-300">
          <div className="bg-white p-4 rounded-md relative">
-           <p>Selecciona un asesor para asignar el chat</p>
+           <p className="mb-4">Selecciona un asesor para asignar el chat</p>
            <ul>
              {msg.map(user => (
-               <li key={user.id} onClick={() => trasladarChat(user.id)}>
+               <li
+                 key={user.id}
+                 onClick={() => trasladarChat(user.id)}
+                 className="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-2"
+               >
                  {user.complete_name}
                </li>
              ))}
