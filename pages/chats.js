@@ -960,13 +960,14 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
   }
   async function trasladarChat (usuarioid){
     const url = `${process.env.NEXT_PUBLIC_BASE_DB}/actualizar-usuario-chat`
+    const requestBody = {
+      idChat2: numeroEspecifico.toString(),
+      nuevoUserId: parseInt(usuarioid) 
+      
+    };
     // Realiza la solicitud PUT a la ruta
     try {
-      const requestBody = {
-        idChat2: numeroEspecifico.toString(),
-        nuevoUserId: parseInt(usuarioid) 
-        
-      };
+      
       console.log(requestBody.idChat2, requestBody.nuevoUserId )
       const response = await fetch(url, {
         method: 'PUT',
