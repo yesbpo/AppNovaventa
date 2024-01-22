@@ -949,7 +949,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
   }
   async function asignarChat(){
     const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
-    const users = responseUsers.json();
+    const users =  await responseUsers.json();
     setMsg(users) 
     console.log(users)
 
