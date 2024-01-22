@@ -963,7 +963,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     // Realiza la solicitud PUT a la ruta
     try {
       const requestBody = {
-        idChat2: numeroEspecifico,
+        idChat2: numeroEspecifico.toString(),
         nuevoUserId: usuarioid 
         
       };
