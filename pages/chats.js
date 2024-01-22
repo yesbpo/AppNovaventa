@@ -1074,7 +1074,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     <BotonEnviar onClick={actualizarEstadoChatCerrados}>Cerrar</BotonEnviar>
     <div>
       <button onClick={asignarChat}>Trasladar Chat</button>
-      {msg && (
+      {msg.length > 0 && (
         <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
           <div className="bg-white p-4 rounded-md">
             <button className="absolute top-2 right-2 text-gray-500" onClick={() => setShowPopup(false)}>
