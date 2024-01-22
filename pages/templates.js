@@ -178,43 +178,43 @@ const handleCreateTemplate = async () => {
 
 
 //Request to obtain the templates
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/gupshup-templates`);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/gupshup-templates');
 
-      if (!response.ok) {
-        throw new Error(`Failed to fetch templates. Status: ${response.status}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.status === "success") {
+          const processedTemplates = data.templates.map(template => ({
+            appId: template.appId,
+            category: template.category,
+            createdOn: template.createdOn,
+            data: template.data,
+            elementName: template.elementName,
+            languageCode: template.languageCode,
+            status: template.status,
+            templateType: template.templateType,
+            modifiedOn: template.modifiedOn,
+          }));
+
+          const sortedTemplates = processedTemplates.sort((a, b) => a.elementName.localeCompare(b.elementName));
+
+          setTemplates(sortedTemplates);
+        } else {
+          setError(`Error: ${data.message}`);
+        }
+      } catch (error) {
+        setError(`Fetch error: ${error.message}`);
       }
+    };
 
-      const data = await response.json();
-
-      if (data.status === "success") {
-        const processedTemplates = data.templates.map(template => ({
-          appId: template.appId,
-          category: template.category,
-          createdOn: template.createdOn,
-          data: template.data,
-          elementName: template.elementName,
-          languageCode: template.languageCode,
-          status: template.status,
-          templateType: template.templateType,
-          modifiedOn: template.modifiedOn,
-        }));
-
-        const sortedTemplates = processedTemplates.sort((a, b) => a.elementName.localeCompare(b.elementName));
-
-        setTemplates(sortedTemplates);
-      } else {
-        setError(`Error: ${data.message}`);
-      }
-    } catch (error) {
-      setError(`Fetch error: ${error.message}`);
-    }
-  };
-
-  fetchData();
-}, [setTemplates, setError]);
+    fetchData();
+  }, []);
 
   
   const getLanguageText = (languageCode) => {
