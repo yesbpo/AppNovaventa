@@ -951,7 +951,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
     const users =  await responseUsers.json().find(u => u.type_user == 'Asesor' || 'Asesor1' && u.status == 'Activo' );
     setMsg(users) 
-    console.log(users)
+    
 
   }
   async function trasladarChat (usuarioid){
@@ -972,7 +972,8 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     
       if (response.ok) {
         const data = await response.json();
-        console.log(data);  // Maneja la respuesta según tus necesidades
+        console.log(data);
+        setMsg('')  // Maneja la respuesta según tus necesidades
       } else {
         console.error('Error al realizar la solicitud:', response.status, response.statusText);
       }
@@ -1073,13 +1074,22 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     <BotonEnviar onClick={actualizarEstadoChatCerrados}>Cerrar</BotonEnviar>
     <div>
       <button onClick={asignarChat}>Trasladar Chat</button>
-      {msg  && <ul>
-        {msg.map(user => (
-          <li key={user.id} onClick={() => trasladarChat(user.id)}>
-            {user.complete_name}
-          </li>
-        ))}
-      </ul>}
+      {msg && (
+        <div className="fixed inset-0 flex items-center justify-center bg-gray-500 bg-opacity-50">
+          <div className="bg-white p-4 rounded-md">
+            <button className="absolute top-2 right-2 text-gray-500" onClick={() => setShowPopup(false)}>
+              X
+            </button>
+            <ul>
+              {msg.map(user => (
+                <li key={user.id} onClick={() => trasladarChat(user.id)}>
+                  {user.complete_name}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
       
     </div>
     <ContainerBox  className='bg-primary'>
