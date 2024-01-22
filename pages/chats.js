@@ -807,10 +807,11 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
           idMessage: idMessage // Puedes ajustar este valor según tus necesidades
         }),
       });
+      setInputValue('')
       if (guardarMensajeResponse.ok) {
         const guardarMensajeData = await guardarMensajeResponse.json();
         console.log(guardarMensajeData)
-        setInputValue('')
+        
         setFile('')
       } else { 
       }
