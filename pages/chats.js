@@ -951,6 +951,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
     const users = responseUsers.json();
     setMsg(users) 
+    console.log(users)
 
   }
   async function trasladarChat (usuarioid){
