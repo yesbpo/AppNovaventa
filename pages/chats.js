@@ -964,7 +964,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     try {
       const requestBody = {
         idChat2: numeroEspecifico.toString(),
-        nuevoUserId: usuarioid 
+        nuevoUserId: parseInt(usuarioid) 
         
       };
       console.log(requestBody.idChat2, requestBody.nuevoUserId )
