@@ -178,7 +178,59 @@ const handleAgregarNumeroClick = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
+      try {
+        const fechaActual = new Date();
+ const options = { timeZone: 'America/Bogota', hour12: false };
+       const fechaInicio = new Date(fechaActual);
+ fechaInicio.setHours(fechaInicio.getHours() - 24);
+ 
+ // Formatear la fecha de inicio
+ const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
+ const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
+ const diaInicio = fechaInicio.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
+ const horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+ const minutosInicio = fechaInicio.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
+ const segundosInicio = fechaInicio.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
+ 
+ const fechaInicioString = `${anioInicio}-${mesInicio}-${diaInicio} ${horaInicio}:${minutosInicio}:${segundosInicio}`;
+ 
+ // Formatear la fecha actual
+ const anioFin = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
+ const mesFin = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
+ const diaFin = fechaActual.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
+ const horaFin = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+ const minutosFin = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
+ const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
+ 
+ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
+ let status ;       
+ if(statuschats == 'Pendientes'){
+        status ='pending'}
+       else{
+        status =   'in process'
+       }
+       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}`);
+       const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
+       const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
+       // El usuario está autenticado, puedes acceder a la sesión
+       
+       if (!response.ok) {
     
+       }
+       const users = await responseUsers.json()
+       const Id = users.filter(d => d.usuario == session.user.name)
+        
+       const chatsPending = await responseChats.json();
+       const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
+       console.log(Id)
+       const data = await response.json();
+       setMensajes1(Object.values(data)[0]);
+       setContactos1(withoutGest);
+       setEngestion(withoutGest.length)
+     } catch (error) {
+     
+       // Puedes manejar el error según tus necesidades
+     }
       const data = await response.json();
       console.log('Datos actualizados correctamente:', data);
     } catch (error) {
