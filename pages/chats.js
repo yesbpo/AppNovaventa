@@ -426,6 +426,7 @@ const handleFileChange = (e) => {
 
     if (response.ok) {
       const data = await response.json();
+      setNumeroEspecifico('')
       try {
         const fechaActual = new Date();
  const options = { timeZone: 'America/Bogota', hour12: false };
@@ -506,6 +507,7 @@ const handleFileChange = (e) => {
 
       if (response.ok) {
         const resultado = await response.json();
+        setNumeroEspecifico('')
         try {
           const fechaActual = new Date();
    const options = { timeZone: 'America/Bogota', hour12: false };
@@ -808,6 +810,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
         }),
       });
       setInputValue('')
+
       if (guardarMensajeResponse.ok) {
         const guardarMensajeData = await guardarMensajeResponse.json();
         console.log(guardarMensajeData)
@@ -974,7 +977,8 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       if (response.ok) {
         const data = await response.json();
         console.log(data);
-        setMsg('')  // Maneja la respuesta según tus necesidades
+        setMsg('')
+        setNumeroEspecifico('')  // Maneja la respuesta según tus necesidades
       } else {
         console.error('Error al realizar la solicitud:', response.status, response.statusText);
       }
@@ -1074,7 +1078,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     <BotonEnviar onClick={actualizarEstadoChat}>Gestionar</BotonEnviar>
     <BotonEnviar onClick={actualizarEstadoChatCerrados}>Cerrar</BotonEnviar>
     <div>
-      <button onClick={asignarChat}>Trasladar Chat</button>
+      {numeroEspecifico !== '' && <button onClick={asignarChat}>Trasladar Chat</button>}
       {msg.length > 0 && (
          <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 transition-opacity duration-300">
          <div className="bg-white p-4 rounded-md relative">
