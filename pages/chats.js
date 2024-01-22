@@ -951,7 +951,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
     const users =  await responseUsers.json();
     
-    setMsg(users.find(u => u.type_user == 'Asesor' || 'Asesor1' && u.status == 'Activo' )) 
+    setMsg(users) 
     
 
   }
