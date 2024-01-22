@@ -191,6 +191,7 @@ const Sends = (props) => {
     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
     const raw_data = XLSX.utils.sheet_to_row_object_array(worksheet);
     setSheetname(raw_data);
+    setSelectvar('');
   };
 
   function asignarDestino(e) {
@@ -477,18 +478,19 @@ const Sends = (props) => {
             placeholder="Selecciona tu Archivo"
           />
 
-          {sheetname.length > 0 && (
-            <div>
-              <h1>Elige la columna que contiene el numero destino</h1>
-              <select className="var-select" value={selectvar} onChange={asignarDestino}>
-                {Object.keys(sheetname[0]).map((columnName, index) => (
-                  <option key={index} value={columnName}>
-                    {columnName}
-                  </option>
-                ))}
-              </select>
-            </div>
-          )}
+            {sheetname.length > 0 && (
+              <div>
+                <h1>Elige la columna que contiene el numero destino</h1>
+                <select className="var-select" value={selectvar} onChange={asignarDestino}>
+                  <option value="" disabled>Seleccionar columna</option>
+                  {Object.keys(sheetname[0]).map((columnName, index) => (
+                    <option key={index} value={columnName}>
+                      {columnName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
 
           <button onClick={handleShowContent}>Mostrar Contenido del Archivo</button>
 
