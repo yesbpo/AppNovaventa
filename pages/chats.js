@@ -978,13 +978,14 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         const data = await response.json();
         console.log(data);
         setMsg('')
-        setNumeroEspecifico('')  // Maneja la respuesta según tus necesidades
+          // Maneja la respuesta según tus necesidades
       } else {
         console.error('Error al realizar la solicitud:', response.status, response.statusText);
       }
     } catch (error) {
       console.error('Error al realizar la solicitud:', error.message);
     }
+    setNumeroEspecifico('')
   }
   if(session){
     return (
