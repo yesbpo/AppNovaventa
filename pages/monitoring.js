@@ -30,7 +30,7 @@ useEffect(() => {
       const data = await response.json();
       const chats = await responseChats.json();
 
-      const asesores = data.filter((d) => d.type_user === 'Asesor');
+      const asesores = data.filter((d) => d.type_user === 'Asesor' ||  d.type_user === 'Asesor1' );
       setAsesores(asesores);
       console.log(asesores)
       const chatspendientes = chats.filter((valor) => valor.status === 'pending');

@@ -331,6 +331,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
   const handleEngestionClick = async () => {
     conection();
     setStatuschats('En gestion')
+    updateuser()
     try {
        const fechaActual = new Date();
 const options = { timeZone: 'America/Bogota', hour12: false };
@@ -427,6 +428,7 @@ const handleFileChange = (e) => {
     if (response.ok) {
       const data = await response.json();
       setNumeroEspecifico('')
+      updateuser()
       try {
         const fechaActual = new Date();
  const options = { timeZone: 'America/Bogota', hour12: false };
@@ -492,6 +494,7 @@ const handleFileChange = (e) => {
 
 
   const actualizarEstadoChat = async (estado) => {
+    updateuser();
     conection();
     try {
       const idChat2 = numeroEspecifico; // Asegúrate de obtener el idChat2 según tu lógica
@@ -810,7 +813,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
         }),
       });
       setInputValue('')
-
+      updateuser()
       if (guardarMensajeResponse.ok) {
         const guardarMensajeData = await guardarMensajeResponse.json();
         console.log(guardarMensajeData)
@@ -953,8 +956,8 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
   async function asignarChat(){
     const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
     const users =  await responseUsers.json();
-    
-    setMsg(users) 
+    const asesores = users.filter(user => user.type_user == "Asesor" || user.type_user == "Asesor1" );
+    setMsg(asesores) 
     
 
   }
@@ -980,7 +983,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       if (response.ok) {
         const data = await response.json();
         console.log(data);
-        
+        setNumeroEspecifico('')
           // Maneja la respuesta según tus necesidades
       } else {
         console.error('Error al realizar la solicitud:', response.status, response.statusText);
@@ -1069,7 +1072,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
             <CustomButton onClick={handleEngestionClick}>{"En gestion: "+engestion}</CustomButton>
              {/* Mostrar Activos si 'mostrarActivos' es true */}
             <CustomButton onClick={handlePendientesClick}>{"Pendientes: "+pendientes}</CustomButton>
-            {session.user.type_user ==='Asesor1'|| 'Coordinador' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
+            {session.user.type_user === 'Asesor1'|| session.user.type_user === 'Coordinador' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
           </ButtonContainer>
         </Box>
         <Container>
@@ -1086,6 +1089,9 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       {msg.length > 0 && (
          <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 transition-opacity duration-300">
          <div className="bg-white p-4 rounded-md relative">
+         <button onClick={() => setMsg('')}>
+              X
+            </button>
            <p className="mb-4">Selecciona un asesor para asignar el chat</p>
            <ul>
              {msg.map(user => (

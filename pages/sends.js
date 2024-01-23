@@ -136,7 +136,7 @@ const Sends = (props) => {
     const apiUrl2 = process.env.NEXT_PUBLIC_BASE_API+'/api/templates';
     axios.get(apiUrl2)
       .then(response => {
-        // Filtra solo las plantillas aprobadas
+        
         const approvedTemplates = response.data.filter(template => template.status === 'APPROVED');
         const sortedTemplates = approvedTemplates.sort((a, b) => a.elementName.localeCompare(b.elementName));
 
@@ -482,8 +482,9 @@ const Sends = (props) => {
               <div>
                 <h1>Elige la columna que contiene el numero destino</h1>
                 <select className="var-select" value={selectvar} onChange={asignarDestino}>
-                  <option value="" disabled>Seleccionar columna</option>
+                  <option value="Seleccionar columna" disabled>Seleccionar columna</option>
                   {Object.keys(sheetname[0]).map((columnName, index) => (
+                   
                     <option key={index} value={columnName}>
                       {columnName}
                     </option>
