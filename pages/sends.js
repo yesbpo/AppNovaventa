@@ -16,7 +16,7 @@ const Sends = (props) => {
   const [selectedTemplate, setSelectedTemplate] = useState("");
   const [selectedTemplateData, setSelectedTemplateData] = useState("");
   const [selectedTemplateType, setSelectedTemplateType] = useState("");
-  const [selectvar, setSelectvar] = useState('');
+  const [selectvar, setSelectvar] = useState('Seleccionar columna');
   const [sheetname, setSheetname] = useState([]);
   const [filename, setFilename] = useState([]);
   const [showFileContent, setShowFileContent] = useState(false);
@@ -482,7 +482,9 @@ const Sends = (props) => {
               <div>
                 <h1>Elige la columna que contiene el numero destino</h1>
                 <select className="var-select" value={selectvar} onChange={asignarDestino}>
-                  <option value="Seleccionar columna" disabled>Seleccionar columna</option>
+                <option value="" disabled>
+              Selecciona el destinatario
+            </option>
                   {Object.keys(sheetname[0]).map((columnName, index) => (
                    
                     <option key={index} value={columnName}>
