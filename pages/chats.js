@@ -956,7 +956,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
   async function asignarChat(){
     const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
     const users =  await responseUsers.json();
-    const asesores = users.filter(user => user.type_user == "Asesor" );
+    const asesores = users.filter(user => user.type_user == "Asesor" || user.type_user == "Asesor1" );
     setMsg(asesores) 
     
 
@@ -1072,7 +1072,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
             <CustomButton onClick={handleEngestionClick}>{"En gestion: "+engestion}</CustomButton>
              {/* Mostrar Activos si 'mostrarActivos' es true */}
             <CustomButton onClick={handlePendientesClick}>{"Pendientes: "+pendientes}</CustomButton>
-            {session.user.type_user ==='Asesor1'|| 'Coordinador' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
+            {session.user.type_user ==='Asesor1'|| user.type_user == 'Coordinador' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
           </ButtonContainer>
         </Box>
         <Container>
