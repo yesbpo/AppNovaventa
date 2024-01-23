@@ -7,6 +7,9 @@ import EmojiPicker from 'emoji-picker-react';
 import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon } from '@heroicons/react/solid';
 
 const Chats = () => {
+  const manejarCambio = (event) => {
+    setInputValue(event.target.value);
+  };
 
   const messagelistRef = useRef(null);
 
@@ -1167,7 +1170,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
           placeholder="Escribe un mensaje..."
           value={inputValue}
           onKeyDown={manejarPresionarEnter}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={manejarCambio}
         />
         <BotonEnviar onClick={enviarMensaje}><PaperAirplaneIcon className="h-5 w-5" /></BotonEnviar>
         <button onClick={toggleEmojiPicker}>😊</button>
