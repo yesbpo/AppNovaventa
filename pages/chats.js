@@ -331,6 +331,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
   const handleEngestionClick = async () => {
     conection();
     setStatuschats('En gestion')
+    updateuser()
     try {
        const fechaActual = new Date();
 const options = { timeZone: 'America/Bogota', hour12: false };
@@ -427,6 +428,7 @@ const handleFileChange = (e) => {
     if (response.ok) {
       const data = await response.json();
       setNumeroEspecifico('')
+      updateuser()
       try {
         const fechaActual = new Date();
  const options = { timeZone: 'America/Bogota', hour12: false };
@@ -492,6 +494,7 @@ const handleFileChange = (e) => {
 
 
   const actualizarEstadoChat = async (estado) => {
+    updateuser();
     conection();
     try {
       const idChat2 = numeroEspecifico; // Asegúrate de obtener el idChat2 según tu lógica
@@ -810,7 +813,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
         }),
       });
       setInputValue('')
-
+      updateuser()
       if (guardarMensajeResponse.ok) {
         const guardarMensajeData = await guardarMensajeResponse.json();
         console.log(guardarMensajeData)
