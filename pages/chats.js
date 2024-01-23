@@ -956,7 +956,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
   async function asignarChat(){
     const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
     const users =  await responseUsers.json();
-    const asesores = users.filter(user => user.type_user === "Asesor" && user.status == 'Activo' );
+    const asesores = users.filter(user => user.type_user == "Asesor" && user.session == 'Activo' );
     setMsg(asesores) 
     
 
