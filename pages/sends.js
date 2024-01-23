@@ -16,7 +16,7 @@ const Sends = (props) => {
   const [selectedTemplate, setSelectedTemplate] = useState("");
   const [selectedTemplateData, setSelectedTemplateData] = useState("");
   const [selectedTemplateType, setSelectedTemplateType] = useState("");
-  const [selectvar, setSelectvar] = useState('');
+  const [selectvar, setSelectvar] = useState('Seleccionar columna');
   const [sheetname, setSheetname] = useState([]);
   const [filename, setFilename] = useState([]);
   const [showFileContent, setShowFileContent] = useState(false);
