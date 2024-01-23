@@ -1089,6 +1089,9 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       {msg.length > 0 && (
          <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 transition-opacity duration-300">
          <div className="bg-white p-4 rounded-md relative">
+         <button onClick={() => setMsg('')}>
+              X
+            </button>
            <p className="mb-4">Selecciona un asesor para asignar el chat</p>
            <ul>
              {msg.map(user => (
