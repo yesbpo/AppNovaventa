@@ -136,7 +136,7 @@ const Sends = (props) => {
     const apiUrl2 = process.env.NEXT_PUBLIC_BASE_API+'/api/templates';
     axios.get(apiUrl2)
       .then(response => {
-        // Filtra solo las plantillas aprobadas
+        
         const approvedTemplates = response.data.filter(template => template.status === 'APPROVED');
         const sortedTemplates = approvedTemplates.sort((a, b) => a.elementName.localeCompare(b.elementName));
 
