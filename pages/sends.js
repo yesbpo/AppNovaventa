@@ -478,15 +478,22 @@ const Sends = (props) => {
             placeholder="Selecciona tu Archivo"
           />
 
-          <select className="var-select" value={selectvar} onChange={asignarDestino}>
-            <option value="Seleccionar columna" disabled>Seleccionar columna</option>
-            {Object.keys(sheetname[0]).map((columnName, index) => (
-              <option key={index} value={columnName}>
-                {columnName}
-              </option>
-            ))}
-          </select>
-
+            {sheetname.length > 0 && (
+              <div>
+                <h1>Elige la columna que contiene el numero destino</h1>
+                <select className="var-select" value={selectvar} onChange={asignarDestino}>
+                <option value="" disabled>
+              Selecciona el destinatario
+            </option>
+                  {Object.keys(sheetname[0]).map((columnName, index) => (
+                   
+                    <option key={index} value={columnName}>
+                      {columnName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
 
           <button onClick={handleShowContent}>Mostrar Contenido del Archivo</button>
 
