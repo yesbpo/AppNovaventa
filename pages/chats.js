@@ -958,7 +958,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     const users =  await responseUsers.json();
     const asesores = users.filter(user => user.type_user == "Asesor" );
     setMsg(asesores) 
-    console.log(asesores)
+    
 
   }
   async function trasladarChat (usuarioid){
