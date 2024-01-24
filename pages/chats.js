@@ -1224,7 +1224,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       
     </div>
     <ContainerBox  className='bg-primary'>
-      <div className='overflow-y-auto h-80vw' >
+      <div className='h-80vw overflow-y-auto' >
       {(() => {
           // Filtra los mensajes por el número específico y contenido no vacío
           const mensajesFiltrados = mensajes1
