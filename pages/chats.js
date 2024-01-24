@@ -1341,7 +1341,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
         value={numeroBuscado}
         onChange={handleNumeroChange}
       />
-      <SearchIcon className="h-50 w-50 text-gray-500 p-2 rounded-r-md cursor-pointer"  onClick={buscarContacto}/>
+      <SearchIcon className="h-15 w-15 text-gray-500 p-2 rounded-r-md cursor-pointer"  onClick={buscarContacto}/>
   <Box className='bg-blue-900'>
     <div className="contact-list-container">
       <h1>{statuschats}</h1>
