@@ -334,7 +334,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
   const handleEngestionClick = async () => {
     conection();
     setStatuschats('En gestion')
-    updateuser()
+    
     try {
        const fechaActual = new Date();
 const options = { timeZone: 'America/Bogota', hour12: false };
