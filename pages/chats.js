@@ -952,6 +952,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
 
         const data1 = await response.json();
         setMensajes1(data1);
+        console.log(data1)
       } catch (error) {
         
         // Puedes manejar el error según tus necesidades
