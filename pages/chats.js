@@ -1418,7 +1418,7 @@ background-color: #f7f7f7;
 border-radius: 10px;
 overflow-y: scroll;
 height: 30vw;
-width: 40vw;
+width: 50vw;
 scroll-behavior: smooth;
 `;
 const ContainerBox2 = styled.div`
