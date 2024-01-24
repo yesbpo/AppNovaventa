@@ -1423,7 +1423,7 @@ scroll-behavior: smooth;
 `;
 const ContainerBox2 = styled.div`
 background-color: #f7f7f7;
-margin-top: 20px;
+margin-top: 25px;
 border-radius: 10px;
 overflow-y: scroll;
 height: 50vw;
