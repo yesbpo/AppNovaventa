@@ -30,25 +30,25 @@ const Chats = () => {
 
     
 
-     const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status1}`);
+     
      const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
 
      const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
      // El usuario está autenticado, puedes acceder a la sesión
      
-     if (!responseChatsin.ok) {
+     if (!responseUsers.ok) {
   
      }
      const users = await responseUsers.json()
      const Id = users.filter(d => d.usuario == session.user.name)
-      
+     const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
      const chatsPending = await responseChatsin.json();
      const chatsPending1 = await responseChatspen.json();
-     const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
+     const withoutGest = chatsPending
      const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
-     console.log(Id)
+     console.log(chatsPending)
      
-     
+     setContactos1(Object.values(withoutGest)[0])
      
      setEngestion(withoutGest.length)
      setPendientes(withoutGest1.length)
@@ -1329,21 +1329,43 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     <div className="contact-list-container">
       <h1>{statuschats}</h1>
       <ul>
-        {contactos1.map((contacto, index) => (
-          <li key={index}>
-            <CustomButton2 onClick={()=>marcaLeido(contacto.idChat2)}className={`p-2 rounded ${
-        contacto.resolved ? 'bg-white text-black' : 'bg-green text-white'
-      }`}>
-              <UserGroupIcon className="w-5 h-10"/> {contacto.idChat2}
-              {contacto.resolved ? 
-              <span className="text-green"> Resuelto </span> :
-              <span className="text-red"> No resuelto </span>
-            }
-            </CustomButton2>
-          </li>
-        ))}
-      </ul>
-    </div>
+  {!Array.isArray(contactos1) && (
+    <li>
+      <CustomButton2
+        onClick={() => marcaLeido(contactos1.idChat2)}
+        className={`p-2 rounded ${
+          contactos1.resolved ? 'bg-gray text-black' : 'bg-green text-white'
+        }`}
+      >
+        <UserGroupIcon className="w-5 h-10" /> {contactos1.idChat2}
+        {contactos1.resolved ? (
+          <span className="text-green"> Resuelto </span>
+        ) : (
+          <span className="text-red"> No resuelto </span>
+        )}
+      </CustomButton2>
+    </li>
+  )}
+  {Array.isArray(contactos1) &&
+    contactos1.map((contacto, index) => (
+      <li key={index}>
+        <CustomButton2
+          onClick={() => marcaLeido(contacto.idChat2)}
+          className={`p-2 rounded ${
+            contacto.resolved ? 'bg-gray text-black' : 'bg-green text-white'
+          }`}
+        >
+          <UserGroupIcon className="w-5 h-10" /> {contacto.idChat2}
+          {contacto.resolved ? (
+            <span className="text-green"> Resuelto </span>
+          ) : (
+            <span className="text-red"> No resuelto </span>
+          )}
+        </CustomButton2>
+      </li>
+    ))}
+</ul>
+</div>
   </Box>
   </ContainerBox2>
  
