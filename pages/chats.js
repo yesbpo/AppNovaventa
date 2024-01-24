@@ -26,7 +26,7 @@ const Chats = () => {
   const messagelistRef = useRef(null);
 
   useEffect( async() => {
-   
+   console.log('hola')
      const status1 = 'in process'
      const status2 = 'pending'
 
@@ -34,8 +34,7 @@ const Chats = () => {
 
      
      const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
-
-     const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
+      const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
      // El usuario está autenticado, puedes acceder a la sesión
      
      if (!responseUsers.ok) {
@@ -64,10 +63,7 @@ const Chats = () => {
     }
     
   }, [mensajes1]);
-  useEffect(() => {
-    // Este efecto se ejecutará en la segunda renderización
-    console.log('Segunda ejecución del efecto');
-  }, [forceUpdate]);
+
  const [showPopup, setShowPopup] = useState('')
   // Función para abrir la ventana emergente
   const openPopup = () => {
