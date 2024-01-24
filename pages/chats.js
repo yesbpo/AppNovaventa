@@ -18,8 +18,7 @@ const Chats = () => {
   };
   const buscarContacto = () => {
     const resultadosFiltrados = contactos1.filter(
-      (contacto) => contacto.idChat2 === numeroBuscado
-    );
+      (contacto) => contacto.idChat2.includes(valorIngresado)    );
     setContactos1(resultadosFiltrados);
   };
   const messagelistRef = useRef(null);
