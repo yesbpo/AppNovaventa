@@ -1420,11 +1420,10 @@ gap: 20px;
 
 const ContainerBox = styled.div`
 background-color: #f7f7f7;
-padding: 15px;
 border-radius: 10px;
 overflow-y: scroll;
 height: 20vw;
-width: 35vw;
+width: 40vw;
 scroll-behavior: smooth;
 `;
 const ContainerBox2 = styled.div`
