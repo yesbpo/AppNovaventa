@@ -1380,7 +1380,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         {contactos1.map((contacto, index) => (
           <li key={index}>
             <CustomButton2 onClick={()=>marcaLeido(contacto.idChat2)}className={`p-2 rounded ${
-        isResolved ? 'bg-white text-black' : 'bg-green text-white'
+        contacto.resolved ? 'bg-white text-black' : 'bg-green text-white'
       }`}>
               <UserGroupIcon className="w-5 h-10"/> {contacto.idChat2}
               {contacto.resolved ? 
