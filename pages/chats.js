@@ -104,7 +104,7 @@ function contarOcurrencias(texto, patron) {
 
 // GET TEMPLATES
 useEffect(() => {
-  console.log('exito1')
+  
  // Traer las plantillas al cargar el componente
  const fetchTemplates = async () => {
    try {
@@ -204,7 +204,7 @@ useEffect(() => {
  }
  fetchTemplates();
  fetchMensajes();
-});
+}, []);
 const handleParamChange = (param, value) => {
  setTemplateParams((prevParams) => {
    const updatedParams = {
