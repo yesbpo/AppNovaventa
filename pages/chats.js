@@ -1224,7 +1224,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       
     </div>
     <ContainerBox  className='bg-primary'>
-      <div className='h-80vw overflow-y-auto' >
+      <div className='h-80 overflow-y-auto' >
       {(() => {
           // Filtra los mensajes por el número específico y contenido no vacío
           const mensajesFiltrados = mensajes1
@@ -1234,7 +1234,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
           // Mapea y renderiza los mensajes ordenados
           return mensajesFiltrados.map((mensaje, index) => (
             
-            <div
+            <div 
               key={index}
               className={`mensaje ${mensaje.type_message && console.log(mensajes1.length, mensajesFiltrados.length)} ${
                 mensaje.type_comunication === 'message-event' ? 'bg-white text-right shadow-lg p-4 bg-gray rounded-md' : 'bg-green text-left shadow-lg p-4 bg-gray rounded-md'
