@@ -1203,8 +1203,6 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
 
     <Box className="bg-primary">
     <h2 className='text-white'>Chat {numeroEspecifico}</h2>
-    <BotonEnviar onClick={actualizarEstadoChat}>Gestionar</BotonEnviar>
-    <BotonEnviar onClick={actualizarEstadoChatCerrados}>Cerrar</BotonEnviar>
     <div className='h-80vw'>
       {numeroEspecifico !== '' && <button onClick={asignarChat}>Transferir Chat</button>}
       {msg.length > 0 && (
@@ -1280,6 +1278,10 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         })()}      </div>
       
     </ContainerBox >
+    <div className='flex flex-row justify-between'>
+      <BotonEnviar onClick={actualizarEstadoChat}>Gestionar</BotonEnviar>
+      <BotonEnviar onClick={actualizarEstadoChatCerrados}>Cerrar</BotonEnviar>
+    </div>
     {/* Contenedor de entrada y botones */}
     <div className='input-container'>
       <InputContainer className='input-box'>
