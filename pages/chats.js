@@ -1035,53 +1035,53 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     const nuevoDato = 'Activo'; // Reemplaza con el nuevo valor que deseas asignar
     if(numeroEspecifico !== '')
     {
-      const fechaActual = new Date();
-const options = { timeZone: 'America/Bogota', hour12: false };
-      const fechaInicio = new Date(fechaActual);
-fechaInicio.setHours(fechaInicio.getHours() - 1);
-let horaInicio ;
-// Formatear la fecha de inicio
-const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
-const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
-const diaInicio = fechaInicio.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
-if (fechaInicio.getHours() >= 24) {
-  horaInicio = 0; 
-}
- horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
-const minutosInicio = fechaInicio.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
-const segundosInicio = fechaInicio.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
+        const fechaActual = new Date();
+  const options = { timeZone: 'America/Bogota', hour12: false };
+        const fechaInicio = new Date(fechaActual);
+  fechaInicio.setHours(fechaInicio.getHours() - 1);
+  let horaInicio ;
+  // Formatear la fecha de inicio
+  const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
+  const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
+  const diaInicio = fechaInicio.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
+  if (fechaInicio.getHours() >= 24) {
+    horaInicio = 0; 
+  }
+  horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+  const minutosInicio = fechaInicio.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
+  const segundosInicio = fechaInicio.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
 
-const fechaInicioString = `${anioInicio}-${mesInicio}-${diaInicio} ${horaInicio}:${minutosInicio}:${segundosInicio}`;
+  const fechaInicioString = `${anioInicio}-${mesInicio}-${diaInicio} ${horaInicio}:${minutosInicio}:${segundosInicio}`;
 
-// Formatear la fecha actual
-const anioFin = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
-const mesFin = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
-const diaFin = fechaActual.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
-const horaFin = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
-const minutosFin = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
-const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
+  // Formatear la fecha actual
+  const anioFin = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
+  const mesFin = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
+  const diaFin = fechaActual.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
+  const horaFin = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+  const minutosFin = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
+  const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
 
-const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
+  const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
 
 
-const fetchAct = async () =>{   
-     
-      try {
-        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${numeroEspecifico}`);
+  const fetchAct = async () =>{   
+      
+        try {
+          const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${numeroEspecifico}`);
 
-        if (!response.ok) {
+          if (!response.ok) {
+            
+          }
+
+          const data1 = await response.json();
+          setMensajes1(Object.values(data1)[0]);
+          console.log(fechaInicioString)
+        } catch (error) {
           
+          // Puedes manejar el error según tus necesidades
         }
-
-        const data1 = await response.json();
-        setMensajes1(Object.values(data1)[0]);
-        console.log(fechaInicioString)
-      } catch (error) {
-        
-        // Puedes manejar el error según tus necesidades
-      }
-    } 
-    await fetchAct();
+      } 
+      await fetchAct();
 
   // Configurar el intervalo para realizar la consulta cada 30 segundos
   const intervalId = setInterval(async () => {
@@ -1090,7 +1090,58 @@ const fetchAct = async () =>{
   }
   
   }
-  
+  async function  fetchActdia (){
+    const fechaActual = new Date();
+    const options = { timeZone: 'America/Bogota', hour12: false };
+          const fechaInicio = new Date(fechaActual);
+    fechaInicio.setDate(fechaInicio.getDate() - 1);
+    let horaInicio ;
+    // Formatear la fecha de inicio
+    const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
+    const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
+    const diaInicio = fechaInicio.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
+    if (fechaInicio.getHours() >= 24) {
+      horaInicio = 0; 
+    }
+     horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+    const minutosInicio = fechaInicio.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
+    const segundosInicio = fechaInicio.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
+    
+    const fechaInicioString = `${anioInicio}-${mesInicio}-${diaInicio} ${horaInicio}:${minutosInicio}:${segundosInicio}`;
+    
+    // Formatear la fecha actual
+    const anioFin = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
+    const mesFin = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
+    const diaFin = fechaActual.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
+    const horaFin = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+    const minutosFin = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
+    const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
+    
+    const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
+    
+    
+    
+         
+          try {
+            const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${numeroEspecifico}`);
+    
+            if (!response.ok) {
+              
+            }
+    
+            const data1 = await response.json();
+            setMensajes1(Object.values(data1)[0]);
+            console.log(fechaInicioString)
+          } catch (error) {
+            
+            // Puedes manejar el error según tus necesidades
+          }
+        
+        
+  }
+  const handleRefresh = () => {
+    fetchActdia();
+  };
   function limpiarLink(dataString) {
     const match = dataString.match(/"file":"([^"]*)"/);
     return match ? match[1] : null;
@@ -1261,14 +1312,17 @@ const fetchAct = async () =>{
 
           // Mapea y renderiza los mensajes ordenados
           return mensajesFiltrados.map((mensaje, index) => (
-
+            
             <div
               key={index}
               className={`mensaje ${mensaje.type_message && console.log(mensajes1.length, mensajesFiltrados.length)} ${
                 mensaje.type_comunication === 'message-event' ? 'bg-white text-right shadow-lg p-4 bg-gray rounded-md' : 'bg-green text-left shadow-lg p-4 bg-gray rounded-md'
               } p-4 mb-4`}
             >
-
+              <RefreshIcon
+          className="h-5 w-5 text-gray-500 p-2 rounded-r-md cursor-pointer"
+          onClick={handleRefresh}
+        />
               { mensaje.type_message === 'image'  ? (
                 <img src={limpiarLink(mensaje.content) || mensaje.content}  alt="Imagen" className="w-15vw shadow-md p-4 bg-gray rounded-md" />
               ) :mensaje.type_message === 'image' ? (
