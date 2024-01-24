@@ -8,7 +8,7 @@ import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon, SearchIcon, RefreshIco
 
 const Chats = () => {
   const { data: session } = useSession();
-  console.log(session)
+  
   const manejarCambio = (event) => {
     setInputValue(event.target.value);
   };
@@ -26,8 +26,8 @@ const Chats = () => {
   const messagelistRef = useRef(null);
 
   useEffect( async() => {
-    
-   console.log(session.user.name)
+    const session1 = session
+   console.log(session1.user.name)
      const status1 = 'in process'
      const status2 = 'pending'
 
