@@ -1030,14 +1030,15 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
 
   
   };
-  const updateuser = async () => {
+  const updateuser =   async () => {
     const usuario = session.user.name; // Reemplaza con el nombre de usuario que deseas actualizar
     const nuevoDato = 'Activo'; // Reemplaza con el nuevo valor que deseas asignar
     if(numeroEspecifico !== '')
-    {const fechaActual = new Date();
+    {
+      const fetchAct = async () =>{const fechaActual = new Date();
 const options = { timeZone: 'America/Bogota', hour12: false };
       const fechaInicio = new Date(fechaActual);
-fechaInicio.setDate(fechaInicio.getDate() - 1);
+fechaInicio.setHours(fechaInicio.getHours() - 1);
 let horaInicio ;
 // Formatear la fecha de inicio
 const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
@@ -1079,7 +1080,13 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
         
         // Puedes manejar el error según tus necesidades
       }
-    }
+    } }
+    await fetchAct();
+
+    // Configurar el intervalo para realizar la consulta cada 30 segundos
+    const intervalId = setInterval(async () => {
+      await fetchAct();
+    }, 30000);
   }
   
   function limpiarLink(dataString) {
