@@ -48,7 +48,7 @@ const Chats = () => {
      const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
      console.log(chatsPending)
      
-     setContactos1(withoutGest)
+     setContactos1(Object.values(withoutGest)[0])
      
      setEngestion(withoutGest.length)
      setPendientes(withoutGest1.length)
