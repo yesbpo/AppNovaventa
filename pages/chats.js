@@ -1417,7 +1417,7 @@ const ContainerBox = styled.div`
 background-color: #f7f7f7;
 border-radius: 10px;
 overflow-y: scroll;
-height: 40vw;
+height: 30vw;
 width: 40vw;
 scroll-behavior: smooth;
 `;
