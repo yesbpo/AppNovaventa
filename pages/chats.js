@@ -944,7 +944,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       
      
       try {
-        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}`);
+        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes');
 
         if (!response.ok) {
           
@@ -952,7 +952,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
 
         const data1 = await response.json();
         setMensajes1(data1);
-        console.log(data1)
+        console.log(data)
       } catch (error) {
         
         // Puedes manejar el error según tus necesidades
@@ -1122,7 +1122,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
     </div>
     <ContainerBox  className='bg-primary'>
       <div ref={messagelistRef} className='messagelist overflow-y-auto'>
-      {numeroEspecifico !== '' &&(() => {
+      {(() => {
           // Filtra los mensajes por el número específico y contenido no vacío
           const mensajesFiltrados = mensajes1
             .filter((mensaje) => mensaje.number === numeroEspecifico && mensaje.content && mensaje.content.trim() !== '')
