@@ -948,7 +948,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       if (guardarMensajeResponse.ok) {
         const guardarMensajeData = await guardarMensajeResponse.json();
         console.log(guardarMensajeData)
-        fetchMensajes()
+        
         setFile('')
       } else { 
       }
@@ -1010,11 +1010,11 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         idMessage: idMessage // Puedes ajustar este valor según tus necesidades
       }),
     });
-    
+    updateuser()
     if (guardarMensajeResponse.ok) {
       const guardarMensajeData = await guardarMensajeResponse.json();
       console.log(guardarMensajeData)
-      fetchMensajes()
+      
       setInputValue('')
           } else {
       
@@ -1038,7 +1038,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         const fechaActual = new Date();
   const options = { timeZone: 'America/Bogota', hour12: false };
         const fechaInicio = new Date(fechaActual);
-  fechaInicio.setHours(fechaInicio.getHours() - 1);
+  fechaInicio.setDate(fechaInicio.getDate() - 1);
   let horaInicio ;
   // Formatear la fecha de inicio
   const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
@@ -1082,11 +1082,9 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         }
       } 
 
-
-  // Configurar el intervalo para realizar la consulta cada 30 segundos
-  const intervalId = setInterval(async () => {
     await fetchAct();
-  }, 30000);
+  // Configurar el intervalo para realizar la consulta cada 30 segundos
+    
   }
   
   }
