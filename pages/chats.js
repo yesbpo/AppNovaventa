@@ -1386,7 +1386,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
  
 const Box = styled.div`
  
-
+padding: 1vw;
 margin: 2vw;
 border-radius: 10px;
 box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
