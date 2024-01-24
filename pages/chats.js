@@ -206,11 +206,11 @@ useEffect(() => {
  fetchMensajes();
 }, []);
 const fetchMensajes = async () => {
-  console.log('exito')
+  
   const fechaActual = new Date();
   const options = { timeZone: 'America/Bogota', hour12: false };
        const fechaInicio = new Date(fechaActual);
-  fechaInicio.setHours(fechaInicio.getHours() - 24);
+  fechaInicio.setHours(fechaInicio.getHours() - 1);
   
   // Formatear la fecha de inicio
   const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
