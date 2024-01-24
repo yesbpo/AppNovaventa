@@ -1342,7 +1342,8 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
   </div>
 
   {/* Contenedor de contactos */}
-  <ContainerBox >
+ </Box>
+ <ContainerBox2 >
   <Box className='bg-blue-900'>
     <div className="contact-list-container">
       <h1>{statuschats}</h1>
@@ -1361,9 +1362,8 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       </ul>
     </div>
   </Box>
-  </ContainerBox>
-</Box>
-  
+  </ContainerBox2>
+ 
         </Container>
       </Layout>
         </>
@@ -1432,8 +1432,8 @@ background-color: #f7f7f7;
 padding: 15px;
 border-radius: 10px;
 overflow-y: scroll;
-height: 50vw;
-width: 15vw;
+height: 30vw;
+width: 40vw;
 scroll-behavior: smooth;
 `;
 const p = styled.div`
