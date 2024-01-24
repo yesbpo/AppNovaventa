@@ -1432,7 +1432,7 @@ padding: 15px;
 border-radius: 10px;
 overflow-y: scroll;
 height: 30vw;
-width: 80vw;
+width: 100vw;
 scroll-behavior: smooth;
 `;
 const p = styled.div`
