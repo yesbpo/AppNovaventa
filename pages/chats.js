@@ -12,10 +12,13 @@ const Chats = () => {
   };
   const [numeroBuscado, setNumeroBuscado] = useState(''); 
   const handleNumeroChange = (e) => {
-    const valorIngresado = e.target.value;
-    setNumeroBuscado(valorIngresado);
+    
+    setNumeroBuscado( e.target.value);
+    
+  };
+  const buscarContacto = () => {
     const resultadosFiltrados = contactos1.filter(
-      (contacto) => contacto.numero.includes(valorIngresado)
+      (contacto) => contacto.numero === numeroBuscado
     );
     setContactos1(resultadosFiltrados);
   };
@@ -1330,12 +1333,13 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
 
   {/* Contenedor de contactos */}
  </Box>
- <input
+ <InputMensaje
         type="text"
         placeholder="Ingrese un número"
         value={numeroBuscado}
         onChange={handleNumeroChange}
       />
+      <button onClick={buscarContacto}></button>
  <ContainerBox2 >
   <Box className='bg-blue-900'>
     <div className="contact-list-container">
