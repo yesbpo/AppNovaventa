@@ -133,18 +133,26 @@ const Sends = (props) => {
   };
 
   useEffect(() => {
-    const apiUrl2 = process.env.NEXT_PUBLIC_BASE_API+'/api/templates';
-    axios.get(apiUrl2)
-      .then(response => {
-        
-        const approvedTemplates = response.data.filter(template => template.status === 'APPROVED');
+    const fetchData = async () => {
+      try {
+        const apiUrl2 = process.env.NEXT_PUBLIC_BASE_API + '/api/templates';
+        const response = await fetch(apiUrl2);
+
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+
+        const data = await response.json();
+        const approvedTemplates = data.filter(template => template.status === 'APPROVED');
         const sortedTemplates = approvedTemplates.sort((a, b) => a.elementName.localeCompare(b.elementName));
 
-        setTemplates(approvedTemplates);
-      })
-      .catch(error => {
+        setTemplates(sortedTemplates);
+      } catch (error) {
         console.error('Error:', error);
-      });
+      }
+    };
+
+    fetchData();
   }, []);
 
   const getTemplateType = (templateType) => {

@@ -200,32 +200,7 @@ const { data: session } = useSession();
       // Puedes manejar el error según tus necesidades
     }
   };
-  const handleEngestionClick = async (iduser) => {
-    conection();
-    setStatuschats('En gestion')
-    try {
-      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes');
-      const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-chats');
-      const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
-      // El usuario está autenticado, puedes acceder a la sesión
-      
-      if (!response.ok) {
-        throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
-      }
-      const users = await responseUsers.json()
-      const Id = iduser
-      const dataChats =  await responseChats.json();
-      const chatsPending = dataChats.filter(d=> d.status == 'in process')
-      const withoutGest = chatsPending.filter(d => d.userId == Id )
-      console.log(Id)
-      const data = await response.json();
-      setMensajes2(data);
-      setContactos2(withoutGest);
-    } catch (error) {
-      console.error('Error al obtener mensajes:', error);
-      // Puedes manejar el error según tus necesidades
-    }
-  };
+  
 
   // closed chats
   const handleClosedClick = async () => {
