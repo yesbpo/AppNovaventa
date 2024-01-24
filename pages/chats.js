@@ -1053,7 +1053,7 @@ let horaInicio ;
 const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
 const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
 const diaInicio = fechaInicio.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
-if (fechaInicio.getHours() = '24') {
+if (fechaInicio.getHours() = 24) {
   horaInicio = '00' ;
 }
  horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
