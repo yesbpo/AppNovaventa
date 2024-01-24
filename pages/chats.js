@@ -1190,15 +1190,15 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
           </ButtonContainer>
         </Box>
         <Container>
-        <Box className='container-messages w-50vw h-40vh flex'>
+        
   {/* Contenedor del chat */}
   
-  <div className='chat-container '>
+
     <Box className="bg-primary">
     <h2 className='text-white'>Chat {numeroEspecifico}</h2>
     <BotonEnviar onClick={actualizarEstadoChat}>Gestionar</BotonEnviar>
     <BotonEnviar onClick={actualizarEstadoChatCerrados}>Cerrar</BotonEnviar>
-    <div>
+    <div className='h-80vw'>
       {numeroEspecifico !== '' && <button onClick={asignarChat}>Transferir Chat</button>}
       {msg.length > 0 && (
          <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 transition-opacity duration-300">
@@ -1224,7 +1224,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       
     </div>
     <ContainerBox  className='bg-primary'>
-      <div ref={messagelistRef} className='messagelist overflow-y-auto'>
+      <div className='h-100 overflow-y-auto' >
       {(() => {
           // Filtra los mensajes por el número específico y contenido no vacío
           const mensajesFiltrados = mensajes1
@@ -1234,7 +1234,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
           // Mapea y renderiza los mensajes ordenados
           return mensajesFiltrados.map((mensaje, index) => (
             
-            <div
+            <div 
               key={index}
               className={`mensaje ${mensaje.type_message && console.log(mensajes1.length, mensajesFiltrados.length)} ${
                 mensaje.type_comunication === 'message-event' ? 'bg-white text-right shadow-lg p-4 bg-gray rounded-md' : 'bg-green text-left shadow-lg p-4 bg-gray rounded-md'
@@ -1310,10 +1310,10 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     
     {/* Botones de acción */}
    
-  </div>
+  
 
   {/* Contenedor de contactos */}
- </Box>
+ 
  
  <ContainerBox2 >
  <InputMensaje
@@ -1417,13 +1417,14 @@ const ContainerBox = styled.div`
 background-color: #f7f7f7;
 border-radius: 10px;
 overflow-y: scroll;
-height: 20vw;
-width: 40vw;
+height: 30vw;
+width: 50vw;
 scroll-behavior: smooth;
 `;
 const ContainerBox2 = styled.div`
 background-color: #f7f7f7;
-padding: 15px;
+margin-top: 30px;
+margin-right: 30px;
 border-radius: 10px;
 overflow-y: scroll;
 height: 50vw;
