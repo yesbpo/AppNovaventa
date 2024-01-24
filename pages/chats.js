@@ -8,7 +8,7 @@ import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon, SearchIcon, RefreshIco
 
 const Chats = () => {
   const { data: session } = useSession();
-console.log(session.user.name)
+  console.log(session)
   const manejarCambio = (event) => {
     setInputValue(event.target.value);
   };
