@@ -1426,11 +1426,10 @@ scroll-behavior: smooth;
 `;
 const ContainerBox2 = styled.div`
 background-color: #f7f7f7;
-padding: 15px;
 border-radius: 10px;
 overflow-y: scroll;
 height: 50vw;
-width: 15vw;
+width: 25vw;
 scroll-behavior: smooth;
 `;
 const p = styled.div`
