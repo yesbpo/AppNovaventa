@@ -421,7 +421,7 @@ const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', tim
 const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
 
       const status = 'pending';
-      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}`);
+      
       const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
       const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
       // El usuario está autenticado, puedes acceder a la sesión
@@ -434,8 +434,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       const chatsPending = await responseChats.json();
       const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
       console.log(Id)
-      const data = await response.json();
-      setMensajes1(Object.values(data)[0]);
+
       setContactos1(withoutGest);
       setPendientes(withoutGest.length)
     } catch (error) {
@@ -474,7 +473,7 @@ const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', tim
 const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
 
       const status = 'in process'
-      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}`);
+      
       const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
       const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
       // El usuario está autenticado, puedes acceder a la sesión
@@ -488,8 +487,8 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       const chatsPending = await responseChats.json();
       const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
       console.log(Id)
-      const data = await response.json();
-      setMensajes1(Object.values(data)[0]);
+      
+      
       setContactos1(withoutGest);
       setEngestion(withoutGest.length)
     } catch (error) {
