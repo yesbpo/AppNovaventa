@@ -1048,7 +1048,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
 const options = { timeZone: 'America/Bogota', hour12: false };
       const fechaInicio = new Date(fechaActual);
 fechaInicio.setDate(fechaInicio.setDate() - 1);
-console.log(fechaInicio.setHours(fechaInicio.getHours() - 24))
+
 // Formatear la fecha de inicio
 const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
 const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
