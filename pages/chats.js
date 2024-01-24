@@ -31,7 +31,7 @@ const Chats = () => {
      const status2 = 'pending'
 
     
-
+try{
      
      const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
       const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
@@ -48,20 +48,23 @@ const Chats = () => {
      const withoutGest = chatsPending
      const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
      console.log(chatsPending)
-     
+    
      setContactos1(Object.values(withoutGest)[0])
      
      setEngestion(withoutGest.length)
      setPendientes(withoutGest1.length)
-  
+    
     const messagelist = messagelistRef.current;
-
+     
     // Verifica si la referencia es null
     if (messagelist) {
       // Establece el desplazamiento en la parte inferior del contenedor
       messagelist.scrollTop = messagelist.scrollHeight;
     }
+  }
+  catch{
     
+  }
   }, [mensajes1]);
 
  const [showPopup, setShowPopup] = useState('')
