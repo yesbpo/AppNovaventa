@@ -27,7 +27,7 @@ const Chats = () => {
 
   useEffect( async() => {
     const session1 = session
-   console.log(session1.user.name)
+   console.log(session1)
      const status1 = 'in process'
      const status2 = 'pending'
 
