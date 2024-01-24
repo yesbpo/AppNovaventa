@@ -1358,7 +1358,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       </ul>
     </div>
   </Box>
-  </ContainerBox>
+  </ContainerBox2>
 </Box>
   
         </Container>
