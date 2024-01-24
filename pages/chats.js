@@ -221,7 +221,7 @@ const fetchMensajes = async () => {
   const fechaActual = new Date();
   const options = { timeZone: 'America/Bogota', hour12: false };
        const fechaInicio = new Date(fechaActual);
-  fechaInicio.setHours(fechaInicio.getHours() - 1);
+  fechaInicio.setHours(fechaInicio.getHours() - 24);
   
   // Formatear la fecha de inicio
   const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
@@ -1010,12 +1010,13 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         idMessage: idMessage // Puedes ajustar este valor según tus necesidades
       }),
     });
+    setInputValue('')
     updateuser()
     if (guardarMensajeResponse.ok) {
       const guardarMensajeData = await guardarMensajeResponse.json();
       console.log(guardarMensajeData)
       
-      setInputValue('')
+      
           } else {
       
     }conection()
@@ -1082,7 +1083,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         }
       } 
 
-    await fetchAct();
+    await fetchMensajes();
   // Configurar el intervalo para realizar la consulta cada 30 segundos
     
   }
