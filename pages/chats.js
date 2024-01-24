@@ -334,7 +334,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
   const handleEngestionClick = async () => {
     conection();
     setStatuschats('En gestion')
-    
+    updateuser()
     try {
        const fechaActual = new Date();
 const options = { timeZone: 'America/Bogota', hour12: false };
@@ -1122,7 +1122,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
     </div>
     <ContainerBox  className='bg-primary'>
       <div ref={messagelistRef} className='messagelist overflow-y-auto'>
-      {(() => {
+      {numeroEspecifico !== ''(() => {
           // Filtra los mensajes por el número específico y contenido no vacío
           const mensajesFiltrados = mensajes1
             .filter((mensaje) => mensaje.number === numeroEspecifico && mensaje.content && mensaje.content.trim() !== '')
