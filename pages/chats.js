@@ -1333,6 +1333,8 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
 
   {/* Contenedor de contactos */}
  </Box>
+ 
+ <ContainerBox2 >
  <InputMensaje
         type="text"
         placeholder="Ingrese un número"
@@ -1340,7 +1342,6 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
         onChange={handleNumeroChange}
       />
       <button onClick={buscarContacto}></button>
- <ContainerBox2 >
   <Box className='bg-blue-900'>
     <div className="contact-list-container">
       <h1>{statuschats}</h1>
