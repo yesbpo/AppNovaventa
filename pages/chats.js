@@ -204,7 +204,7 @@ useEffect(() => {
  }
  fetchTemplates();
  fetchMensajes();
-}, []);
+});
 const handleParamChange = (param, value) => {
  setTemplateParams((prevParams) => {
    const updatedParams = {
