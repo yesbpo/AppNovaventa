@@ -14,7 +14,7 @@ const Chats = () => {
   const handleNumeroChange = (e) => {
     const valorIngresado = e.target.value;
     setNumeroBuscado(valorIngresado);
-    const resultadosFiltrados = contactos.filter(
+    const resultadosFiltrados = contactos1.filter(
       (contacto) => contacto.numero.includes(valorIngresado)
     );
     setContactos1(resultadosFiltrados);
