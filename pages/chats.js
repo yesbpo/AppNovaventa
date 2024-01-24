@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import io from 'socket.io-client';
 import { useSession, signIn } from 'next-auth/react';
 import EmojiPicker from 'emoji-picker-react';
-import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon, SearchIcon } from '@heroicons/react/solid';
+import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon, SearchIcon, RefreshIcon } from '@heroicons/react/solid';
 
 const Chats = () => {
   const manejarCambio = (event) => {
