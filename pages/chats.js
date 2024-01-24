@@ -1198,7 +1198,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     <h2 className='text-white'>Chat {numeroEspecifico}</h2>
     <BotonEnviar onClick={actualizarEstadoChat}>Gestionar</BotonEnviar>
     <BotonEnviar onClick={actualizarEstadoChatCerrados}>Cerrar</BotonEnviar>
-    <div>
+    <div className='h-80vw'>
       {numeroEspecifico !== '' && <button onClick={asignarChat}>Transferir Chat</button>}
       {msg.length > 0 && (
          <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 transition-opacity duration-300">
