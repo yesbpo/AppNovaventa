@@ -18,7 +18,7 @@ const Chats = () => {
   };
   const buscarContacto = () => {
     const resultadosFiltrados = contactos1.filter(
-      (contacto) => contacto.numero === numeroBuscado
+      (contacto) => contacto.idChat2 === numeroBuscado
     );
     setContactos1(resultadosFiltrados);
   };
