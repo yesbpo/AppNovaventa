@@ -7,7 +7,7 @@ import EmojiPicker from 'emoji-picker-react';
 import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon, SearchIcon, RefreshIcon } from '@heroicons/react/solid';
 
 const Chats = () => {
-  const [, forceUpdate] = useState();
+  const { data: session } = useSession();
 
   const manejarCambio = (event) => {
     setInputValue(event.target.value);
@@ -26,6 +26,7 @@ const Chats = () => {
   const messagelistRef = useRef(null);
 
   useEffect( async() => {
+    const { data: session } = useSession();
    console.log('hola')
      const status1 = 'in process'
      const status2 = 'pending'
@@ -346,7 +347,7 @@ const handleAgregarNumeroClick = () => {
   // Función para mantener el scroll en la parte inferior
   // El array vacío asegura que el efecto se ejecute solo una vez al montar el componente
 
-  const { data: session } = useSession();
+  
   const manejarPresionarEnter = (event) => {
     if (event.key === 'Enter') {
       
