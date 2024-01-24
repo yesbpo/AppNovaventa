@@ -1048,14 +1048,15 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
 const options = { timeZone: 'America/Bogota', hour12: false };
       const fechaInicio = new Date(fechaActual);
 fechaInicio.setDate(fechaInicio.getDate() - 1);
-if (fechaInicio.getHours() >= 24) {
-  fechaInicio.setHours(fechaInicio.getHours() % 24);
-}
+let horaInicio ;
 // Formatear la fecha de inicio
 const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
 const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
 const diaInicio = fechaInicio.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
-const horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+if (fechaInicio.getHours() >= 24) {
+  horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone }) % 24;
+}
+ horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
 const minutosInicio = fechaInicio.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
 const segundosInicio = fechaInicio.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
 
