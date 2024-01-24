@@ -1429,7 +1429,7 @@ background-color: #f7f7f7;
 padding: 15px;
 border-radius: 10px;
 overflow-y: scroll;
-height: 30vw;
+height: 100vw;
 width: 100vw;
 scroll-behavior: smooth;
 `;
