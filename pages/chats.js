@@ -1075,7 +1075,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
 
           const data1 = await response.json();
           setMensajes1(Object.values(data1)[0]);
-          console.log(fechaInicioString)
+          
         } catch (error) {
           
           // Puedes manejar el error según tus necesidades
