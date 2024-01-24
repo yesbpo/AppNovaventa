@@ -1420,8 +1420,8 @@ background-color: #f7f7f7;
 padding: 15px;
 border-radius: 10px;
 overflow-y: scroll;
-max-height: 300px;
-max-width: 500px;
+height: 30vw;
+width: 50vw;
 scroll-behavior: smooth;
 `;
 
