@@ -7,6 +7,8 @@ import EmojiPicker from 'emoji-picker-react';
 import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon, SearchIcon, RefreshIcon } from '@heroicons/react/solid';
 
 const Chats = () => {
+  const [, forceUpdate] = useState();
+
   const manejarCambio = (event) => {
     setInputValue(event.target.value);
   };
@@ -60,7 +62,12 @@ const Chats = () => {
       // Establece el desplazamiento en la parte inferior del contenedor
       messagelist.scrollTop = messagelist.scrollHeight;
     }
+    forceUpdate({});
   }, [mensajes1]);
+  useEffect(() => {
+    // Este efecto se ejecutará en la segunda renderización
+    console.log('Segunda ejecución del efecto');
+  }, [forceUpdate]);
  const [showPopup, setShowPopup] = useState('')
   // Función para abrir la ventana emergente
   const openPopup = () => {
