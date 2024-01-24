@@ -1439,7 +1439,7 @@ width: 100%;
 `;
 const CustomButton2 = styled.button`
 
-color: white;
+
 padding: 10px 20px;
 font-size: 16px;
 border: none;
