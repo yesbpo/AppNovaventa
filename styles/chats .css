@@ -49,7 +49,7 @@
 
 .messagelist {
   background-color: whitesmoke;
-  height: 335px;
+  height: 80vw;
   width: 100%;
   overflow-y: auto;
 }
