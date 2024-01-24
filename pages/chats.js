@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import io from 'socket.io-client';
 import { useSession, signIn } from 'next-auth/react';
 import EmojiPicker from 'emoji-picker-react';
-import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon } from '@heroicons/react/solid';
+import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon, SearchIcon } from '@heroicons/react/solid';
 
 const Chats = () => {
   const manejarCambio = (event) => {
@@ -1341,7 +1341,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
         value={numeroBuscado}
         onChange={handleNumeroChange}
       />
-      <button onClick={buscarContacto}></button>
+      <SearchIcon className="h-5 w-5 text-gray-500 p-2 rounded-r-md cursor-pointer"  onClick={buscarContacto}/>
   <Box className='bg-blue-900'>
     <div className="contact-list-container">
       <h1>{statuschats}</h1>
