@@ -46,7 +46,7 @@ const Chats = () => {
      const chatsPending1 = await responseChatspen.json();
      const withoutGest = chatsPending
      const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
-     console.log(Id)
+     console.log(chatsPending)
      
      setContactos1(withoutGest)
      
