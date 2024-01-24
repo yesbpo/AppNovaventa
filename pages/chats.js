@@ -1193,7 +1193,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         <Box className='container-messages w-50vw h-40vh flex'>
   {/* Contenedor del chat */}
   
-  <div className='chat-container '>
+
     <Box className="bg-primary">
     <h2 className='text-white'>Chat {numeroEspecifico}</h2>
     <BotonEnviar onClick={actualizarEstadoChat}>Gestionar</BotonEnviar>
@@ -1310,7 +1310,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     
     {/* Botones de acción */}
    
-  </div>
+  
 
   {/* Contenedor de contactos */}
  </Box>
