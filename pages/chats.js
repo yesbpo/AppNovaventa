@@ -10,7 +10,15 @@ const Chats = () => {
   const manejarCambio = (event) => {
     setInputValue(event.target.value);
   };
-
+  const [numeroBuscado, setNumeroBuscado] = useState(''); 
+  const handleNumeroChange = (e) => {
+    const valorIngresado = e.target.value;
+    setNumeroBuscado(valorIngresado);
+    const resultadosFiltrados = contactos.filter(
+      (contacto) => contacto.numero.includes(valorIngresado)
+    );
+    setContactos1(resultadosFiltrados);
+  };
   const messagelistRef = useRef(null);
 
   useEffect( async() => {
@@ -513,11 +521,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
     }
   };
 
-  const [mensajes, setMensajes] = useState(
-     [
-      { numero: '', tipo: '', contenido: '', estado: '', date: ''},
-    ]   
-);
+  
 
 const [file, setFile] = useState('');
 
@@ -803,13 +807,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       contenido: data.payload.payload.text,
       date: fecha,
     };
-    if(data.payload.payload == undefined){
-      setMensajes((prevMensajes) => [...prevMensajes, nuevoMensaje]);
-    }
-    else{
-      setMensajes((prevMensajes)=>[...prevMensajes, nuevoMensajeEntrante]);
-    }
-    
+   
     if (contactos.fecha !== nuevosContactos.fecha) {
       setContactos(nuevosContactos);
     }
@@ -979,17 +977,6 @@ const dia = fechaActual.getDate().toString().padStart(2, '0');
 const hora = fechaActual.getHours().toString().padStart(2, '0');
 const minutos = fechaActual.getMinutes().toString().padStart(2, '0');
 const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
-      setMensajes((prevMensajes) => (
-        [
-          ...prevMensajes,
-          {
-            numero: mensajeData.destination,
-            tipo: 'message-event',
-            contenido: mensajeData.message,
-            date: `${anio}-${mes}-${dia} ${hora}:${minutos}:${segundos}`,
-          },
-        ]
-      ));
       const response = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/api/envios', {
         method: 'POST',
         headers: {
@@ -1343,6 +1330,12 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
 
   {/* Contenedor de contactos */}
  </Box>
+ <input
+        type="text"
+        placeholder="Ingrese un número"
+        value={numeroBuscado}
+        onChange={handleNumeroChange}
+      />
  <ContainerBox2 >
   <Box className='bg-blue-900'>
     <div className="contact-list-container">
