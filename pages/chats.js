@@ -1207,7 +1207,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
   </div>}
         <Layout className='big-box'>
                 
-        <Box className='estados' onLoad={()=>updateuser}>
+        <Box className='estados' onLoad={updateuser()}>
           <ButtonContainer>
             <CustomButton onClick={handleEngestionClick}>{"En gestion: "+engestion}</CustomButton>
              {/* Mostrar Activos si 'mostrarActivos' es true */}
