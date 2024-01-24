@@ -36,7 +36,7 @@ const Chats = () => {
      const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
      // El usuario está autenticado, puedes acceder a la sesión
      
-     if (!response.ok) {
+     if (!responseChatsin.ok) {
   
      }
      const users = await responseUsers.json()
@@ -426,7 +426,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
       // El usuario está autenticado, puedes acceder a la sesión
       
-      if (!response.ok) {
+      if (!responseChats.ok) {
           }
       const users = await responseUsers.json()
       const Id = users.filter(d => d.usuario == session.user.name)
@@ -454,7 +454,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
       // El usuario está autenticado, puedes acceder a la sesión
       
-      if (!response.ok) {
+      if (!responseChats.ok) {
    
       }
       const users = await responseUsers.json()
@@ -527,7 +527,7 @@ const handleFileChange = (e) => {
        const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
        // El usuario está autenticado, puedes acceder a la sesión
        
-       if (!response.ok) {
+       if (!responseChats.ok) {
     
        }
        const users = await responseUsers.json()
@@ -609,7 +609,7 @@ const handleFileChange = (e) => {
          const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
          // El usuario está autenticado, puedes acceder a la sesión
          
-         if (!response.ok) {
+         if (!responseChats.ok) {
       
          }
          const users = await responseUsers.json()
