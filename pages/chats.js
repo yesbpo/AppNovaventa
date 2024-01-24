@@ -1424,6 +1424,7 @@ scroll-behavior: smooth;
 const ContainerBox2 = styled.div`
 background-color: #f7f7f7;
 margin-top: 30px;
+margin-right: 30px;
 border-radius: 10px;
 overflow-y: scroll;
 height: 50vw;
