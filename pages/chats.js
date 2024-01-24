@@ -829,13 +829,10 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
         
       } catch (error) {
         console.error('Error al subir el archivo:', error.message);
-        setInputValue('')
+        
       }
     } else{
-    if (!inputValue.trim()){
-      
-      return;
-    }
+    
     try {
       const mensajeData = {
         channel: 'whatsapp',
@@ -876,29 +873,11 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       setInputValue('')
       if (!response.ok) {
               }
-      const responseData = await response.json();
-      
+      const responseData = await response.json(); 
        // Escucha el evento 'cambio' para obtener el idMessage
-      const idMessage = responseData.messageId;
-
-      // Actualiza el mensaje en el servidor
-      const actualizarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/mensajeenviado', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          content: mensajeData.message,
-          idMessage,
-        }),
-      });
-
-      if (actualizarMensajeResponse.ok) {
-        const actualizarMensajeData = actualizarMensajeResponse.json();
-            } else {
-        
+      const idMessage = responseData.messageId;  
           // Guarda el mensaje en el servidor
-    const guardarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
+      const guardarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -921,7 +900,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
           } else {
       
     }conection()
-      }
+      
     
       
       
