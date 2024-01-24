@@ -1080,7 +1080,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
         }
 
         const data1 = await response.json();
-        setMensajes1(data1);
+        setMensajes1(Object.values(data1)[0]);
         console.log(data1)
       } catch (error) {
         
