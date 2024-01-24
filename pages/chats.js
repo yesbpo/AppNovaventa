@@ -32,8 +32,7 @@ const Chats = () => {
      const status2 = 'pending'
 
     
-async function fetchmsj (){
-  const { data: session } = useSession();
+try{
   console.log('entra')
      const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
       const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
@@ -63,8 +62,10 @@ async function fetchmsj (){
       // Establece el desplazamiento en la parte inferior del contenedor
       messagelist.scrollTop = messagelist.scrollHeight;
     }
-}
-fetchmsj ()
+  }
+  catch{
+    
+  }
   }, [mensajes1]);
 
  const [showPopup, setShowPopup] = useState('')
