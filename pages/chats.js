@@ -1112,9 +1112,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         
         
   }
-  const handleRefresh = () => {
-    fetchActdia();
-  };
+  
   function limpiarLink(dataString) {
     const match = dataString.match(/"file":"([^"]*)"/);
     return match ? match[1] : null;
@@ -1282,10 +1280,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
           const mensajesFiltrados = mensajes1
             .filter((mensaje) => mensaje.number === numeroEspecifico && mensaje.content && mensaje.content.trim() !== '')
             .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)); // Ordena los mensajes por fecha
-<RefreshIcon
-          className="h-5 w-5 text-gray-500 p-2 rounded-r-md cursor-pointer"
-          onClick={handleRefresh}
-        />
+
           // Mapea y renderiza los mensajes ordenados
           return mensajesFiltrados.map((mensaje, index) => (
             
@@ -1384,13 +1379,15 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       <ul>
         {contactos1.map((contacto, index) => (
           <li key={index}>
-            <CustomButton onClick={()=>marcaLeido(contacto.idChat2)}>
+            <CustomButton2 onClick={()=>marcaLeido(contacto.idChat2)}className={`p-2 rounded ${
+        isResolved ? 'bg-white text-black' : 'bg-green text-white'
+      }`}>
               <UserGroupIcon className="w-5 h-10"/> {contacto.idChat2}
               {contacto.resolved ? 
               <span className="text-green"> Resuelto </span> :
               <span className="text-red"> No resuelto </span>
             }
-            </CustomButton>
+            </CustomButton2>
           </li>
         ))}
       </ul>
@@ -1441,7 +1438,21 @@ width: 100%;
   background-color: #45a049;
 }
 `;
+const CustomButton2 = styled.button`
 
+color: white;
+padding: 10px 20px;
+font-size: 16px;
+border: none;
+border-radius: 5px;
+cursor: pointer;
+transition: background-color 0.3s;
+width: 100%;
+
+&:hover {
+  background-color: #45a049;
+}
+`;
 const ButtonContainer = styled.div`
 display: flex;
 gap: 10px;
