@@ -1054,7 +1054,7 @@ const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZo
 const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
 const diaInicio = fechaInicio.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
 if (fechaInicio.getHours() = 24) {
-  horaInicio = '00' ;
+  horaInicio = 0; 
 }
  horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
 const minutosInicio = fechaInicio.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
