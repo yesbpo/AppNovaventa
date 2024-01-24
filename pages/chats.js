@@ -1081,7 +1081,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
           // Puedes manejar el error según tus necesidades
         }
       } 
-      await fetchAct();
+
 
   // Configurar el intervalo para realizar la consulta cada 30 segundos
   const intervalId = setInterval(async () => {
@@ -1309,7 +1309,10 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
           const mensajesFiltrados = mensajes1
             .filter((mensaje) => mensaje.number === numeroEspecifico && mensaje.content && mensaje.content.trim() !== '')
             .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)); // Ordena los mensajes por fecha
-
+<RefreshIcon
+          className="h-5 w-5 text-gray-500 p-2 rounded-r-md cursor-pointer"
+          onClick={handleRefresh}
+        />
           // Mapea y renderiza los mensajes ordenados
           return mensajesFiltrados.map((mensaje, index) => (
             
@@ -1319,10 +1322,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
                 mensaje.type_comunication === 'message-event' ? 'bg-white text-right shadow-lg p-4 bg-gray rounded-md' : 'bg-green text-left shadow-lg p-4 bg-gray rounded-md'
               } p-4 mb-4`}
             >
-              <RefreshIcon
-          className="h-5 w-5 text-gray-500 p-2 rounded-r-md cursor-pointer"
-          onClick={handleRefresh}
-        />
+              
               { mensaje.type_message === 'image'  ? (
                 <img src={limpiarLink(mensaje.content) || mensaje.content}  alt="Imagen" className="w-15vw shadow-md p-4 bg-gray rounded-md" />
               ) :mensaje.type_message === 'image' ? (
