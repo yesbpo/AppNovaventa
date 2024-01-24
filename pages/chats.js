@@ -234,7 +234,7 @@ const fetchMensajes = async () => {
   
        const status1 = 'in process'
        const status2 = 'pending'
-       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`//obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&numeber=${numeroEspecifico}`);
+       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`//obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${numeroEspecifico}`);
       
   
        const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status1}`);
