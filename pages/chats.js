@@ -1043,7 +1043,8 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
   const updateuser = async () => {
     const usuario = session.user.name; // Reemplaza con el nombre de usuario que deseas actualizar
     const nuevoDato = 'Activo'; // Reemplaza con el nuevo valor que deseas asignar
-    const fechaActual = new Date();
+    if(numeroEspecifico !== '')
+    {const fechaActual = new Date();
 const options = { timeZone: 'America/Bogota', hour12: false };
       const fechaInicio = new Date(fechaActual);
 fechaInicio.setHours(fechaInicio.getHours() - 24);
@@ -1072,7 +1073,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       
      
       try {
-        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes');
+        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${numeroEspecifico}`);
 
         if (!response.ok) {
           
@@ -1085,7 +1086,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
         
         // Puedes manejar el error según tus necesidades
       }
-    
+    }
   }
   
   function limpiarLink(dataString) {
