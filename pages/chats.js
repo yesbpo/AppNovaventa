@@ -1190,7 +1190,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
           </ButtonContainer>
         </Box>
         <Container>
-        <Box className='container-messages w-50vw h-40vh flex'>
+        
   {/* Contenedor del chat */}
   
 
@@ -1313,7 +1313,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
   
 
   {/* Contenedor de contactos */}
- </Box>
+ 
  
  <ContainerBox2 >
  <InputMensaje
