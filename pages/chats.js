@@ -571,7 +571,7 @@ const handleFileChange = (e) => {
        else{
         status ='in process'
        }
-       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}`);
+       
        const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
        const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
        // El usuario está autenticado, puedes acceder a la sesión
@@ -585,8 +585,8 @@ const handleFileChange = (e) => {
        const chatsPending = await responseChats.json();
        const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
        console.log(Id)
-       const data = await response.json();
-       setMensajes1(Object.values(data)[0]);
+       
+       
        setContactos1(withoutGest);
        setEngestion(withoutGest.length)
      } catch (error) {
@@ -653,7 +653,7 @@ const handleFileChange = (e) => {
          else{
           status ='in process'
          }
-         const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}`);
+         
          const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
          const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
          // El usuario está autenticado, puedes acceder a la sesión
@@ -667,8 +667,7 @@ const handleFileChange = (e) => {
          const chatsPending = await responseChats.json();
          const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
          console.log(Id)
-         const data = await response.json();
-         setMensajes1(Object.values(data)[0]);
+
          setContactos1(withoutGest);
          setEngestion(withoutGest.length)
        } catch (error) {
@@ -1128,8 +1127,8 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
   async function trasladarChat (usuarioid){
     const url = `${process.env.NEXT_PUBLIC_BASE_DB}/actualizar-usuario-chat`
     const requestBody = {
-      idChat2: numeroEspecifico.toString(),
-      nuevoUserId: parseInt(usuarioid) 
+      idChat2:  numeroEspecifico.toString(),
+      nuevoUserId:  parseInt(usuarioid) 
       
     };
     // Realiza la solicitud PUT a la ruta
