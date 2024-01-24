@@ -1035,7 +1035,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     const nuevoDato = 'Activo'; // Reemplaza con el nuevo valor que deseas asignar
     if(numeroEspecifico !== '')
     {
-      const fetchAct = async () =>{const fechaActual = new Date();
+      const fechaActual = new Date();
 const options = { timeZone: 'America/Bogota', hour12: false };
       const fechaInicio = new Date(fechaActual);
 fechaInicio.setHours(fechaInicio.getHours() - 1);
@@ -1064,7 +1064,7 @@ const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', tim
 const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
 
 
-      
+const fetchAct = async () =>{   
      
       try {
         const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${numeroEspecifico}`);
@@ -1083,12 +1083,12 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
     } 
     await fetchAct();
 
-    // Configurar el intervalo para realizar la consulta cada 30 segundos
-    const intervalId = setInterval(async () => {
-      await fetchAct();
-    }, 30000);
+  // Configurar el intervalo para realizar la consulta cada 30 segundos
+  const intervalId = setInterval(async () => {
+    await fetchAct();
+  }, 30000);
   }
-    
+  
   }
   
   function limpiarLink(dataString) {
