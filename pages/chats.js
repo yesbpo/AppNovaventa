@@ -1433,7 +1433,7 @@ padding: 15px;
 border-radius: 10px;
 overflow-y: scroll;
 height: 30vw;
-width: 40vw;
+width: 50vw;
 scroll-behavior: smooth;
 `;
 const p = styled.div`
