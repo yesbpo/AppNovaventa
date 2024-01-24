@@ -1081,7 +1081,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
 
         const data1 = await response.json();
         setMensajes1(Object.values(data1)[0]);
-        console.log(data1)
+        console.log(fechaInicio.setHours(fechaInicio.getHours() - 24))
       } catch (error) {
         
         // Puedes manejar el error según tus necesidades
