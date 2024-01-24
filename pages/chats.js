@@ -30,7 +30,7 @@ const Chats = () => {
 
     
 
-     const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status1}`);
+     
      const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
 
      const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
@@ -41,14 +41,14 @@ const Chats = () => {
      }
      const users = await responseUsers.json()
      const Id = users.filter(d => d.usuario == session.user.name)
-      
+     const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`http://tu-servidor/api/consultar-chats/${Id[0].id}`);
      const chatsPending = await responseChatsin.json();
      const chatsPending1 = await responseChatspen.json();
      const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
      const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
      console.log(Id)
      
-     
+     setContactos1(chatsPending)
      
      setEngestion(withoutGest.length)
      setPendientes(withoutGest1.length)
@@ -1330,7 +1330,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         {contactos1.map((contacto, index) => (
           <li key={index}>
             <CustomButton2 onClick={()=>marcaLeido(contacto.idChat2)} className={`p-2 rounded ${
-        contacto.resolved ? 'bg-white text-black' : 'bg-green text-white'
+        contacto.resolved ? 'bg-gray text-black' : 'bg-green text-white'
       }`}>
               <UserGroupIcon className="w-5 h-10"/> {contacto.idChat2}
               {contacto.resolved ? 
