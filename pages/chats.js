@@ -44,11 +44,11 @@ const Chats = () => {
      const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
      const chatsPending = await responseChatsin.json();
      const chatsPending1 = await responseChatspen.json();
-     const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
+     const withoutGest = chatsPending
      const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
      console.log(Id)
      
-     setContactos1(chatsPending)
+     setContactos1(withoutGest)
      
      setEngestion(withoutGest.length)
      setPendientes(withoutGest1.length)
