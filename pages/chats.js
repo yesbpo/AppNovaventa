@@ -41,7 +41,7 @@ const Chats = () => {
      }
      const users = await responseUsers.json()
      const Id = users.filter(d => d.usuario == session.user.name)
-     const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`http://tu-servidor/api/consultar-chats/${Id[0].id}`);
+     const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
      const chatsPending = await responseChatsin.json();
      const chatsPending1 = await responseChatspen.json();
      const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
