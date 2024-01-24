@@ -1080,13 +1080,15 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
         
         // Puedes manejar el error según tus necesidades
       }
-    } }
+    } 
     await fetchAct();
 
     // Configurar el intervalo para realizar la consulta cada 30 segundos
     const intervalId = setInterval(async () => {
       await fetchAct();
     }, 30000);
+  }
+    
   }
   
   function limpiarLink(dataString) {
