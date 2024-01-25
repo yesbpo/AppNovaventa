@@ -159,12 +159,12 @@ useEffect(() => {
   const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
   const chatsPending = await responseChatsin.json();
   
-  const withoutGest = chatsPending
+  const withoutGest = chatsPending.filter(c=> c.status =='pending' || c.status =='in process')
   
   console.log(chatsPending)
   
   setContactos1(Object.values(withoutGest)[0])
-  fetchExpired(Object.values(withoutGest)[0])
+  fetchExpired(Object.values(chatsPending)[0])
   
   setEngestion(withoutGest.length)
   
@@ -547,7 +547,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       console.log(chatsPending)
      
       setContactos1(Object.values(withoutGest)[0])
-      
+      setContactos(Object.values(chatsPending)[0])
       setEngestion(withoutGest.length)
       setPendientes(withoutGest1.length)
       
