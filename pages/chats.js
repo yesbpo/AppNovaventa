@@ -264,15 +264,15 @@ const ultmsj = data[data.length-1]
 if (new Date(fechaFinString) > new Date(ultmsj.timestamp) ){
 try {
   // Objeto de configuración para la solicitud PUT
-  const idChat2 =ultmsj.number
-  const nuevoEstado = ultmsj.type_comunication === 'message' ? 'expiredbyasesor' : 'expiredbyclient';
-  
+  const idChat2 = ultmsj.number;
+const nuevoEstado = ultmsj.type_comunication === 'message' ? 'expiredbyasesor' : 'expiredbyclient';
+const nuevoUserId = e.userId;
   const requestOptions = {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify( idChat2, nuevoEstado, e.userId ),
+    body: JSON.stringify({ idChat2, nuevoEstado, nuevoUserId }),
   };
 
   // Hacer la solicitud a la ruta de actualización y esperar la respuesta
