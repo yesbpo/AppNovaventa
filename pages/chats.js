@@ -662,7 +662,7 @@ const handleFileChange = (e) => {
 
       if (response.ok) {
         const resultado = await response.json();
-        setNumeroEspecifico('')
+        
         try {
           const fechaActual = new Date();
    const options = { timeZone: 'America/Bogota', hour12: false };
@@ -688,29 +688,10 @@ const handleFileChange = (e) => {
    const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
    
    const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
-   let status ;       
-   if(statuschats == 'Pendientes'){
-          status ='pending'}
-         else{
-          status ='in process'
-         }
-         
-         const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
-         const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
-         // El usuario está autenticado, puedes acceder a la sesión
-         
-         if (!responseChats.ok) {
-      
-         }
-         const users = await responseUsers.json()
-         const Id = users.filter(d => d.usuario == session.user.name)
-          
-         const chatsPending = await responseChats.json();
-         const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
-         console.log(Id)
+   
 
-         setContactos1(withoutGest);
-         setEngestion(withoutGest.length)
+         
+         
        } catch (error) {
        
          // Puedes manejar el error según tus necesidades
@@ -772,7 +753,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
            
           }
           const data1 = await response.json();
-          setMensajes1(data1);
+          
           
             // Se ejecutará cada vez que el componente se monte o actualice
             const audioElement = new Audio(process.env.NEXT_PUBLIC_BASE_API+'/uploads/short-success-sound-glockenspiel-treasure-video-game-6346.mp3');
