@@ -40,7 +40,7 @@ const Reports = (props) => {
     event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
 
     try {
-      const response = await axios.post('/ruta-de-tu-servidor/agregar-contenido', {
+      const response = await axios.post(process.env.NEXT_PUBLIC_BASE_DB+'/agregar-contenido', {
         contentn,
         name,
       });
