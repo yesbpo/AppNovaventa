@@ -249,7 +249,7 @@ const fetchExpired =  (contacts) => {
     const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
     
    
-    const contactoslimpios = contacts.filter(contacto => new Date(contacto.receivedDate) > new Date(fechaInicioString))
+    const contactoslimpios = contacts.filter(contacto => new Date(contacto.receivedDate) > fechaInicioString)
   
 contactoslimpios.forEach( async e => {
   try{
@@ -259,7 +259,7 @@ if (!response.ok) {
 }
 
 const data = await response.json();
-console.log('Mensajes obtenidos:', data[0]);
+console.log('Mensajes obtenidos:', data[data.length-1]);
 const ultmsj = data[data.length]
 
 try {
