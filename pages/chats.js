@@ -1095,7 +1095,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       if (response.ok) {
         const data = await response.json();
         console.log(data);
-        
+        setMsg('')
           // Maneja la respuesta según tus necesidades
       } else {
         console.error('Error al realizar la solicitud:', response.status, response.statusText);
