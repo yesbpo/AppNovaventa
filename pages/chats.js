@@ -66,7 +66,7 @@ try{
   catch{
     
   }
-  });
+  }, [mensajes1]);
 
  const [showPopup, setShowPopup] = useState('')
   // Función para abrir la ventana emergente
@@ -428,33 +428,47 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
   };
   const handleEngestionClick = async () => {
     conection();
-    setStatuschats('En gestion')
+    setStatuschats('Chats')
     updateuser()
-    try {
     
-      const status = 'in process'
-      
-      const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
-      const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
+    
+      const status1 = 'in process'
+      const status2 = 'pending'
+ 
+     
+ try{
+   console.log('entra')
+      const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
+       const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
       // El usuario está autenticado, puedes acceder a la sesión
       
-      if (!responseChats.ok) {
+      if (!responseUsers.ok) {
    
       }
       const users = await responseUsers.json()
       const Id = users.filter(d => d.usuario == session.user.name)
-       
-      const chatsPending = await responseChats.json();
-      const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
-      console.log(Id)
+      const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
+      const chatsPending = await responseChatsin.json();
+      const chatsPending1 = await responseChatspen.json();
+      const withoutGest = chatsPending
+      const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
+      console.log(chatsPending)
+     
+      setContactos1(Object.values(withoutGest)[0])
       
-      
-      setContactos1(withoutGest);
       setEngestion(withoutGest.length)
-    } catch (error) {
-    
-      // Puedes manejar el error según tus necesidades
-    }
+      setPendientes(withoutGest1.length)
+     
+     const messagelist = messagelistRef.current;
+      
+     // Verifica si la referencia es null
+     if (messagelist) {
+       // Establece el desplazamiento en la parte inferior del contenedor
+       messagelist.scrollTop = messagelist.scrollHeight;
+     }
+   }catch{
+
+   }
   };
 
   
@@ -1167,7 +1181,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
                 
         <Box className='estados' onLoad={updateuser()}>
           <ButtonContainer>
-            <CustomButton onClick={handleEngestionClick}>{"En gestion: "+engestion}</CustomButton>
+            <CustomButton onClick={handleEngestionClick}>{"Chats: "+contactos1.length}</CustomButton>
              {/* Mostrar Activos si 'mostrarActivos' es true */}
             <CustomButton onClick={handlePendientesClick}>{"Pendientes: "+pendientes}</CustomButton>
             {session.user.type_user === 'Asesor1'|| session.user.type_user === 'Coordinador' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
