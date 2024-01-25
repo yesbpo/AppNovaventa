@@ -219,8 +219,9 @@ useEffect(() => {
  fetchExpired();
 }, []);
 const fetchExpired =  () => {
+  console.log('entra en expirados')
   if(contactos1.length > 0){
-    console.log('entra en expirados')
+    
     const fechaActual = new Date();
     const options = { timeZone: 'America/Bogota', hour12: false };
          const fechaInicio = new Date(fechaActual);
