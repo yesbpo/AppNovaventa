@@ -28,7 +28,7 @@ const Chats = () => {
   };
   const buscarContacto = () => {
     const resultadosFiltrados = contactos1.filter(
-      (contacto) => contacto.idChat2.includes(numeroBuscado)    );
+      (contacto) => contacto.idChat2.includes(numeroBuscado));
     setContactos(resultadosFiltrados);
   };
   const messagelistRef = useRef(null);
@@ -1317,7 +1317,7 @@ fetchMensajes()
         </CustomButton2>
       </li>
     ))}
-    {Array.isArray(contactos) && numeroBuscado !== '' && 
+    {numeroBuscado !== '' && 
     contactos.map((contacto, index) => (
       <li key={index}>
         <CustomButton2
