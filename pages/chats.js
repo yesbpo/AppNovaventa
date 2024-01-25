@@ -1479,7 +1479,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
             `p-2 rounded ${
               contacto.status === 'in process' ? 'bg-gray text-black' : 
               contacto.status === 'expiredbyasesor' ? 'bg-red text-black' :
-              contacto.status === 'expiredbyclient' ? 'bg-white text-white' :
+              contacto.status === 'expiredbyclient' ? 'bg-white text-black' :
               'bg-green text-white' // Estado por defecto
             }`}`}
         >{(() => {
