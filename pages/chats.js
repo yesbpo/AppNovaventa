@@ -1390,7 +1390,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       >
         <UserGroupIcon className="w-5 h-10" /> {contactos1.idChat2}
         {contactos1.resolved && (
-  <span className="text-red">Mensaje entrante</span>
+  <span className="text-red">Mensaje nuevo</span>
 )}
       </CustomButton2>
     </li>
