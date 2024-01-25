@@ -992,7 +992,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
 
   const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
 
-
+fetchMensajes()
   
     
   // Configurar el intervalo para realizar la consulta cada 30 segundos
