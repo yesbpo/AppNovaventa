@@ -146,8 +146,36 @@ useEffect(() => {
  
 
   
+  const fechaActual = new Date();
+  const options = { timeZone: 'America/Bogota', hour12: false };
+       const fechaInicio = new Date(fechaActual);
+  fechaInicio.setHours(fechaInicio.getHours() - 24);
+  
+  // Formatear la fecha de inicio
+  const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
+  const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
+  const diaInicio = fechaInicio.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
+  const horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+  const minutosInicio = fechaInicio.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
+  const segundosInicio = fechaInicio.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
+  
+  const fechaInicioString = `${anioInicio}-${mesInicio}-${diaInicio} ${horaInicio}:${minutosInicio}:${segundosInicio}`;
+  
+  // Formatear la fecha actual
+  const anioFin = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
+  const mesFin = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
+  const diaFin = fechaActual.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
+  const horaFin = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+  const minutosFin = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
+  const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
+  
+  const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
   
 
+       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${numeroEspecifico}`);
+  
+       const data = await response.json();
+       
   const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
   // El usuario está autenticado, puedes acceder a la sesión
   
@@ -157,6 +185,7 @@ useEffect(() => {
   const users = await responseUsers.json()
   const Id = users.filter(d => d.usuario == session.user.name)
   const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
+
   const chatsPending = await responseChatsin.json();
   
   const withoutGest = chatsPending.filter(c=> c.status =='pending' || c.status =='in process')
@@ -168,7 +197,7 @@ useEffect(() => {
   
   setEngestion(withoutGest.length)
   
-
+  setMensajes1(Object.values(data)[0]);
  const messagelist = messagelistRef.current;
 
  // Verifica si la referencia es null
@@ -180,6 +209,11 @@ useEffect(() => {
  }
  fetchTemplates();
  fetchMensajes();
+ // Llama a fetchMensajes cada segundo
+ const mensajesIntervalId = setInterval(fetchMensajes, 1000);
+
+ // Limpia el intervalo al desmontar el componente
+ return () => clearInterval(mensajesIntervalId);
  
 }, []);
 const fetchExpired =  (contacts) => {
@@ -959,79 +993,12 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
   const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
 
 
-  const fetchAct = async () =>{   
-      
-        try {
-          const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${numeroEspecifico}`);
-
-          if (!response.ok) {
-            
-          }
-
-          const data1 = await response.json();
-          setMensajes1(Object.values(data1)[0]);
-          
-        } catch (error) {
-          
-          // Puedes manejar el error según tus necesidades
-        }
-      } 
-
-    await fetchMensajes();
+  
     
   // Configurar el intervalo para realizar la consulta cada 30 segundos
     
   }
   
-  }
-  async function  fetchActdia (){
-    const fechaActual = new Date();
-    const options = { timeZone: 'America/Bogota', hour12: false };
-          const fechaInicio = new Date(fechaActual);
-    fechaInicio.setDate(fechaInicio.getDate() - 1);
-    let horaInicio ;
-    // Formatear la fecha de inicio
-    const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
-    const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
-    const diaInicio = fechaInicio.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
-    if (fechaInicio.getHours() >= 24) {
-      horaInicio = 0; 
-    }
-     horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
-    const minutosInicio = fechaInicio.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
-    const segundosInicio = fechaInicio.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
-    
-    const fechaInicioString = `${anioInicio}-${mesInicio}-${diaInicio} ${horaInicio}:${minutosInicio}:${segundosInicio}`;
-    
-    // Formatear la fecha actual
-    const anioFin = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
-    const mesFin = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
-    const diaFin = fechaActual.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
-    const horaFin = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
-    const minutosFin = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
-    const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
-    
-    const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
-    
-    
-    
-         
-          try {
-            const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${numeroEspecifico}`);
-    
-            if (!response.ok) {
-              
-            }
-    
-            const data1 = await response.json();
-            setMensajes1(Object.values(data1)[0]);
-            console.log(fechaInicioString)
-          } catch (error) {
-            
-            // Puedes manejar el error según tus necesidades
-          }
-        
-        
   }
   
   function limpiarLink(dataString) {
