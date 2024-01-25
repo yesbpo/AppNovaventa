@@ -58,7 +58,7 @@ const CrearUsuario = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          type_user: isChecked ? typeUser + '1' : typeUser,
+          type_user: isChecked && typeUser !== 'Coordinador' ? typeUser + '1' : typeUser,
           email:email,
           session:'Inactivo',
           usuario: usuario,
