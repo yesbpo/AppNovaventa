@@ -8,6 +8,12 @@ import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon, SearchIcon, RefreshIco
 
 const Chats = () => {
   const { data: session } = useSession();
+  const intervalIdRef = React.useRef(null);
+
+  const startFetchingChats = () => {
+    intervalIdRef.current = setInterval(fetchChats, 60000);
+  };
+
   const session1 = session
   const manejarCambio = (event) => {
     setInputValue(event.target.value);
@@ -67,7 +73,43 @@ try{
     
   }
   }, [mensajes1]);
-
+async function fetchChats (){
+  try{
+    console.log('entra')
+       const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
+        const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
+       // El usuario está autenticado, puedes acceder a la sesión
+       
+       if (!responseUsers.ok) {
+    
+       }
+       const users = await responseUsers.json()
+       const Id = users.filter(d => d.usuario == session.user.name)
+       const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
+       const chatsPending = await responseChatsin.json();
+       const chatsPending1 = await responseChatspen.json();
+       const withoutGest = chatsPending
+       const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
+       console.log(chatsPending)
+      
+       setContactos1(Object.values(withoutGest)[0])
+       
+       setEngestion(withoutGest.length)
+       setPendientes(withoutGest1.length)
+      
+      const messagelist = messagelistRef.current;
+       
+      // Verifica si la referencia es null
+      if (messagelist) {
+        // Establece el desplazamiento en la parte inferior del contenedor
+        messagelist.scrollTop = messagelist.scrollHeight;
+      }
+    }
+    catch{
+      
+    }
+  
+}
  const [showPopup, setShowPopup] = useState('')
   // Función para abrir la ventana emergente
   const openPopup = () => {
@@ -429,8 +471,8 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
   const handleEngestionClick = async () => {
     conection();
     setStatuschats('Chats')
-    updateuser()
-    
+    updateuser();
+    startFetchingChats();
     
       const status1 = 'in process'
       const status2 = 'pending'
@@ -746,7 +788,6 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
   }
   const enviarMensaje = async () => {
     if (file) {
-     
       try {
         const formData = new FormData();
         formData.append('archivo', file);
@@ -1006,6 +1047,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       } 
 
     await fetchMensajes();
+    const intervalId = setInterval(fetchChats, 60000);
   // Configurar el intervalo para realizar la consulta cada 30 segundos
     
   }
