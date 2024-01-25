@@ -1285,7 +1285,7 @@ fetchMensajes()
       </CustomButton2>
     </li>
   )}
-  {Array.isArray(contactos1) && numeroBuscado == '' && 
+  {Array.isArray(contactos1) && 
     contactos1.map((contacto, index) => (
       <li key={index}>
         <CustomButton2
