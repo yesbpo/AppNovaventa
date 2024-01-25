@@ -1314,8 +1314,8 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       
     </ContainerBox >
     <div className='flex flex-row justify-between'>
-      <BotonEnviar onClick={actualizarEstadoChat}>Gestionar</BotonEnviar>
-      <BotonEnviar onClick={actualizarEstadoChatCerrados}>Cerrar</BotonEnviar>
+      <BotonEnviar onClick={actualizarEstadoChat}>En atencion</BotonEnviar>
+      <BotonEnviar onClick={actualizarEstadoChatCerrados}>Finalizar</BotonEnviar>
     </div>
     {/* Contenedor de entrada y botones */}
     <div className='input-container'>
