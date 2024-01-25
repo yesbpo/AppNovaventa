@@ -249,7 +249,7 @@ const fetchExpired =  (contacts) => {
     const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
     
    
-    const contactoslimpios = contacts.filter(contacto => new Date(contacto.receivedDate) > fechaInicioString)
+    const contactoslimpios = contacts.filter(contacto => new Date(contacto.receivedDate) < new Date(fechaInicioString))
   
 contactoslimpios.forEach( async e => {
   try{
