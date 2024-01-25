@@ -36,14 +36,13 @@ const Reports = (props) => {
   const [name, setName] = useState('');
   const [mensaje, setMensaje] = useState('');
 
-  const handleAgregarContenido = async () => {
+  const handleAgregarContenido = async (event) => {
+    event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+
     try {
-      const response = await fetch('/ruta-de-tu-servidor/agregar-contenido', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ contentn, name }),
+      const response = await axios.post('/ruta-de-tu-servidor/agregar-contenido', {
+        contentn,
+        name,
       });
 
       if (response.ok) {
