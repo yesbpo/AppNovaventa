@@ -201,7 +201,8 @@ useEffect(() => {
   console.log(chatsPending)
   
   setContactos1(Object.values(withoutGest)[0])
-  fetchExpired(); 
+  try{fetchExpired()}
+  catch{} 
   setEngestion(withoutGest.length)
   setPendientes(withoutGest1.length)
 
@@ -216,7 +217,7 @@ useEffect(() => {
  }
  fetchTemplates();
  fetchMensajes();
- fetchExpired();
+ 
 }, []);
 const fetchExpired =  () => {
   console.log('entra en expirados', contactos1)
