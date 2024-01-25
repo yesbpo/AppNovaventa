@@ -259,7 +259,7 @@ if (!response.ok) {
 }
 
 const data = await response.json();
-console.log('Mensajes obtenidos:', data);
+console.log('Mensajes obtenidos:', data[data.length]);
 const ultmsj = data[data.length]
 
 try {
