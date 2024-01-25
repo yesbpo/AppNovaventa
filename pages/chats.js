@@ -66,7 +66,7 @@ try{
   catch{
     
   }
-  }, [mensajes1]);
+  });
 
  const [showPopup, setShowPopup] = useState('')
   // Función para abrir la ventana emergente
