@@ -210,10 +210,10 @@ useEffect(() => {
  fetchTemplates();
  fetchMensajes();
  // Llama a fetchMensajes cada segundo
- const mensajesIntervalId = setInterval(fetchMensajes, 1000);
+ 
 
  // Limpia el intervalo al desmontar el componente
- return () => clearInterval(mensajesIntervalId);
+ 
  
 }, []);
 const fetchExpired =  (contacts) => {
