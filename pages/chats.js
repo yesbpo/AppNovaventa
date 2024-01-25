@@ -1409,11 +1409,9 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       <span className="text-white"> En atención </span>
     )}
           <UserGroupIcon className="w-5 h-10" /> {contacto.idChat2}
-          {contacto.resolved ? (
-            <span className="text-green"> Resuelto </span>
-          ) : (
-            <span className="text-red"> No resuelto </span>
-          )}
+          {contacto.resolved && (
+  <span className="text-red">Mensaje nuevo</span>
+)}
         </CustomButton2>
       </li>
     ))}
