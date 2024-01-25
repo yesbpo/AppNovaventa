@@ -75,7 +75,7 @@ try{
   }, [mensajes1]);
 async function fetchChats (){
   try{
-    console.log('entra')
+    console.log('entra en chats123')
        const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
         const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
        // El usuario está autenticado, puedes acceder a la sesión
