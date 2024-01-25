@@ -52,9 +52,9 @@ try{
      const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
      const chatsPending = await responseChatsin.json();
      const chatsPending1 = await responseChatspen.json();
-     const withoutGest = chatsPending.filter(c=> c.status == 'pending' || c.status == 'in process')
+     const withoutGest = chatsPending
      const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
-     console.log(chatsPending)
+     console.log(Object.values(withoutGest)[0])
     
      setContactos1(Object.values(withoutGest)[0])
      
