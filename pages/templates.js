@@ -36,16 +36,17 @@ const Reports = (props) => {
   const [contentn, setContentn] = useState('');
   const [status, setStatus] = useState('');
   const [mensaje, setMensaje] = useState('');
+  
 
   const handleAgregarContenido = async () => {
     try {
       // Realizar la solicitud POST al servidor
       const response = await axios.post(process.env.NEXT_PUBLIC_BASE_DB+'/agregar-contenido', {
         name,
-        contentn,
+        contentn,  // Ajustar aquí al nombre correcto
         status,
       });
-
+  
       // Actualizar el estado con el mensaje de la respuesta del servidor
       setMensaje(response.data.mensaje);
     } catch (error) {
