@@ -1119,7 +1119,7 @@ fetchMensajes()
   </div>}
         <Layout className='big-box'>
                 
-        <Box className='estados' onLoad={updateuser()}>
+        <Box className='estados' onLoad={updateuser}>
           <ButtonContainer>
             <CustomButton onClick={handleEngestionClick}>{"Chats: "+contactos1.length}</CustomButton>
              {/* Mostrar Activos si 'mostrarActivos' es true */}
