@@ -261,7 +261,7 @@ if (!response.ok) {
 const data = await response.json();
 console.log('Mensajes obtenidos:', data[data.length-1]);
 const ultmsj = data[data.length-1]
-if (new Date(fechaFinString) < new Date(ultmsj.timestamp) ){
+if (new Date(fechaFinString) > new Date(ultmsj.timestamp) ){
 try {
   // Objeto de configuración para la solicitud PUT
   const idChat2 =ultmsj.number
