@@ -201,8 +201,8 @@ useEffect(() => {
   console.log(chatsPending)
   
   setContactos1(Object.values(withoutGest)[0])
-  try{fetchExpired()}
-  catch{} 
+  fetchExpired(Object.values(withoutGest)[0])
+  
   setEngestion(withoutGest.length)
   setPendientes(withoutGest1.length)
 
@@ -219,9 +219,9 @@ useEffect(() => {
  fetchMensajes();
  
 }, []);
-const fetchExpired =  () => {
-  console.log('entra en expirados', contactos1)
-  if(contactos1.length > 0){
+const fetchExpired =  (contacts) => {
+  console.log('entra en expirados', contacts)
+  if(contacts.length > 0){
     
     const fechaActual = new Date();
     const options = { timeZone: 'America/Bogota', hour12: false };
@@ -249,7 +249,7 @@ const fetchExpired =  () => {
     const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
     
    
-    const contactoslimpios = contactos1.filter(contacto => new Date(contacto.receivedDate) > new Date(fechaInicioString))
+    const contactoslimpios = contacts.filter(contacto => new Date(contacto.receivedDate) > new Date(fechaInicioString))
   
 contactoslimpios.forEach( async e => {
   try{
