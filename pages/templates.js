@@ -37,26 +37,32 @@ const Reports = (props) => {
   const [mensaje, setMensaje] = useState('');
 
   const handleAgregarContenido = async (event) => {
-    event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
+  event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
 
-    try {
-      const response = await axios.post(process.env.NEXT_PUBLIC_BASE_DB+'/agregar-contenido', {
+  try {
+    const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/agregar-contenido', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
         contentn,
         name,
-      });
+      }),
+    });
 
-      if (response.ok) {
-        const data = await response.json();
-        setMensaje(data.mensaje);
-      } else {
-        console.error('Error al enviar la solicitud:', response.statusText);
-        setMensaje('Error al procesar la solicitud');
-      }
-    } catch (error) {
-      console.error('Error en la solicitud:', error);
-      setMensaje('Error interno del cliente');
+    if (response.ok) {
+      const data = await response.json();
+      setMensaje(data.mensaje);
+    } else {
+      console.error('Error al enviar la solicitud:', response.statusText);
+      setMensaje('Error al procesar la solicitud');
     }
-  };
+  } catch (error) {
+    console.error('Error en la solicitud:', error);
+    setMensaje('Error interno del cliente');
+  }
+};
 
 
 //Constants buy page templates
