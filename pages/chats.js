@@ -1161,7 +1161,7 @@ fetchMensajes()
       
     </div>
     <ContainerBox  className='bg-primary'>
-      <div className='h-100 overflow-y-auto' >
+      <div className='messagelist h-100 overflow-y-auto' >
       {(() => {
           // Filtra los mensajes por el número específico y contenido no vacío
           const mensajesFiltrados = mensajes1
