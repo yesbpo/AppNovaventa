@@ -467,7 +467,7 @@ const handleAgregarNumeroClick = () => {
   
      const handlePendientesClick = async () => {
       
-      conection();
+
       setStatuschats('Pendientes')
     try {
        const fechaActual = new Date();
@@ -518,7 +518,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
     }
   };
   const handleEngestionClick = async () => {
-    conection();
+
     setStatuschats('Chats')
     updateuser();
     startFetchingChats();
@@ -584,7 +584,7 @@ const handleFileChange = (e) => {
   const [numeroEspecifico, setNumeroEspecifico] = useState('');
   // Ejemplo de consumo de la ruta con JavaScript y fetch
   const actualizarEstadoChatCerrados = async () => {
-  conection();
+  
   const idChat2 = numeroEspecifico;
   const nuevoEstado = 'closed';
   const nuevoUserId = 0;
@@ -647,7 +647,7 @@ const handleFileChange = (e) => {
 
   const actualizarEstadoChat = async (estado) => {
     updateuser();
-    conection();
+
     try {
       const idChat2 = numeroEspecifico; // Asegúrate de obtener el idChat2 según tu lógica
       const nuevoEstado = 'in process'; // Asegúrate de obtener el nuevoEstado según tu lógica
@@ -716,107 +716,7 @@ const handleFileChange = (e) => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   
   
-  const conection =()=> {
-    const socket = io(process.env.NEXT_PUBLIC_BASE_API);
-    socket.on( async(data) => {
-  
-        try {
-          const fechaActual = new Date();
-const options = { timeZone: 'America/Bogota', hour12: false };
-      const fechaInicio = new Date(fechaActual);
-fechaInicio.setHours(fechaInicio.getHours() - 24);
 
-// Formatear la fecha de inicio
-const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
-const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
-const diaInicio = fechaInicio.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
-const horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
-const minutosInicio = fechaInicio.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
-const segundosInicio = fechaInicio.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
-
-const fechaInicioString = `${anioInicio}-${mesInicio}-${diaInicio} ${horaInicio}:${minutosInicio}:${segundosInicio}`;
-
-// Formatear la fecha actual
-const anioFin = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
-const mesFin = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
-const diaFin = fechaActual.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
-const horaFin = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
-const minutosFin = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
-const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
-
-const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
-
-
-      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}`);
-  
-          if (!response.ok) {
-           
-          }
-          const data1 = await response.json();
-          
-          
-            // Se ejecutará cada vez que el componente se monte o actualice
-            const audioElement = new Audio(process.env.NEXT_PUBLIC_BASE_API+'/uploads/short-success-sound-glockenspiel-treasure-video-game-6346.mp3');
-          
-        } catch (error) {
-          
-          // Puedes manejar el error según tus necesidades
-        }
-      
-
-  
-         
-    const nuevosContactos = [
-      ...contactos,
-      {
-        user: data.payload.source,
-        fecha: new Date(data.timestamp).toLocaleString('es-ES', {
-          year: 'numeric',
-          month: 'numeric',
-          day: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric',
-          second: 'numeric',
-          timeZoneName: 'short',
-        }),
-      },
-    ];
-    let fecha = new Date(data.timestamp).toLocaleString('es-ES', {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      hour: 'numeric',
-      minute: 'numeric',
-      second: 'numeric',
-      timeZoneName: 'short',
-    })
-    const nuevoMensaje = {
-      numero: data.payload.destination,
-      tipo: 'message-event',
-      contenido: inputValue,
-      estado: data.payload.type,
-      date: fecha
-
-    };
-    
-    const nuevoMensajeEntrante = {
-      numero: data.payload.source,
-      tipo: data.type,
-      contenido: data.payload.payload.text,
-      date: fecha,
-    };
-   
-    if (contactos.fecha !== nuevosContactos.fecha) {
-      setContactos(nuevosContactos);
-    }
-    const cont = parseInt(msg.length);
-    
-    const webhookText = data ? data.payload.payload.text : null;
-    setWebhookData(webhookText);
-    
-  }
-  )
-  }
   const enviarMensaje = async () => {
     if (file) {
       try {
@@ -1013,7 +913,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       
           } else {
       
-    }conection()
+    }
       
     
       
