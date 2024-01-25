@@ -293,6 +293,7 @@ throw error; // Puedes manejar el error o propagarlo según tus necesidades
  }
  fetchTemplates();
  fetchMensajes();
+ fetchExpired();
 }, []);
 const fetchMensajes = async () => {
   
