@@ -173,7 +173,52 @@ useEffect(() => {
      setError(Fetch `error: ${error.message}`);
    }
  };
- const fetchExpired =  () => {
+ 
+ const fetchMensajes = async () => {
+  console.log('exito')
+   
+  const status1 = 'in process'
+  const status2 = 'pending'
+
+ 
+
+  
+  const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
+
+  const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
+  // El usuario está autenticado, puedes acceder a la sesión
+  
+  if (!responseUsers.ok) {
+
+  }
+  const users = await responseUsers.json()
+  const Id = users.filter(d => d.usuario == session.user.name)
+  const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
+  const chatsPending = await responseChatsin.json();
+  const chatsPending1 = await responseChatspen.json();
+  const withoutGest = chatsPending
+  const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
+  console.log(chatsPending)
+  
+  setContactos1(Object.values(withoutGest)[0])
+  fetchExpired(); 
+  setEngestion(withoutGest.length)
+  setPendientes(withoutGest1.length)
+
+ const messagelist = messagelistRef.current;
+
+ // Verifica si la referencia es null
+ if (messagelist) {
+   // Establece el desplazamiento en la parte inferior del contenedor
+   messagelist.scrollTop = messagelist.scrollHeight;
+ }
+ 
+ }
+ fetchTemplates();
+ fetchMensajes();
+ fetchExpired();
+}, []);
+const fetchExpired =  () => {
   if(contactos1.length > 0){
     console.log('entra en expirados')
     const fechaActual = new Date();
@@ -228,7 +273,7 @@ try {
   };
 
   // Hacer la solicitud a la ruta de actualización y esperar la respuesta
-  const response = await fetch(`${process.env.DB_ROUTE}/actualizar-estado-chat`, requestOptions);
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_DB}/actualizar-estado-chat`, requestOptions);
 
   if (!response.ok) {
     throw new Error('Error en la solicitud');
@@ -252,50 +297,6 @@ throw error; // Puedes manejar el error o propagarlo según tus necesidades
 })
   }
  }
- const fetchMensajes = async () => {
-  console.log('exito')
-   
-  const status1 = 'in process'
-  const status2 = 'pending'
-
- 
-
-  
-  const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
-
-  const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
-  // El usuario está autenticado, puedes acceder a la sesión
-  
-  if (!responseUsers.ok) {
-
-  }
-  const users = await responseUsers.json()
-  const Id = users.filter(d => d.usuario == session.user.name)
-  const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
-  const chatsPending = await responseChatsin.json();
-  const chatsPending1 = await responseChatspen.json();
-  const withoutGest = chatsPending
-  const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
-  console.log(chatsPending)
-  
-  setContactos1(Object.values(withoutGest)[0])
-  
-  setEngestion(withoutGest.length)
-  setPendientes(withoutGest1.length)
-
- const messagelist = messagelistRef.current;
-
- // Verifica si la referencia es null
- if (messagelist) {
-   // Establece el desplazamiento en la parte inferior del contenedor
-   messagelist.scrollTop = messagelist.scrollHeight;
- }
- 
- }
- fetchTemplates();
- fetchMensajes();
- fetchExpired();
-}, []);
 const fetchMensajes = async () => {
   
   const fechaActual = new Date();
