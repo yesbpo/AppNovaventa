@@ -681,7 +681,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
           }
           const data1 = await response.json();
           setMensajes1(data1);
-          console.log(data1)
+          
             // Se ejecutará cada vez que el componente se monte o actualice
             const audioElement = new Audio(process.env.NEXT_PUBLIC_BASE_API+'/uploads/short-success-sound-glockenspiel-treasure-video-game-6346.mp3');
           
