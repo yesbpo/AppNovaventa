@@ -32,8 +32,33 @@ const Reports = (props) => {
   const [selectedStatus, setSelectedStatus] = useState(''); // Estado seleccionado
   const [selectedType, setSelectedType] = useState('');
   const [filtersApplied, setFiltersApplied] = useState(false);
+  const [contentn, setContentn] = useState('');
+  const [name, setName] = useState('');
+  const [mensaje, setMensaje] = useState('');
 
-  const grupo = 'Cueros Velez';
+  const handleAgregarContenido = async () => {
+    try {
+      const response = await fetch('/ruta-de-tu-servidor/agregar-contenido', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ contentn, name }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setMensaje(data.mensaje);
+      } else {
+        console.error('Error al enviar la solicitud:', response.statusText);
+        setMensaje('Error al procesar la solicitud');
+      }
+    } catch (error) {
+      console.error('Error en la solicitud:', error);
+      setMensaje('Error interno del cliente');
+    }
+  };
+
 
 //Constants buy page templates
   const templatesPerPage = 5;
@@ -456,24 +481,20 @@ const handleCreateTemplate = async () => {
 <span>{deleteMessage}</span>
 
 <div>
-      <h2>Agregar Contenido</h2>
-      <label>
-        Nombre:
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-      </label>
-      <br />
-      <label>
-        Contenido:
-        <textarea value={content} onChange={(e) => setContent(e.target.value)} />
-      </label>
-      <br />
-      <label>
-        Estado:
-        <input type="text" value={status} onChange={(e) => setStatus(e.target.value)} />
-      </label>
-      <br />
-      <button onClick={handleAgregarContenido}>Agregar Contenido</button>
-      {mensaje && <p>{mensaje}</p>}
+      <form onSubmit={handleAgregarContenido}>
+        <label>
+          Contenido:
+          <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
+        </label>
+        <br />
+        <label>
+          Nombre:
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        </label>
+        <br />
+        <button type="submit">Agregar Contenido</button>
+      </form>
+      <p>{mensaje}</p>
     </div>
 
 <div className='CreatedTemplates'>
