@@ -40,7 +40,7 @@ const Reports = (props) => {
   const handleAgregarContenido = async () => {
     try {
       // Realizar la solicitud POST al servidor
-      const response = await axios.post(process.env.NEXT_PUBLIC_BASE_DB+'/api/agregar-contenido', {
+      const response = await axios.post(process.env.NEXT_PUBLIC_BASE_DB+'/agregar-contenido', {
         name,
         contentn,
         status,
