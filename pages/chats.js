@@ -1254,7 +1254,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
                  onClick={() => trasladarChat(user.id)}
                  className="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-2"
                >
-                 {user.complete_name}
+                 {user.complete_name},{user.session} 
                </li>
              ))}
            </ul>
