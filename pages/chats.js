@@ -260,8 +260,8 @@ if (!response.ok) {
 
 const data = await response.json();
 console.log('Mensajes obtenidos:', data[data.length-1]);
-const ultmsj = data[data.length]
-
+const ultmsj = data[data.length-1]
+if (new Date(fechaFinString) < new Date(ultmsj.timestamp) ){
 try {
   // Objeto de configuración para la solicitud PUT
   const idChat2 =ultmsj.number
@@ -289,7 +289,7 @@ try {
   console.error('Error al actualizar el usuario del chat:', error);
   throw error; // Puedes manejar el error o propagarlo según tus necesidades
 }
-
+}
 
 // Aquí puedes manejar los mensajes obtenidos según tus necesidades
 
