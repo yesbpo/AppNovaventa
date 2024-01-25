@@ -10,11 +10,11 @@ const Chats = () => {
   const { data: session } = useSession();
   const intervalIdRef = React.useRef(null);
 
-  const startFetchingChats = (userid) => {
-    intervalIdRef.current = setInterval(fetchChats(userid), 60000);
+  const startFetchingChats = () => {
+    intervalIdRef.current = setInterval(fetchChats(), 60000);
   };
 
-  const session1 = session
+  const [session1, setSession1 ]= useState('')
   const manejarCambio = (event) => {
     setInputValue(event.target.value);
   };
@@ -73,7 +73,7 @@ try{
     
   }
   }, [mensajes1]);
-async function fetchChats (userid){
+async function fetchChats (){
   try{
     console.log('entra en chats123')
        const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
@@ -84,12 +84,12 @@ async function fetchChats (userid){
     
        }
        const users = await responseUsers.json()
-       
-       const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${userid[0].id}`);
+       const Id = users.filter(d => d.usuario == session1.user.name)
+       const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
        const chatsPending = await responseChatsin.json();
        const chatsPending1 = await responseChatspen.json();
        const withoutGest = chatsPending
-       const withoutGest1 = chatsPending1.filter(d => d.userId == userid[0].id )
+       const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
        console.log(chatsPending)
       
        setContactos1(Object.values(withoutGest)[0])
@@ -472,7 +472,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
     conection();
     setStatuschats('Chats')
     updateuser();
-    
+    startFetchingChats();
     
       const status1 = 'in process'
       const status2 = 'pending'
@@ -500,7 +500,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       
       setEngestion(withoutGest.length)
       setPendientes(withoutGest1.length)
-      startFetchingChats(Id);
+      setSession1(session) 
      const messagelist = messagelistRef.current;
       
      // Verifica si la referencia es null
