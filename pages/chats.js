@@ -29,7 +29,7 @@ const Chats = () => {
   const buscarContacto = () => {
     const resultadosFiltrados = contactos1.filter(
       (contacto) => contacto.idChat2.includes(numeroBuscado));
-    setContactos1(resultadosFiltrados);
+    setContactos(resultadosFiltrados);
   };
   const messagelistRef = useRef(null);
 
@@ -1285,7 +1285,7 @@ fetchMensajes()
       </CustomButton2>
     </li>
   )}
-  {Array.isArray(contactos1) && 
+  {Array.isArray(contactos1)  && 
     contactos1.map((contacto, index) => (
       <li key={index}>
         <CustomButton2
@@ -1316,7 +1316,37 @@ fetchMensajes()
         </CustomButton2>
       </li>
     ))}
-  
+  {Array.isArray(contactos)  && 
+    contactos.map((contacto, index) => (
+      <li key={index}>
+        <CustomButton2
+          onClick={() => marcaLeido(contacto.idChat2)}
+          className={`p-2 rounded ${
+            `p-2 rounded ${
+              contacto.status === 'in process' ? 'bg-green text-black' : 
+              contacto.status === 'expiredbyasesor' ? 'bg-red text-black' :
+              contacto.status === 'expiredbyclient' ? 'bg-primary text-black' :
+              'bg-gray text-white' // Estado por defecto
+            }`}`}
+        >{(() => {
+          switch (contacto.status) {
+            case 'in process':
+              return <span className="text-black">En atencion</span>;
+            case 'expiredbyasesor':
+              return <span className="text-white">expirado asesor</span>;
+            case 'expiredbyclient':
+              return <span className="text-red">expirado cliente</span>;
+            default:
+              return <span className="text-white">Pendiente</span>;
+          }
+        })()}
+          <UserGroupIcon className="w-5 h-10" /> {contacto.idChat2}
+          {!contacto.resolved && (
+  <span className="text-red">Mensaje nuevo</span>
+)}
+        </CustomButton2>
+      </li>
+    ))}
 </ul>
 </div>
   </Box>
