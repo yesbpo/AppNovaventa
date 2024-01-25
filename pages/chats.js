@@ -260,7 +260,7 @@ if (!response.ok) {
 
 const data = await response.json();
 console.log('Mensajes obtenidos:', data);
-const ultmsj = Object.values(data)[0][Object.values(data)[0].length]
+const ultmsj = data[data.length]
 
 try {
   // Objeto de configuración para la solicitud PUT
