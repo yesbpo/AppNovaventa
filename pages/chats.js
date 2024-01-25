@@ -1119,7 +1119,7 @@ fetchMensajes()
   </div>}
         <Layout className='big-box'>
                 
-        <Box className='estados' onLoad={updateuser}>
+        <Box className='estados' onLoad={updateuser()}>
           <ButtonContainer>
             <CustomButton onClick={handleEngestionClick}>{"Chats: "+contactos1.length}</CustomButton>
              {/* Mostrar Activos si 'mostrarActivos' es true */}
@@ -1161,7 +1161,7 @@ fetchMensajes()
       
     </div>
     <ContainerBox  className='bg-primary'>
-      <div className='messagelist h-100 overflow-y-auto' onLoad={updateuser} >
+      <div className='messagelist h-100 overflow-y-auto' >
       {(() => {
           // Filtra los mensajes por el número específico y contenido no vacío
           const mensajesFiltrados = mensajes1
@@ -1176,7 +1176,7 @@ fetchMensajes()
               className={`mensaje ${mensaje.type_message && console.log(mensajes1.length, mensajesFiltrados.length)} ${
                 mensaje.type_comunication === 'message-event' ? 'bg-white text-right shadow-lg p-4 bg-gray rounded-md' : 'bg-green text-left shadow-lg p-4 bg-gray rounded-md'
               } p-4 mb-4`}
-              onLoad={updateuser()}
+              
             >
               
               { mensaje.type_message === 'image'  ? (
