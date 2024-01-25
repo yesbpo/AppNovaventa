@@ -73,43 +73,6 @@ try{
     
   }
   }, [mensajes1]);
-async function fetchChats (){
-  try{
-    console.log(session1)
-     
-        const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
-       // El usuario está autenticado, puedes acceder a la sesión
-       
-       if (!responseUsers.ok) {
-    
-       }
-       const users = await responseUsers.json()
-       const Id = users.filter(d => d.usuario == session1)
-       const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
-       const chatsPending = await responseChatsin.json();
-       const chatsPending1 = await responseChatspen.json();
-       const withoutGest = chatsPending
-       const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
-       console.log(chatsPending)
-      
-       setContactos1(Object.values(withoutGest)[0])
-       
-       setEngestion(withoutGest.length)
-       setPendientes(withoutGest1.length)
-      
-      const messagelist = messagelistRef.current;
-       
-      // Verifica si la referencia es null
-      if (messagelist) {
-        // Establece el desplazamiento en la parte inferior del contenedor
-        messagelist.scrollTop = messagelist.scrollHeight;
-      }
-    }
-    catch{
-      
-    }
-  
-}
  const [showPopup, setShowPopup] = useState('')
   // Función para abrir la ventana emergente
   const openPopup = () => {
@@ -183,7 +146,7 @@ useEffect(() => {
  
 
   
-  const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
+  
 
   const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
   // El usuario está autenticado, puedes acceder a la sesión
@@ -195,16 +158,16 @@ useEffect(() => {
   const Id = users.filter(d => d.usuario == session.user.name)
   const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
   const chatsPending = await responseChatsin.json();
-  const chatsPending1 = await responseChatspen.json();
+  
   const withoutGest = chatsPending
-  const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
+  
   console.log(chatsPending)
   
   setContactos1(Object.values(withoutGest)[0])
   fetchExpired(Object.values(withoutGest)[0])
   
   setEngestion(withoutGest.length)
-  setPendientes(withoutGest1.length)
+  
 
  const messagelist = messagelistRef.current;
 
@@ -260,7 +223,8 @@ if (!response.ok) {
 
 const data = await response.json();
 console.log('Mensajes obtenidos:', data[data.length-1]);
-const ultmsj = data[data.length-1]
+const ultmsjord = data.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+const ultmsj = ultmsjord[ultmsjord.length-1]
 if (new Date(fechaFinString) > new Date(ultmsj.timestamp) ){
 try {
   // Objeto de configuración para la solicitud PUT
