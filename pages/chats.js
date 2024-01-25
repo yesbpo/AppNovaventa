@@ -22,7 +22,9 @@ const Chats = () => {
   const handleNumeroChange = (e) => {
     
     setNumeroBuscado( e.target.value);
-    
+    const resultadosFiltrados = contactos1.filter(
+      (contacto) => contacto.idChat2.includes(e.target.value));
+    setContactos1(resultadosFiltrados);
   };
   const buscarContacto = () => {
     const resultadosFiltrados = contactos1.filter(
