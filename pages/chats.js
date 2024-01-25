@@ -1183,8 +1183,9 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
           <ButtonContainer>
             <CustomButton onClick={handleEngestionClick}>{"Chats: "+contactos1.length}</CustomButton>
              {/* Mostrar Activos si 'mostrarActivos' es true */}
-            <CustomButton onClick={handlePendientesClick}>{"Pendientes: "+pendientes}</CustomButton>
-            {session.user.type_user === 'Asesor1'|| session.user.type_user === 'Coordinador' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
+            
+            {session.user.type_user === 'Asesor1' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
+            {session.user.type_user === 'Coordinador' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
           </ButtonContainer>
         </Box>
         <Container>
@@ -1332,7 +1333,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       <CustomButton2
         onClick={() => marcaLeido(contactos1.idChat2)}
         className={`p-2 rounded ${
-          contactos1.resolved ? 'bg-gray text-black' : 'bg-green text-white'
+          (contactos1.status == 'in process' ? 'bg-gray text-black' : 'bg-green text-white'  )
         }`}
       >
         <UserGroupIcon className="w-5 h-10" /> {contactos1.idChat2}
@@ -1350,7 +1351,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         <CustomButton2
           onClick={() => marcaLeido(contacto.idChat2)}
           className={`p-2 rounded ${
-            contacto.resolved ? 'bg-gray text-black' : 'bg-green text-white'
+            (contacto.status == 'in process' ? 'bg-gray text-black' : 'bg-green text-white'  ) 
           }`}
         >
           <UserGroupIcon className="w-5 h-10" /> {contacto.idChat2}
