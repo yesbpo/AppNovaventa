@@ -259,8 +259,9 @@ if (!response.ok) {
 }
 
 const data = await response.json();
+console.log('Mensajes obtenidos:', Object.values(data)[0]);
 const ultmsj = Object.values(data)[0][Object.values(data)[0].length]
-console.log('Mensajes obtenidos:', Object.values(data)[0][Object.values(data)[0].length]);
+
 try {
   // Objeto de configuración para la solicitud PUT
   const idChat2 =ultmsj.number
