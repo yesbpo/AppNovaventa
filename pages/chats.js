@@ -259,8 +259,8 @@ if (!response.ok) {
 }
 
 const data = await response.json();
-console.log('Mensajes obtenidos:', data[data.length]);
-const ultmsj = data[data.length]
+console.log('Mensajes obtenidos:', data[data.length-1]);
+const ultmsj = data[data.length-1]
 
 try {
   // Objeto de configuración para la solicitud PUT
