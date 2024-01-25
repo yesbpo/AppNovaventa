@@ -219,7 +219,7 @@ useEffect(() => {
  fetchExpired();
 }, []);
 const fetchExpired =  () => {
-  console.log('entra en expirados')
+  console.log('entra en expirados', contactos1)
   if(contactos1.length > 0){
     
     const fechaActual = new Date();
