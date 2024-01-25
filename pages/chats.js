@@ -173,14 +173,83 @@ useEffect(() => {
      setError(Fetch `error: ${error.message}`);
    }
  };
- const fetchExpired =  async () => {
-contactos1.forEach(e => {
+ const fetchExpired =  () => {
+  if(contactos1.length > 0){
+    const fechaActual = new Date();
+    const options = { timeZone: 'America/Bogota', hour12: false };
+         const fechaInicio = new Date(fechaActual);
+    fechaInicio.setHours(fechaInicio.getHours() - 24);
+    
+    // Formatear la fecha de inicio
+    const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
+    const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
+    const diaInicio = fechaInicio.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
+    const horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+    const minutosInicio = fechaInicio.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
+    const segundosInicio = fechaInicio.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
+    
+    const fechaInicioString = `${anioInicio}-${mesInicio}-${diaInicio} ${horaInicio}:${minutosInicio}:${segundosInicio}`;
+    
+    // Formatear la fecha actual
+    const anioFin = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
+    const mesFin = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
+    const diaFin = fechaActual.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
+    const horaFin = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+    const minutosFin = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
+    const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
+    
+    const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
+    
+   
+    const contactoslimpios = contactos1.filter(contacto => new Date(contacto.receivedDate) > new Date(fechaInicioString))
+  
+contactoslimpios.forEach( async e => {
   try{
+const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_DB}/obtener-mensajes/${contactoslimpios.number}`)
+if (!response.ok) {
+  throw new Error('Error en la solicitud');
+}
 
+const data = await response.json();
+const ultmsj = Object.values(data)[0][Object.values(data)[0].length]
+console.log('Mensajes obtenidos:', Object.values(data)[0][Object.values(data)[0].length]);
+try {
+  // Objeto de configuración para la solicitud PUT
+  const idChat2 =ultmsj.number
+  const nuevoEstado = ultmsj.type_comunication === 'message' ? 'expiredbyasesor' : 'expiredbyclient';
+  
+  const requestOptions = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify( idChat2, nuevoEstado, e.userId ),
+  };
+
+  // Hacer la solicitud a la ruta de actualización y esperar la respuesta
+  const response = await fetch(`${process.env.DB_ROUTE}/actualizar-estado-chat`, requestOptions);
+
+  if (!response.ok) {
+    throw new Error('Error en la solicitud');
   }
-  catch{}
-})
 
+  // Parsear la respuesta como JSON
+  const data = await response.json();
+  return data;
+} catch (error) {
+  console.error('Error al actualizar el usuario del chat:', error);
+  throw error; // Puedes manejar el error o propagarlo según tus necesidades
+}
+
+
+// Aquí puedes manejar los mensajes obtenidos según tus necesidades
+
+} catch (error) {
+console.error('Error al obtener mensajes:', error);
+throw error; // Puedes manejar el error o propagarlo según tus necesidades
+}
+})
+  }
  }
  const fetchMensajes = async () => {
   console.log('exito')
