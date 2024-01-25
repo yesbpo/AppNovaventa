@@ -56,7 +56,7 @@ try{
      const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
      console.log(Object.values(withoutGest)[0].filter(c => c.status == 'pending' || c.status == 'in process'))
     
-     setContactos1(Object.values(withoutGest)[0])
+     setContactos1(Object.values(withoutGest)[0].filter(c => c.status == 'pending' || c.status == 'in process'))
      
      setEngestion(withoutGest.length)
      
