@@ -75,7 +75,7 @@ try{
   }, [mensajes1]);
 async function fetchChats (){
   try{
-    console.log(session1.user)
+    console.log(session1)
      
         const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
        // El usuario está autenticado, puedes acceder a la sesión
@@ -84,7 +84,7 @@ async function fetchChats (){
     
        }
        const users = await responseUsers.json()
-       const Id = users.filter(d => d.usuario == session1.user.name)
+       const Id = users.filter(d => d.usuario == session1)
        const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
        const chatsPending = await responseChatsin.json();
        const chatsPending1 = await responseChatspen.json();
@@ -488,6 +488,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
    
       }
       const users = await responseUsers.json()
+      setSession1(session.user.name) 
       const Id = users.filter(d => d.usuario == session.user.name)
       const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
       const chatsPending = await responseChatsin.json();
@@ -500,7 +501,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       
       setEngestion(withoutGest.length)
       setPendientes(withoutGest1.length)
-      setSession1(session) 
+      
      const messagelist = messagelistRef.current;
       
      // Verifica si la referencia es null
