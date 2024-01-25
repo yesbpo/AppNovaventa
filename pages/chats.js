@@ -1323,21 +1323,21 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
           onClick={() => marcaLeido(contacto.idChat2)}
           className={`p-2 rounded ${
             `p-2 rounded ${
-              contacto.status === 'in process' ? 'bg-blue text-black' : 
+              contacto.status === 'in process' ? 'bg-green text-black' : 
               contacto.status === 'expiredbyasesor' ? 'bg-red text-black' :
               contacto.status === 'expiredbyclient' ? 'bg-primary text-black' :
-              'bg-green text-white' // Estado por defecto
+              'bg-gray text-white' // Estado por defecto
             }`}`}
         >{(() => {
           switch (contacto.status) {
             case 'in process':
-              return <span className="text-black">Pendiente</span>;
+              return <span className="text-black">En atencion</span>;
             case 'expiredbyasesor':
               return <span className="text-white">expirado asesor</span>;
             case 'expiredbyclient':
               return <span className="text-red">expirado cliente</span>;
             default:
-              return <span className="text-white">En atención</span>;
+              return <span className="text-white">Pendiente</span>;
           }
         })()}
           <UserGroupIcon className="w-5 h-10" /> {contacto.idChat2}
