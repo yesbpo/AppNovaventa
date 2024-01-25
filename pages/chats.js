@@ -1395,8 +1395,12 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
           onClick={() => marcaLeido(contacto.idChat2)}
           className={`p-2 rounded ${
             (contacto.status == 'in process' ? 'bg-gray text-black' : 'bg-green text-white'  ) 
-          }`}
-        >
+            }`}
+        >{contacto.status === 'in process' ? (
+      <span className="text-white"> Pendiente </span>
+    ) : (
+      <span className="text-white"> En atención </span>
+    )}
           <UserGroupIcon className="w-5 h-10" /> {contacto.idChat2}
           {contacto.resolved ? (
             <span className="text-green"> Resuelto </span>
