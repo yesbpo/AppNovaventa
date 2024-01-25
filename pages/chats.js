@@ -284,7 +284,7 @@ const nuevoUserId = e.userId;
 
   // Parsear la respuesta como JSON
   const data = await response.json();
-  return data;
+  
 } catch (error) {
   console.error('Error al actualizar el usuario del chat:', error);
   throw error; // Puedes manejar el error o propagarlo según tus necesidades
@@ -1476,13 +1476,24 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         <CustomButton2
           onClick={() => marcaLeido(contacto.idChat2)}
           className={`p-2 rounded ${
-            (contacto.status == 'in process' ? 'bg-gray text-black' : 'bg-green text-white'  ) 
-            }`}
-        >{contacto.status === 'in process' ? (
-      <span className="text-white"> Pendiente </span>
-    ) : (
-      <span className="text-white"> En atención </span>
-    )}
+            `p-2 rounded ${
+              contacto.status === 'in process' ? 'bg-gray text-black' : 
+              contacto.status === 'expiredbyasesor' ? 'bg-red text-black' :
+              contacto.status === 'expiredbyclient' ? 'bg-white text-white' :
+              'bg-green text-white' // Estado por defecto
+            }`}`}
+        >{(() => {
+          switch (contacto.status) {
+            case 'in process':
+              return <span className="text-black">Pendiente</span>;
+            case 'expiredbyasesor':
+              return <span className="text-white">expirado asesor</span>;
+            case 'expiredbyclient':
+              return <span className="text-black">expirado cliente</span>;
+            default:
+              return <span className="text-white">En atención</span>;
+          }
+        })()}
           <UserGroupIcon className="w-5 h-10" /> {contacto.idChat2}
           {contacto.resolved && (
   <span className="text-red">Mensaje nuevo</span>
