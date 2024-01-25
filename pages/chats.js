@@ -173,6 +173,15 @@ useEffect(() => {
      setError(Fetch `error: ${error.message}`);
    }
  };
+ const fetchExpired =  async () => {
+contactos1.forEach(e => {
+  try{
+
+  }
+  catch{}
+})
+
+ }
  const fetchMensajes = async () => {
   console.log('exito')
    
@@ -1380,11 +1389,9 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         }`}
       >
         <UserGroupIcon className="w-5 h-10" /> {contactos1.idChat2}
-        {contactos1.resolved ? (
-          <span className="text-green"> Resuelto </span>
-        ) : (
-          <span className="text-red"> No resuelto </span>
-        )}
+        {contactos1.resolved && (
+  <span className="text-red">Mensaje entrante</span>
+)}
       </CustomButton2>
     </li>
   )}
