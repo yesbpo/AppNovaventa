@@ -1266,8 +1266,7 @@ fetchMensajes()
         value={numeroBuscado}
         onChange={handleNumeroChange}
       />
-      <SearchIcon className="h-7 w-7 text-gray-500 p-2 rounded-r-md cursor-pointer"  onClick={buscarContacto}/>
-  <Box className='bg-blue-900'>
+        <Box className='bg-blue-900'>
     <div className="contact-list-container">
       <h1>{statuschats}</h1>
       <ul>
