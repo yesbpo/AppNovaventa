@@ -223,7 +223,7 @@ if (!response.ok) {
 
 const data = await response.json();
 console.log('Mensajes obtenidos:', data[data.length-1]);
-const ultmsjord = data.sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+const ultmsjord = data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 const ultmsj = ultmsjord[ultmsjord.length-1]
 if (new Date(fechaFinString) > new Date(ultmsj.timestamp) ){
 try {
