@@ -222,9 +222,10 @@ if (!response.ok) {
 }
 
 const data = await response.json();
-console.log('Mensajes obtenidos:', data[data.length-1]);
+
 const ultmsjord = data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 const ultmsj = ultmsjord[ultmsjord.length-1]
+console.log('Mensajes obtenidos:', ultmsj);
 if (new Date(fechaFinString) > new Date(ultmsj.timestamp) ){
 try {
   // Objeto de configuración para la solicitud PUT
