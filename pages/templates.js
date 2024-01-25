@@ -32,6 +32,29 @@ const Reports = (props) => {
   const [selectedStatus, setSelectedStatus] = useState(''); // Estado seleccionado
   const [selectedType, setSelectedType] = useState('');
   const [filtersApplied, setFiltersApplied] = useState(false);
+  const [name, setName] = useState('');
+  const [contentn, setContentn] = useState('');
+  const [status, setStatus] = useState('');
+  const [mensaje, setMensaje] = useState('');
+
+  const handleAgregarContenido = async () => {
+    try {
+      // Realizar la solicitud POST al servidor
+      const response = await axios.post('/api/agregar-contenido', {
+        name,
+        contentn,
+        status,
+      });
+
+      // Actualizar el estado con el mensaje de la respuesta del servidor
+      setMensaje(response.data.mensaje);
+    } catch (error) {
+      // Manejar errores de la solicitud
+      console.error('Error al agregar contenido:', error);
+      setMensaje('Error al procesar la solicitud');
+    }
+  };
+
 
   
 
@@ -456,6 +479,27 @@ const handleCreateTemplate = async () => {
       }
 
 <span>{deleteMessage}</span>
+
+<div>
+      <h2>Agregar Contenido</h2>
+      <label>
+        Nombre:
+        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+      </label>
+      <br />
+      <label>
+        Contenido:
+        <textarea value={content} onChange={(e) => setContent(e.target.value)} />
+      </label>
+      <br />
+      <label>
+        Estado:
+        <input type="text" value={status} onChange={(e) => setStatus(e.target.value)} />
+      </label>
+      <br />
+      <button onClick={handleAgregarContenido}>Agregar Contenido</button>
+      {mensaje && <p>{mensaje}</p>}
+    </div>
 
 <div className='CreatedTemplates'>
         {error && <p>{error}</p>}
