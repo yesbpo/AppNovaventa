@@ -1287,7 +1287,7 @@ fetchMensajes()
       <select>
         {respuestasRapidas.map(respuesta => (
           <option key={respuesta.name} value={respuesta.contentn}>
-            {respuesta.name}
+            {respuesta.name}:{respuesta.contentn}
           </option>
         ))}
       </select>
