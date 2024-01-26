@@ -11,7 +11,7 @@ const Chats = () => {
   const intervalIdRef = React.useRef(null);
 
   const startFetchingChats = () => {
-    intervalIdRef.current = setInterval(handleEngestionClick, 10000);
+    intervalIdRef.current = setInterval(handleEngestionClick, 60000);
   };
 
   const [session1, setSession1 ]= useState('')
@@ -574,7 +574,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
      
  try{
    console.log('entra')
-      const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
+      
        const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
       // El usuario está autenticado, puedes acceder a la sesión
       
@@ -594,7 +594,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       setContactos1(Object.values(withoutGest)[0].filter(c=> c.status == 'pending' || c.status == 'in process'))
       
       setEngestion(withoutGest.length)
-      setPendientes(withoutGest1.length)
+      
       
      const messagelist = messagelistRef.current;
       
@@ -1033,7 +1033,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
   // Configurar el intervalo para realizar la consulta cada 30 segundos
     
   }
-  
+  fetchMensajes()
   }
   
   function limpiarLink(dataString) {
