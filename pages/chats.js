@@ -586,13 +586,13 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       const chatsPending = await responseChatsin.json();
       
       const withoutGest = chatsPending
-      const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
+      
       
 
       setContactos1(Object.values(withoutGest)[0].filter(c=> c.status == 'pending' || c.status == 'in process'))
 
       setEngestion(withoutGest.length)
-      setPendientes(withoutGest1.length)
+
 
      const messagelist = messagelistRef.current;
 
