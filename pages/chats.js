@@ -41,7 +41,7 @@ const Chats = () => {
 
 
 try{
-  console.log('entra')
+  
      const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
       const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
      // El usuario está autenticado, puedes acceder a la sesión
@@ -149,7 +149,7 @@ useEffect(() => {
  };
 
  const fetchMensajes = async () => {
-  console.log('exito')
+  
 
   const status1 = 'in process'
   const status2 = 'pending'
@@ -201,7 +201,7 @@ useEffect(() => {
 
   const withoutGest = chatsPending
 
-  console.log(chatsPending)
+
 
   setContactos1(Object.values(withoutGest)[0].filter(c => c.status == 'pending' || c.status == 'in process'))
   fetchExpired(Object.values(withoutGest)[0])
@@ -270,7 +270,7 @@ const data = await response.json();
 
 const ultmsjord = data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 const ultmsj = ultmsjord[ultmsjord.length-1]
-console.log('Mensajes obtenidos:', ultmsj);
+
 if (new Date(fechaFinString) > new Date(ultmsj.timestamp) ){
 try {
   // Objeto de configuración para la solicitud PUT
@@ -469,7 +469,7 @@ const handleAgregarNumeroClick = () => {
       }
 
       const data = await response.json();
-      console.log('Datos actualizados correctamente:', data);
+      
     } catch (error) {
       console.error('Error al actualizar el chat:', error);
     }
@@ -565,7 +565,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
   const handleEngestionClick = async () => {
 
     setStatuschats('Chats')
-    updateuser();
+    
     startFetchingChats();
 
       const status1 = 'in process'
@@ -573,7 +573,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
 
 
  try{
-   console.log('entra')
+   
       const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
        const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
       // El usuario está autenticado, puedes acceder a la sesión
@@ -589,7 +589,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       const chatsPending1 = await responseChatspen.json();
       const withoutGest = chatsPending
       const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
-      console.log( Object.values(chatsPending)[0])
+      
 
       setContactos1(Object.values(withoutGest)[0].filter(c=> c.status == 'pending' || c.status == 'in process'))
 
@@ -649,7 +649,7 @@ const handleFileChange = (e) => {
     if (response.ok) {
       const data = await response.json();
       setNumeroEspecifico('')
-      updateuser()
+      
       try {
  let status ;
  if(statuschats == 'Pendientes'){
@@ -686,7 +686,7 @@ const handleFileChange = (e) => {
        const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
        // El usuario está autenticado, puedes acceder a la sesión
 
-       if (!responseChats.ok) {
+       if (!responseUsers.ok) {
 
        }
        const users = await responseUsers.json()
@@ -703,7 +703,7 @@ const handleFileChange = (e) => {
 
        // Puedes manejar el error según tus necesidades
      }
-      console.log('Respuesta del servidor:', data);
+      
     } else {
       console.error('Error en la solicitud:', response.statusText);
     }
@@ -715,7 +715,7 @@ const handleFileChange = (e) => {
 
 
   const actualizarEstadoChat = async (estado) => {
-    updateuser();
+    
 
     try {
       const idChat2 = numeroEspecifico; // Asegúrate de obtener el idChat2 según tu lógica
@@ -907,7 +907,7 @@ const handleFileChange = (e) => {
         }),
       });
       setInputValue('')
-      updateuser()
+      
       if (guardarMensajeResponse.ok) {
         const guardarMensajeData = await guardarMensajeResponse.json();
         console.log(guardarMensajeData)
