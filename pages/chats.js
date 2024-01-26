@@ -1283,7 +1283,7 @@ fetchMensajes()
       <select>
         {respuestasRapidas.map(respuesta => (
           <option key={respuesta.name} value={respuesta.contentn}>
-            {respuesta.name}:{respuesta.contentn}
+            {respuesta.name}:{respuesta.contentn}{onClick={setInputValue}}
           </option>
         ))}
       </select>
