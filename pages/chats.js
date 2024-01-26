@@ -657,8 +657,32 @@ const handleFileChange = (e) => {
        else{
         status ='in process'
        }
+       const fechaActual = new Date();
+       const options = { timeZone: 'America/Bogota', hour12: false };
+             const fechaInicio = new Date(fechaActual);
+       fechaInicio.setHours(fechaInicio.getHours() - 24);
        
-       const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
+       // Formatear la fecha de inicio
+       const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
+       const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
+       const diaInicio = fechaInicio.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
+       const horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+       const minutosInicio = fechaInicio.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
+       const segundosInicio = fechaInicio.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
+       
+       const fechaInicioString = `${anioInicio}-${mesInicio}-${diaInicio} ${horaInicio}:${minutosInicio}:${segundosInicio}`;
+       
+       // Formatear la fecha actual
+       const anioFin = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
+       const mesFin = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
+       const diaFin = fechaActual.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
+       const horaFin = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+       const minutosFin = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
+       const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
+       
+       const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
+       
+       const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${session.user.id}`);
        const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
        // El usuario está autenticado, puedes acceder a la sesión
        
@@ -668,12 +692,12 @@ const handleFileChange = (e) => {
        const users = await responseUsers.json()
        const Id = users.filter(d => d.usuario == session.user.name)
         
-       const chatsPending = await responseChats.json();
-       const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
-       console.log(Id)
+       const chatsPending = await responseChatsin.json();
+       const withoutGest = chatsPending
        
        
-       setContactos1(withoutGest);
+       
+       setContactos1(Object.values(withoutGest).filter(c => c.status ));
        setEngestion(withoutGest.length)
      } catch (error) {
      
