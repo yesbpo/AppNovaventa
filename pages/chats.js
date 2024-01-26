@@ -354,7 +354,7 @@ const fetchMensajes = async () => {
        const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
        // El usuario está autenticado, puedes acceder a la sesión
        
-       if (!response.ok) {
+       if (!responseUsers.ok) {
     
        }
        const users = await responseUsers.json()
