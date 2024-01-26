@@ -11,7 +11,7 @@ const Chats = () => {
   const intervalIdRef = React.useRef(null);
 
   const startFetchingChats = () => {
-    intervalIdRef.current = setInterval(handleEngestionClick, 60000);
+    intervalIdRef.current = setInterval(handleEngestionClick, 10000);
   };
 
   const [session1, setSession1 ]= useState('')
