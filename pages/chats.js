@@ -623,7 +623,7 @@ const handleFileChange = (e) => {
   
   const idChat2 = numeroEspecifico;
   const nuevoEstado = 'closed';
-  
+  const nuevoUserId  = session.user.id
   try {
     const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/actualizar-estado-chat', {
       method: 'PUT',
