@@ -339,6 +339,7 @@ const fetchMensajes = async () => {
   
        const status1 = 'in process'
        const status2 = 'pending'
+       if(numeroEspecifico !== ''){
        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${numeroEspecifico}`);
       
   
@@ -364,14 +365,14 @@ const fetchMensajes = async () => {
        
        setEngestion(withoutGest.length)
        setPendientes(withoutGest1.length)
-    
+      
       const messagelist = messagelistRef.current;
   
       // Verifica si la referencia es null
       if (messagelist) {
         // Establece el desplazamiento en la parte inferior del contenedor
         messagelist.scrollTop = messagelist.scrollHeight;
-      }
+      }}
  }
 const handleParamChange = (param, value) => {
  setTemplateParams((prevParams) => {
