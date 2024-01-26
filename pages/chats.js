@@ -87,6 +87,7 @@ try{
   };
   //logica agregar numero 
  
+const [respuestasRapidas, setRespuestasRapidas] = useState([]);
 const [numericInputValue, setNumericInputValue] = useState('');
 const [templates, setTemplates] = useState([]);
 const [selectedTemplateId, setSelectedTemplateId] = useState('');
@@ -99,6 +100,14 @@ function contarOcurrencias(texto, patron) {
  
  return coincidencias ? coincidencias : 0;
 }
+
+useEffect(() => {
+  // Realizar la solicitud GET al servidor
+  fetch(process.env.NEXT_PUBLIC_BASE_DB + 'obtener-nombres-contenidos')
+    .then(response => response.json())
+    .then(data => setRespuestasRapidas(data))
+    .catch(error => console.error('Error al obtener respuestas rápidas:', error));
+}, []);
 
 
 // GET TEMPLATES
@@ -1240,6 +1249,16 @@ fetchMensajes()
     <div className='flex flex-row justify-between'>
       <BotonEnviar onClick={actualizarEstadoChat}>En atencion</BotonEnviar>
       <BotonEnviar onClick={actualizarEstadoChatCerrados}>Finalizar</BotonEnviar>
+      <div>
+      <label>Selecciona una respuesta rápida:</label>
+      <select>
+        {respuestasRapidas.map(respuesta => (
+          <option key={respuesta.name} value={respuesta.contentn}>
+            {respuesta.name}
+          </option>
+        ))}
+      </select>
+    </div>
     </div>
     {/* Contenedor de entrada y botones */}
     <div className='input-container'>
