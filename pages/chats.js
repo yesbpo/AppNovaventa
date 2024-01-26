@@ -199,7 +199,7 @@ useEffect(() => {
   
   setEngestion(withoutGest.length)
   
-  setMensajes1(Object.values(data)[0]);
+  
  const messagelist = messagelistRef.current;
 
  // Verifica si la referencia es null
