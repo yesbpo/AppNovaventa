@@ -190,7 +190,7 @@ useEffect(() => {
 
   const chatsPending = await responseChatsin.json();
   
-  const withoutGest = chatsPending.filter(c=> c.status =='pending' || c.status =='in process')
+  const withoutGest = chatsPending
   
   console.log(chatsPending)
   
