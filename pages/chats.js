@@ -1246,20 +1246,6 @@ fetchMensajes()
         })()}      </div>
 
     </ContainerBox >
-    <div className='flex flex-row justify-between'>
-      <BotonEnviar onClick={actualizarEstadoChat}>En atencion</BotonEnviar>
-      <BotonEnviar onClick={actualizarEstadoChatCerrados}>Finalizar</BotonEnviar>
-      <div>
-      <label>Selecciona una respuesta rápida:</label>
-      <select>
-        {respuestasRapidas.map(respuesta => (
-          <option key={respuesta.name} value={respuesta.contentn}>
-            {respuesta.name}
-          </option>
-        ))}
-      </select>
-    </div>
-    </div>
     {/* Contenedor de entrada y botones */}
     <div className='input-container'>
       <InputContainer className='input-box'>
@@ -1291,6 +1277,21 @@ fetchMensajes()
           disableAutoFocus
         />
       )}
+    </div>
+
+    <div className='flex flex-row justify-between'>
+      <BotonEnviar onClick={actualizarEstadoChat}>En atencion</BotonEnviar>
+      <BotonEnviar onClick={actualizarEstadoChatCerrados}>Finalizar</BotonEnviar>
+      <div>
+      <label>Selecciona una respuesta rápida:</label>
+      <select>
+        {respuestasRapidas.map(respuesta => (
+          <option key={respuesta.name} value={respuesta.contentn}>
+            {respuesta.name}
+          </option>
+        ))}
+      </select>
+    </div>
     </div>
 
     </Box>
