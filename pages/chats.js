@@ -18,9 +18,9 @@ const Chats = () => {
   const manejarCambio = (event) => {
     setInputValue(event.target.value);
   };
-  const [numeroBuscado, setNumeroBuscado] = useState(''); 
+  const [numeroBuscado, setNumeroBuscado] = useState('');
   const handleNumeroChange = (e) => {
-    
+
     setNumeroBuscado( e.target.value);
     const resultadosFiltrados = contactos1.filter(
       (contacto) => contacto.idChat2.includes(e.target.value));
@@ -34,20 +34,20 @@ const Chats = () => {
   const messagelistRef = useRef(null);
 
   useEffect( async() => {
-    
-   console.log(session1)
+
+   
      const status1 = 'in process'
      const status2 = 'pending'
 
-    
+
 try{
-  console.log('entra')
+  
      const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
       const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
      // El usuario está autenticado, puedes acceder a la sesión
-     
+
      if (!responseUsers.ok) {
-  
+
      }
      const users = await responseUsers.json()
      const Id = users.filter(d => d.usuario == session.user.name)
@@ -57,14 +57,14 @@ try{
      const withoutGest = chatsPending
      const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
      console.log(Object.values(withoutGest)[0].filter(c => c.status == 'pending' || c.status == 'in process'))
-    
+
      setContactos1(Object.values(withoutGest)[0].filter(c => c.status == 'pending' || c.status == 'in process'))
-     
+
      setEngestion(withoutGest.length)
-     
-    
+
+
     const messagelist = messagelistRef.current;
-     
+
     // Verifica si la referencia es null
     if (messagelist) {
       // Establece el desplazamiento en la parte inferior del contenedor
@@ -72,7 +72,7 @@ try{
     }
   }
   catch{
-    
+
   }
   }, [mensajes1]);
  const [showPopup, setShowPopup] = useState('')
@@ -85,8 +85,8 @@ try{
   const closePopup = () => {
     setShowPopup(false);
   };
-  //logica agregar numero 
- 
+  //logica agregar numero
+
 const [respuestasRapidas, setRespuestasRapidas] = useState([]);
 const [numericInputValue, setNumericInputValue] = useState('');
 const [templates, setTemplates] = useState([]);
@@ -97,7 +97,7 @@ function contarOcurrencias(texto, patron) {
  const regex = new RegExp(patron, 'g');
  const coincidencias = texto.match(regex);
  const componentes = Array.from({ length: coincidencias }, (v, index) => index);
- 
+
  return coincidencias ? coincidencias : 0;
 }
 
@@ -112,7 +112,7 @@ useEffect(() => {
 
 // GET TEMPLATES
 useEffect(() => {
-  
+
  // Traer las plantillas al cargar el componente
  const fetchTemplates = async () => {
    try {
@@ -147,21 +147,21 @@ useEffect(() => {
      setError(Fetch `error: ${error.message}`);
    }
  };
- 
+
  const fetchMensajes = async () => {
-  console.log('exito')
-   
+  
+
   const status1 = 'in process'
   const status2 = 'pending'
 
- 
 
-  
+
+
   const fechaActual = new Date();
   const options = { timeZone: 'America/Bogota', hour12: false };
        const fechaInicio = new Date(fechaActual);
   fechaInicio.setHours(fechaInicio.getHours() - 24);
-  
+
   // Formatear la fecha de inicio
   const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
   const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
@@ -169,9 +169,9 @@ useEffect(() => {
   const horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
   const minutosInicio = fechaInicio.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
   const segundosInicio = fechaInicio.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
-  
+
   const fechaInicioString = `${anioInicio}-${mesInicio}-${diaInicio} ${horaInicio}:${minutosInicio}:${segundosInicio}`;
-  
+
   // Formatear la fecha actual
   const anioFin = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
   const mesFin = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
@@ -179,17 +179,17 @@ useEffect(() => {
   const horaFin = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
   const minutosFin = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
   const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
-  
+
   const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
-  
+
 
        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${numeroEspecifico}`);
-  
+
        const data = await response.json();
-       
+
   const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
   // El usuario está autenticado, puedes acceder a la sesión
-  
+
   if (!responseUsers.ok) {
 
   }
@@ -198,17 +198,17 @@ useEffect(() => {
   const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
 
   const chatsPending = await responseChatsin.json();
-  
+
   const withoutGest = chatsPending
-  
-  console.log(chatsPending)
-  
+
+
+
   setContactos1(Object.values(withoutGest)[0].filter(c => c.status == 'pending' || c.status == 'in process'))
   fetchExpired(Object.values(withoutGest)[0])
-  
+
   setEngestion(withoutGest.length)
-  
-  
+
+
  const messagelist = messagelistRef.current;
 
  // Verifica si la referencia es null
@@ -216,26 +216,26 @@ useEffect(() => {
    // Establece el desplazamiento en la parte inferior del contenedor
    messagelist.scrollTop = messagelist.scrollHeight;
  }
- 
+
  }
  fetchTemplates();
  fetchMensajes();
  // Llama a fetchMensajes cada segundo
- 
+
 
  // Limpia el intervalo al desmontar el componente
- 
- 
+
+
 }, []);
 const fetchExpired =  (contacts) => {
   console.log('entra en expirados', contacts)
   if(contacts.length > 0){
-    
+
     const fechaActual = new Date();
     const options = { timeZone: 'America/Bogota', hour12: false };
          const fechaInicio = new Date(fechaActual);
     fechaInicio.setHours(fechaInicio.getHours() - 24);
-    
+
     // Formatear la fecha de inicio
     const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
     const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
@@ -243,9 +243,9 @@ const fetchExpired =  (contacts) => {
     const horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
     const minutosInicio = fechaInicio.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
     const segundosInicio = fechaInicio.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
-    
+
     const fechaInicioString = `${anioInicio}-${mesInicio}-${diaInicio} ${horaInicio}:${minutosInicio}:${segundosInicio}`;
-    
+
     // Formatear la fecha actual
     const anioFin = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
     const mesFin = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
@@ -253,12 +253,12 @@ const fetchExpired =  (contacts) => {
     const horaFin = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
     const minutosFin = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
     const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
-    
+
     const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
-    
-   
+
+
     const contactoslimpios = contacts.filter(contacto => new Date(contacto.receivedDate) < new Date(fechaInicioString))
-  
+
 contactoslimpios.forEach( async e => {
   try{
 const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_DB}/obtener-mensajes/${e.idChat2}`)
@@ -270,7 +270,7 @@ const data = await response.json();
 
 const ultmsjord = data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 const ultmsj = ultmsjord[ultmsjord.length-1]
-console.log('Mensajes obtenidos:', ultmsj);
+
 if (new Date(fechaFinString) > new Date(ultmsj.timestamp) ){
 try {
   // Objeto de configuración para la solicitud PUT
@@ -294,7 +294,7 @@ const nuevoUserId = e.userId;
 
   // Parsear la respuesta como JSON
   const data = await response.json();
-  
+
 } catch (error) {
   console.error('Error al actualizar el usuario del chat:', error);
   throw error; // Puedes manejar el error o propagarlo según tus necesidades
@@ -311,12 +311,12 @@ throw error; // Puedes manejar el error o propagarlo según tus necesidades
   }
  }
 const fetchMensajes = async () => {
-  
+
   const fechaActual = new Date();
   const options = { timeZone: 'America/Bogota', hour12: false };
        const fechaInicio = new Date(fechaActual);
   fechaInicio.setHours(fechaInicio.getHours() - 24);
-  
+
   // Formatear la fecha de inicio
   const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
   const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
@@ -324,9 +324,9 @@ const fetchMensajes = async () => {
   const horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
   const minutosInicio = fechaInicio.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
   const segundosInicio = fechaInicio.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
-  
+
   const fechaInicioString = `${anioInicio}-${mesInicio}-${diaInicio} ${horaInicio}:${minutosInicio}:${segundosInicio}`;
-  
+
   // Formatear la fecha actual
   const anioFin = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
   const mesFin = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
@@ -334,39 +334,39 @@ const fetchMensajes = async () => {
   const horaFin = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
   const minutosFin = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
   const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
-  
+
   const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
-  
+
        const status1 = 'in process'
        const status2 = 'pending'
        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${numeroEspecifico}`);
-      
-  
-       const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status1}`);
-       const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
-  
+
+
+       
+       
+
        const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
        // El usuario está autenticado, puedes acceder a la sesión
-       
+
        if (!response.ok) {
-    
+
        }
        const users = await responseUsers.json()
        const Id = users.filter(d => d.usuario == session.user.name)
-        
-       const chatsPending = await responseChatsin.json();
-       const chatsPending1 = await responseChatspen.json();
-       const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
-       const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
+
+       
+       
+       
+       
        console.log(Id)
        const data = await response.json();
        setMensajes1(Object.values(data)[0]);
+
        
-       setEngestion(withoutGest.length)
-       setPendientes(withoutGest1.length)
-    
+       
+
       const messagelist = messagelistRef.current;
-  
+
       // Verifica si la referencia es null
       if (messagelist) {
         // Establece el desplazamiento en la parte inferior del contenedor
@@ -446,16 +446,16 @@ const handleNumericInputChange = (value) => {
 const handleAgregarNumeroClick = () => {
  // Llamamos a la función enviarSolicitud al hacer clic en el botón
  enviarSolicitud();
- 
+
 };
   // logica chats
   async function marcaLeido(id_chat2){
-    
+
     try {
       setNumeroEspecifico(id_chat2)
       const idChat2 = id_chat2; // Reemplaza 'tu_id_chat2' con el valor real que deseas actualizar
       const resolvedValue = true; // Reemplaza 'nuevo_valor_resolved' con el nuevo valor para 'resolved'
-    
+
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_DB}/actualizar-chat/${idChat2}`, {
         method: 'PUT',
         headers: {
@@ -463,35 +463,35 @@ const handleAgregarNumeroClick = () => {
         },
         body: JSON.stringify({ resolved: resolvedValue }),
       });
-    
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-      
+
       const data = await response.json();
-      console.log('Datos actualizados correctamente:', data);
+      
     } catch (error) {
       console.error('Error al actualizar el chat:', error);
     }
-    
+
   }
   const [statuschats, setStatuschats] = useState('')
-  
+
   const [pendientes, setPendientes] = useState('');
   const [engestion, setEngestion] = useState('');
-  
+
   // Función para mantener el scroll en la parte inferior
   // El array vacío asegura que el efecto se ejecute solo una vez al montar el componente
 
-  
+
   const manejarPresionarEnter = (event) => {
     if (event.key === 'Enter') {
-      
+
       enviarMensaje();
-      
+
     }
   };
-  
+
   const [emojis, setEmojis] = useState([]);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const handleAddEmoji = (emoji) => {
@@ -502,16 +502,16 @@ const handleAgregarNumeroClick = () => {
   const toggleEmojiPicker = () => {
     setShowEmojiPicker((prevShow) => !prevShow);
   };
-  
+
   const [contactos1, setContactos1] = useState([]);
   const [contactos, setContactos] = useState([
     { user: null, fecha: null, mensajes: [{ tipomensaje: '', datemessage: '', content: '' }] },
   ]);
   const [webhookData, setWebhookData] = useState(null);
   const [mensajes1, setMensajes1] = useState([]);
-  
+
      const handlePendientesClick = async () => {
-      
+
 
       setStatuschats('Pendientes')
     try {
@@ -541,16 +541,16 @@ const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', tim
 const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
 
       const status = 'pending';
-      
+
       const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
       const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
       // El usuario está autenticado, puedes acceder a la sesión
-      
+
       if (!responseChats.ok) {
           }
       const users = await responseUsers.json()
       const Id = users.filter(d => d.usuario == session.user.name)
-      
+
       const chatsPending = await responseChats.json();
       const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
       console.log(Id)
@@ -558,46 +558,46 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       setContactos1(withoutGest);
       setPendientes(withoutGest.length)
     } catch (error) {
-    
+
       // Puedes manejar el error según tus necesidades
     }
   };
   const handleEngestionClick = async () => {
 
     setStatuschats('Chats')
-    updateuser();
-    startFetchingChats();
     
+    startFetchingChats();
+
       const status1 = 'in process'
       const status2 = 'pending'
- 
-     
+
+
  try{
-   console.log('entra')
+   
       const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
        const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
       // El usuario está autenticado, puedes acceder a la sesión
-      
+
       if (!responseUsers.ok) {
-   
+
       }
       const users = await responseUsers.json()
-      setSession1(session.user.name) 
+      setSession1(session.user.name)
       const Id = users.filter(d => d.usuario == session.user.name)
       const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
       const chatsPending = await responseChatsin.json();
       const chatsPending1 = await responseChatspen.json();
       const withoutGest = chatsPending
       const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
-      console.log( Object.values(chatsPending)[0])
-     
-      setContactos1(Object.values(withoutGest)[0].filter(c=> c.status == 'pending' || c.status == 'in process'))
       
+
+      setContactos1(Object.values(withoutGest)[0].filter(c=> c.status == 'pending' || c.status == 'in process'))
+
       setEngestion(withoutGest.length)
       setPendientes(withoutGest1.length)
-      
+
      const messagelist = messagelistRef.current;
-      
+
      // Verifica si la referencia es null
      if (messagelist) {
        // Establece el desplazamiento en la parte inferior del contenedor
@@ -608,7 +608,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
    }
   };
 
-  
+
 
 const [file, setFile] = useState('');
 
@@ -629,7 +629,7 @@ const handleFileChange = (e) => {
   const [numeroEspecifico, setNumeroEspecifico] = useState('');
   // Ejemplo de consumo de la ruta con JavaScript y fetch
   const actualizarEstadoChatCerrados = async () => {
-  
+
   const idChat2 = numeroEspecifico;
   const nuevoEstado = 'closed';
   const nuevoUserId  = session.user.id
@@ -649,9 +649,9 @@ const handleFileChange = (e) => {
     if (response.ok) {
       const data = await response.json();
       setNumeroEspecifico('')
-      updateuser()
+      
       try {
- let status ;       
+ let status ;
  if(statuschats == 'Pendientes'){
         status ='pending'}
        else{
@@ -661,7 +661,7 @@ const handleFileChange = (e) => {
        const options = { timeZone: 'America/Bogota', hour12: false };
              const fechaInicio = new Date(fechaActual);
        fechaInicio.setHours(fechaInicio.getHours() - 24);
-       
+
        // Formatear la fecha de inicio
        const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
        const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
@@ -669,9 +669,9 @@ const handleFileChange = (e) => {
        const horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
        const minutosInicio = fechaInicio.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
        const segundosInicio = fechaInicio.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
-       
+
        const fechaInicioString = `${anioInicio}-${mesInicio}-${diaInicio} ${horaInicio}:${minutosInicio}:${segundosInicio}`;
-       
+
        // Formatear la fecha actual
        const anioFin = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
        const mesFin = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
@@ -679,31 +679,31 @@ const handleFileChange = (e) => {
        const horaFin = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
        const minutosFin = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
        const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
-       
+
        const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
-       
+
        const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${session.user.id}`);
        const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
        // El usuario está autenticado, puedes acceder a la sesión
-       
-       if (!responseChats.ok) {
-    
+
+       if (!responseUsers.ok) {
+
        }
        const users = await responseUsers.json()
        const Id = users.filter(d => d.usuario == session.user.name)
-        
+
        const chatsPending = await responseChatsin.json();
-       const withoutGest = chatsPending
-       
-       
-       
-       setContactos1(Object.values(withoutGest).filter(c => c.status ));
+       const withoutGest = chatsPending;
+
+
+
+       setContactos1(Object.values(withoutGest)[0].filter(c => c.status == 'pending' || c.status == 'in process' ));
        setEngestion(withoutGest.length)
      } catch (error) {
-     
+
        // Puedes manejar el error según tus necesidades
      }
-      console.log('Respuesta del servidor:', data);
+      
     } else {
       console.error('Error en la solicitud:', response.statusText);
     }
@@ -715,7 +715,7 @@ const handleFileChange = (e) => {
 
 
   const actualizarEstadoChat = async (estado) => {
-    updateuser();
+    
 
     try {
       const idChat2 = numeroEspecifico; // Asegúrate de obtener el idChat2 según tu lógica
@@ -731,13 +731,13 @@ const handleFileChange = (e) => {
 
       if (response.ok) {
         const resultado = await response.json();
-        
+
         try {
           const fechaActual = new Date();
    const options = { timeZone: 'America/Bogota', hour12: false };
          const fechaInicio = new Date(fechaActual);
    fechaInicio.setHours(fechaInicio.getHours() - 24);
-   
+
    // Formatear la fecha de inicio
    const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
    const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
@@ -745,9 +745,9 @@ const handleFileChange = (e) => {
    const horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
    const minutosInicio = fechaInicio.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
    const segundosInicio = fechaInicio.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
-   
+
    const fechaInicioString = `${anioInicio}-${mesInicio}-${diaInicio} ${horaInicio}:${minutosInicio}:${segundosInicio}`;
-   
+
    // Formatear la fecha actual
    const anioFin = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
    const mesFin = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
@@ -755,36 +755,36 @@ const handleFileChange = (e) => {
    const horaFin = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
    const minutosFin = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
    const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
-   
-   const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
-   
 
-         
-         
+   const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
+
+
+
+
        } catch (error) {
-       
+
          // Puedes manejar el error según tus necesidades
        }
         // Manejar la respuesta exitosa según tus necesidades
       } else if (response.status === 404) {
-    
+
         // Manejar el caso de chat no encontrado según tus necesidades
       } else {
-    
+
         // Manejar otros errores según tus necesidades
       }
     } catch (error) {
-    
+
       // Manejar errores generales según tus necesidades
     }
   };
    // Reemplaza esto con el número que necesites
   const [inputValue, setInputValue] = useState('')
   const [msg, setMsg] = useState([]);
-  
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  
-  
+
+
 
   const enviarMensaje = async () => {
     if (file) {
@@ -829,10 +829,10 @@ const handleFileChange = (e) => {
               tipoadjunto = {
                 type: cleanedType,
                 url: base + documentUrl,
-                filename: file, 
+                filename: file,
               };
               break;
-            
+
             case 'video':
               // Lógica para el tipo 'video'
               tipoadjunto = {
@@ -841,7 +841,7 @@ const handleFileChange = (e) => {
                 caption: inputValue,
               };
               break;
-          
+
             case 'image':
               // Lógica para el tipo 'image'
               tipoadjunto = {
@@ -865,7 +865,7 @@ const handleFileChange = (e) => {
               tipoadjunto = null;
               break;
           }
-          
+
          // Preparar datos del mensaje
         const mensajeData = {
           channel: 'whatsapp',
@@ -886,7 +886,7 @@ const handleFileChange = (e) => {
         if (!envioResponse.ok) {
           throw new Error(`Error al enviar el mensaje: ${envioResponse.status} ${envioResponse.statusText}`);
         }
-        
+
         const envioData = await envioResponse.json();
         console.log('Respuesta del servidor de envíos:',documentUrl );
         const idMessage = envioData.messageId;
@@ -907,23 +907,23 @@ const handleFileChange = (e) => {
         }),
       });
       setInputValue('')
-      updateuser()
+      
       if (guardarMensajeResponse.ok) {
         const guardarMensajeData = await guardarMensajeResponse.json();
         console.log(guardarMensajeData)
-        
+
         setFile('')
-      } else { 
+      } else {
       }
-        
+
         }
-        
+
       } catch (error) {
         console.error('Error al subir el archivo:', error.message);
-        
+
       }
     } else{
-    
+
     try {
       const mensajeData = {
         channel: 'whatsapp',
@@ -933,8 +933,8 @@ const handleFileChange = (e) => {
         message: inputValue,
         disablePreview: true,
       };
-      
-      
+
+
       const fechaActual = new Date();
 const options = { timeZone: 'America/Bogota', hour12: false };
 const anio = fechaActual.getFullYear();
@@ -954,9 +954,9 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       if (!response.ok) {
               }
       const responseData = await response.json();
- 
+
        // Escucha el evento 'cambio' para obtener el idMessage
-      const idMessage = responseData.messageId;  
+      const idMessage = responseData.messageId;
           // Guarda el mensaje en el servidor
       const guardarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
       method: 'POST',
@@ -978,21 +978,21 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
     if (guardarMensajeResponse.ok) {
       const guardarMensajeData = await guardarMensajeResponse.json();
       console.log(guardarMensajeData)
-      
-      
+
+
           } else {
-      
+
     }
-      
-    
-      
-      
+
+
+
+
     } catch (error) {
-      
+
     }
   };
 
-  
+
   };
   const updateuser =   async () => {
     const usuario = session.user.name; // Reemplaza con el nombre de usuario que deseas actualizar
@@ -1009,7 +1009,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
   const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
   const diaInicio = fechaInicio.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
   if (fechaInicio.getHours() >= 24) {
-    horaInicio = 0; 
+    horaInicio = 0;
   }
   horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
   const minutosInicio = fechaInicio.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
@@ -1028,14 +1028,14 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
   const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
 
 fetchMensajes()
-  
-    
+
+
   // Configurar el intervalo para realizar la consulta cada 30 segundos
-    
+
   }
-  
+
   }
-  
+
   function limpiarLink(dataString) {
     const match = dataString.match(/"file":"([^"]*)"/);
     return match ? match[1] : null;
@@ -1044,20 +1044,20 @@ fetchMensajes()
     const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
     const users =  await responseUsers.json();
     const asesores = users.filter(user => user.type_user == "Asesor" || user.type_user == "Asesor1" );
-    setMsg(asesores) 
-    
+    setMsg(asesores)
+
 
   }
   async function trasladarChat (usuarioid){
     const url = `${process.env.NEXT_PUBLIC_BASE_DB}/actualizar-usuario-chat`
     const requestBody = {
       idChat2:  numeroEspecifico.toString(),
-      nuevoUserId:  parseInt(usuarioid) 
-      
+      nuevoUserId:  parseInt(usuarioid)
+
     };
     // Realiza la solicitud PUT a la ruta
     try {
-      
+
       console.log(requestBody.idChat2, requestBody.nuevoUserId )
       const response = await fetch(url, {
         method: 'PUT',
@@ -1066,7 +1066,7 @@ fetchMensajes()
         },
         body: JSON.stringify(requestBody),
       });
-    
+
       if (response.ok) {
         const data = await response.json();
         console.log(data);
@@ -1078,13 +1078,13 @@ fetchMensajes()
     } catch (error) {
       console.error('Error al realizar la solicitud:', error.message);
     }
-    
+
   }
   if(session){
     return (
     <>
      {showPopup &&  <div className="fixed inset-0 flex items-center justify-center overflow-y-auto">
-      
+
     <div className="bg-black bg-opacity-50 " ></div>
     <div className="bg-white p-6 rounded shadow-lg w-96">
     <button
@@ -1118,14 +1118,14 @@ fetchMensajes()
         className="mt-1 p-2 border border-gray-300 rounded-md"
       >
         <option value="" disabled>Select a template</option>
-       
+
         {templates.map((template) => (
-         
+
           <option key={template.id} value={template.id}>
             {template.data}{contarOcurrencias(template.data, '{{.*?}}')}
           </option>
         ))}
-         
+
       </select>
 
       {templates.map(
@@ -1153,20 +1153,20 @@ fetchMensajes()
     </div>
   </div>}
         <Layout className='big-box'>
-                
+
         <Box className='estados' onLoad={updateuser()}>
           <ButtonContainer>
             <CustomButton onClick={handleEngestionClick}>{"Chats: "+contactos1.length}</CustomButton>
              {/* Mostrar Activos si 'mostrarActivos' es true */}
-            
+
             {session.user.type_user === 'Asesor1' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
             {session.user.type_user === 'Coordinador' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
           </ButtonContainer>
         </Box>
         <Container>
-        
+
   {/* Contenedor del chat */}
-  
+
 
     <Box className="bg-primary">
     <h2 className='text-white'>Chat {numeroEspecifico}</h2>
@@ -1186,14 +1186,14 @@ fetchMensajes()
                  onClick={() => trasladarChat(user.id)}
                  className="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-2"
                >
-                 {user.complete_name},{user.session} 
+                 {user.complete_name},{user.session}
                </li>
              ))}
            </ul>
          </div>
        </div>
       )}
-      
+
     </div>
     <ContainerBox  className='bg-primary'>
       <div className='messagelist h-100 overflow-y-auto' >
@@ -1205,15 +1205,15 @@ fetchMensajes()
 
           // Mapea y renderiza los mensajes ordenados
           return mensajesFiltrados.map((mensaje, index) => (
-            
-            <div 
+
+            <div
               key={index}
               className={`mensaje ${mensaje.type_message && console.log(mensajes1.length, mensajesFiltrados.length)} ${
                 mensaje.type_comunication === 'message-event' ? 'bg-white text-right shadow-lg p-4 bg-gray rounded-md' : 'bg-green text-left shadow-lg p-4 bg-gray rounded-md'
               } p-4 mb-4`}
-              
+
             >
-              
+
               { mensaje.type_message === 'image'  ? (
                 <img src={limpiarLink(mensaje.content) || mensaje.content}  alt="Imagen" className="w-15vw shadow-md p-4 bg-gray rounded-md" />
               ) :mensaje.type_message === 'image' ? (
@@ -1244,7 +1244,7 @@ fetchMensajes()
             </div>
           ));
         })()}      </div>
-      
+
     </ContainerBox >
     <div className='flex flex-row justify-between'>
       <BotonEnviar onClick={actualizarEstadoChat}>En atencion</BotonEnviar>
@@ -1282,8 +1282,8 @@ fetchMensajes()
         onChange={handleFileChange}
          // Puedes ajustar las extensiones permitidas
       />
-      
-        
+
+
       </InputContainer>
       {showEmojiPicker && (
         <EmojiPicker
@@ -1294,14 +1294,14 @@ fetchMensajes()
     </div>
 
     </Box>
-    
+
     {/* Botones de acción */}
-   
-  
+
+
 
   {/* Contenedor de contactos */}
- 
- 
+
+
  <ContainerBox2 >
  <InputMensaje
         type="text"
@@ -1328,14 +1328,14 @@ fetchMensajes()
       </CustomButton2>
     </li>
   )}
-  {Array.isArray(contactos1)  && 
+  {Array.isArray(contactos1)  &&
     contactos1.map((contacto, index) => (
       <li key={index}>
         <CustomButton2
           onClick={() => marcaLeido(contacto.idChat2)}
           className={`p-2 rounded ${
             `p-2 rounded ${
-              contacto.status === 'in process' ? 'bg-green text-black' : 
+              contacto.status === 'in process' ? 'bg-green text-black' :
               contacto.status === 'expiredbyasesor' ? 'bg-red text-black' :
               contacto.status === 'expiredbyclient' ? 'bg-primary text-black' :
               'bg-gray text-white' // Estado por defecto
@@ -1359,12 +1359,12 @@ fetchMensajes()
         </CustomButton2>
       </li>
     ))}
-  
+
 </ul>
 </div>
   </Box>
   </ContainerBox2>
- 
+
         </Container>
       </Layout>
         </>
@@ -1381,12 +1381,12 @@ fetchMensajes()
         </button>
       </div>
     </>
-    
+
       )
     };
- 
+
 const Box = styled.div`
- 
+
 padding: 1vw;
 margin: 2vw;
 border-radius: 10px;
@@ -1489,6 +1489,5 @@ transition: background-color 0.3s;
   background-color: #45a049;
 }
 `;
-
   export default Chats;
   
