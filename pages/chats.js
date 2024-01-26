@@ -343,7 +343,7 @@ const fetchMensajes = async () => {
 
 
        const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status1}`);
-       const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
+       
 
        const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
        // El usuario está autenticado, puedes acceder a la sesión
@@ -355,15 +355,15 @@ const fetchMensajes = async () => {
        const Id = users.filter(d => d.usuario == session.user.name)
 
        const chatsPending = await responseChatsin.json();
-       const chatsPending1 = await responseChatspen.json();
+       
        const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
-       const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
+       
        console.log(Id)
        const data = await response.json();
        setMensajes1(Object.values(data)[0]);
 
        setEngestion(withoutGest.length)
-       setPendientes(withoutGest1.length)
+       
 
       const messagelist = messagelistRef.current;
 
