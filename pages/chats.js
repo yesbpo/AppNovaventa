@@ -570,7 +570,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       const status2 = 'pending'
 
 
- try{
+ 
    
 
        const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
@@ -601,9 +601,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
        // Establece el desplazamiento en la parte inferior del contenedor
        messagelist.scrollTop = messagelist.scrollHeight;
      }
-   }catch{
-
-   }
+   
   };
 
 
