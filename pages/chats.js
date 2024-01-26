@@ -688,7 +688,7 @@ const handleFileChange = (e) => {
        
        
        
-       setContactos1(Object.values(withoutGest).filter(c => c.status ));
+       setContactos1(Object.values(withoutGest).filter(c => c.status == 'pending' || c.status == 'in process' ));
        setEngestion(withoutGest.length)
      } catch (error) {
      
