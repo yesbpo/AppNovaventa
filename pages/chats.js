@@ -1282,8 +1282,8 @@ fetchMensajes()
       <label>Selecciona una respuesta rápida:</label>
       <select>
         {respuestasRapidas.map(respuesta => (
-          <option key={respuesta.name} value={respuesta.contentn}>
-            {respuesta.name}:{respuesta.contentn}{onClick={setInputValue}}
+          <option key={respuesta.name} value={respuesta.contentn}onClick={setInputValue}>
+            {respuesta.name}:{respuesta.contentn}
           </option>
         ))}
       </select>
