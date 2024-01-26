@@ -42,7 +42,7 @@ const Chats = () => {
 
 try{
   
-     const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
+     
       const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
      // El usuario está autenticado, puedes acceder a la sesión
 
@@ -53,7 +53,7 @@ try{
      const Id = users.filter(d => d.usuario == session.user.name)
      const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
      const chatsPending = await responseChatsin.json();
-     const chatsPending1 = await responseChatspen.json();
+     
      const withoutGest = chatsPending
      const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
      console.log(Object.values(withoutGest)[0].filter(c => c.status == 'pending' || c.status == 'in process'))
@@ -542,28 +542,26 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
 
       const status = 'pending';
 
-      const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
+      
       const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
       // El usuario está autenticado, puedes acceder a la sesión
 
-      if (!responseChats.ok) {
+      if (!responseUsers.ok) {
           }
       const users = await responseUsers.json()
       const Id = users.filter(d => d.usuario == session.user.name)
 
-      const chatsPending = await responseChats.json();
+      
       const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
       
 
-      setContactos1(withoutGest);
-      setPendientes(withoutGest.length)
     } catch (error) {
 
       // Puedes manejar el error según tus necesidades
     }
   };
   const handleEngestionClick = async () => {
-
+console.log('entra')
     setStatuschats('Chats')
     
     startFetchingChats();
@@ -572,9 +570,9 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       const status2 = 'pending'
 
 
- try{
+ 
    
-      const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
+
        const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
       // El usuario está autenticado, puedes acceder a la sesión
 
@@ -586,15 +584,15 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       const Id = users.filter(d => d.usuario == session.user.name)
       const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
       const chatsPending = await responseChatsin.json();
-      const chatsPending1 = await responseChatspen.json();
+      
       const withoutGest = chatsPending
-      const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
+      
       
 
       setContactos1(Object.values(withoutGest)[0].filter(c=> c.status == 'pending' || c.status == 'in process'))
 
       setEngestion(withoutGest.length)
-      setPendientes(withoutGest1.length)
+
 
      const messagelist = messagelistRef.current;
 
@@ -603,9 +601,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
        // Establece el desplazamiento en la parte inferior del contenedor
        messagelist.scrollTop = messagelist.scrollHeight;
      }
-   }catch{
-
-   }
+   
   };
 
 
