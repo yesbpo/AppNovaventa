@@ -103,8 +103,8 @@ function contarOcurrencias(texto, patron) {
 
 useEffect(() => {
   // Realizar la solicitud GET al servidor
-  fetch(process.env.NEXT_PUBLIC_BASE_DB + 'obtener-nombres-contenidos')
-    .then(response => response.json())
+  fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-nombres-contenidos')
+  .then(response => response.json())
     .then(data => setRespuestasRapidas(data))
     .catch(error => console.error('Error al obtener respuestas rápidas:', error));
 }, []);
