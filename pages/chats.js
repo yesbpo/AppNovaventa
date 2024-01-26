@@ -339,10 +339,15 @@ const fetchMensajes = async () => {
   
        const status1 = 'in process'
        const status2 = 'pending'
+       let response;
+       let data;
        if(numeroEspecifico !== ''){
-       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${numeroEspecifico}`);
-      
-  
+       response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${numeroEspecifico}`);
+       data = await response.json(); 
+       setMensajes1(Object.values(data)[0].filter(c=> c.status == 'pending' || c.status == 'in process'));
+      }
+       
+       
        const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status1}`);
        const responseChatspen = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status2}`);
   
@@ -360,8 +365,7 @@ const fetchMensajes = async () => {
        const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
        const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
        console.log(Id)
-       const data = await response.json();
-       setMensajes1(Object.values(data)[0]);
+       
        
        setEngestion(withoutGest.length)
        setPendientes(withoutGest1.length)
@@ -372,7 +376,7 @@ const fetchMensajes = async () => {
       if (messagelist) {
         // Establece el desplazamiento en la parte inferior del contenedor
         messagelist.scrollTop = messagelist.scrollHeight;
-      }}
+      }
  }
 const handleParamChange = (param, value) => {
  setTemplateParams((prevParams) => {
