@@ -693,7 +693,7 @@ const handleFileChange = (e) => {
        const Id = users.filter(d => d.usuario == session.user.name)
         
        const chatsPending = await responseChatsin.json();
-       const withoutGest = chatsPending
+       const withoutGest = chatsPending;
        
        
        
