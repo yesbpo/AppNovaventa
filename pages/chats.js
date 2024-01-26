@@ -358,7 +358,7 @@ const fetchMensajes = async () => {
        
        
        
-       console.log(Id)
+       
        const data = await response.json();
        setMensajes1(Object.values(data)[0]);
 
@@ -553,7 +553,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
 
       const chatsPending = await responseChats.json();
       const withoutGest = chatsPending.filter(d => d.userId == Id[0].id )
-      console.log(Id)
+      
 
       setContactos1(withoutGest);
       setPendientes(withoutGest.length)
@@ -1208,7 +1208,7 @@ fetchMensajes()
 
             <div
               key={index}
-              className={`mensaje ${mensaje.type_message && console.log(mensajes1.length, mensajesFiltrados.length)} ${
+              className={`mensaje ${mensaje.type_message} ${
                 mensaje.type_comunication === 'message-event' ? 'bg-white text-right shadow-lg p-4 bg-gray rounded-md' : 'bg-green text-left shadow-lg p-4 bg-gray rounded-md'
               } p-4 mb-4`}
 
