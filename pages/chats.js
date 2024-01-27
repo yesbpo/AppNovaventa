@@ -1279,15 +1279,15 @@ fetchMensajes()
       <BotonEnviar onClick={actualizarEstadoChat}>En atencion</BotonEnviar>
       <BotonEnviar onClick={actualizarEstadoChatCerrados}>Finalizar</BotonEnviar>
       <div>
-  <label>Selecciona una respuesta rápida:</label>
-  <select onChange={(e) => setInputValue(e.target.value)}>
-    {respuestasRapidas.map(respuesta => (
-      <option key={respuesta.name} value={respuesta.contentn}>
-        {respuesta.name}: {respuesta.contentn}
-      </option>
-    ))}
-  </select>
-</div>
+      <label htmlFor="respuestasRapidas">Selecciona una respuesta rápida:</label>
+      <StyledSelect id="respuestasRapidas" onChange={(e) => setInputValue(e.target.value)}>
+        {respuestasRapidas.map(respuesta => (
+          <option key={respuesta.name} value={respuesta.contentn}>
+            {respuesta.name}: {respuesta.contentn}
+          </option>
+        ))}
+      </StyledSelect>
+    </div>
     </div>
 
     </Box>
@@ -1486,5 +1486,24 @@ transition: background-color 0.3s;
   background-color: #45a049;
 }
 `;
+
+const StyledSelect = styled.select`
+  padding: 8px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border-color 0.3s;
+
+  &:hover {
+    border-color: #4caf50;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #4caf50;
+  }
+`;
+
   export default Chats;
   
