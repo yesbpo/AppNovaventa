@@ -32,9 +32,11 @@ const Reports = (props) => {
   const [selectedStatus, setSelectedStatus] = useState(''); // Estado seleccionado
   const [selectedType, setSelectedType] = useState('');
   const [filtersApplied, setFiltersApplied] = useState(false);
+  const [modalAbierto, setModalAbierto] = useState(false);
   const [contentn, setContentn] = useState('');
   const [name, setName] = useState('');
   const [mensaje, setMensaje] = useState('');
+  
 
   const handleAgregarContenido = async (event) => {
   event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
@@ -62,6 +64,7 @@ const Reports = (props) => {
     console.error('Error en la solicitud:', error);
     setMensaje('Error interno del cliente');
   }
+  setModalAbierto(false);
 };
 
 
@@ -486,20 +489,27 @@ const handleCreateTemplate = async () => {
 <span>{deleteMessage}</span>
 
 <div>
-      <form onSubmit={handleAgregarContenido}>
-        <label>
-          Contenido:
-          <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Nombre:
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-        </label>
-        <br />
-        <button type="submit">Agregar Contenido</button>
-      </form>
-      <p>{mensaje}</p>
+      <button onClick={() => setModalAbierto(true)}>Mostrar Popup</button>
+
+      {modalAbierto && (
+        <div className="modal">
+          <form onSubmit={handleAgregarContenido}>
+            <label>
+              Contenido:
+              <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
+            </label>
+            <br />
+            <label>
+              Nombre:
+              <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+            </label>
+            <br />
+            <button type="submit">Agregar Contenido</button>
+          </form>
+          <p>{mensaje}</p>
+          <button onClick={() => setModalAbierto(false)}>Cerrar Popup</button>
+        </div>
+      )}
     </div>
 
 <div className='CreatedTemplates'>
