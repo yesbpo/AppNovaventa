@@ -348,6 +348,10 @@ const handleCreateTemplate = async () => {
             ))}
           </TemplateButtons>
         )}
+         <button onClick={toggleModal} style={{ fontWeight: 'bold', margin: '20px' }}>
+        {modalAbierto ? 'Cerrar Popup' : 'Mostrar Popup'}
+      </button>
+
       </Container>
 
       {(selectedTemplateType === 'TEXT' || selectedTemplateType === 'IMAGE' || selectedTemplateType === 'VIDEO' || selectedTemplateType === 'DOCUMENT') && (
@@ -499,9 +503,7 @@ const handleCreateTemplate = async () => {
 <span>{deleteMessage}</span>
 
 <div>
-      <button onClick={toggleModal} style={{ fontWeight: 'bold', margin: '20px' }}>
-        {modalAbierto ? 'Cerrar Popup' : 'Mostrar Popup'}
-      </button>
+     
 
       {modalAbierto && (
         <div className="modal">
@@ -518,10 +520,9 @@ const handleCreateTemplate = async () => {
           <button onClick={handleAgregarContenido}>Agregar Contenido</button>
         </div>
       )}
-
-      
     </div>
     <p>{mensaje}</p>
+    
 
 <div className='CreatedTemplates'>
         {error && <p>{error}</p>}
