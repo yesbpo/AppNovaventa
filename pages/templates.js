@@ -492,9 +492,9 @@ const handleCreateTemplate = async () => {
 <span>{deleteMessage}</span>
 
 <div>
-      <button onClick={toggleModal}>
-        {modalAbierto ? 'Cerrar Popup' : 'Mostrar Popup'}
-      </button>
+      <Button onClick={toggleModal} style={{fontWeight: 'bold',margin:'20px'}}>
+        {modalAbierto ? 'Crear respuesta rapida' : 'Crear respuesta rapida'}
+      </Button>
 
       {modalAbierto && (
         <div className="modal">
