@@ -708,7 +708,7 @@ setWebhookData(webhookText);
         })()}
       
         </Box>
-        <Box style={{ height: '30vw', width: '10vw'}}>
+        <Box style={{ height: '30vw', width: '15vw'}}>
         
           <div className="chat-container">
             <h1>{statuschats}</h1>
@@ -723,7 +723,7 @@ setWebhookData(webhookText);
             </ul>
           </div>
         </Box>
-        <Box style={{ height: '30vw', width: '10vw'}}>
+        <Box style={{ height: '30vw', width: '15vw'}}>
           <div className="chat-container">
             <h1>En gestion</h1>
             <ul>
