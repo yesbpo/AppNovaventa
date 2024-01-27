@@ -70,6 +70,11 @@ const Reports = (props) => {
   setName('');
   setContentn('');
   setModalAbierto(false);
+
+  setMensaje('Contenido agregado con éxito');
+    setTimeout(() => {
+      setMensaje('');
+    }, 3000);
 };
 
 
@@ -494,28 +499,29 @@ const handleCreateTemplate = async () => {
 <span>{deleteMessage}</span>
 
 <div>
-  <button onClick={toggleModal} style={{ fontWeight: 'bold', margin: '20px' }}>
-    {modalAbierto ? 'Cerrar Popup' : 'Mostrar Popup'}
-  </button>
+      <button onClick={toggleModal} style={{ fontWeight: 'bold', margin: '20px' }}>
+        {modalAbierto ? 'Cerrar Popup' : 'Mostrar Popup'}
+      </button>
 
-  {modalAbierto && (
-    <div className="modal">
-      <label>
-        Nombre:
-        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-      </label>
-      <br />
-      <label>
-        Contenido:
-        <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
-      </label>
-      <br />
-      <button onClick={handleAgregarContenido}>Agregar Contenido</button>
-      <p>{mensaje}</p>
+      {modalAbierto && (
+        <div className="modal">
+          <label>
+            Nombre:
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+          </label>
+          <br />
+          <label>
+            Contenido:
+            <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
+          </label>
+          <br />
+          <button onClick={handleAgregarContenido}>Agregar Contenido</button>
+        </div>
+      )}
+
+      
     </div>
-  )}
-</div>
-
+    <p>{mensaje}</p>
 
 <div className='CreatedTemplates'>
         {error && <p>{error}</p>}
