@@ -498,7 +498,6 @@ const handleCreateTemplate = async () => {
 
   {modalAbierto && (
     <div className="modal">
-      <form onSubmit={handleAgregarContenido}>
         <label>
           Nombre:
           <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
@@ -509,8 +508,7 @@ const handleCreateTemplate = async () => {
           <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
         </label>
         <br />
-      </form>
-      <button type="submit">Agregar Contenido</button>
+        <button onSubmit={handleAgregarContenido}>Agregar Contenido</button>
       <p>{mensaje}</p>
     </div>
   )}
