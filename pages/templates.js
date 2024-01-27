@@ -509,8 +509,7 @@ const handleCreateTemplate = async () => {
               <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
             </label>
             <br />
-            <Button className={`bg-grey ${modalAbierto ? 'visible' : 'hidden'}`} type="submit" style={{ fontWeight: 'bold', margin: '20px' }}
-            >
+            <Button onClick={submit} >
               Agregar Contenido
             </Button>
           </form>
