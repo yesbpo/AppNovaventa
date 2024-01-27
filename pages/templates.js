@@ -37,6 +37,9 @@ const Reports = (props) => {
   const [name, setName] = useState('');
   const [mensaje, setMensaje] = useState('');
   
+  const toggleModal = () => {
+    setModalAbierto(!modalAbierto);
+  };
 
   const handleAgregarContenido = async (event) => {
   event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
@@ -489,25 +492,27 @@ const handleCreateTemplate = async () => {
 <span>{deleteMessage}</span>
 
 <div>
-      <button onClick={() => setModalAbierto(true)}>Mostrar Popup</button>
+      <button onClick={toggleModal}>
+        {modalAbierto ? 'Cerrar Popup' : 'Mostrar Popup'}
+      </button>
 
       {modalAbierto && (
         <div className="modal">
           <form onSubmit={handleAgregarContenido}>
             <label>
-              Contenido:
-              <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
+              Nombre:
+              <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
             </label>
             <br />
             <label>
-              Nombre:
-              <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+              Contenido:
+              <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
             </label>
             <br />
             <button type="submit">Agregar Contenido</button>
           </form>
           <p>{mensaje}</p>
-          <button onClick={() => setModalAbierto(false)}>Cerrar Popup</button>
+          <button onClick={toggleModal}>Cerrar Popup</button>
         </div>
       )}
     </div>
