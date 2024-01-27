@@ -141,8 +141,9 @@ const CrearUsuario = () => {
     
     <Layout>
     <div className="flex items-center justify-center h-screen">
+    <BotonEnviar onClick={handleChangeCrear}>Agregar usuario</BotonEnviar>
       <div className="w-full max-w-md p-4 bg-white shadow-md rounded-md">
-        <BotonEnviar onClick={handleChangeCrear}>Agregar usuario</BotonEnviar>
+        
         {usuarioSeleccionado ? (
           <div>
             <h1 className="text-2x1 font-bold text-center mb-4">Modificar Usuario</h1>
