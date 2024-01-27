@@ -141,7 +141,7 @@ const CrearUsuario = () => {
     
     <Layout>
       <div className="flex items-center justify-between p-4">
-      <h1 className="text-2xl font-bold">Tu Título</h1>
+      <h1 className="text-2xl font-bold">Listado de usuarios</h1>
       <BotonEnviar onClick={handleChangeCrear} className="bg-blue-500 text-white p-2 rounded-md">Agregar usuario</BotonEnviar>
       </div>
       <div className="flex items-center justify-center h-screen">
