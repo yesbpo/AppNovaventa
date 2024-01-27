@@ -1278,7 +1278,9 @@ fetchMensajes()
     <div className='flex flex-row justify-between'>
       <BotonEnviar onClick={actualizarEstadoChat}>En atencion</BotonEnviar>
       <BotonEnviar onClick={actualizarEstadoChatCerrados}>Finalizar</BotonEnviar>
-      <div>
+    </div>
+
+    <div>
       <label>Selecciona una respuesta rápida:</label>
       <select>
         {respuestasRapidas.map(respuesta => (
@@ -1287,7 +1289,6 @@ fetchMensajes()
           </option>
         ))}
       </select>
-    </div>
     </div>
 
     </Box>
