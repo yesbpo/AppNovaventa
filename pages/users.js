@@ -270,19 +270,11 @@ const CrearUsuario = () => {
     <label htmlFor="completeName" className="form-label">Complete Name:</label>
     <input type="text" className="form-control" id="completeName" value={complete_name} onChange={(e) => setComplete_name(e.target.value)} />
   </div>
-  <label className="flex items-center cursor-pointer">
-  <span className={`relative inline-block w-10 h-6 transition duration-200 ease-in-out ${isChecked ? 'bg-blue-500' : 'bg-gray-400'} rounded-full shadow-inner`}>
-  <span className={`absolute inset-0 w-5 h-5 transition-transform duration-200 ease-in-out transform ${isChecked ? 'translate-x-full' : 'translate-x-0'} bg-white rounded-full shadow-md`}></span>
+   <label class='switch'>
+    <input type="checkbox" checked={isChecked} onChange={handleChange} />
+    <span class="slider round">Permiso de agregar número</span>
+   </label>
   
-  </span>
-  <input 
-    type="checkbox" 
-    className='hidden' 
-    checked={isChecked} 
-    onChange={handleChange}
-    />
-  <span className='ml-2 text-sm font-medium text-gray-700'>Permiso de agregar número</span>
-  </label>
   <BotonEnviar type="button" onClick={handleCrearUsuario} className="w-full bg-green-500 text-white p-2 rounded-md">
     Crear Usuario
   </BotonEnviar>
