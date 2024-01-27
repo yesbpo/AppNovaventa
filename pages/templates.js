@@ -496,25 +496,22 @@ const handleCreateTemplate = async () => {
         {modalAbierto ? 'Cerrar Popup' : 'Mostrar Popup'}
       </button>
 
-      {modalAbierto && (
-        <div className="modal">
-          <form onSubmit={handleAgregarContenido}>
-            <label>
-              Nombre:
-              <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-            </label>
-            <br />
-            <label>
-              Contenido:
-              <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
-            </label>
-            <br />
-            <button type="submit">Agregar Contenido</button>
-          </form>
-          <p>{mensaje}</p>
-          <button onClick={toggleModal}>Cerrar Popup</button>
-        </div>
-      )}
+      <div className={modalAbierto ? 'modal' : 'modal-hidden'}>
+        <form onSubmit={handleAgregarContenido}>
+          <label>
+            Nombre:
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+          </label>
+          <br />
+          <label>
+            Contenido:
+            <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
+          </label>
+          <br />
+          <button type="submit">Agregar Contenido</button>
+        </form>
+        <p>{mensaje}</p>
+      </div>
     </div>
 
 <div className='CreatedTemplates'>
@@ -673,5 +670,6 @@ const TemplateItem = styled.div`
     margin-top: 15px;
   }
 `;
+
 
 export default Reports;
