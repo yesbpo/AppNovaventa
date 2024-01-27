@@ -509,8 +509,8 @@ const handleCreateTemplate = async () => {
           <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
         </label>
         <br />
-        <button type="submit">Agregar Contenido</button>
       </form>
+      <button type="submit">Agregar Contenido</button>
       <p>{mensaje}</p>
     </div>
   )}
