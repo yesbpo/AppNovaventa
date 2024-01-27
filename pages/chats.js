@@ -1276,9 +1276,9 @@ fetchMensajes()
     </div>
 
     <div className='flex flex-row justify-between'>
-  <BotonEnviar onClick={actualizarEstadoChat}>En atención</BotonEnviar>
-  <BotonEnviar onClick={actualizarEstadoChatCerrados}>Finalizar</BotonEnviar>
-  <div>
+      <BotonEnviar onClick={actualizarEstadoChat}>En atencion</BotonEnviar>
+      <BotonEnviar onClick={actualizarEstadoChatCerrados}>Finalizar</BotonEnviar>
+      <div>
     <label>Selecciona una respuesta rápida:</label>
     <select onChange={handleSelectChange}>
       <option value="" disabled defaultValue>Selecciona una respuesta</option>
@@ -1290,7 +1290,6 @@ fetchMensajes()
     </select>
   </div>
 </div>
-
 
     </Box>
 
