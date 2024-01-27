@@ -183,9 +183,9 @@ useEffect(() => {
   const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
 
 
-       
+       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${numeroEspecifico}`);
 
-       
+       const data = await response.json();
 
   const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
   // El usuario está autenticado, puedes acceder a la sesión
@@ -1278,16 +1278,17 @@ fetchMensajes()
     <div className='flex flex-row justify-between'>
       <BotonEnviar onClick={actualizarEstadoChat}>En atencion</BotonEnviar>
       <BotonEnviar onClick={actualizarEstadoChatCerrados}>Finalizar</BotonEnviar>
-      <div>
-      <label>Selecciona una respuesta rápida:</label>
-      <select>
+    </div>
+
+    <div>
+      <label htmlFor="respuestasRapidas">Selecciona una respuesta rápida:</label>
+      <StyledSelect id="respuestasRapidas" onChange={(e) => setInputValue(e.target.value)}>
         {respuestasRapidas.map(respuesta => (
           <option key={respuesta.name} value={respuesta.contentn}>
-            {respuesta.name}
+            {respuesta.name}: {respuesta.contentn}
           </option>
         ))}
-      </select>
-    </div>
+      </StyledSelect>
     </div>
 
     </Box>
@@ -1486,5 +1487,25 @@ transition: background-color 0.3s;
   background-color: #45a049;
 }
 `;
+
+const StyledSelect = styled.select`
+  width: 180px; /* Ajusta el tamaño según tus necesidades */
+  padding: 10px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border-color 0.3s;
+
+  &:hover {
+    border-color: #f7f7f7;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #4caf50;
+  }
+`;
+
   export default Chats;
   
