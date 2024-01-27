@@ -1488,9 +1488,9 @@ transition: background-color 0.3s;
 `;
 
 const StyledSelect = styled.select`
-  width: 150px; /* Ajusta el tamaño según tus necesidades */
+  width: 180px; /* Ajusta el tamaño según tus necesidades */
   padding: 10px;
-  font-size: 8px;
+  font-size: 13px;
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
