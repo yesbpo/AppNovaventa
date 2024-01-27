@@ -1278,7 +1278,7 @@ fetchMensajes()
     <div>
   <label>Selecciona una respuesta rápida:</label>
   <select>
-    {respuestasRapidas ? (
+    {respuestasRapidas && Array.isArray(respuestasRapidas) ? (
       respuestasRapidas.map(respuesta => (
         <option key={respuesta.name} value={respuesta.contentn}>
           {respuesta.name}
