@@ -145,7 +145,7 @@ const CrearUsuario = () => {
         <BotonEnviar onClick={handleChangeCrear}>Agregar usuario</BotonEnviar>
         {usuarioSeleccionado ? (
           <div>
-            <h1 className="text-dark text-center mb-6">Modificar Usuario</h1>
+            <h1 className="text-2x1 font-bold text-center mb-4">Modificar Usuario</h1>
             <p>{usuarioSeleccionado.complete_name}</p>
             <div className="mb-5">
     <label htmlFor="usuario" className="form-label">Usuario:</label>
