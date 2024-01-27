@@ -796,7 +796,7 @@ const ContainerBox = styled.div`
   padding: 15px;
   border-radius: 10px;
   overflow-y: scroll;
-  max-height: 400px;
+  height: 30vw;
   max-width: 500px;
 `;
 
