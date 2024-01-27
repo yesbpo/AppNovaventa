@@ -195,7 +195,7 @@ const CrearUsuario = () => {
     <label htmlFor="completeName" className="form-label">Complete Name:</label>
     <input type="text" className="form-control" id="completeName" value={complete_name} onChange={(e) => setComplete_name(e.target.value)} />
   </div>
-  <input type="checkbox" checked={isChecked} onChange={handleChange} />
+  <input type="checkbox" className='slider round' checked={isChecked} onChange={handleChange} />
   <p>Permiso de agregar número</p>
   <BotonEnviar type="button" onClick={handleUpdateUser} className="w-full bg-blue-500 text-white p-2 rounded-md">
     Actualizar Usuario
