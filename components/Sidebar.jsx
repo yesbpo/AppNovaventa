@@ -28,9 +28,7 @@ const menuItems = [
 const menuItems1 = [
   { id: 7, label: 'chats', icon: ChatIcon, link: '/chats' },
 ]
-const menuItems2 = [
-  { id: 7, label: 'cargando...', link: '/' },
-]
+
 const Sidebar = (props) => {
   const [toggleCollapse, setToggleCollapse] = useState(false);
   const [isCollapsible, setIsCollapsible] = useState(false);
@@ -55,12 +53,7 @@ const Sidebar = (props) => {
     fetchData();
   }, []);
   
-  const defaultValue = 'Cargando...';
-
-  const selectedItems =
-    users.type_user === 'Coordinador' ? menuItems : 
-    users.type_user === 'Asesor' ? menuItems1 :
-    users.type_user === undefined ? menuItems2 : defaultValue;
+  const selectedItems = users.type_user === 'Coordinador' ? menuItems  :  menuItems1;
   // Routing.
   const router = useRouter();
   const activeMenu = useMemo(() => selectedItems.find((menu) => menu.link === router.pathname), [
