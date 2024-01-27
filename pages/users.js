@@ -146,10 +146,10 @@ const CrearUsuario = () => {
         {usuarioSeleccionado ? (
           <div>
             <h1 className="text-2x1 font-bold text-center mb-4">Modificar Usuario</h1>
-            <p>{usuarioSeleccionado.complete_name}</p>
-            <div className="mb-5">
-    <label htmlFor="usuario" className="form-label">Usuario:</label>
-    <input type="text" className="form-control" id="usuario" value={usuario} onChange={(e) => setUsuario(e.target.value)} />
+            <p className="mb-2">{usuarioSeleccionado.complete_name}</p>
+            <div className="mb-4">
+    <label htmlFor="usuario" className="block text-sm font-medium text-gray-600">Usuario:</label>
+    <input type="text" className="form-input mt-1 block w-full" id="usuario" value={usuario} onChange={(e) => setUsuario(e.target.value)} />
   </div>
   <div className="mb-3">
     <label htmlFor="password" className="form-label">Password:</label>
