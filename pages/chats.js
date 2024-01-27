@@ -1488,15 +1488,15 @@ transition: background-color 0.3s;
 `;
 
 const StyledSelect = styled.select`
-  padding: 8px;
-  font-size: 16px;
+  padding: 6px;
+  font-size: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
   transition: border-color 0.3s;
 
   &:hover {
-    border-color: #4caf50;
+    border-color: #f7f7f7;
   }
 
   &:focus {
