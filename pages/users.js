@@ -141,7 +141,7 @@ const CrearUsuario = () => {
     
     <Layout>
     <div className="flex items-center justify-center h-screen">
-      <div className="w-full max-w-md">
+      <div className="w-full max-w-md p-4 bg-white shadow-md rounded-md">
         <BotonEnviar onClick={handleChangeCrear}>Agregar usuario</BotonEnviar>
         {usuarioSeleccionado ? (
           <div>
@@ -152,9 +152,7 @@ const CrearUsuario = () => {
     <input type="text" className="form-control" id="usuario" value={usuario} onChange={(e) => setUsuario(e.target.value)} />
   </div>
   <div className="mb-3">
-    <label htmlFor="password" className="form-label">
-      Password:
-    </label>
+    <label htmlFor="password" className="form-label">Password:</label>
     <div className="password-container">
       <input
         type={mostrarPassword ? 'text' : 'password'}
@@ -257,9 +255,9 @@ const CrearUsuario = () => {
   <BotonEnviar type="button" onClick={handleCrearUsuario}>
     Crear Usuario
   </BotonEnviar>
-              </form>}
-              {/* Lista de usuarios */}
-              <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
+  </form>}
+      {/* Lista de usuarios */}
+      <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
   <ul>
     {!showCrear && <h2 className="text-dark text-center mb-3">Modificar Usuarios</h2> && usuarios.map((usuario) => (
       <li key={usuario.id}>
