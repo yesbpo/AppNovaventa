@@ -67,6 +67,8 @@ const Reports = (props) => {
     console.error('Error en la solicitud:', error);
     setMensaje('Error interno del cliente');
   }
+  setName('');
+  setContentn('');
   setModalAbierto(false);
 };
 
