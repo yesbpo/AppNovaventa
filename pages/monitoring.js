@@ -660,9 +660,8 @@ setWebhookData(webhookText);
         <Box className='h-90 w-300'>
         <h2>Chat {numeroEspecifico}</h2>
           <ContainerBox>
-          <h2>Mensajes de {numeroEspecifico}</h2>
-            <div>
-      
+
+
       
             {(() => {
           // Filtra los mensajes por el número específico y contenido no vacío
@@ -707,7 +706,6 @@ setWebhookData(webhookText);
             </div>
           ));
         })()}
-    </div> 
       </ContainerBox>
         </Box>
         <Box>
