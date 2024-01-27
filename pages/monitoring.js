@@ -659,7 +659,7 @@ setWebhookData(webhookText);
      {statuschats && <Container>
         <Box className='h-90 w-300'>
         <h2>Chat {numeroEspecifico}</h2>
-          <ContainerBox>
+          
 
 
       
@@ -706,7 +706,7 @@ setWebhookData(webhookText);
             </div>
           ));
         })()}
-      </ContainerBox>
+      
         </Box>
         <Box>
         
