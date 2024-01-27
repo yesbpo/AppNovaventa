@@ -657,7 +657,7 @@ setWebhookData(webhookText);
         </ButtonContainer>
       </Box>
      {statuschats && <Container>
-        <Box className='h-90 w-300'>
+        <Box className='h-90 w-100'>
         <h2>Chat {numeroEspecifico}</h2>
           
 
@@ -761,6 +761,7 @@ setWebhookData(webhookText);
   overflow-y: scroll;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   max-height: 400px;
+  max-width: 100vw;
 `;
 
 const CustomButton = styled.button`
