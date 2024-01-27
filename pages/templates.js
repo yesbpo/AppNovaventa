@@ -492,31 +492,29 @@ const handleCreateTemplate = async () => {
 <span>{deleteMessage}</span>
 
 <div>
-      <Button onClick={toggleModal} style={{fontWeight: 'bold',margin:'20px'}}>
-        {modalAbierto ? 'Crear respuesta rapida' : 'Crear respuesta rapida'}
-      </Button>
+  <button onClick={toggleModal} style={{ fontWeight: 'bold', margin: '20px' }}>
+    {modalAbierto ? 'Cerrar Popup' : 'Mostrar Popup'}
+  </button>
 
-      {modalAbierto && (
-        <div className="modal">
-          <form onSubmit={handleAgregarContenido}>
-            <label>
-              Nombre:
-              <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-            </label>
-            <br />
-            <label>
-              Contenido:
-              <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
-            </label>
-            <br />
-            <Button onClick={submit} >
-              Agregar Contenido
-            </Button>
-          </form>
-          <p>{mensaje}</p>
-        </div>
-      )}
+  {modalAbierto && (
+    <div className="modal">
+      <form onSubmit={handleAgregarContenido}>
+        <label>
+          Nombre:
+          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+        </label>
+        <br />
+        <label>
+          Contenido:
+          <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
+        </label>
+        <br />
+        <button type="submit">Agregar Contenido</button>
+      </form>
+      <p>{mensaje}</p>
     </div>
+  )}
+</div>
 
 <div className='CreatedTemplates'>
         {error && <p>{error}</p>}
