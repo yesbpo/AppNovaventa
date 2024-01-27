@@ -498,21 +498,22 @@ const handleCreateTemplate = async () => {
 
   {modalAbierto && (
     <div className="modal">
-        <label>
-          Nombre:
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Contenido:
-          <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
-        </label>
-        <br />
-        <button onSubmit={handleAgregarContenido}>Agregar Contenido</button>
+      <label>
+        Nombre:
+        <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+      </label>
+      <br />
+      <label>
+        Contenido:
+        <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
+      </label>
+      <br />
+      <button onClick={handleAgregarContenido}>Agregar Contenido</button>
       <p>{mensaje}</p>
     </div>
   )}
 </div>
+
 
 <div className='CreatedTemplates'>
         {error && <p>{error}</p>}
