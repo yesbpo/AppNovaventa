@@ -1281,15 +1281,15 @@ fetchMensajes()
     </div>
 
     <div>
-  <label>Selecciona una respuesta rápida:</label>
-  <select>
-    {Array.isArray(respuestasRapidas) && respuestasRapidas.map(respuesta => (
-      <option key={respuesta.name} value={respuesta.contentn}>
-        {respuesta.name}
-      </option>
-    ))}
-  </select>
-</div>
+      <label>Selecciona una respuesta rápida:</label>
+      <select>
+        {respuestasRapidas.map(respuesta => (
+          <option key={respuesta.name} value={respuesta.contentn}>
+            {respuesta.name}
+          </option>
+        ))}
+      </select>
+    </div>
 
     </Box>
 
