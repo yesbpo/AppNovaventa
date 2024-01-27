@@ -496,22 +496,24 @@ const handleCreateTemplate = async () => {
         {modalAbierto ? 'Cerrar Popup' : 'Mostrar Popup'}
       </button>
 
-      <div className={modalAbierto ? 'modal' : 'modal-hidden'}>
-        <form onSubmit={handleAgregarContenido}>
-          <label>
-            Nombre:
-            <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-          </label>
-          <br />
-          <label>
-            Contenido:
-            <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
-          </label>
-          <br />
-          <button type="submit">Agregar Contenido</button>
-        </form>
-        <p>{mensaje}</p>
-      </div>
+      {modalAbierto && (
+        <div className="modal">
+          <form onSubmit={handleAgregarContenido}>
+            <label>
+              Nombre:
+              <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+            </label>
+            <br />
+            <label>
+              Contenido:
+              <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
+            </label>
+            <br />
+            <button type="submit">Agregar Contenido</button>
+          </form>
+          <p>{mensaje}</p>
+        </div>
+      )}
     </div>
 
 <div className='CreatedTemplates'>
