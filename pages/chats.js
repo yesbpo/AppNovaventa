@@ -1488,7 +1488,8 @@ transition: background-color 0.3s;
 `;
 
 const StyledSelect = styled.select`
-  padding: 6px;
+  width: 150px; /* Ajusta el tamaño según tus necesidades */
+  padding: 10px;
   font-size: 8px;
   border: 1px solid #ccc;
   border-radius: 5px;
