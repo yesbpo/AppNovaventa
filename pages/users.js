@@ -151,22 +151,25 @@ const CrearUsuario = () => {
     <label htmlFor="usuario" className="block text-sm font-medium text-gray-600">Usuario:</label>
     <input type="text" className="form-input mt-1 block w-full" id="usuario" value={usuario} onChange={(e) => setUsuario(e.target.value)} />
   </div>
-  <div className="mb-3">
-    <label htmlFor="password" className="form-label">Password:</label>
+  <div className="mb-4">
+    <label htmlFor="password" className="block text-sm font-medium text-gray-600">Password:</label>
     <div className="password-container">
       <input
         type={mostrarPassword ? 'text' : 'password'}
-        className="form-control password-input"
+        className="form-input mt-1 block w-full"
         id="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <BotonMostrarPassword type="button" onClick={toggleMostrarPassword}>
+      <BotonMostrarPassword 
+        className="ml-2 text-sm text-blue-500 focus:outline-none" 
+        type="button" 
+        onClick={toggleMostrarPassword}>
         {mostrarPassword ? 'Ocultar' : 'Mostrar'}
       </BotonMostrarPassword>
     </div>
   </div>
-  <div className="mb-3">
+  <div className="mb-4">
     <label htmlFor="email" className="form-label">Email:</label>
     <input type="email" className="form-control" id="email" value={email} onChange={(e) => setEmail(e.target.value)} />
   </div>
@@ -189,7 +192,7 @@ const CrearUsuario = () => {
   </div>
   <input type="checkbox" checked={isChecked} onChange={handleChange} />
   <p>Permiso de agregar número</p>
-  <BotonEnviar type="button" onClick={handleUpdateUser}>
+  <BotonEnviar type="button" onClick={handleUpdateUser} className="w-full bg-blue-500 text-white p-2 rounded-md">
     Actualizar Usuario
   </BotonEnviar>
             {/* Agregar más detalles según sea necesario */}
@@ -203,7 +206,7 @@ const CrearUsuario = () => {
             )}
             <div className="flex">
             {showCrear && <form>
-              <h1 className="text-dark text-center mb-6">Crear Usuario</h1>
+              <h1 className="text-2xl font-bold text-center mb-4">Crear Usuario</h1>
   {mensaje && (
     <Mensaje tipo={mensaje.tipo}>
       {mensaje.texto}
@@ -252,16 +255,17 @@ const CrearUsuario = () => {
     <input type="text" className="form-control" id="completeName" value={complete_name} onChange={(e) => setComplete_name(e.target.value)} />
   </div>
   <p>Permiso de agregar número</p><input type="checkbox" checked={isChecked} onChange={handleChange} />
-  <BotonEnviar type="button" onClick={handleCrearUsuario}>
+  <BotonEnviar type="button" onClick={handleCrearUsuario} className="w-full bg-green-500 text-white p-2 rounded-md">
     Crear Usuario
   </BotonEnviar>
   </form>}
       {/* Lista de usuarios */}
-      <div style={{ maxHeight: '300px', overflowY: 'auto' }}>
-  <ul>
-    {!showCrear && <h2 className="text-dark text-center mb-3">Modificar Usuarios</h2> && usuarios.map((usuario) => (
-      <li key={usuario.id}>
-        {usuario.complete_name}<button onClick={() => handleUsuarioSeleccionado(usuario)}>Modificar</button>
+    <div styleclassName="max-h-300px overflow-y-auto">
+      <ul>
+      {!showCrear && <h2 className="text-2xl font-bold text-center mb-3">Modificar Usuarios</h2> && usuarios.map((usuario) => (
+      <li key={usuario.id} className='mb-2'>
+        <span className='mr-2'>{usuario.complete_name}</span>
+        <button onClick={() => handleUsuarioSeleccionado(usuario)} className="bg-blue-500 text-white p-1 rounded-md">Modificar</button>
       </li>
     ))}
   </ul>
