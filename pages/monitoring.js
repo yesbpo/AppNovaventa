@@ -657,7 +657,7 @@ setWebhookData(webhookText);
         </ButtonContainer>
       </Box>
      {statuschats && <Container>
-        <Box style={{ height: '30vw', width: '60vw'}}>
+        <Box style={{ height: '30vw', width: '50vw'}}>
         <h2>Chat {numeroEspecifico}</h2>
           
 
