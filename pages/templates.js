@@ -349,7 +349,7 @@ const handleCreateTemplate = async () => {
           </TemplateButtons>
         )}
          <button onClick={toggleModal} style={{ fontWeight: 'bold', margin: '20px' }}>
-        {modalAbierto ? 'Cerrar Popup' : 'Mostrar Popup'}
+        {modalAbierto ? 'Crear respuesta rapida' : 'Crear respuesta rapida'}
       </button>
 
       </Container>
@@ -359,7 +359,7 @@ const handleCreateTemplate = async () => {
       
         <div className='templateStyle'>
           <label>
-            Nombre plantilla:
+            * Nombre plantilla:
             <input
               type="text"
               value={elementName}
@@ -405,7 +405,7 @@ const handleCreateTemplate = async () => {
 {selectedTemplateType === 'TEXT' && (
     <>
       <label>
-        Header:
+        Encabezado:
         <input
           type="text"
           value={header}
@@ -418,7 +418,7 @@ const handleCreateTemplate = async () => {
       <Separador />
 
       <label>
-        Example Header:
+        Ejemplo de encabezado:
         <input
           type="text"
           value={exampleHeader}
@@ -432,7 +432,7 @@ const handleCreateTemplate = async () => {
           <Separador />
         
           <StyledLabel>
-            Content:
+            * Contenido de la plantilla:
             <TextArea
               value={content}
               onChange={(e) => setContent(e.target.value)}
@@ -456,7 +456,7 @@ const handleCreateTemplate = async () => {
           <Separador />
 
           <StyledLabel>
-            Example Content:
+            * Ejemplo del contenido de la plantilla:
             <TextArea
               value={exampleContent}
               onChange={(e) => setExampleContent(e.target.value)}
@@ -466,7 +466,7 @@ const handleCreateTemplate = async () => {
           <Separador />
 
           <label>
-            Pie de Página:
+            Pie de la plantilla:
             <input
               type="text"
               value={footer}
@@ -488,7 +488,7 @@ const handleCreateTemplate = async () => {
           <Separador />
           </div>
 
-          <button onClick={handleCreateTemplate}>Crear Plantilla</button>
+          <button onClick={handleCreateTemplate}>Enviar plantilla para aaprobación</button>
 
           {message && (
             <div>
@@ -508,7 +508,7 @@ const handleCreateTemplate = async () => {
       {modalAbierto && (
         <div className="modal">
           <label>
-            Nombre:
+            Nombre respuesta rapida:
             <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
           </label>
           <br />
