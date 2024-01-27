@@ -1279,15 +1279,15 @@ fetchMensajes()
       <BotonEnviar onClick={actualizarEstadoChat}>En atencion</BotonEnviar>
       <BotonEnviar onClick={actualizarEstadoChatCerrados}>Finalizar</BotonEnviar>
       <div>
-      <label>Selecciona una respuesta rápida:</label>
-      <select>
-        {respuestasRapidas.map(respuesta => (
-          <option key={respuesta.name} value={respuesta.contentn}onClick={setInputValue}>
-            {respuesta.name}:{respuesta.contentn}
-          </option>
-        ))}
-      </select>
-    </div>
+  <label>Selecciona una respuesta rápida:</label>
+  <select onChange={(e) => setInputValue(e.target.value)}>
+    {respuestasRapidas.map(respuesta => (
+      <option key={respuesta.name} value={respuesta.contentn}>
+        {respuesta.name}: {respuesta.contentn}
+      </option>
+    ))}
+  </select>
+</div>
     </div>
 
     </Box>
