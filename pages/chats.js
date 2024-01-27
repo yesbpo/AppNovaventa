@@ -1276,19 +1276,21 @@ fetchMensajes()
     </div>
 
     <div className='flex flex-row justify-between'>
-      <BotonEnviar onClick={actualizarEstadoChat}>En atencion</BotonEnviar>
-      <BotonEnviar onClick={actualizarEstadoChatCerrados}>Finalizar</BotonEnviar>
-      <div>
-      <label>Selecciona una respuesta rápida:</label>
-      <select>
-        {respuestasRapidas.map(respuesta => (
-          <option key={respuesta.name} value={respuesta.contentn}onClick={setInputValue}>
-            {respuesta.name}:{respuesta.contentn}
-          </option>
-        ))}
-      </select>
-    </div>
-    </div>
+  <BotonEnviar onClick={actualizarEstadoChat}>En atención</BotonEnviar>
+  <BotonEnviar onClick={actualizarEstadoChatCerrados}>Finalizar</BotonEnviar>
+  <div>
+    <label>Selecciona una respuesta rápida:</label>
+    <select onChange={handleSelectChange}>
+      <option value="" disabled defaultValue>Selecciona una respuesta</option>
+      {respuestasRapidas.map(respuesta => (
+        <option key={respuesta.name} value={respuesta.contentn}>
+          {respuesta.name}: {respuesta.contentn}
+        </option>
+      ))}
+    </select>
+  </div>
+</div>
+
 
     </Box>
 
