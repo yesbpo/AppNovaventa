@@ -269,7 +269,7 @@ const CrearUsuario = () => {
   </BotonEnviar>
   </form>}
       {/* Lista de usuarios */}
-    <div style={{maxHeight: '100vh'}} className='overflow-y-auto'>
+    <div >
       <ul>
       {!showCrear && <h2 className="text-2xl font-bold text-center mb-3">Modificar Usuarios</h2> && usuarios.map((usuario) => (
       <li key={usuario.id} className='mb-2 flex items-center justify-between'>
