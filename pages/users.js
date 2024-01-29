@@ -117,12 +117,12 @@ const CrearUsuario = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          type_user: 'newType', // Reemplaza esto con los valores que deseas actualizar
-          email: 'newEmail@example.com',
-          session: 'newSessionToken',
-          usuario: 'newUsername',
-          password: 'newPassword',
-          complete_name: 'New Full Name',
+          type_user: typeUser , // Reemplaza esto con los valores que deseas actualizar
+          email: email,
+          session: session,
+          usuario: usuario,
+          password: password,
+          complete_name: complete_name,
         }),
       });
 
@@ -144,9 +144,8 @@ const CrearUsuario = () => {
       <h1 className="text-2xl font-bold font-serif">Listado de usuarios</h1>
       <BotonEnviar onClick={handleChangeCrear} className="bg-blue-500 text-white p-2 rounded-md">Agregar usuario</BotonEnviar>
       </div>
-      <div className="flex items-center justify-center h-screen">
-    
-      <div className="w-full max-w-md p-4 bg-white shadow-md rounded-md">
+      
+      <div className="flex items-center justify-between p-10 w-60">
         
         {usuarioSeleccionado ? (
           <div>
@@ -270,12 +269,14 @@ const CrearUsuario = () => {
   </BotonEnviar>
   </form>}
       {/* Lista de usuarios */}
-    <div styleclassName="max-h-300px overflow-y-auto">
+    <div style={{maxHeight: '100vh'}} className='overflow-y-auto'>
       <ul>
       {!showCrear && <h2 className="text-2xl font-bold text-center mb-3">Modificar Usuarios</h2> && usuarios.map((usuario) => (
-      <li key={usuario.id} className='mb-2'>
+      <li key={usuario.id} className='mb-2 flex items-center justify-between'>
         <span className='mr-2'>{usuario.complete_name}</span>
-        <button onClick={() => handleUsuarioSeleccionado(usuario)} className="bg-blue-500 text-white p-1 rounded-md">Modificar</button>
+        <button 
+          onClick={() => handleUsuarioSeleccionado(usuario)} 
+          className="bg-blue-500 text-white p-1 rounded-md ml-auto">Modificar</button>
       </li>
     ))}
   </ul>
@@ -284,7 +285,7 @@ const CrearUsuario = () => {
           </div>
         )}
       </div>
-    </div>
+    
   </Layout>
       )}
       return (
