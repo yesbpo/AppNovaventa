@@ -644,15 +644,10 @@ const handleFileChange = (e) => {
 
     if (response.ok) {
       const data = await response.json();
-      setNumeroEspecifico('')
+      
       
       try {
- let status ;
- if(statuschats == 'Pendientes'){
-        status ='pending'}
-       else{
-        status ='in process'
-       }
+
        const fechaActual = new Date();
        const options = { timeZone: 'America/Bogota', hour12: false };
              const fechaInicio = new Date(fechaActual);
