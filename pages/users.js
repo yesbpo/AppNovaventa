@@ -144,7 +144,7 @@ const CrearUsuario = () => {
       <h1 className="text-2xl font-bold font-serif">Listado de usuarios</h1>
       <BotonEnviar onClick={handleChangeCrear} className="bg-blue-500 text-white p-2 rounded-md">Agregar usuario</BotonEnviar>
       </div>
-      <div className="flex h-screen">
+      
     
       <div className="w-full max-w-md p-4 bg-white shadow-md rounded-md overflow-y-auto">
         
@@ -284,7 +284,7 @@ const CrearUsuario = () => {
           </div>
         )}
       </div>
-    </div>
+    
   </Layout>
       )}
       return (
