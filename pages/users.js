@@ -148,7 +148,7 @@ const CrearUsuario = () => {
       <div className="flex items-center justify-between p-10">
         
         {usuarioSeleccionado ? (
-          <div className='flex items-center justify-center h-screen overflow-y-auto'>
+          <div>
             <h1 className="text-2x1 font-bold text-center mb-4">Modificar Usuario</h1>
             <p className="mb-2">{usuarioSeleccionado.complete_name}</p>
             <div className="mb-4">
