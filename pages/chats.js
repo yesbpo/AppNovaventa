@@ -1312,21 +1312,26 @@ fetchMensajes()
     <div className="contact-list-container">
       <h1>{statuschats}</h1>
       <ul>
-  {!Array.isArray(contactos1) && (
-    <li>
-      <CustomButton2
-        onClick={() => marcaLeido(contactos1.idChat2)}
-        className={`p-2 rounded ${
-          (contactos1.status == 'in process' ? 'bg-gray text-black' : 'bg-green text-white'  )
-        }`}
-      >
-        <UserGroupIcon className="w-5 h-10" /> {contactos1.idChat2}
-        {contactos1.resolved && (
-  <span className="text-red">Mensaje nuevo</span>
+      {!Array.isArray(contactos1) && (
+  <li>
+    <CustomButton2
+      onClick={() => {
+        marcaLeido(contactos1.idChat2);
+        if (!contactos1.resolved) {
+          window.alert('¡Nuevo mensaje!');
+        }
+      }}
+      className={`p-2 rounded ${
+        contactos1.status === 'in process' ? 'bg-gray text-black' : 'bg-green text-white'
+      }`}
+    >
+      <UserGroupIcon className="w-5 h-10" /> {contactos1.idChat2}
+      {contactos1.resolved === false && (
+        <span className="text-red">Mensaje nuevo</span>
+      )}
+    </CustomButton2>
+  </li>
 )}
-      </CustomButton2>
-    </li>
-  )}
   {Array.isArray(contactos1)  &&
     contactos1.map((contacto, index) => (
       <li key={index}>
