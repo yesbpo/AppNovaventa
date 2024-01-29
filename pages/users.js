@@ -145,7 +145,7 @@ const CrearUsuario = () => {
       <BotonEnviar onClick={handleChangeCrear} className="bg-blue-500 text-white p-2 rounded-md">Agregar usuario</BotonEnviar>
       </div>
       
-      <div className="flex items-center justify-between p-10 w-60">
+      <div className="flex items-center justify-between p-10">
         
         {usuarioSeleccionado ? (
           <div>
@@ -276,7 +276,7 @@ const CrearUsuario = () => {
         <span className='mr-2'>{usuario.complete_name}</span>
         <button 
           onClick={() => handleUsuarioSeleccionado(usuario)} 
-          className="bg-blue-500 text-white p-1 rounded-md ml-auto">Modificar</button>
+          className="bg-blue-500 text-white p-2 rounded-md">Modificar</button>
       </li>
     ))}
   </ul>
