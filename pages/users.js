@@ -204,7 +204,7 @@ const CrearUsuario = () => {
             {/* Agregar más detalles según sea necesario */}
           </div>
         ) : (
-            <div className='flex items-center justify-center h-screen'>
+            <div>
             {mensaje && (
               <Mensaje tipo={mensaje.tipo}>
                 {mensaje.texto}
