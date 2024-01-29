@@ -1281,19 +1281,15 @@ fetchMensajes()
     </div>
 
     <div>
-        <label>Selecciona una respuesta rápida:</label>
-        <select>
-          {respuestasRapidas && Array.isArray(respuestasRapidas) ? (
-            respuestasRapidas.map(respuesta => (
-              <option key={respuesta.name} value={respuesta.contentn}>
-                {respuesta.name}
-              </option>
-            ))
-          ) : (
-            <option value="">No hay respuestas rápidas disponibles</option>
-          )}
-        </select>
-      </div>
+      <label htmlFor="respuestasRapidas">Selecciona una respuesta rápida:</label>
+      <StyledSelect id="respuestasRapidas" onChange={(e) => setInputValue(e.target.value)}>
+        {respuestasRapidas.map(respuesta => (
+          <option key={respuesta.name} value={respuesta.contentn}>
+            {respuesta.name}: {respuesta.contentn}
+          </option>
+        ))}
+      </StyledSelect>
+    </div>
 
 
     </Box>
