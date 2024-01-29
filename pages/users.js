@@ -117,12 +117,12 @@ const CrearUsuario = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          type_user: 'newType', // Reemplaza esto con los valores que deseas actualizar
-          email: 'newEmail@example.com',
-          session: 'newSessionToken',
-          usuario: 'newUsername',
-          password: 'newPassword',
-          complete_name: 'New Full Name',
+          type_user: typeUser , // Reemplaza esto con los valores que deseas actualizar
+          email: email,
+          session: session,
+          usuario: usuario,
+          password: password,
+          complete_name: complete_name,
         }),
       });
 
