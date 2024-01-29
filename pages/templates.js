@@ -32,9 +32,14 @@ const Reports = (props) => {
   const [selectedStatus, setSelectedStatus] = useState(''); // Estado seleccionado
   const [selectedType, setSelectedType] = useState('');
   const [filtersApplied, setFiltersApplied] = useState(false);
+  const [modalAbierto, setModalAbierto] = useState(false);
   const [contentn, setContentn] = useState('');
   const [name, setName] = useState('');
   const [mensaje, setMensaje] = useState('');
+  
+  const toggleModal = () => {
+    setModalAbierto(!modalAbierto);
+  };
 
   const handleAgregarContenido = async (event) => {
   event.preventDefault(); // Prevenir el comportamiento por defecto del formulario
@@ -62,6 +67,14 @@ const Reports = (props) => {
     console.error('Error en la solicitud:', error);
     setMensaje('Error interno del cliente');
   }
+  setName('');
+  setContentn('');
+  setModalAbierto(false);
+
+  setMensaje('Contenido agregado con éxito');
+    setTimeout(() => {
+      setMensaje('');
+    }, 3000);
 };
 
 
@@ -335,6 +348,10 @@ const handleCreateTemplate = async () => {
             ))}
           </TemplateButtons>
         )}
+         <button onClick={toggleModal} style={{ fontWeight: 'bold', margin: '20px' }}>
+        {modalAbierto ? 'Crear respuesta rapida' : 'Crear respuesta rapida'}
+      </button>
+
       </Container>
 
       {(selectedTemplateType === 'TEXT' || selectedTemplateType === 'IMAGE' || selectedTemplateType === 'VIDEO' || selectedTemplateType === 'DOCUMENT') && (
@@ -342,7 +359,7 @@ const handleCreateTemplate = async () => {
       
         <div className='templateStyle'>
           <label>
-            Nombre plantilla:
+            * Nombre plantilla:
             <input
               type="text"
               value={elementName}
@@ -388,7 +405,7 @@ const handleCreateTemplate = async () => {
 {selectedTemplateType === 'TEXT' && (
     <>
       <label>
-        Header:
+        Encabezado:
         <input
           type="text"
           value={header}
@@ -401,7 +418,7 @@ const handleCreateTemplate = async () => {
       <Separador />
 
       <label>
-        Example Header:
+        Ejemplo de encabezado:
         <input
           type="text"
           value={exampleHeader}
@@ -415,7 +432,7 @@ const handleCreateTemplate = async () => {
           <Separador />
         
           <StyledLabel>
-            Content:
+            * Contenido de la plantilla:
             <TextArea
               value={content}
               onChange={(e) => setContent(e.target.value)}
@@ -439,7 +456,7 @@ const handleCreateTemplate = async () => {
           <Separador />
 
           <StyledLabel>
-            Example Content:
+            * Ejemplo del contenido de la plantilla:
             <TextArea
               value={exampleContent}
               onChange={(e) => setExampleContent(e.target.value)}
@@ -449,7 +466,7 @@ const handleCreateTemplate = async () => {
           <Separador />
 
           <label>
-            Pie de Página:
+            Pie de la plantilla:
             <input
               type="text"
               value={footer}
@@ -471,7 +488,7 @@ const handleCreateTemplate = async () => {
           <Separador />
           </div>
 
-          <button onClick={handleCreateTemplate}>Crear Plantilla</button>
+          <button onClick={handleCreateTemplate}>Enviar plantilla para aaprobación</button>
 
           {message && (
             <div>
@@ -486,21 +503,26 @@ const handleCreateTemplate = async () => {
 <span>{deleteMessage}</span>
 
 <div>
-      <form onSubmit={handleAgregarContenido}>
-        <label>
-          Contenido:
-          <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
-        </label>
-        <br />
-        <label>
-          Nombre:
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
-        </label>
-        <br />
-        <button type="submit">Agregar Contenido</button>
-      </form>
-      <p>{mensaje}</p>
+     
+
+      {modalAbierto && (
+        <div className="modal">
+          <label>
+            Nombre respuesta rapida:
+            <input type="text" value={name} onChange={(e) => setName(e.target.value)} />
+          </label>
+          <br />
+          <label>
+            Contenido:
+            <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
+          </label>
+          <br />
+          <button onClick={handleAgregarContenido}>Agregar Contenido</button>
+        </div>
+      )}
     </div>
+    <p>{mensaje}</p>
+    
 
 <div className='CreatedTemplates'>
         {error && <p>{error}</p>}
@@ -658,5 +680,6 @@ const TemplateItem = styled.div`
     margin-top: 15px;
   }
 `;
+
 
 export default Reports;
