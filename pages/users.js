@@ -274,7 +274,7 @@ const CrearUsuario = () => {
       {!showCrear && <h2 className="text-2xl font-bold text-center mb-3">Modificar Usuarios</h2> && usuarios.map((usuario) => (
       <li key={usuario.id} className='mb-2 flex items-center justify-between'>
         <span className='mr-2'>{usuario.complete_name}</span>
-        <button onClick={() => handleUsuarioSeleccionado(usuario)} className="flex-grow bg-blue-500 text-white p-1 rounded-md">Modificar</button>
+        <button onClick={() => handleUsuarioSeleccionado(usuario)} className="bg-blue-500 text-white p-1 rounded-md">Modificar</button>
       </li>
     ))}
   </ul>
