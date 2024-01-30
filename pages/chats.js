@@ -589,7 +589,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
 console.log('entra')
     setStatuschats('Chats')
     
-    startFetchingChats();
+    
 
       const status1 = 'in process'
       const status2 = 'pending'
