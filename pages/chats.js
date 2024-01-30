@@ -12,7 +12,8 @@ const Chats = () => {
 
   const startFetchingChats = (id_chat2) => {
   let lastTimestamp = 0;
-
+  handleEngestionClick();
+  fetchMensajes(id_chat2);
   const update = (timestamp) => {
     if (timestamp - lastTimestamp >= 60000) { // Ejecutar cada segundo
       lastTimestamp = timestamp;
