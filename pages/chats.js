@@ -991,7 +991,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       }),
     });
     setInputValue('')
-    updateuser()
+    
     if (guardarMensajeResponse.ok) {
       const guardarMensajeData = await guardarMensajeResponse.json();
       console.log(guardarMensajeData)
