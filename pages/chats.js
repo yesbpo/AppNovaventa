@@ -17,7 +17,7 @@ const Chats = () => {
     handleEngestionClick();
     fetchMensajes(id_chat2);
      // Llama a tu segunda función aquí
-    }, 1000);
+    }, 5000);
   };
   async function obtenerMensaje(idMessage) {
     try {
