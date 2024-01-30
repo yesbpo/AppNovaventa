@@ -244,7 +244,7 @@ useEffect(() => {
 
  }
  fetchTemplates();
- fetchMensajes();
+ 
  // Llama a fetchMensajes cada segundo
 
 
