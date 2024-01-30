@@ -932,7 +932,7 @@ const handleFileChange = (e) => {
         }),
       });
       setInputValue('')
-      
+      fetchMensajes(numeroEspecifico);
       if (guardarMensajeResponse.ok) {
         const guardarMensajeData = await guardarMensajeResponse.json();
         console.log(guardarMensajeData)
