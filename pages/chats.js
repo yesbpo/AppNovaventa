@@ -11,13 +11,20 @@ const Chats = () => {
   const intervalIdRef = React.useRef(null);
 
   const startFetchingChats = (id_chat2) => {
-    console.log(id_chat2)
-    
-    intervalIdRef.current = setInterval(() => {
-    handleEngestionClick();
-    fetchMensajes(id_chat2);
-     // Llama a tu segunda función aquí
-    }, 5000);
+    let lastTimestamp = 0;
+  
+    const update = (timestamp) => {
+      if (timestamp - lastTimestamp >= 1000) { // Ejecutar cada segundo
+        lastTimestamp = timestamp;
+        handleEngestionClick();
+        fetchMensajes(id_chat2);
+        // Llama a tu segunda función aquí
+      }
+  
+      requestAnimationFrame(update);
+    };
+  
+    requestAnimationFrame(update);
   };
   async function obtenerMensaje(idMessage) {
     try {
