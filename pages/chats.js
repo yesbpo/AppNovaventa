@@ -5,57 +5,27 @@ import io from 'socket.io-client';
 import { useSession, signIn } from 'next-auth/react';
 import EmojiPicker from 'emoji-picker-react';
 import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon, SearchIcon, RefreshIcon } from '@heroicons/react/solid';
+
 const Chats = () => {
   const { data: session } = useSession();
   const intervalIdRef = React.useRef(null);
 
-  useEffect(() => {
-    // Código del Web Worker
-    const workerCode = `
-      let lastTimestamp = 0;
+  const startFetchingChats = (id_chat2) => {
+  let lastTimestamp = 0;
 
-      self.addEventListener('message', (event) => {
-        const id_chat2 = event.data;
+  const update = (timestamp) => {
+    if (timestamp - lastTimestamp >= 60000) { // Ejecutar cada segundo
+      lastTimestamp = timestamp;
+      handleEngestionClick();
+      fetchMensajes(id_chat2);
+      // Llama a tu segunda función aquí
+    }
 
-        const intervalId = setInterval(() => {
-          self.postMessage('tick');
-        }, 1000);
+    requestAnimationFrame(update);
+  };
 
-        // Puedes enviar mensajes de vuelta al componente principal si es necesario
-        // self.postMessage('Worker iniciado');
-
-        // Manejar la terminación del Web Worker
-        self.addEventListener('message', (event) => {
-          if (event.data === 'stop') {
-            clearInterval(intervalId);
-            self.close();
-          }
-        });
-      });
-    `;
-
-    // Crear un Blob a partir del código del Web Worker
-    const blob = new Blob([workerCode], { type: 'application/javascript' });
-    const worker = new Worker(URL.createObjectURL(blob));
-
-    worker.addEventListener('message', (event) => {
-      // Manejar los mensajes del Web Worker
-      if (event.data === 'tick') {
-        handleEngestionClick();
-        fetchMensajes(numeroEspecifico);
-        // Llama a tu segunda función aquí
-      }
-    });
-
-    // Puedes enviar mensajes al Web Worker si es necesario
-    // worker.postMessage('Mensaje desde el componente React');
-
-    // Limpiar el Web Worker cuando el componente se desmonta
-    return () => {
-      worker.postMessage('stop');
-      worker.terminate();
-    };
-  }, [/* Dependencias si es necesario */]);
+  requestAnimationFrame(update);
+};
   async function obtenerMensaje(idMessage) {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_DB}/obtener-mensaje/${idMessage}`);
