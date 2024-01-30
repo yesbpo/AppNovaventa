@@ -10,10 +10,35 @@ const Chats = () => {
   const { data: session } = useSession();
   const intervalIdRef = React.useRef(null);
 
-  const startFetchingChats = () => {
-    intervalIdRef.current = setInterval(handleEngestionClick, 60000);
+  const startFetchingChats = (id_chat2) => {
+    console.log(id_chat2)
+    
+    intervalIdRef.current = setInterval(() => {
+    handleEngestionClick();
+    fetchMensajes(id_chat2);
+     // Llama a tu segunda función aquí
+    }, 1000);
   };
-
+  async function obtenerMensaje(idMessage) {
+    try {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_DB}/obtener-mensaje/${idMessage}`);
+  
+      if (!response.ok) {
+        throw new Error(`Error al obtener el mensaje: ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      
+      setMensajes1(prevMensajes => [...prevMensajes, data]);
+      console.log('Mensaje obtenido:', data);
+      // Aquí puedes trabajar con el mensaje obtenido
+    } catch (error) {
+      console.error('Error en la solicitud:', error.message);
+      // Manejar el error según sea necesario
+    }
+    console.log(mensajes1)
+  }
+  
   const [session1, setSession1 ]= useState('')
   const manejarCambio = (event) => {
     setInputValue(event.target.value);
@@ -310,7 +335,7 @@ throw error; // Puedes manejar el error o propagarlo según tus necesidades
 })
   }
  }
-const fetchMensajes = async () => {
+ const fetchMensajes = async (id_chat2) => {
 
   const fechaActual = new Date();
   const options = { timeZone: 'America/Bogota', hour12: false };
@@ -339,7 +364,7 @@ const fetchMensajes = async () => {
 
        const status1 = 'in process'
        const status2 = 'pending'
-       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${numeroEspecifico}`);
+       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'2'+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${id_chat2}`);
 
 
        
@@ -373,7 +398,7 @@ const fetchMensajes = async () => {
         messagelist.scrollTop = messagelist.scrollHeight;
       }
  }
-const handleParamChange = (param, value) => {
+ const handleParamChange = (param, value) => {
  setTemplateParams((prevParams) => {
    const updatedParams = {
      ...prevParams,
@@ -1145,7 +1170,7 @@ fetchMensajes()
   </div>}
         <Layout className='big-box'>
 
-        <Box className='estados' onLoad={updateuser()}>
+        <Box className='estados' >
           <ButtonContainer>
             <CustomButton onClick={handleEngestionClick}>{"Chats: "+contactos1.length}</CustomButton>
              {/* Mostrar Activos si 'mostrarActivos' es true */}
