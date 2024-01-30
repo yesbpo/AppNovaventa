@@ -478,6 +478,7 @@ const handleAgregarNumeroClick = () => {
 
     try {
       setNumeroEspecifico(id_chat2)
+      startFetchingChats(id_chat2)
       const idChat2 = id_chat2; // Reemplaza 'tu_id_chat2' con el valor real que deseas actualizar
       const resolvedValue = true; // Reemplaza 'nuevo_valor_resolved' con el nuevo valor para 'resolved'
 
