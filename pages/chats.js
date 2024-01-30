@@ -364,7 +364,7 @@ throw error; // Puedes manejar el error o propagarlo según tus necesidades
 
        const status1 = 'in process'
        const status2 = 'pending'
-       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'2'+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${id_chat2}`);
+       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${id_chat2}`);
 
 
        
