@@ -42,7 +42,7 @@ const Chats = () => {
       // Manejar los mensajes del Web Worker
       if (event.data === 'tick') {
         handleEngestionClick();
-        fetchMensajes(/* proporciona id_chat2 aquí */);
+        fetchMensajes(numeroEspecifico);
         // Llama a tu segunda función aquí
       }
     });
