@@ -144,9 +144,8 @@ const CrearUsuario = () => {
       <h1 className="text-2xl font-bold font-serif">Listado de usuarios</h1>
       <BotonEnviar onClick={handleChangeCrear} className="bg-blue-500 text-white p-2 rounded-md">Agregar usuario</BotonEnviar>
       </div>
-      <div className="flex items-center justify-center h-screen">
-    
-      <div className="w-full max-w-md p-4 bg-white shadow-md rounded-md">
+      
+      <div className="flex items-center justify-between p-10">
         
         {usuarioSeleccionado ? (
           <div>
@@ -270,12 +269,14 @@ const CrearUsuario = () => {
   </BotonEnviar>
   </form>}
       {/* Lista de usuarios */}
-    <div styleclassName="max-h-300px overflow-y-auto">
+    <div >
       <ul>
-      {!showCrear && <h2 className="text-2xl font-bold text-center mb-3">Modificar Usuarios</h2> && usuarios.map((usuario) => (
-      <li key={usuario.id} className='mb-2'>
+      {!showCrear && <h2 className="text-2xl font-bold text-align-right mb-3">Modificar Usuarios</h2> && usuarios.map((usuario) => (
+      <li key={usuario.id} className='mb-5 flex items-center justify-between'>
         <span className='mr-2'>{usuario.complete_name}</span>
-        <button onClick={() => handleUsuarioSeleccionado(usuario)} className="bg-blue-500 text-white p-1 rounded-md">Modificar</button>
+        <button 
+          onClick={() => handleUsuarioSeleccionado(usuario)} 
+          className="bg-blue-500 text-white p-2 rounded-md">Modificar</button>
       </li>
     ))}
   </ul>
@@ -284,7 +285,7 @@ const CrearUsuario = () => {
           </div>
         )}
       </div>
-    </div>
+    
   </Layout>
       )}
       return (
