@@ -976,6 +976,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         body: new URLSearchParams(mensajeData).toString(),
       });
       setInputValue('')
+      fetchMensajes(numeroEspecifico);
       if (!response.ok) {
               }
       const responseData = await response.json();
