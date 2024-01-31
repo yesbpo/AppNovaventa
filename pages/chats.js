@@ -1165,15 +1165,15 @@ fetchMensajes()
                     onChange={(e) => handleParamChange(param, e.target.value)}
                     className="mt-1 p-2 border border-gray-300 rounded-md"
                   />
-<button
+                </div>
+                
+              ))}
+              <button
         onClick={handleAgregarNumeroClick}
         className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
       >
         Enviar plantilla
       </button>
-                </div>
-                
-              ))}
             </div>
           )
       )}
