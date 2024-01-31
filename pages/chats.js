@@ -1184,10 +1184,7 @@ fetchMensajes()
           <ButtonContainer>
             <CustomButton onClick={handleEngestionClick}>{"Chats: "+contactos1.length}</CustomButton>
              {/* Mostrar Activos si 'mostrarActivos' es true */}            
-             {session.user.name === 'ychala' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
-            {session.user.name === 'Jechaparro' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
-            {session.user.name === 'Aelizarde' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
-            {session.user.name === 'Msaenz' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
+             {session.user.name === 'ychala' || session.user.name === 'Jechaparro' || session.user.name === 'Aelizarde' || session.user.name === 'Msaenz' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
             
           </ButtonContainer>
         </Box>
