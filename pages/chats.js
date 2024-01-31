@@ -1503,11 +1503,12 @@ align-items: center;
 `;
 
 const InputMensaje = styled.input`
-flex: 1;
-padding: 10px;
-border: 1px solid #ddd;
-border-radius: 5px;
-margin-right: 10px;
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-right: 10px;
+  white-space: pre-wrap;  /* Agrega esta línea para que el texto se envuelva */
 `;
 
 const BotonEnviar = styled.button`
