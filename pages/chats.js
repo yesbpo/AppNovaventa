@@ -1181,14 +1181,14 @@ fetchMensajes()
         <Layout className='big-box'>
 
         <Box className='estados'>
-  <ButtonContainer>
-    <CustomButton onClick={handleEngestionClick}>{"Chats: " + contactos1.length}</CustomButton>
-    {/* Mostrar Activos si 'mostrarActivos' es true */}
-    {(session.user.name === 'ychala' || session.user.name === 'Jechaparro' || session.user.name === 'Aelizarde' || session.user.name === 'Msaenz') && (
-      <CustomButton onClick={openPopup}>Agregar Número</CustomButton>
-    )}
-  </ButtonContainer>
-</Box>
+          <ButtonContainer>
+            <CustomButton onClick={handleEngestionClick}>{"Chats: " + contactos1.length}</CustomButton>
+            {/* Mostrar Activos si 'mostrarActivos' es true */}
+            {(session.user.name === 'ychala' || session.user.name === 'jechaparro' || session.user.name === 'aelizarde' || session.user.name === 'msaenz') && (
+              <CustomButton onClick={openPopup}>Agregar Número</CustomButton>
+            )}
+          </ButtonContainer>
+        </Box>
         <Container>
 
   {/* Contenedor del chat */}
