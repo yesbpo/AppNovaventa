@@ -630,7 +630,7 @@ setWebhookData(webhookText);
   }
   const handleNumeroChange = (e) => {
 
-    
+    console.log(resultadost)
     const resultadosFiltrados = resultadost.filter(
       (contacto) => contacto.idChat2.includes(e.target.value));
     setDatosbuscados(resultadosFiltrados);
