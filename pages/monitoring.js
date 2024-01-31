@@ -733,7 +733,7 @@ setWebhookData(webhookText);
     console.log(asesores.filter((contacto) => contacto.id == 4))
     setValorbuscado(e.target.value)
     const resultadosFiltrados = resultadost.filter(
-      (contacto) => contacto.idChat2.includes(e.target.value));
+      (contacto) => contacto.idChat2.includes(e.target.value) || nombreuser(contacto.userId).includes(e.target.value) );
             
     setDatosbuscados(resultadosFiltrados);
   };
