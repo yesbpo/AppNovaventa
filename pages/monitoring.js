@@ -630,9 +630,10 @@ setWebhookData(webhookText);
   }
   const handleNumeroChange = (e) => {
 
-    console.log(resultadost[0])
+    console.log(resultad)
     const resultadosFiltrados = resultadost.filter(
       (contacto) => contacto.idChat2.includes(e.target.value));
+      console.log(resultadosFiltrados)
     setDatosbuscados(resultadosFiltrados);
   };
   if(session){
