@@ -517,7 +517,7 @@ const handleCreateTemplate = async () => {
             <input type="text" value={contentn} onChange={(e) => setContentn(e.target.value)} />
           </label>
           <br />
-          <button onClick={handleAgregarContenido}>Agregar Contenido</button>
+          <button onClick={handleAgregarContenido}>Agregar respuesta rapida</button>
         </div>
       )}
     </div>
