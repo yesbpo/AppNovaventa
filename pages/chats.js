@@ -1143,7 +1143,7 @@ fetchMensajes()
         onChange={handleTemplateChange}
         className="mt-1 p-2 border border-gray-300 rounded-md"
       >
-        <option value="" disabled>Select a template</option>
+        <option value="" disabled>Selecciona una plantilla</option>
 
         {templates.map((template) => (
 
@@ -1185,6 +1185,7 @@ fetchMensajes()
             <CustomButton onClick={handleEngestionClick}>{"Chats: "+contactos1.length}</CustomButton>
              {/* Mostrar Activos si 'mostrarActivos' es true */}            
              (session.user.name === 'ychala' || session.user.name === 'Jechaparro' || session.user.name === 'Aelizarde' || session.user.name === 'Msaenz') && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>
+
             
           </ButtonContainer>
         </Box>
