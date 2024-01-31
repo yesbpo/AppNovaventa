@@ -667,7 +667,7 @@ setWebhookData(webhookText);
     datosbuscados.map((contacto) => (
       <li key={contacto.idChat2}>
         {/* Renderizar los datos del contacto */}
-        {nombreuser(contacto.userId)} - {contacto.idChat2}
+        {nombreuser(contacto.userId)} - {contacto.idChat2} - {contacto.status === 'pending' ? 'Pendiente' : contacto.status === 'in process' ? 'En Atención' : contacto.status === 'expiredbyassesor' ? 'Expirado por Asesor' : contacto.status === 'expiredbyclient' ? 'Expirado por cliente' :'Finalizado'}
       </li>
     ))
   ) : (
