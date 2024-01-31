@@ -638,8 +638,9 @@ setWebhookData(webhookText);
             
     setDatosbuscados(resultadosFiltrados);
   };
-  const npmbreuser = (id) => {
-    asesores.filter((contacto) => contacto.id.includes(id));
+  const nombreuser = (idus) => {
+    
+    return asesores.filter((contacto) => contacto.id == idus).complete_name;
   }
 
   if(session){
@@ -664,7 +665,7 @@ setWebhookData(webhookText);
     datosbuscados.map((contacto) => (
       <li key={contacto.idChat2}>
         {/* Renderizar los datos del contacto */}
-        {contacto.userId} - {contacto.idChat2}
+        {nombreuser(contacto.userId)} - {contacto.idChat2}
       </li>
     ))
   ) : (
