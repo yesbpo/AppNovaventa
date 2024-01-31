@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 import { useSession, signIn } from 'next-auth/react';
 
 const MonitoringPage = () => {
-  const [datosbuscados, setDatosbuscados] = useState(resultadost);
+  
   useEffect(() => {
     // Lógica que se ejecutará después del montaje del componente
     updateuser();
@@ -16,6 +16,7 @@ const [resultados, setResultados] = useState([]);
 const [resultados1, setResultados1] = useState([]);
 const [resultados2, setResultados2] = useState([]);
 const [resultadost, setResultadost] = useState([]);
+const [datosbuscados, setDatosbuscados] = useState(resultadost);
 useEffect(() => {
   const obtenerMensajes = async () => {
     try {
@@ -654,7 +655,7 @@ setWebhookData(webhookText);
       />
 
 <ul>
-  {datosbuscados[0].length > 0 ? (
+  {datosbuscados.length > 0 ? (
     datosbuscados.map((contacto) => (
       <li key={contacto.idChat2}>
         {/* Renderizar los datos del contacto */}
