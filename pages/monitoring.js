@@ -652,12 +652,7 @@ setWebhookData(webhookText);
         placeholder="Buscar por número"
       />
 
-      {/* Renderizar los resultados */}
-      <ul>
-        {datosbuscados.map((contacto) => (
-          <li key={contacto.idChat2}>{/* Renderizar los datos del contacto */}</li>
-        ))}
-      </ul>
+     
     </div>
         {resultados.map((resultado, index) => (
           <CustomButton className="cursor-pointer" key={index}
