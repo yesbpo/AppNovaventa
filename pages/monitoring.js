@@ -17,6 +17,7 @@ const [resultados1, setResultados1] = useState([]);
 const [resultados2, setResultados2] = useState([]);
 const [resultadost, setResultadost] = useState([]);
 const [datosbuscados, setDatosbuscados] = useState('');
+const [valorbuscado, setValorbuscado] = useState('');
 useEffect(() => {
   const obtenerMensajes = async () => {
     try {
@@ -730,7 +731,7 @@ setWebhookData(webhookText);
   const handleNumeroChange = (e) => {
     
     console.log(asesores.filter((contacto) => contacto.id == 4))
-    
+    setValorbuscado(e.target.value)
     const resultadosFiltrados = resultadost.filter(
       (contacto) => contacto.idChat2.includes(e.target.value));
             
@@ -760,7 +761,7 @@ setWebhookData(webhookText);
         placeholder="Buscar por número"
       />
 
-{datosbuscados.length !== '' && <ul>
+{valorbuscado !== '' && <ul>
  {datosbuscados.length > 0 ? (
     datosbuscados.map((contacto) => (
       <li key={contacto.idChat2} onClick={()=>handleClick(contacto.idChat2)}>
