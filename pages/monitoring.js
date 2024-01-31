@@ -638,7 +638,7 @@ setWebhookData(webhookText);
     setDatosbuscados(resultadosFiltrados);
   };
   const npmbreuser = (id) => {
-    asesores.filter((contacto) => contacto.includes(id));
+    asesores.filter((contacto) => contacto.id.includes(id));
   }
 
   if(session){
