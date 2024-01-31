@@ -639,9 +639,11 @@ setWebhookData(webhookText);
     setDatosbuscados(resultadosFiltrados);
   };
   const nombreuser = (idus) => {
-    
-    return asesores.filter((contacto) => contacto.id == idus).complete_name;
-  }
+    const asesorEncontrado = asesores.find((contacto) => contacto.id === idus);
+  
+    // Verifica si se encontró el asesor antes de intentar acceder a la propiedad
+    return asesorEncontrado ? asesorEncontrado.complete_name : 'Nombre no encontrado';
+  };
 
   if(session){
   return (
