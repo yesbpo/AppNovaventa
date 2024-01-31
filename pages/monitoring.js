@@ -647,7 +647,7 @@ setWebhookData(webhookText);
         <div>
       <input
         type="text"
-        value={numeroBuscado}
+        
         onChange={handleNumeroChange}
         placeholder="Buscar por número"
       />
