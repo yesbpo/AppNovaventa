@@ -631,16 +631,19 @@ setWebhookData(webhookText);
   }
   const handleNumeroChange = (e) => {
     
-    console.log(asesores.filter((contacto) => contacto.id.includes(4)))
+    console.log(asesores.filter((contacto) => contacto.id == 4))
     
     const resultadosFiltrados = resultadost.filter(
       (contacto) => contacto.idChat2.includes(e.target.value));
             
     setDatosbuscados(resultadosFiltrados);
   };
-  const npmbreuser = (id) => {
-    asesores.filter((contacto) => contacto.id.includes(id));
-  }
+  const nombreuser = (idus) => {
+    const asesorEncontrado = asesores.find((contacto) => contacto.id === idus);
+  
+    // Verifica si se encontró el asesor antes de intentar acceder a la propiedad
+    return asesorEncontrado ? asesorEncontrado.complete_name : 'Nombre no encontrado';
+  };
 
   if(session){
   return (
@@ -664,7 +667,7 @@ setWebhookData(webhookText);
     datosbuscados.map((contacto) => (
       <li key={contacto.idChat2}>
         {/* Renderizar los datos del contacto */}
-        {contacto.userId} - {contacto.idChat2}
+        {nombreuser(contacto.userId)} - {contacto.idChat2}
       </li>
     ))
   ) : (
