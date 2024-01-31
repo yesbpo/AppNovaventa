@@ -228,8 +228,8 @@ useEffect(() => {
       const data = await response.json();
 
       if (data.datos) {
-        // Aquí puedes hacer algo con los datos, por ejemplo, actualizar el estado en tu componente
-        console.log(data.datos);
+        // Update the state with the fetched data
+        setTemplates(data.datos);
       } else {
         console.log(data.mensaje);
       }
@@ -547,6 +547,14 @@ useEffect(() => {
       )}
     </div>
     <p>{mensaje}</p>
+    
+    {templates.map((template) => (
+  <div key={template.id}>
+    <strong>Element Name:</strong> {template.elementname}<br />
+    {/* Add other fields you want to display */}
+    <hr />
+  </div>
+))}
     
 
 <div className='CreatedTemplates'>
