@@ -11,21 +11,22 @@ const Chats = () => {
   const intervalIdRef = React.useRef(null);
 
   const startFetchingChats = (id_chat2) => {
-    let lastTimestamp = 0;
-  
-    const update = (timestamp) => {
-      if (timestamp - lastTimestamp >= 1000) { // Ejecutar cada segundo
-        lastTimestamp = timestamp;
-        handleEngestionClick();
-        fetchMensajes(id_chat2);
-        // Llama a tu segunda función aquí
-      }
-  
-      requestAnimationFrame(update);
-    };
-  
+  let lastTimestamp = 0;
+  handleEngestionClick();
+  fetchMensajes(id_chat2);
+  const update = (timestamp) => {
+    if (timestamp - lastTimestamp >= 60000) { // Ejecutar cada segundo
+      lastTimestamp = timestamp;
+      handleEngestionClick();
+      fetchMensajes(id_chat2);
+      // Llama a tu segunda función aquí
+    }
+
     requestAnimationFrame(update);
   };
+
+  requestAnimationFrame(update);
+};
   async function obtenerMensaje(idMessage) {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_DB}/obtener-mensaje/${idMessage}`);
@@ -931,7 +932,7 @@ const handleFileChange = (e) => {
         }),
       });
       setInputValue('')
-      
+      fetchMensajes(numeroEspecifico);
       if (guardarMensajeResponse.ok) {
         const guardarMensajeData = await guardarMensajeResponse.json();
         console.log(guardarMensajeData)
@@ -975,6 +976,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         body: new URLSearchParams(mensajeData).toString(),
       });
       setInputValue('')
+      fetchMensajes(numeroEspecifico);
       if (!response.ok) {
               }
       const responseData = await response.json();
@@ -1183,8 +1185,13 @@ fetchMensajes()
             <CustomButton onClick={handleEngestionClick}>{"Chats: "+contactos1.length}</CustomButton>
              {/* Mostrar Activos si 'mostrarActivos' es true */}
 
-            {session.user.type_user === 'Asesor' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
+            {session.user.type_user === 'Asesor1' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
             {session.user.type_user === 'Coordinador' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
+            {session.user.name === 'ychala' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
+            {session.user.name === 'Jechaparro' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
+            {session.user.name === 'Aelizarde' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
+            {session.user.name === 'Msaenz' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
+            
           </ButtonContainer>
         </Box>
         <Container>
