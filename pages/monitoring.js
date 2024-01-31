@@ -630,7 +630,7 @@ setWebhookData(webhookText);
   }
   const handleNumeroChange = (e) => {
 
-    console.log(resultad)
+    
     const resultadosFiltrados = resultadost.filter(
       (contacto) => contacto.idChat2.includes(e.target.value));
       console.log(resultadosFiltrados)
@@ -653,12 +653,18 @@ setWebhookData(webhookText);
         placeholder="Buscar por número"
       />
 
-      {/* Renderizar los resultados */}
-      <ul>
-        {resultadost.map((contacto) => (
-          <li key={contacto.idChat2}>{/* Renderizar los datos del contacto */}</li>
-        ))}
-      </ul>
+<ul>
+  {datosbuscados.length > 0 ? (
+    datosbuscados.map((contacto) => (
+      <li key={contacto.idChat2}>
+        {/* Renderizar los datos del contacto */}
+        {contacto.nombre} - {contacto.idChat2}
+      </li>
+    ))
+  ) : (
+    <li>No se encontraron resultados</li>
+  )}
+</ul>
     </div>
         {resultados.map((resultado, index) => (
           <CustomButton className="cursor-pointer" key={index}
