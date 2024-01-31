@@ -4,9 +4,8 @@ import styled from 'styled-components';
 import io from 'socket.io-client';
 import { useSession, signIn } from 'next-auth/react';
 
-
-
 const MonitoringPage = () => {
+  const [datosbuscados, setDatosbuscados] = useState('');
   useEffect(() => {
     // Lógica que se ejecutará después del montaje del componente
     updateuser();
@@ -39,7 +38,7 @@ useEffect(() => {
       const chatCerrado = chatscerrados.map((chat) => chat.userId);
       const chatGestion = chatsengestion.map((chat) => chat.userId);
       const chatsPendings = chats.map((chat) => chat.userId);
-     
+      setResultadost(chats)
       console.log(chatsPendings)
       // pendientes
       const frecuencias = {};
@@ -629,6 +628,13 @@ setWebhookData(webhookText);
     const match = dataString.match(/"file":"([^"]*)"/);
     return match ? match[1] : null;
   }
+  const handleNumeroChange = (e) => {
+
+    
+    const resultadosFiltrados = resultadost.filter(
+      (contacto) => contacto.idChat2.includes(e.target.value));
+    setDatosbuscados(resultadosFiltrados);
+  };
   if(session){
   return (
   <>
@@ -638,7 +644,21 @@ setWebhookData(webhookText);
         <ButtonContainer>
         <div className="p-2 border border-gray-300 rounded">
         
-        
+        <div>
+      <input
+        type="text"
+        value={numeroBuscado}
+        onChange={handleNumeroChange}
+        placeholder="Buscar por número"
+      />
+
+      {/* Renderizar los resultados */}
+      <ul>
+        {datosbuscados.map((contacto) => (
+          <li key={contacto.idChat2}>{/* Renderizar los datos del contacto */}</li>
+        ))}
+      </ul>
+    </div>
         {resultados.map((resultado, index) => (
           <CustomButton className="cursor-pointer" key={index}
             onClick={()=>{handlePendientesClick(resultado.asesor.id)}}>
