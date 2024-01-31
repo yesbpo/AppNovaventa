@@ -132,7 +132,8 @@ const { data: session } = useSession();
       const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
       
             const status = 'pending';
-            const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}`);      const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
+            const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}`);      
+            const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
       
       // El usuario está autenticado, puedes acceder a la sesión
       
@@ -201,7 +202,104 @@ const { data: session } = useSession();
     }
   };
   
-
+  const handleClick = async (iduser) => {
+    setNumeroEspecifico(iduser)
+    
+  try {   const fechaActual = new Date();
+    const options = { timeZone: 'America/Bogota', hour12: false };
+          const fechaInicio = new Date(fechaActual);
+    fechaInicio.setHours(fechaInicio.getHours() - 24);
+    
+    // Formatear la fecha de inicio
+    const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
+    const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
+    const diaInicio = fechaInicio.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
+    const horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+    const minutosInicio = fechaInicio.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
+    const segundosInicio = fechaInicio.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
+    
+    const fechaInicioString = `${anioInicio}-${mesInicio}-${diaInicio} ${horaInicio}:${minutosInicio}:${segundosInicio}`;
+    
+    // Formatear la fecha actual
+    const anioFin = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
+    const mesFin = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
+    const diaFin = fechaActual.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
+    const horaFin = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+    const minutosFin = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
+    const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
+    
+    const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
+    
+          const status = 'pending';
+          const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}`);      
+          const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
+    
+    // El usuario está autenticado, puedes acceder a la sesión
+    
+    if (!response.ok) {
+      throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
+    }
+    
+    const Id = iduser
+     
+    const chatsPending = await responseChats.json();
+    const withoutGest = chatsPending.filter(d => d.idChat2 == Id )
+    console.log(Id)
+    const data = await response.json();
+    setMensajes1(Object.values(data)[0]);
+    setContactos1(withoutGest);
+    setStatuschats('Pendientes');
+    try {   const fechaActual = new Date();
+      const options = { timeZone: 'America/Bogota', hour12: false };
+            const fechaInicio = new Date(fechaActual);
+      fechaInicio.setHours(fechaInicio.getHours() - 24);
+      
+      // Formatear la fecha de inicio
+      const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
+      const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
+      const diaInicio = fechaInicio.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
+      const horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+      const minutosInicio = fechaInicio.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
+      const segundosInicio = fechaInicio.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
+      
+      const fechaInicioString = `${anioInicio}-${mesInicio}-${diaInicio} ${horaInicio}:${minutosInicio}:${segundosInicio}`;
+      
+      // Formatear la fecha actual
+      const anioFin = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
+      const mesFin = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
+      const diaFin = fechaActual.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
+      const horaFin = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+      const minutosFin = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
+      const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
+      
+      const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
+      
+            const status = 'in process';
+            const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}`);
+      const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
+     
+      // El usuario está autenticado, puedes acceder a la sesión
+      
+      if (!response.ok) {
+        throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
+      }
+      
+      const Id = iduser
+      const chatsPending = await responseChats.json();
+      const withoutGest = chatsPending.filter(d => d.idChat2 == Id )
+      console.log(Id)
+      const data = await response.json();
+      setMensajes2(Object.values(data)[0]);
+      setContactos2(withoutGest);
+    } catch (error) {
+      console.error('Error al obtener mensajes:', error);
+      // Puedes manejar el error según tus necesidades
+    }
+  } catch (error) {
+    console.error('Error al obtener mensajes:', error);
+    // Puedes manejar el error según tus necesidades
+  }
+};
   // closed chats
   const handleClosedClick = async () => {
     conection();
@@ -665,7 +763,7 @@ setWebhookData(webhookText);
 <ul>
   {datosbuscados.length > 0 ? (
     datosbuscados.map((contacto) => (
-      <li key={contacto.idChat2} onClick={()=>setNumeroEspecifico(contacto.idChat2)}>
+      <li key={contacto.idChat2} onClick={()=>handleClick(contacto.idChat2)}>
         {/* Renderizar los datos del contacto */}
         {nombreuser(contacto.userId)} - {contacto.idChat2} - {contacto.status === 'pending' ? 'Pendiente' : contacto.status === 'in process' ? 'En Atención' : contacto.status === 'expiredbyassesor' ? 'Expirado por Asesor' : contacto.status === 'expiredbyclient' ? 'Expirado por cliente' :'Finalizado'}
       </li>
