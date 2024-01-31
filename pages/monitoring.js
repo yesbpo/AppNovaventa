@@ -663,7 +663,7 @@ setWebhookData(webhookText);
     datosbuscados.map((contacto) => (
       <li key={contacto.idChat2}>
         {/* Renderizar los datos del contacto */}
-        {npmbreuser(contacto.userId)} - {contacto.idChat2}
+        {contacto.userId} - {contacto.idChat2}
       </li>
     ))
   ) : (
