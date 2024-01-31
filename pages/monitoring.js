@@ -654,7 +654,7 @@ setWebhookData(webhookText);
       />
 
 <ul>
-  {datosbuscados.length > 0 ? (
+  {datosbuscados[0].length > 0 ? (
     datosbuscados.map((contacto) => (
       <li key={contacto.idChat2}>
         {/* Renderizar los datos del contacto */}
