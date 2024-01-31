@@ -16,7 +16,7 @@ const [resultados, setResultados] = useState([]);
 const [resultados1, setResultados1] = useState([]);
 const [resultados2, setResultados2] = useState([]);
 const [resultadost, setResultadost] = useState([]);
-const [datosbuscados, setDatosbuscados] = useState(resultadost);
+const [datosbuscados, setDatosbuscados] = useState([]);
 useEffect(() => {
   const obtenerMensajes = async () => {
     try {
