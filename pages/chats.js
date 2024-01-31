@@ -1143,7 +1143,7 @@ fetchMensajes()
         onChange={handleTemplateChange}
         className="mt-1 p-2 border border-gray-300 rounded-md"
       >
-        <option value="" disabled>Select a template</option>
+        <option value="" disabled>Selecciona una plantilla</option>
 
         {templates.map((template) => (
 
@@ -1180,13 +1180,13 @@ fetchMensajes()
   </div>}
         <Layout className='big-box'>
 
-        <Box className='estados' >
+        <Box className='estados'>
           <ButtonContainer>
-            <CustomButton onClick={handleEngestionClick}>{"Chats: "+contactos1.length}</CustomButton>
-             {/* Mostrar Activos si 'mostrarActivos' es true */}
-
-            {session.user.name === 'ychala' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
-            
+            <CustomButton onClick={handleEngestionClick}>{"Chats: " + contactos1.length}</CustomButton>
+            {/* Mostrar Activos si 'mostrarActivos' es true */}
+            {(session.user.name === 'ychala' || session.user.name === 'jechaparro' || session.user.name === 'aelizarde' || session.user.name === 'msaenz' || session.user.name === 'bvasquez' || session.user.name === 'aosorio' || session.user.name === 'cnavarrete') && (
+              <CustomButton onClick={openPopup}>Agregar Número</CustomButton>
+            )}
           </ButtonContainer>
         </Box>
         <Container>
