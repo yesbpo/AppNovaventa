@@ -5,7 +5,7 @@ import io from 'socket.io-client';
 import { useSession, signIn } from 'next-auth/react';
 
 const MonitoringPage = () => {
-  const [datosbuscados, setDatosbuscados] = useState('');
+  const [datosbuscados, setDatosbuscados] = useState(resultadost);
   useEffect(() => {
     // Lógica que se ejecutará después del montaje del componente
     updateuser();
