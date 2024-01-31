@@ -634,9 +634,13 @@ setWebhookData(webhookText);
     
     const resultadosFiltrados = resultadost.filter(
       (contacto) => contacto.idChat2.includes(e.target.value));
-      console.log(resultadosFiltrados)
+            console.log(resultadosFiltrados)
     setDatosbuscados(resultadosFiltrados);
   };
+  const npmbreuser = (id) => {
+    asesores.filter((contacto) => contacto.includes(id));
+  }
+
   if(session){
   return (
   <>
@@ -659,7 +663,7 @@ setWebhookData(webhookText);
     datosbuscados.map((contacto) => (
       <li key={contacto.idChat2}>
         {/* Renderizar los datos del contacto */}
-        {contacto.nombre} - {contacto.idChat2}
+        {npmbreuser(contacto.userId)} - {contacto.idChat2}
       </li>
     ))
   ) : (
