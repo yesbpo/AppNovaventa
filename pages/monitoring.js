@@ -631,7 +631,7 @@ setWebhookData(webhookText);
   }
   const handleNumeroChange = (e) => {
     
-    console.log(asesores.filter((contacto) => contacto.id.includes(4)))
+    console.log(asesores.filter((contacto) => contacto.id == 4))
     
     const resultadosFiltrados = resultadost.filter(
       (contacto) => contacto.idChat2.includes(e.target.value));
