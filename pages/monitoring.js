@@ -630,11 +630,11 @@ setWebhookData(webhookText);
     return match ? match[1] : null;
   }
   const handleNumeroChange = (e) => {
-
+    console.log(asesores)
     
     const resultadosFiltrados = resultadost.filter(
       (contacto) => contacto.idChat2.includes(e.target.value));
-            console.log(resultadosFiltrados)
+            
     setDatosbuscados(resultadosFiltrados);
   };
   const npmbreuser = (id) => {
