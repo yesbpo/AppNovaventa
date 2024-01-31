@@ -760,8 +760,8 @@ setWebhookData(webhookText);
         placeholder="Buscar por número"
       />
 
-<ul>
-  {datosbuscados.length > 0 ? (
+{datosbuscados.length > 0 && <ul>
+ {datosbuscados.length > 0 ? (
     datosbuscados.map((contacto) => (
       <li key={contacto.idChat2} onClick={()=>handleClick(contacto.idChat2)}>
         {/* Renderizar los datos del contacto */}
@@ -771,7 +771,7 @@ setWebhookData(webhookText);
   ) : (
     <li>No se encontraron resultados</li>
   )}
-</ul>
+</ul>}
     </div>
         {resultados.map((resultado, index) => (
           <CustomButton className="cursor-pointer" key={index}
