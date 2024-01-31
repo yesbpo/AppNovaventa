@@ -1497,17 +1497,20 @@ border-radius: 5px;
 
 
 const InputContainer = styled.div`
-margin-top: 15px;
-display: flex;
-align-items: center;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;  /* Permite que los elementos se envuelvan a la siguiente línea */
 `;
 
 const InputMensaje = styled.input`
-flex: 1;
-padding: 10px;
-border: 1px solid #ddd;
-border-radius: 5px;
-margin-right: 10px;
+  flex: 1;
+  min-width: 200px;  /* Ancho mínimo fijo del InputMensaje */
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-right: 10px;
+  white-space: pre-wrap;
 `;
 
 const BotonEnviar = styled.button`
