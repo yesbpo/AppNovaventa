@@ -556,12 +556,6 @@ useEffect(() => {
 <span>{deleteMessage}</span>
 
 
-            <div key={template.id}>
-              <strong>Element Name:</strong> {template.elementname}<br />
-              <hr />
-            </div>
-
-
 <div>
      
 
@@ -582,6 +576,13 @@ useEffect(() => {
       )}
     </div>
     <p>{mensaje}</p>
+
+    {templates.map((template) => (
+            <div key={template.id}>
+              <strong>Element Name:</strong> {template.elementname}<br />
+              <hr />
+            </div>
+          ))}
 
     
 
