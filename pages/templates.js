@@ -553,18 +553,15 @@ useEffect(() => {
       )
       }
 
-{templates.length > 0 ? (
-  templates.map((template) => (
-    <div key={template.id}>
-      <strong>Element Name:</strong> {template.elementname}<br />
-      <hr />
-    </div>
-  ))
-) : (
-  <p>Cargando datos...</p>
-)}
-
 <span>{deleteMessage}</span>
+
+{templates.map((template) => (
+            <div key={template.id}>
+              <strong>Element Name:</strong> {template.elementname}<br />
+              <hr />
+            </div>
+          ))}
+
 
 <div>
      
