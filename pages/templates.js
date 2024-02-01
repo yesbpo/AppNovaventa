@@ -591,7 +591,10 @@ useEffect(() => {
   {currentTemplates.length > 0 && (
     <ul>
       {currentTemplates
-        .filter((template) => templates.some((dataTemplate) => dataTemplate.elementName === template.elementName))
+        .filter((template) => {
+          const normalizedElementName = template.elementName.toLowerCase().trim();
+          return templates.some((dataTemplate) => dataTemplate.elementName.toLowerCase().trim() === normalizedElementName);
+        })
         .map((template) => (
           <li key={template.elementName}>
                 <strong>Categoria:</strong> {template.category}<br />
