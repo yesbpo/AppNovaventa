@@ -328,37 +328,30 @@ useEffect(() => {
   };
 
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-contenido-seetemp');
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        const data = await response.json();
-  
-        if (data.datos) {
-          // Update the state with the fetched data
-          setTemplates(data.datos);
-  
-          // Assuming 'elementNamesFromSeetemp' is the array of element names obtained from Seetemp
-          const elementNamesFromSeetemp = data.datos.map(item => item.elementname);
-  
-          // Filter and update the state with only matched templates
-          const filteredTemplates = currentTemplates.filter((template) => elementNamesFromSeetemp.includes(template.elementName));
-  
-          // Assuming 'setCurrentTemplates' is a state update function
-          setCurrentTemplates(filteredTemplates);
-        } else {
-          console.log(data.mensaje);
-        }
-      } catch (error) {
-        console.error(`Fetch error: ${error.message}`);
+//filter templates
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-contenido-seetemp');
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-    };
-  
-    fetchData();
-  }, [currentTemplates, setTemplates, setCurrentTemplates]);
+      const data = await response.json();
+
+      if (data.datos) {
+        // Aquí puedes hacer algo con los datos, por ejemplo, actualizar el estado en tu componente
+        console.log(data.datos);
+        // Update the state with the fetched data
+        setTemplates(data.datos);
+      } else {
+        console.log(data.mensaje);
+      }
+    } catch (error) {
+      console.error(`Fetch error: ${error.message}`);
+    }
+  };
+  fetchData();
+}, []);
 
 
 //This is the application to delete the templates
@@ -382,8 +375,6 @@ useEffect(() => {
       showTemporaryMessage('Error al eliminar la plantilla. Por favor, inténtelo de nuevo.');
     }
   };
-  
-
 
 //This temporary message shows whether or not the template was deleted.
   useEffect(() => {
@@ -592,7 +583,6 @@ useEffect(() => {
               <hr />
             </div>
           ))}
-          
 
     
 
@@ -600,22 +590,20 @@ useEffect(() => {
         {error && <p>{error}</p>}
         {currentTemplates.length > 0 && (
           <ul>
-            {currentTemplates
-  .filter((template) => elementNamesFromSeetemp.includes(template.elementName))
-  .map((template) => (
-    <li key={template.elementName}>
-      <strong>Categoria:</strong> {template.category}<br />
-      <strong>Tipo de plantilla:</strong> {getTemplateType(template.templateType)}<br />
-      <strong>Fecha de creación:</strong> {new Date(template.createdOn).toLocaleString()}<br />
-      <strong>Fecha de modificación:</strong> {new Date(template.modifiedOn).toLocaleString()}<br />
-      <strong>Contenido:</strong> {template.data}<br />
-      <strong>Nombre:</strong> {template.elementName}<br />
-      <strong>Idioma:</strong> {getLanguageText(template.languageCode)}<br />
-      <strong>Estado:</strong> {getStatusText(template.status)}<br />
-      <button onClick={() => handleDeleteTemplate(template.elementName)}>Eliminar Plantilla</button>
-      <hr />
-    </li>
-  ))}
+            {currentTemplates.map((template) => (
+              <li key={template.elementName}>
+                <strong>Categoria:</strong> {template.category}<br />
+                <strong>Tipo de plantilla:</strong> {getTemplateType(template.templateType)}<br />
+                <strong>Fecha de creación:</strong> {new Date(template.createdOn).toLocaleString()}<br />
+                <strong>Fecha de modificación:</strong> {new Date(template.modifiedOn).toLocaleString()}<br />
+                <strong>Contenido:</strong> {template.data}<br />
+                <strong>Nombre:</strong> {template.elementName}<br />
+                <strong>Idioma:</strong> {getLanguageText(template.languageCode)}<br />
+                <strong>Estado:</strong> {getStatusText(template.status)}<br />
+                <button onClick={() => handleDeleteTemplate(template.elementName)}>Eliminar Plantilla</button>
+                <hr />
+              </li>
+            ))}
           </ul>
         )}
 
