@@ -345,7 +345,10 @@ useEffect(() => {
           const elementNamesFromSeetemp = data.datos.map(item => item.elementname);
   
           // Filter and update the state with only matched templates
-          setCurrentTemplates(currentTemplates.filter((template) => elementNamesFromSeetemp.includes(template.elementName)));
+          const filteredTemplates = currentTemplates.filter((template) => elementNamesFromSeetemp.includes(template.elementName));
+          
+          // Assuming 'setCurrentTemplates' is a state update function
+          setCurrentTemplates(filteredTemplates);
         } else {
           console.log(data.mensaje);
         }
@@ -353,6 +356,7 @@ useEffect(() => {
         console.error(`Fetch error: ${error.message}`);
       }
     };
+  
     fetchData();
   }, []);
 
