@@ -375,6 +375,9 @@ useEffect(() => {
       showTemporaryMessage('Error al eliminar la plantilla. Por favor, inténtelo de nuevo.');
     }
   };
+  
+  const elementNamesFromSeetemp = data.datos.map(item => item.elementname);
+
 
 //This temporary message shows whether or not the template was deleted.
   useEffect(() => {
@@ -583,6 +586,7 @@ useEffect(() => {
               <hr />
             </div>
           ))}
+          
 
     
 
@@ -590,20 +594,22 @@ useEffect(() => {
         {error && <p>{error}</p>}
         {currentTemplates.length > 0 && (
           <ul>
-            {currentTemplates.map((template) => (
-              <li key={template.elementName}>
-                <strong>Categoria:</strong> {template.category}<br />
-                <strong>Tipo de plantilla:</strong> {getTemplateType(template.templateType)}<br />
-                <strong>Fecha de creación:</strong> {new Date(template.createdOn).toLocaleString()}<br />
-                <strong>Fecha de modificación:</strong> {new Date(template.modifiedOn).toLocaleString()}<br />
-                <strong>Contenido:</strong> {template.data}<br />
-                <strong>Nombre:</strong> {template.elementName}<br />
-                <strong>Idioma:</strong> {getLanguageText(template.languageCode)}<br />
-                <strong>Estado:</strong> {getStatusText(template.status)}<br />
-                <button onClick={() => handleDeleteTemplate(template.elementName)}>Eliminar Plantilla</button>
-                <hr />
-              </li>
-            ))}
+            {currentTemplates
+  .filter((template) => elementNamesFromSeetemp.includes(template.elementName))
+  .map((template) => (
+    <li key={template.elementName}>
+      <strong>Categoria:</strong> {template.category}<br />
+      <strong>Tipo de plantilla:</strong> {getTemplateType(template.templateType)}<br />
+      <strong>Fecha de creación:</strong> {new Date(template.createdOn).toLocaleString()}<br />
+      <strong>Fecha de modificación:</strong> {new Date(template.modifiedOn).toLocaleString()}<br />
+      <strong>Contenido:</strong> {template.data}<br />
+      <strong>Nombre:</strong> {template.elementName}<br />
+      <strong>Idioma:</strong> {getLanguageText(template.languageCode)}<br />
+      <strong>Estado:</strong> {getStatusText(template.status)}<br />
+      <button onClick={() => handleDeleteTemplate(template.elementName)}>Eliminar Plantilla</button>
+      <hr />
+    </li>
+  ))}
           </ul>
         )}
 
