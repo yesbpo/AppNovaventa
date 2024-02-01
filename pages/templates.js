@@ -553,13 +553,16 @@ useEffect(() => {
       )
       }
 
-{templates.map((template) => (
-            <div key={template.id}>
-              <strong>Element Name:</strong> {template.elementname}<br />
-              {/* Add other fields you want to display */}
-              <hr />
-            </div>
-          ))}
+{templates.length > 0 ? (
+  templates.map((template) => (
+    <div key={template.id}>
+      <strong>Element Name:</strong> {template.elementname}<br />
+      <hr />
+    </div>
+  ))
+) : (
+  <p>Cargando datos...</p>
+)}
 
 <span>{deleteMessage}</span>
 
