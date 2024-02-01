@@ -521,6 +521,14 @@ useEffect(() => {
             </div>
           )}
 
+          {templates.map((template) => (
+            <div key={template.id}>
+              <strong>Element Name:</strong> {template.elementname}<br />
+              {/* Add other fields you want to display */}
+              <hr />
+            </div>
+          ))}
+
         </>
       )
       }
