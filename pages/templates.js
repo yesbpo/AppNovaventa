@@ -281,6 +281,7 @@ useEffect(() => {
 
     fetchData();
   }, []);
+  
 
   
   const getLanguageText = (languageCode) => {
@@ -325,6 +326,33 @@ useEffect(() => {
         return templateType;
     }
   };
+
+
+//filter templates
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-contenido-seetemp');
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+
+      if (data.datos) {
+        // Aquí puedes hacer algo con los datos, por ejemplo, actualizar el estado en tu componente
+        console.log(data.datos);
+        // Update the state with the fetched data
+        setTemplates(data.datos);
+      } else {
+        console.log(data.mensaje);
+      }
+    } catch (error) {
+      console.error(`Fetch error: ${error.message}`);
+    }
+  };
+  fetchData();
+}, []);
+
 
 //This is the application to delete the templates
   const handleDeleteTemplate = async (elementName) => {
@@ -520,6 +548,7 @@ useEffect(() => {
               <p>{message}</p>
             </div>
           )}
+          
 
           {templates.map((template) => (
             <div key={template.id}>
