@@ -346,7 +346,7 @@ useEffect(() => {
   
           // Filter and update the state with only matched templates
           const filteredTemplates = currentTemplates.filter((template) => elementNamesFromSeetemp.includes(template.elementName));
-          
+  
           // Assuming 'setCurrentTemplates' is a state update function
           setCurrentTemplates(filteredTemplates);
         } else {
@@ -358,7 +358,7 @@ useEffect(() => {
     };
   
     fetchData();
-  }, []);
+  }, [currentTemplates, setTemplates, setCurrentTemplates]);
 
 
 //This is the application to delete the templates
