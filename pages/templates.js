@@ -328,30 +328,33 @@ useEffect(() => {
   };
 
 
-//filter templates
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-contenido-seetemp');
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-contenido-seetemp');
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const data = await response.json();
+  
+        if (data.datos) {
+          // Update the state with the fetched data
+          setTemplates(data.datos);
+  
+          // Assuming 'elementNamesFromSeetemp' is the array of element names obtained from Seetemp
+          const elementNamesFromSeetemp = data.datos.map(item => item.elementname);
+  
+          // Filter and update the state with only matched templates
+          setCurrentTemplates(currentTemplates.filter((template) => elementNamesFromSeetemp.includes(template.elementName)));
+        } else {
+          console.log(data.mensaje);
+        }
+      } catch (error) {
+        console.error(`Fetch error: ${error.message}`);
       }
-      const data = await response.json();
-
-      if (data.datos) {
-        // Aquí puedes hacer algo con los datos, por ejemplo, actualizar el estado en tu componente
-        console.log(data.datos);
-        // Update the state with the fetched data
-        setTemplates(data.datos);
-      } else {
-        console.log(data.mensaje);
-      }
-    } catch (error) {
-      console.error(`Fetch error: ${error.message}`);
-    }
-  };
-  fetchData();
-}, []);
+    };
+    fetchData();
+  }, []);
 
 
 //This is the application to delete the templates
@@ -376,7 +379,6 @@ useEffect(() => {
     }
   };
   
-  const elementNamesFromSeetemp = data.datos.map(item => item.elementname);
 
 
 //This temporary message shows whether or not the template was deleted.
