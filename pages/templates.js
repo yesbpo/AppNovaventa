@@ -591,24 +591,24 @@ useEffect(() => {
   {currentTemplates.length > 0 && (
     <ul>
       {currentTemplates
-  .filter((template) => {
-    const normalizedElementName = template.elementName.toLowerCase().trim();
-    return templates.some((dataTemplate) => dataTemplate.elementName.toLowerCase().trim() === normalizedElementName);
-  })
-  .map((template) => (
-    <li key={template.elementName}>
-      <strong>Categoria:</strong> {template.category}<br />
-      <strong>Tipo de plantilla:</strong> {getTemplateType(template.templateType)}<br />
-      <strong>Fecha de creación:</strong> {new Date(template.createdOn).toLocaleString()}<br />
-      <strong>Fecha de modificación:</strong> {new Date(template.modifiedOn).toLocaleString()}<br />
-      <strong>Contenido:</strong> {template.data}<br />
-      <strong>Nombre:</strong> {template.elementName}<br />
-      <strong>Idioma:</strong> {getLanguageText(template.languageCode)}<br />
-      <strong>Estado:</strong> {getStatusText(template.status)}<br />
-      <button onClick={() => handleDeleteTemplate(template.elementName)}>Eliminar Plantilla</button>
-      <hr />
-    </li>
-  ))}
+        .filter((template) => {
+          const normalizedElementName = template.elementName.toLowerCase().trim();
+          return templates.some((dataTemplate) => dataTemplate.elementName.toLowerCase().trim() === normalizedElementName);
+        })
+        .map((template) => (
+          <li key={template.elementName}>
+                <strong>Categoria:</strong> {template.category}<br />
+                <strong>Tipo de plantilla:</strong> {getTemplateType(template.templateType)}<br />
+                <strong>Fecha de creación:</strong> {new Date(template.createdOn).toLocaleString()}<br />
+                <strong>Fecha de modificación:</strong> {new Date(template.modifiedOn).toLocaleString()}<br />
+                <strong>Contenido:</strong> {template.data}<br />
+                <strong>Nombre:</strong> {template.elementName}<br />
+                <strong>Idioma:</strong> {getLanguageText(template.languageCode)}<br />
+                <strong>Estado:</strong> {getStatusText(template.status)}<br />
+                <button onClick={() => handleDeleteTemplate(template.elementName)}>Eliminar Plantilla</button>
+                <hr />
+              </li>
+            ))}
           </ul>
         )}
 
