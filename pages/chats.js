@@ -11,22 +11,15 @@ const Chats = () => {
   const intervalIdRef = React.useRef(null);
 
   const startFetchingChats = (id_chat2) => {
-  let lastTimestamp = 0;
-  handleEngestionClick();
-  fetchMensajes(id_chat2);
-  const update = (timestamp) => {
-    if (timestamp - lastTimestamp >= 60000) { // Ejecutar cada segundo
-      lastTimestamp = timestamp;
-      handleEngestionClick();
-      fetchMensajes(id_chat2);
-      // Llama a tu segunda función aquí
-    }
-
-    requestAnimationFrame(update);
+    console.log(id_chat2)
+    console.log(latestData)
+    
+    intervalIdRef.current = setInterval(() => {
+    handleEngestionClick();
+    conection();
+     // Llama a tu segunda función aquí
+    }, 10000);
   };
-
-  requestAnimationFrame(update);
-};
   async function obtenerMensaje(idMessage) {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_DB}/obtener-mensaje/${idMessage}`);
@@ -37,7 +30,7 @@ const Chats = () => {
       
       const data = await response.json();
       
-      setMensajes1(prevMensajes => [...prevMensajes, data]);
+     
       console.log('Mensaje obtenido:', data);
       // Aquí puedes trabajar con el mensaje obtenido
     } catch (error) {
@@ -393,7 +386,7 @@ throw error; // Puedes manejar el error o propagarlo según tus necesidades
        
        
        const data = await response.json();
-       setMensajes1(Object.values(data)[0]);
+       
 
        
        
@@ -522,7 +515,8 @@ const handleAgregarNumeroClick = () => {
     if (event.key === 'Enter') {
 
       enviarMensaje();
-
+      setInputValue('')
+      conection();
     }
   };
 
@@ -901,7 +895,7 @@ const handleFileChange = (e) => {
           disablePreview: true,
         };
         // Enviar mensaje a través de la API de envíos
-        const envioResponse = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/api/envios', {
+        const envioResponse = await fetch(process.env.NEXT_PUBLIC_API2+'/api/envios', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -911,11 +905,23 @@ const handleFileChange = (e) => {
         if (!envioResponse.ok) {
           throw new Error(`Error al enviar el mensaje: ${envioResponse.status} ${envioResponse.statusText}`);
         }
-
+        
         const envioData = await envioResponse.json();
         console.log('Respuesta del servidor de envíos:',documentUrl );
         const idMessage = envioData.messageId;
-        // Actualizar el mensaje enviado en el servidor
+        const mensajesaliente = {
+          content: {file: base + documentUrl,  text: mensajeData.message.caption},
+          type_comunication: 'message-event', // Puedes ajustar este valor según tus necesidades
+          status: 'sent', // Puedes ajustar este valor según tus necesidades
+          number: numeroEspecifico,
+          type_message: cleanedType,
+          timestamp: `${anio}-${mes}-${dia} ${hora}:${minutos}:${segundos}`,
+          idMessage: idMessage // Puedes ajustar este valor según tus necesidades
+        } 
+        socket.emit('message', mensajesaliente)
+        
+      setInputValue('')
+      conection()// Actualizar el mensaje enviado en el servidor
         const guardarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
         method: 'POST',
         headers: {
@@ -931,13 +937,14 @@ const handleFileChange = (e) => {
           idMessage: idMessage // Puedes ajustar este valor según tus necesidades
         }),
       });
-      setInputValue('')
-      fetchMensajes(numeroEspecifico);
+      
+      
+      
       if (guardarMensajeResponse.ok) {
         const guardarMensajeData = await guardarMensajeResponse.json();
         console.log(guardarMensajeData)
-
         setFile('')
+        
       } else {
       }
 
@@ -968,28 +975,22 @@ const dia = fechaActual.getDate().toString().padStart(2, '0');
 const hora = fechaActual.getHours().toString().padStart(2, '0');
 const minutos = fechaActual.getMinutes().toString().padStart(2, '0');
 const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
-      const response = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/api/envios', {
+      const response = await fetch(process.env.NEXT_PUBLIC_API2+'/api/envios', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams(mensajeData).toString(),
       });
+      conection()
       setInputValue('')
-      fetchMensajes(numeroEspecifico);
       if (!response.ok) {
               }
       const responseData = await response.json();
 
        // Escucha el evento 'cambio' para obtener el idMessage
       const idMessage = responseData.messageId;
-          // Guarda el mensaje en el servidor
-      const guardarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+     const mensajesaliente1 = {
         content: inputValue,
         type_comunication: 'message-event', // Puedes ajustar este valor según tus necesidades
         status: 'sent', // Puedes ajustar este valor según tus necesidades
@@ -997,18 +998,15 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         type_message: 'text',
         timestamp: `${anio}-${mes}-${dia} ${hora}:${minutos}:${segundos}`,
         idMessage: idMessage // Puedes ajustar este valor según tus necesidades
-      }),
-    });
-    setInputValue('')
+      }
+      setInputValue('')
+      socket.emit('message', mensajesaliente1)
+      conection()
+          // Guarda el mensaje en el servidor
+      
     
-    if (guardarMensajeResponse.ok) {
-      const guardarMensajeData = await guardarMensajeResponse.json();
-      console.log(guardarMensajeData)
-
-
-          } else {
-
-    }
+   
+   
 
 
 
