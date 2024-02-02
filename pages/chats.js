@@ -12,7 +12,7 @@ const Chats = () => {
 
   const startFetchingChats = (id_chat2) => {
     console.log(id_chat2)
-    console.log(latestData)
+    
     
     intervalIdRef.current = setInterval(() => {
     handleEngestionClick();
