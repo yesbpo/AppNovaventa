@@ -19,7 +19,7 @@ const Chats = () => {
     transports: ['websocket', 'pooling'],
     resource: '/conversation-api/',
   };
-  const socket = socketIOClient('https://novaventa.appcenteryes.com/socket.io/', socketIOConnOpt );
+  const socket = socketIOClient('wss://novaventa.appcenteryes.com/socket.io/', socketIOConnOpt );
   
   useEffect(() => {
     socket.on('tablaData', (data) => {
