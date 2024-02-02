@@ -9,6 +9,18 @@ import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon, SearchIcon, RefreshIco
 const Chats = () => {
   const { data: session } = useSession();
   const intervalIdRef = React.useRef(null);
+  const socket = socketIOClient('wss://novaventa.appcenteryes.com/socket.io/', socketIOConnOpt );
+  
+  useEffect(() => {
+    socket.on('tablaData', (data) => {
+      setMensajes1(data);
+    });
+
+    // Limpiar la conexión cuando el componente se desmonta
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   const startFetchingChats = (id_chat2) => {
     console.log(id_chat2)
