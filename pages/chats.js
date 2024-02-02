@@ -43,7 +43,7 @@ const Chats = () => {
   }   
   const startFetchingChats = (id_chat2) => {
     console.log(id_chat2)
-    fetchMensajes(id_chat2)
+
     
     intervalIdRef.current = setInterval(() => {
     handleEngestionClick();
@@ -276,7 +276,7 @@ useEffect(() => {
 
  }
  fetchTemplates();
- 
+ fetchMensajes
  // Llama a fetchMensajes cada segundo
 
 
@@ -413,7 +413,7 @@ throw error; // Puedes manejar el error o propagarlo según tus necesidades
 
        
        
-       
+       fetchExpired(Object.values(withoutGest)[0])
        
        
        const data = await response.json();
