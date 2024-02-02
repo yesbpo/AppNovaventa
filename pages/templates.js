@@ -216,6 +216,31 @@ const handleCreateTemplate = async () => {
   }
 };
 
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-contenido-seetemp');
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.datos) {
+        // Update the state with the fetched data
+        setTemplates(data.datos);
+      } else {
+        console.log(data.mensaje);
+      }
+    } catch (error) {
+      console.error(`Fetch error: ${error.message}`);
+    }
+  };
+
+  fetchData();
+}, []);
+
 
 
 //Request to obtain the templates
@@ -256,6 +281,7 @@ const handleCreateTemplate = async () => {
 
     fetchData();
   }, []);
+  
 
   
   const getLanguageText = (languageCode) => {
@@ -300,6 +326,33 @@ const handleCreateTemplate = async () => {
         return templateType;
     }
   };
+
+
+//filter templates
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-contenido-seetemp');
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      const data = await response.json();
+
+      if (data.datos) {
+        // Aquí puedes hacer algo con los datos, por ejemplo, actualizar el estado en tu componente
+        console.log(data.datos);
+        // Update the state with the fetched data
+        setTemplates(data.datos);
+      } else {
+        console.log(data.mensaje);
+      }
+    } catch (error) {
+      console.error(`Fetch error: ${error.message}`);
+    }
+  };
+  fetchData();
+}, []);
+
 
 //This is the application to delete the templates
   const handleDeleteTemplate = async (elementName) => {
@@ -502,6 +555,7 @@ const handleCreateTemplate = async () => {
 
 <span>{deleteMessage}</span>
 
+
 <div>
      
 
@@ -522,6 +576,14 @@ const handleCreateTemplate = async () => {
       )}
     </div>
     <p>{mensaje}</p>
+
+    {templates.map((template) => (
+            <div key={template.id}>
+              <strong>Element Name:</strong> {template.elementname}<br />
+              <hr />
+            </div>
+          ))}
+
     
 
 <div className='CreatedTemplates'>
