@@ -9,6 +9,16 @@ import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon, SearchIcon, RefreshIco
 const Chats = () => {
   const { data: session } = useSession();
   const intervalIdRef = React.useRef(null);
+  const socketIOConnOpt = {
+    'force new connection': true,
+    reconnection: true,
+    reconnectionDelay: 10000,
+    reconnectionDelayMax: 60000,
+    reconnectionAttempts: 'Infinity',
+    timeout: 10000,
+    transports: ['websocket', 'pooling'],
+    resource: '/conversation-api/',
+  };
   const socket = socketIOClient('wss://novaventa.appcenteryes.com/socket.io/', socketIOConnOpt );
   
   useEffect(() => {
