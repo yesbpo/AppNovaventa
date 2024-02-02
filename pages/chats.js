@@ -31,7 +31,16 @@ const Chats = () => {
       socket.disconnect();
     };
   }, []);
+  const conection = () => {
+    socket.on('tablaData', (data) => {
+      setMensajes1(data);
+    });
 
+    // Limpiar la conexión cuando el componente se desmonta
+    return () => {
+      socket.disconnect();
+    };
+  }   
   const startFetchingChats = (id_chat2) => {
     console.log(id_chat2)
     
