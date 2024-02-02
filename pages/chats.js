@@ -1034,12 +1034,32 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       socket.emit('message', mensajesaliente1)
       conection()
           // Guarda el mensaje en el servidor
-      
+          const guardarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              content: {file: base + documentUrl,  text: mensajeData.message.caption},
+              type_comunication: 'message-event', // Puedes ajustar este valor según tus necesidades
+              status: 'sent', // Puedes ajustar este valor según tus necesidades
+              number: numeroEspecifico,
+              type_message: cleanedType,
+              timestamp: `${anio}-${mes}-${dia} ${hora}:${minutos}:${segundos}`,
+              idMessage: idMessage // Puedes ajustar este valor según tus necesidades
+            }),
+          });
+          
+          
+          
+          if (guardarMensajeResponse.ok) {
+            const guardarMensajeData = await guardarMensajeResponse.json();
+            console.log(guardarMensajeData)
     
    
    
 
-
+          }
 
 
     } catch (error) {
