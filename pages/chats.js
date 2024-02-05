@@ -328,7 +328,7 @@ if (!response.ok) {
 }
 
 const data = await response.json();
-
+console.log(data)
 const ultmsjord = data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 const ultmsj = ultmsjord[ultmsjord.length-1]
 
