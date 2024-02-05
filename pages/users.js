@@ -269,7 +269,7 @@ const CrearUsuario = () => {
   </BotonEnviar>
   </form>}
       {/* Lista de usuarios */}
-        <div>
+        <div className='text-align-right mb-3'>
           <ul>
           {!showCrear && <h2 className="text-2xl font-bold text-align-right mb-3">Modificar Usuarios</h2> && usuarios.map((usuario) => (
           <li key={usuario.id} className='mb-5 flex items-center justify-between'>
