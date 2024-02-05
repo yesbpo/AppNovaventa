@@ -47,7 +47,7 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
   }, []);
   
   const conection = () => {
-    f
+    
     socket.on('tablaData', (data) => {
       setMensajes1(data);
     });
