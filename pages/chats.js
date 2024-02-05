@@ -23,8 +23,8 @@ const Chats = () => {
 const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', socketIOConnOpt );
   
   useEffect(() => {
-    socket.on('message-into', (data) => {
-      setMensajes1(data);
+    socket.on('message-into', (rows) => {
+      setMensajes1(rows);
     });
     socket.on('tablaData', (data) => {
       setMensajes1(data);
@@ -36,8 +36,8 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
     };
   }, []);
   const conection = () => {
-    socket.on('message-into', (data) => {
-      setMensajes1(data);
+    socket.on('message-into', (rows) => {
+      setMensajes1(rows);
     });
     socket.on('tablaData', (data) => {
       setMensajes1(data);
