@@ -22,7 +22,6 @@ const Chats = () => {
   };
 const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', socketIOConnOpt );
   
-  
   useEffect(() => {
     socket.on('message-into', (rows) => {
       setMensajes1(rows);
@@ -59,7 +58,7 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
     handleEngestionClick();
     
      // Llama a tu segunda función aquí
-    }, 10000);
+    }, 15000);
   };
   async function obtenerMensaje(idMessage) {
     try {
