@@ -204,7 +204,7 @@ const CrearUsuario = () => {
             {/* Agregar más detalles según sea necesario */}
           </div>
         ) : (
-            <div>
+            <div className='w-full'>
             {mensaje && (
               <Mensaje tipo={mensaje.tipo}>
                 {mensaje.texto}
