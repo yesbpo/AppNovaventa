@@ -140,7 +140,7 @@ const CrearUsuario = () => {
   return (
     
     <Layout>
-      <div className="flex items-center justify-between p-10">
+      <div className="flex items-center justify-between m-10">
       <h1 className="text-2xl font-bold font-serif">Listado de usuarios</h1>
       <BotonEnviar onClick={handleChangeCrear} className="bg-blue-500 text-white p-2 rounded-md">Agregar usuario</BotonEnviar>
       </div>
