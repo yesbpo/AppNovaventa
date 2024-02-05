@@ -22,19 +22,7 @@ const Chats = () => {
   };
 const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', socketIOConnOpt );
   
-  useEffect(() => {
-    socket.on('message-into', (rows) => {
-      setMensajes1(rows);
-    });
-    socket.on('tablaData', (data) => {
-      setMensajes1(data);
-    });
-
-    // Limpiar la conexión cuando el componente se desmonta
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+  
   useEffect(() => {
     
     socket.on('tablaData', (data) => {
