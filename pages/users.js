@@ -140,7 +140,7 @@ const CrearUsuario = () => {
   return (
     
     <Layout>
-      <div className="flex items-center justify-between p-4">
+      <div className="flex items-center justify-between p-6">
       <h1 className="text-2xl font-bold font-serif">Listado de usuarios</h1>
       <BotonEnviar onClick={handleChangeCrear} className="bg-blue-500 text-white p-2 rounded-md">Agregar usuario</BotonEnviar>
       </div>
@@ -204,7 +204,7 @@ const CrearUsuario = () => {
             {/* Agregar más detalles según sea necesario */}
           </div>
         ) : (
-            <div>
+            <div className='w-full'>
             {mensaje && (
               <Mensaje tipo={mensaje.tipo}>
                 {mensaje.texto}
@@ -269,22 +269,30 @@ const CrearUsuario = () => {
   </BotonEnviar>
   </form>}
       {/* Lista de usuarios */}
-    <div >
-      <ul>
-      {!showCrear && <h2 className="text-2xl font-bold text-align-right mb-3">Modificar Usuarios</h2> && usuarios.map((usuario) => (
-      <li key={usuario.id} className='mb-5 flex items-center justify-between'>
-        <span className='mr-2'>{usuario.complete_name}</span>
-        <button 
-          onClick={() => handleUsuarioSeleccionado(usuario)} 
-          className="bg-blue-500 text-white p-2 rounded-md">Modificar</button>
-      </li>
-    ))}
-  </ul>
-</div>
-            </div>
-          </div>
+        <div className='text-align-right mb-3 w-full'>
+          <ul>
+          {!showCrear && <h2 className="text-2xl font-bold text-align-right mb-3">Modificar Usuarios</h2> && usuarios.map((usuario) => (
+          <li key={usuario.id} className='mb-5 flex items-center justify-between'>
+            <span className='mr-2'>{usuario.complete_name}</span>
+            <div className='flex items-center'>
+            <button 
+              onClick={() => handleUsuarioSeleccionado(usuario)} 
+              className="bg-blue-500 text-white p-2 rounded-md mr-2">Modificar</button>
+            <button 
+                onClick={() => handleEliminarUsuario(usuario)}
+                className='bg-gray-500 text-white p-2 rounded-md mr-2 boton-inactivar'>Inactivar</button>
+            <button 
+                onClick={() => handleEliminarUsuario(usuario)}
+                className='bg-red-500 text-white p-2 rounded-md boton-eliminar'>Eliminar</button>
+                </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+    </div>
+    </div>
         )}
-      </div>
+  </div>
     
   </Layout>
       )}
@@ -350,4 +358,5 @@ const EstilosAdicionales = styled.style`
     width: 100%;
   }
 `;
+
 export default CrearUsuario;

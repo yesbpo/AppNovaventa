@@ -1,32 +1,65 @@
 import Layout from '../components/Layout';
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import styled from 'styled-components';
-import io from 'socket.io-client';
+import socketIOClient from 'socket.io-client';
 import { useSession, signIn } from 'next-auth/react';
 import EmojiPicker from 'emoji-picker-react';
 import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon, SearchIcon, RefreshIcon } from '@heroicons/react/solid';
 
 const Chats = () => {
+  const [latestData, setLatestData] = useState('')
   const { data: session } = useSession();
   const intervalIdRef = React.useRef(null);
-
-  const startFetchingChats = (id_chat2) => {
-  let lastTimestamp = 0;
-  handleEngestionClick();
-  fetchMensajes(id_chat2);
-  const update = (timestamp) => {
-    if (timestamp - lastTimestamp >= 60000) { // Ejecutar cada segundo
-      lastTimestamp = timestamp;
-      handleEngestionClick();
-      fetchMensajes(id_chat2);
-      // Llama a tu segunda función aquí
-    }
-
-    requestAnimationFrame(update);
+  const socketIOConnOpt = {
+    'force new connection': true,
+    reconnection: true,
+    reconnectionDelay: 10000,
+    reconnectionDelayMax: 60000,
+    reconnectionAttempts: 'Infinity',
+    timeout: 10000,
+    transports: ['websocket', 'pooling'],
+    resource: '/conversation-api/',
   };
+const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', socketIOConnOpt );
+  
+  useEffect(() => {
+    socket.on('message-into', (rows) => {
+      setMensajes1(rows);
+    });
+    socket.on('tablaData', (data) => {
+      setMensajes1(data);
+    });
 
-  requestAnimationFrame(update);
-};
+    // Limpiar la conexión cuando el componente se desmonta
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
+  
+  
+  const conection = () => {
+    
+    socket.on('tablaData', (data) => {
+      setMensajes1(data);
+    });
+    socket.on('message-into', (rows) => {
+      setMensajes1(rows);
+    });
+    // Limpiar la conexión cuando el componente se desmonta
+    return () => {
+      socket.disconnect();
+    };
+  }   
+  const startFetchingChats = (id_chat2) => {
+    console.log(id_chat2)
+    console.log(latestData)
+    
+    intervalIdRef.current = setInterval(() => {
+    handleEngestionClick();
+    
+     // Llama a tu segunda función aquí
+    }, 15000);
+  };
   async function obtenerMensaje(idMessage) {
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_DB}/obtener-mensaje/${idMessage}`);
@@ -37,7 +70,7 @@ const Chats = () => {
       
       const data = await response.json();
       
-      setMensajes1(prevMensajes => [...prevMensajes, data]);
+    
       console.log('Mensaje obtenido:', data);
       // Aquí puedes trabajar con el mensaje obtenido
     } catch (error) {
@@ -50,6 +83,7 @@ const Chats = () => {
   const [session1, setSession1 ]= useState('')
   const manejarCambio = (event) => {
     setInputValue(event.target.value);
+    
   };
   const [numeroBuscado, setNumeroBuscado] = useState('');
   const handleNumeroChange = (e) => {
@@ -88,11 +122,11 @@ try{
      const chatsPending = await responseChatsin.json();
      
      const withoutGest = chatsPending
-     const withoutGest1 = chatsPending1.filter(d => d.userId == Id[0].id )
+     
      console.log(Object.values(withoutGest)[0].filter(c => c.status == 'pending' || c.status == 'in process'))
 
      setContactos1(Object.values(withoutGest)[0].filter(c => c.status == 'pending' || c.status == 'in process'))
-
+     fetchExpired(Object.values(withoutGest)[0])
      setEngestion(withoutGest.length)
 
 
@@ -135,11 +169,11 @@ function contarOcurrencias(texto, patron) {
 }
 
 useEffect(() => {
-   //Realizar la solicitud GET al servidor
-   fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-nombres-contenidos')
-   .then(response => response.json())
-   .then(data => setRespuestasRapidas(data))
-  .catch(error => console.error('Error al obtener respuestas rápidas:', error));
+  // Realizar la solicitud GET al servidor
+  fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-nombres-contenidos')
+  .then(response => response.json())
+    .then(data => setRespuestasRapidas(data))
+    .catch(error => console.error('Error al obtener respuestas rápidas:', error));
 }, []);
 
 
@@ -150,7 +184,7 @@ useEffect(() => {
  const fetchTemplates = async () => {
    try {
      // Utilizar el servidor proxy en lugar de la URL directa
-     const response = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/gupshup-templates');
+     const response = await fetch(process.env.NEXT_PUBLIC_API2+'/gupshup-templates');
 
      if (!response.ok) {
        throw new Error(HTTP `error! Status: ${response.status}`);
@@ -216,7 +250,7 @@ useEffect(() => {
   const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
 
 
-       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${numeroEspecifico}`);
+       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'2'+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${numeroEspecifico}`);
 
        const data = await response.json();
 
@@ -290,17 +324,18 @@ const fetchExpired =  (contacts) => {
     const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
 
 
-    const contactoslimpios = contacts.filter(contacto => new Date(contacto.receivedDate) < new Date(fechaInicioString))
+    const contactoslimpios = contacts.filter(contacto => new Date(contacto.assignedDate) < new Date(fechaInicioString))
 
 contactoslimpios.forEach( async e => {
   try{
-const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_DB}/obtener-mensajes/${e.idChat2}`)
+    console.log(e.idChat2)
+const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_DB+'2'}/obtener-mensajes/${e.idChat2}`)
 if (!response.ok) {
   throw new Error('Error en la solicitud');
 }
 
 const data = await response.json();
-
+console.log(data)
 const ultmsjord = data.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
 const ultmsj = ultmsjord[ultmsjord.length-1]
 
@@ -343,7 +378,7 @@ throw error; // Puedes manejar el error o propagarlo según tus necesidades
 })
   }
  }
- const fetchMensajes = async (id_chat2) => {
+const fetchMensajes = async (id_chat2) => {
 
   const fechaActual = new Date();
   const options = { timeZone: 'America/Bogota', hour12: false };
@@ -372,7 +407,7 @@ throw error; // Puedes manejar el error o propagarlo según tus necesidades
 
        const status1 = 'in process'
        const status2 = 'pending'
-       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${id_chat2}`);
+       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'2'+`/obtener-mensajes-por-fecha-y-numero?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}&number=${id_chat2}`);
 
 
        
@@ -393,7 +428,7 @@ throw error; // Puedes manejar el error o propagarlo según tus necesidades
        
        
        const data = await response.json();
-       setMensajes1(Object.values(data)[0]);
+       
 
        
        
@@ -406,7 +441,7 @@ throw error; // Puedes manejar el error o propagarlo según tus necesidades
         messagelist.scrollTop = messagelist.scrollHeight;
       }
  }
- const handleParamChange = (param, value) => {
+const handleParamChange = (param, value) => {
  setTemplateParams((prevParams) => {
    const updatedParams = {
      ...prevParams,
@@ -483,10 +518,11 @@ const handleAgregarNumeroClick = () => {
 };
   // logica chats
   async function marcaLeido(id_chat2){
-
+    setNumeroEspecifico(id_chat2)
+    startFetchingChats(id_chat2);
     try {
-      setNumeroEspecifico(id_chat2)
-      startFetchingChats(id_chat2)
+      
+      
       const idChat2 = id_chat2; // Reemplaza 'tu_id_chat2' con el valor real que deseas actualizar
       const resolvedValue = true; // Reemplaza 'nuevo_valor_resolved' con el nuevo valor para 'resolved'
 
@@ -522,7 +558,8 @@ const handleAgregarNumeroClick = () => {
     if (event.key === 'Enter') {
 
       enviarMensaje();
-
+      setInputValue('')
+      
     }
   };
 
@@ -595,7 +632,9 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
     }
   };
   const handleEngestionClick = async () => {
-console.log('entra')
+    conection();
+
+    console.log('entra')
     setStatuschats('Chats')
     
     
@@ -707,7 +746,7 @@ const handleFileChange = (e) => {
 
        const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
 
-       const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${session.user.id}`);
+       const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'2'+`/consultar-chats/${session.user.id}`);
        const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
        // El usuario está autenticado, puedes acceder a la sesión
 
@@ -901,7 +940,7 @@ const handleFileChange = (e) => {
           disablePreview: true,
         };
         // Enviar mensaje a través de la API de envíos
-        const envioResponse = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/api/envios', {
+        const envioResponse = await fetch(process.env.NEXT_PUBLIC_API2+'/api/envios', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -911,11 +950,23 @@ const handleFileChange = (e) => {
         if (!envioResponse.ok) {
           throw new Error(`Error al enviar el mensaje: ${envioResponse.status} ${envioResponse.statusText}`);
         }
-
+        
         const envioData = await envioResponse.json();
         console.log('Respuesta del servidor de envíos:',documentUrl );
         const idMessage = envioData.messageId;
-        // Actualizar el mensaje enviado en el servidor
+        const mensajesaliente = {
+          content: {file: base + documentUrl,  text: mensajeData.message.caption},
+          type_comunication: 'message-event', // Puedes ajustar este valor según tus necesidades
+          status: 'sent', // Puedes ajustar este valor según tus necesidades
+          number: numeroEspecifico,
+          type_message: cleanedType,
+          timestamp: `${anio}-${mes}-${dia} ${hora}:${minutos}:${segundos}`,
+          idMessage: idMessage // Puedes ajustar este valor según tus necesidades
+        } 
+        socket.emit('message', mensajesaliente)
+          
+      setInputValue('')
+      // Actualizar el mensaje enviado en el servidor
         const guardarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
         method: 'POST',
         headers: {
@@ -931,13 +982,14 @@ const handleFileChange = (e) => {
           idMessage: idMessage // Puedes ajustar este valor según tus necesidades
         }),
       });
-      setInputValue('')
-      fetchMensajes(numeroEspecifico);
+      
+      
+      
       if (guardarMensajeResponse.ok) {
         const guardarMensajeData = await guardarMensajeResponse.json();
         console.log(guardarMensajeData)
-
         setFile('')
+        
       } else {
       }
 
@@ -968,28 +1020,22 @@ const dia = fechaActual.getDate().toString().padStart(2, '0');
 const hora = fechaActual.getHours().toString().padStart(2, '0');
 const minutos = fechaActual.getMinutes().toString().padStart(2, '0');
 const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
-      const response = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/api/envios', {
+      const response = await fetch(process.env.NEXT_PUBLIC_API2+'/api/envios', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: new URLSearchParams(mensajeData).toString(),
       });
-      setInputValue('')
-      fetchMensajes(numeroEspecifico);
+
+      
       if (!response.ok) {
               }
       const responseData = await response.json();
 
        // Escucha el evento 'cambio' para obtener el idMessage
       const idMessage = responseData.messageId;
-          // Guarda el mensaje en el servidor
-      const guardarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
+     const mensajesaliente1 = {
         content: inputValue,
         type_comunication: 'message-event', // Puedes ajustar este valor según tus necesidades
         status: 'sent', // Puedes ajustar este valor según tus necesidades
@@ -997,18 +1043,27 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         type_message: 'text',
         timestamp: `${anio}-${mes}-${dia} ${hora}:${minutos}:${segundos}`,
         idMessage: idMessage // Puedes ajustar este valor según tus necesidades
-      }),
-    });
-    setInputValue('')
-    
-    if (guardarMensajeResponse.ok) {
-      const guardarMensajeData = await guardarMensajeResponse.json();
-      console.log(guardarMensajeData)
-
-
-          } else {
-
-    }
+      }
+      setInputValue('')
+      socket.emit('message', mensajesaliente1)
+      
+          // Guarda el mensaje en el servidor
+      
+          const guardarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(mensajesaliente1),
+          });
+          
+          
+          
+          if (guardarMensajeResponse.ok) {
+            const guardarMensajeData = await guardarMensajeResponse.json();
+            console.log(guardarMensajeData)
+            conection()
+          }
 
 
 
@@ -1130,6 +1185,12 @@ fetchMensajes()
         onChange={(e) => handleNumericInputChange(e.target.value)}
         className="mt-1 p-2 border border-gray-300 rounded-md"
       />
+     <button
+        onClick={handleAgregarNumeroClick}
+        className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Agregar Número
+      </button>
 
       <h2 className="mt-4 text-lg font-semibold">Plantillas:</h2>
       <select
@@ -1137,7 +1198,7 @@ fetchMensajes()
         onChange={handleTemplateChange}
         className="mt-1 p-2 border border-gray-300 rounded-md"
       >
-        <option value="" disabled>Selecciona una plantilla</option>
+        <option value="" disabled>Select a template</option>
 
         {templates.map((template) => (
 
@@ -1166,14 +1227,7 @@ fetchMensajes()
                     className="mt-1 p-2 border border-gray-300 rounded-md"
                   />
                 </div>
-                
               ))}
-              <button
-        onClick={handleAgregarNumeroClick}
-        className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-      >
-        Enviar plantilla
-      </button>
             </div>
           )
       )}
@@ -1183,11 +1237,11 @@ fetchMensajes()
 
         <Box className='estados'>
           <ButtonContainer>
-            <CustomButton onClick={handleEngestionClick}>{"Chats: " + contactos1.length}</CustomButton>
-            {/* Mostrar Activos si 'mostrarActivos' es true */}
-            {(session.user.name === 'ychala' || session.user.name === 'jechaparro' || session.user.name === 'aelizarde' || session.user.name === 'msaenz' || session.user.name === 'bvasquez' || session.user.name === 'aosorio' || session.user.name === 'cnavarrete' || session.user.name === 'absanchez' || session.user.name === 'agalindo' || session.user.name === 'mfmoreno' || session.user.name === 'abarrera' || session.user.name === 'kagallego' || session.user.name === 'dgarcia' || session.user.name === 'fgrisales' || session.user.name === 'MilenaGar' || session.user.name === 'gbetancur' || session.user.name === 'ychala') && (
-              <CustomButton onClick={openPopup}>Agregar Número</CustomButton>
-            )}
+            <CustomButton onClick={handleEngestionClick}>{"Chats: "+contactos1.length}</CustomButton>
+             {/* Mostrar Activos si 'mostrarActivos' es true */}
+
+            {session.user.type_user === 'Asesor1' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
+            {session.user.type_user === 'Coordinador' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
           </ButtonContainer>
         </Box>
         <Container>
@@ -1309,19 +1363,17 @@ fetchMensajes()
     <div className='flex flex-row justify-between'>
       <BotonEnviar onClick={actualizarEstadoChat}>En atencion</BotonEnviar>
       <BotonEnviar onClick={actualizarEstadoChatCerrados}>Finalizar</BotonEnviar>
-    </div>
-
-    <div>
-      <label htmlFor="respuestasRapidas">Selecciona una respuesta rápida:</label>
-      <StyledSelect id="respuestasRapidas" onChange={(e) => setInputValue(e.target.value)}>
+      <div>
+      <label>Selecciona una respuesta rápida:</label>
+      <select>
         {respuestasRapidas.map(respuesta => (
-          <option key={respuesta.name} value={respuesta.contentn}>
-            {respuesta.name}: {respuesta.contentn}
+          <option key={respuesta.name} value={respuesta.contentn}onClick={setInputValue}>
+            {respuesta.name}:{respuesta.contentn}
           </option>
         ))}
-      </StyledSelect>
+      </select>
     </div>
-
+    </div>
 
     </Box>
 
@@ -1343,26 +1395,21 @@ fetchMensajes()
     <div className="contact-list-container">
       <h1>{statuschats}</h1>
       <ul>
-      {!Array.isArray(contactos1) && (
-  <li>
-    <CustomButton2
-      onClick={() => {
-        marcaLeido(contactos1.idChat2);
-        if (!contactos1.resolved) {
-          window.alert('¡Nuevo mensaje!');
-        }
-      }}
-      className={`p-2 rounded ${
-        contactos1.status === 'in process' ? 'bg-gray text-black' : 'bg-green text-white'
-      }`}
-    >
-      <UserGroupIcon className="w-5 h-10" /> {contactos1.idChat2}
-      {contactos1.resolved === false && (
-        <span className="text-red">Mensaje nuevo</span>
-      )}
-    </CustomButton2>
-  </li>
+  {!Array.isArray(contactos1) && (
+    <li>
+      <CustomButton2
+        onClick={() => marcaLeido(contactos1.idChat2)}
+        className={`p-2 rounded ${
+          (contactos1.status == 'in process' ? 'bg-gray text-black' : 'bg-green text-white'  )
+        }`}
+      >
+        <UserGroupIcon className="w-5 h-10" /> {contactos1.idChat2}
+        {contactos1.resolved && (
+  <span className="text-red">Mensaje nuevo</span>
 )}
+      </CustomButton2>
+    </li>
+  )}
   {Array.isArray(contactos1)  &&
     contactos1.map((contacto, index) => (
       <li key={index}>
@@ -1497,20 +1544,17 @@ border-radius: 5px;
 
 
 const InputContainer = styled.div`
-  margin-top: 15px;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;  /* Permite que los elementos se envuelvan a la siguiente línea */
+margin-top: 15px;
+display: flex;
+align-items: center;
 `;
 
 const InputMensaje = styled.input`
-  flex: 1;
-  min-width: 200px;  /* Ancho mínimo fijo del InputMensaje */
-  padding: 10px;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  margin-right: 10px;
-  white-space: pre-wrap;
+flex: 1;
+padding: 10px;
+border: 1px solid #ddd;
+border-radius: 5px;
+margin-right: 10px;
 `;
 
 const BotonEnviar = styled.button`
@@ -1527,25 +1571,5 @@ transition: background-color 0.3s;
   background-color: #45a049;
 }
 `;
-
-const StyledSelect = styled.select`
-  width: 180px; /* Ajusta el tamaño según tus necesidades */
-  padding: 10px;
-  font-size: 13px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: border-color 0.3s;
-
-  &:hover {
-    border-color: #f7f7f7;
-  }
-
-  &:focus {
-    outline: none;
-    border-color: #4caf50;
-  }
-`;
-
   export default Chats;
   

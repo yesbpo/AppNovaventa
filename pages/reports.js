@@ -114,65 +114,52 @@ function Reports() {
       const { conversaciones } = await response.json();
   
       // Crear un libro de Excel
-      const workbook = XLSX.utils.book_new();
-  
-      // Crear una hoja de Excel
-      const sheet = XLSX.utils.aoa_to_sheet([
-        ['id', 'idchat', 'asesor', 'conversacion', 'numero', 'calificacion', 'fecha_ingreso', 'fecha_ultimagestion', 'userid']
-      ]);
-  
-      let rowIndex = 2; // Iniciar desde la segunda fila (1-indexed)
-  
-      // Iterar sobre los datos para procesar el campo 'conversacion'
-      conversaciones.forEach((item) => {
-        // Buscar y dividir el campo 'conversacion' por el símbolo '['
-        const conversacionArray = item.conversacion.split('[');
-  
-        // Añadir los campos específicos solo en la primera fila de cada conversación
-        XLSX.utils.sheet_add_aoa(sheet, [
-          [
-            item.id,
-            item.idchat,
-            item.asesor,
-            conversacionArray[0].trim(),
-            item.numero,
-            item.calificacion,
-            item.fecha_ingreso,
-            item.fecha_ultimagestion,
-            item.userid
-          ]
-        ], { origin: `A${rowIndex}` });
-  
-        rowIndex++;
-  
-        // Añadir el resto de los textos en nuevas filas
-        for (let i = 1; i < conversacionArray.length; i++) {
-          XLSX.utils.sheet_add_aoa(sheet, [
-            [
-              '',
-              '',
-              '',
-              conversacionArray[i].trim(),
-              '',
-              '',
-              '',
-              '',
-              ''
-            ]
-          ], { origin: `A${rowIndex}` });
-          rowIndex++;
-        }
-      });
-  
-      // Añadir la hoja al libro
-      XLSX.utils.book_append_sheet(workbook, sheet, 'Hoja1');
-  
-      // Guardar el libro como un archivo Excel
-      XLSX.writeFile(workbook, 'informe.xlsx');
-      console.log('Informe Excel generado y descargado correctamente.');
-    } catch (error) {
-      console.error('Error durante la solicitud:', error.message);
-    }
+      
+        // Crear un nuevo libro de Excel
+        const workbook = XLSX.utils.book_new();
+
+        // Crear una nueva hoja de Excel
+        const sheet = XLSX.utils.aoa_to_sheet([
+          ['id', 'idchat', 'asesor', 'conversacion', 'numero', 'calificacion', 'fecha_ingreso', 'fecha_ultimagestion', 'userid']
+        ]);
+
+        let rowIndex = 2; // Iniciar desde la segunda fila (1-indexed)
+
+        // Iterar sobre los datos para procesar el campo 'conversacion'
+        conversaciones.forEach((item) => {
+          // Dividir el campo 'conversacion' por el símbolo '['
+          const conversacionArray = item.conversacion.split('[');
+
+          // Iterar sobre los mensajes en la conversación
+          for (let i = 0; i < conversacionArray.length; i++) {
+            // Añadir los campos específicos y el texto para cada mensaje
+            XLSX.utils.sheet_add_aoa(sheet, [
+              [
+                item.id,
+                item.idchat,
+                item.asesor,
+                conversacionArray[i].trim(), // Texto del mensaje
+                item.numero,
+                item.calificacion,
+                item.fecha_ingreso,
+                item.fecha_ultimagestion,
+                item.userid
+              ]
+            ], { origin: `A${rowIndex}` });
+
+            rowIndex++;
+          }
+        });
+
+        // Añadir la hoja al libro
+        XLSX.utils.book_append_sheet(workbook, sheet, 'Hoja1');
+
+        // Guardar el libro como un archivo Excel (descargar el archivo)
+        XLSX.writeFile(workbook, 'informe.xlsx');
+        console.log('Informe Excel generado y descargado correctamente.');
+      } catch (error) {
+        console.error('Error durante la solicitud:', error.message);
+      }
   };
   const [fecha, setFecha] = useState(''); // Asigna el valor deseado
   const [idchat, setIdchat] = useState(''); // Asigna el valor deseado
