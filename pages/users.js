@@ -277,13 +277,13 @@ const CrearUsuario = () => {
             <div className='flex items-center'>
             <button 
               onClick={() => handleUsuarioSeleccionado(usuario)} 
-              className="bg-blue-500 text-white p-2 rounded-md">Modificar</button>
+              className="bg-blue-500 text-white p-3 rounded-md">Modificar</button>
             <button 
                 onClick={() => handleEliminarUsuario(usuario)}
-                className='bg-orange-500 text-white p-2 rounded-md'>Inactivar</button>
+                className='bg-orange-500 text-white p-3 rounded-md'>Inactivar</button>
             <button 
                 onClick={() => handleEliminarUsuario(usuario)}
-                className='bg-red-500 text-white p-2 rounded-md'>Eliminar</button>
+                className='bg-red-500 text-white p-3 rounded-md'>Eliminar</button>
                 </div>
           </li>
         ))}
