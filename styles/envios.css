@@ -64,7 +64,11 @@ button {
   }
 
 .boton-inactivar {
-    background-color: #ff8800; 
+    background-color: darkgray; 
+}
+
+.boton-eliminar{
+    background-color: tomato;
 }
 
 /*Estilo para el hover del botón*/

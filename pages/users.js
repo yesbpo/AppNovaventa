@@ -283,7 +283,7 @@ const CrearUsuario = () => {
                 className='bg-gray-500 text-white p-2 rounded-md mr-2 boton-inactivar'>Inactivar</button>
             <button 
                 onClick={() => handleEliminarUsuario(usuario)}
-                className='bg-red-500 text-white p-2 rounded-md'>Eliminar</button>
+                className='bg-red-500 text-white p-2 rounded-md boton-eliminar'>Eliminar</button>
                 </div>
           </li>
         ))}
