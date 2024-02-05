@@ -278,9 +278,9 @@ const CrearUsuario = () => {
             <button 
               onClick={() => handleUsuarioSeleccionado(usuario)} 
               className="bg-blue-500 text-white p-2 rounded-md mr-2">Modificar</button>
-            <button 
+            <button2 
                 onClick={() => handleEliminarUsuario(usuario)}
-                className='bg-orange-500 text-white p-2 rounded-md mr-2'>Inactivar</button>
+                className='bg-orange-500 text-white p-2 rounded-md mr-2'>Inactivar</button2>
             <button 
                 onClick={() => handleEliminarUsuario(usuario)}
                 className='bg-red-500 text-white p-2 rounded-md'>Eliminar</button>
@@ -358,4 +358,9 @@ const EstilosAdicionales = styled.style`
     width: 100%;
   }
 `;
+
+const button2 = styled.style`
+
+`;
+
 export default CrearUsuario;
