@@ -63,6 +63,14 @@ button {
     cursor: pointer;
   }
 
+.boton-inactivar {
+    background-color: darkgray; 
+}
+
+.boton-eliminar{
+    background-color: tomato;
+}
+
 /*Estilo para el hover del botón*/
 
 button:hover{
