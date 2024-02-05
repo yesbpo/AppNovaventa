@@ -24,21 +24,12 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
   
   
   useEffect(() => {
-    
+    socket.on('message-into', (rows) => {
+      setMensajes1(rows);
+    });
     socket.on('tablaData', (data) => {
       setMensajes1(data);
     });
-
-    // Limpiar la conexión cuando el componente se desmonta
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
-  useEffect(() => {
-    socket.on('message-into', (rows) => {
-      setMensajes1(rows);
-    });  
-    
 
     // Limpiar la conexión cuando el componente se desmonta
     return () => {
@@ -46,12 +37,15 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
     };
   }, []);
   
+  
   const conection = () => {
     
     socket.on('tablaData', (data) => {
       setMensajes1(data);
     });
-
+    socket.on('message-into', (rows) => {
+      setMensajes1(rows);
+    });
     // Limpiar la conexión cuando el componente se desmonta
     return () => {
       socket.disconnect();
@@ -63,7 +57,7 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
     
     intervalIdRef.current = setInterval(() => {
     handleEngestionClick();
-    conection();
+    
      // Llama a tu segunda función aquí
     }, 10000);
   };
@@ -639,7 +633,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
     }
   };
   const handleEngestionClick = async () => {
-    conection()
+    conection();
 
     console.log('entra')
     setStatuschats('Chats')
