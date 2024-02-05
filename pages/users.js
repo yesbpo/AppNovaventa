@@ -277,9 +277,8 @@ const CrearUsuario = () => {
         <button 
           onClick={() => handleUsuarioSeleccionado(usuario)} 
           className="bg-blue-500 text-white p-2 rounded-md">Modificar</button>
-          <button
-            onClick={() => handleEliminarUsuario(usuario)}
-            className="bg-red-500 text-white p-2 rounded-md">Eliminar</button>
+          <button className='bg-red-500 text-white p-2 rounded-md'
+            onClick={() => handleEliminarUsuario(usuario)}>Eliminar</button>
       </li>
     ))}
   </ul>
