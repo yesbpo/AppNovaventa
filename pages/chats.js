@@ -965,7 +965,7 @@ const handleFileChange = (e) => {
           idMessage: idMessage // Puedes ajustar este valor según tus necesidades
         } 
         socket.emit('message', mensajesaliente)
-        conection()  
+          
       setInputValue('')
       // Actualizar el mensaje enviado en el servidor
         const guardarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
@@ -1028,7 +1028,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         },
         body: new URLSearchParams(mensajeData).toString(),
       });
-      conection()
+
       setInputValue('')
       if (!response.ok) {
               }
@@ -1047,7 +1047,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       }
       setInputValue('')
       socket.emit('message', mensajesaliente1)
-      conection()
+      
           // Guarda el mensaje en el servidor
       
     
