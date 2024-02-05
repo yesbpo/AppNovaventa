@@ -321,7 +321,7 @@ const fetchExpired =  (contacts) => {
 
 contactoslimpios.forEach( async e => {
   try{
-    console.log(e.assignedDate)
+    console.log(e.idChat2)
 const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_DB+'2'}/obtener-mensajes/${e.idChat2}`)
 if (!response.ok) {
   throw new Error('Error en la solicitud');
