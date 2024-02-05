@@ -119,7 +119,7 @@ try{
      console.log(Object.values(withoutGest)[0].filter(c => c.status == 'pending' || c.status == 'in process'))
 
      setContactos1(Object.values(withoutGest)[0].filter(c => c.status == 'pending' || c.status == 'in process'))
-
+     fetchExpired(Object.values(withoutGest)[0])
      setEngestion(withoutGest.length)
 
 
