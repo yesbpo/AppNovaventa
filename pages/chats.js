@@ -23,6 +23,7 @@ const Chats = () => {
 const socket = socketIOClient('wss://novaventa.appcenteryes.com/socket.io/', socketIOConnOpt );
   
   useEffect(() => {
+    
     socket.on('tablaData', (data) => {
       setMensajes1(data);
     });
@@ -316,10 +317,11 @@ const fetchExpired =  (contacts) => {
     const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
 
 
-    const contactoslimpios = contacts.filter(contacto => new Date(contacto.receivedDate) < new Date(fechaInicioString))
+    const contactoslimpios = contacts.filter(contacto => new Date(contacto.assignedDate) < new Date(fechaInicioString))
 
 contactoslimpios.forEach( async e => {
   try{
+    console.log(e.assignedDate)
 const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_DB+'2'}/obtener-mensajes/${e.idChat2}`)
 if (!response.ok) {
   throw new Error('Error en la solicitud');
