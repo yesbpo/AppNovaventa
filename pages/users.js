@@ -279,6 +279,12 @@ const CrearUsuario = () => {
           className="bg-blue-500 text-white p-2 rounded-md">Modificar</button>
       </li>
     ))}
+    <li className='mb-5 flex items-center justify-between'>
+        <span className='mr-2'></span>
+        <button 
+          
+          className="bg-red-500 text-white p-2 rounded-md">Eliminar</button>
+    </li>
   </ul>
 </div>
             </div>
