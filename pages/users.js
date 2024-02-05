@@ -278,9 +278,9 @@ const CrearUsuario = () => {
             <button 
               onClick={() => handleUsuarioSeleccionado(usuario)} 
               className="bg-blue-500 text-white p-2 rounded-md mr-2">Modificar</button>
-            <button2 
+            <button 
                 onClick={() => handleEliminarUsuario(usuario)}
-                className='bg-orange-500 text-white p-2 rounded-md mr-2'>Inactivar</button2>
+                className='bg-orange-500 text-white p-2 rounded-md mr-2'>Inactivar</button>
             <button 
                 onClick={() => handleEliminarUsuario(usuario)}
                 className='bg-red-500 text-white p-2 rounded-md'>Eliminar</button>
@@ -357,10 +357,6 @@ const EstilosAdicionales = styled.style`
   .password-input {
     width: 100%;
   }
-`;
-
-const button2 = styled.button2`
-  background-color: #afb1b3;
 `;
 
 export default CrearUsuario;
