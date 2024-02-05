@@ -1029,7 +1029,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         body: new URLSearchParams(mensajeData).toString(),
       });
 
-      setInputValue('')
+      
       if (!response.ok) {
               }
       const responseData = await response.json();
@@ -1050,9 +1050,21 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
       
           // Guarda el mensaje en el servidor
       
-    
+          const guardarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(mensajesaliente1),
+          });
+          
+          
+          
+          if (guardarMensajeResponse.ok) {
+            const guardarMensajeData = await guardarMensajeResponse.json();
+            console.log(guardarMensajeData)
    
-   
+          }
 
 
 
