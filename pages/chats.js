@@ -59,9 +59,7 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
   }, []);
   
   const conection = () => {
-    socket.on('message-into', (rows) => {
-      setMensajes1(rows);
-    });
+    f
     socket.on('tablaData', (data) => {
       setMensajes1(data);
     });
@@ -985,9 +983,9 @@ const handleFileChange = (e) => {
           idMessage: idMessage // Puedes ajustar este valor según tus necesidades
         } 
         socket.emit('message', mensajesaliente)
-        
+        conection()  
       setInputValue('')
-      conection()// Actualizar el mensaje enviado en el servidor
+      // Actualizar el mensaje enviado en el servidor
         const guardarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
         method: 'POST',
         headers: {
