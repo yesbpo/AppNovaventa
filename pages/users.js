@@ -277,16 +277,12 @@ const CrearUsuario = () => {
         <button 
           onClick={() => handleUsuarioSeleccionado(usuario)} 
           className="bg-blue-500 text-white p-2 rounded-md">Modificar</button>
+        <button className='bg-orange-500 text-white p-2 rounded-md'
+            onClick={() => handleEliminarUsuario(usuario)}>Inactivar</button>
+         <button className='bg-red-500 text-white p-2 rounded-md'
+            onClick={() => handleEliminarUsuario(usuario)}>Eliminar</button>
       </li>
     ))}
-    {!showCrear && <h2 className="text-2xl font-bold text-align-right mb-3">Modificar Usuarios</h2> && usuarios.map((usuario) => (
-      <li key={usuario.id} className='mb-5 flex items-center justify-between'>
-        <span className='mr-2'>{usuario.complete_name}</span>
-        <button 
-          onClick={() => handleUsuarioSeleccionado(usuario)} 
-          className="bg-red-500 text-white p-2 rounded-md">Eliminar</button>
-      </li>
-      ))}
   </ul>
 </div>
             </div>
