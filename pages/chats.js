@@ -20,7 +20,7 @@ const Chats = () => {
     transports: ['websocket', 'pooling'],
     resource: '/conversation-api/',
   };
-const socket = socketIOClient('wss://novaventa.appcenteryes.com/socket.io/', socketIOConnOpt );
+const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', socketIOConnOpt );
   
   useEffect(() => {
     
