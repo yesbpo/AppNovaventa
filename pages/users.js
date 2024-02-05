@@ -359,8 +359,8 @@ const EstilosAdicionales = styled.style`
   }
 `;
 
-const button2 = styled.style`
-
+const button2 = styled.button2`
+  background-color: #afb1b3;
 `;
 
 export default CrearUsuario;
