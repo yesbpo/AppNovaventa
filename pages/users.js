@@ -140,7 +140,7 @@ const CrearUsuario = () => {
   return (
     
     <Layout>
-      <div className="flex items-center justify-between p-4">
+      <div className="flex items-center justify-between m-10">
       <h1 className="text-2xl font-bold font-serif">Listado de usuarios</h1>
       <BotonEnviar onClick={handleChangeCrear} className="bg-blue-500 text-white p-2 rounded-md">Agregar usuario</BotonEnviar>
       </div>
@@ -269,7 +269,7 @@ const CrearUsuario = () => {
   </BotonEnviar>
   </form>}
       {/* Lista de usuarios */}
-        <div className='text-align-right mb-3'>
+        <div className='text-align-right mb-3 w-full'>
           <ul>
           {!showCrear && <h2 className="text-2xl font-bold text-align-right mb-3">Modificar Usuarios</h2> && usuarios.map((usuario) => (
           <li key={usuario.id} className='mb-5 flex items-center justify-between'>
@@ -277,13 +277,13 @@ const CrearUsuario = () => {
             <div className='flex items-center'>
             <button 
               onClick={() => handleUsuarioSeleccionado(usuario)} 
-              className="bg-blue-500 text-white p-2 rounded-md">Modificar</button>
+              className="bg-blue-500 text-white p-3 rounded-md">Modificar</button>
             <button 
                 onClick={() => handleEliminarUsuario(usuario)}
-                className='bg-orange-500 text-white p-2 rounded-md'>Inactivar</button>
+                className='bg-orange-500 text-white p-3 rounded-md'>Inactivar</button>
             <button 
                 onClick={() => handleEliminarUsuario(usuario)}
-                className='bg-red-500 text-white p-2 rounded-md'>Eliminar</button>
+                className='bg-red-500 text-white p-3 rounded-md'>Eliminar</button>
                 </div>
           </li>
         ))}
