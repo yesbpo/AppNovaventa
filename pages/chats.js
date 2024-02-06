@@ -120,7 +120,7 @@ try{
      const users = await responseUsers.json()
      
      const Id = users.filter(d => d.usuario == session.user.name)
-     console.log(Id)
+     console.log(idMessage)
      const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
      const chatsPending = await responseChatsin.json();
      
@@ -658,7 +658,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       const users = await responseUsers.json()
       setSession1(session.user.name)
       const Id = users.filter(d => d.usuario == session.user.name)
-      console.log(Id+'1')
+      console.log(Id)
       setUser(Id)
       const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
       const chatsPending = await responseChatsin.json();
