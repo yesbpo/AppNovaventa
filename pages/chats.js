@@ -120,8 +120,7 @@ try{
      const users = await responseUsers.json()
      
      const Id = users.filter(d => d.usuario == session.user.name)
-     console.log(Id[0].type_user)
-     setUser(Id)
+     
      const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
      const chatsPending = await responseChatsin.json();
      
@@ -659,7 +658,8 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       const users = await responseUsers.json()
       setSession1(session.user.name)
       const Id = users.filter(d => d.usuario == session.user.name)
-      console.log(Id)
+      console.log(Id+'1')
+      setUser(Id)
       const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
       const chatsPending = await responseChatsin.json();
       
@@ -1245,7 +1245,7 @@ fetchMensajes()
             <CustomButton onClick={handleEngestionClick}>{"Chats: "+contactos1.length}</CustomButton>
              {/* Mostrar Activos si 'mostrarActivos' es true */}
 
-            {user.type_user === 'Asesor1' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
+            {user[0].type_user === 'Asesor1' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
            
           </ButtonContainer>
         </Box>
