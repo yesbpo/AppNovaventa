@@ -635,7 +635,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
   };
   const handleEngestionClick = async () => {
     conection();
-
+    console.log(user)
     console.log('entra')
     setStatuschats('Chats')
     
