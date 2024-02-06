@@ -120,6 +120,7 @@ try{
      const users = await responseUsers.json()
      
      const Id = users.filter(d => d.usuario == session.user.name)
+     console.log(Id)
      setUser(Id)
      const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
      const chatsPending = await responseChatsin.json();
