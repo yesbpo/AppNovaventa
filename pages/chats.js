@@ -9,6 +9,7 @@ import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon, SearchIcon, RefreshIco
 const Chats = () => {
   const [latestData, setLatestData] = useState('')
   const { data: session } = useSession();
+  const [user, setUser] = useState('');
   const intervalIdRef = React.useRef(null);
   const socketIOConnOpt = {
     'force new connection': true,
@@ -117,6 +118,7 @@ try{
 
      }
      const users = await responseUsers.json()
+     setUser(users.filter(d => d.usuario == session.user.name))
      const Id = users.filter(d => d.usuario == session.user.name)
      const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
      const chatsPending = await responseChatsin.json();
@@ -1240,8 +1242,8 @@ fetchMensajes()
             <CustomButton onClick={handleEngestionClick}>{"Chats: "+contactos1.length}</CustomButton>
              {/* Mostrar Activos si 'mostrarActivos' es true */}
 
-            {session.user.type_user === 'Asesor1' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
-            {session.user.type_user === 'Coordinador' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
+            {user.type_user === 'Asesor1' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
+            {user.type_user === 'Coordinador' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
           </ButtonContainer>
         </Box>
         <Container>
