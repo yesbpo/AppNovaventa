@@ -1243,7 +1243,7 @@ fetchMensajes()
              {/* Mostrar Activos si 'mostrarActivos' es true */}
 
             {user.type_user === 'Asesor1' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
-            {user.type_user === 'Coordinador' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
+           
           </ButtonContainer>
         </Box>
         <Container>
