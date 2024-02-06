@@ -27,9 +27,7 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
     socket.on('message-into', (rows) => {
       setMensajes1(rows);
     });
-    socket.on('tablaData', (data) => {
-      setMensajes1(data);
-    });
+    
 
     // Limpiar la conexión cuando el componente se desmonta
     return () => {
@@ -43,9 +41,7 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
     socket.on('tablaData', (data) => {
       setMensajes1(data);
     });
-    socket.on('message-into', (rows) => {
-      setMensajes1(rows);
-    });
+   
     // Limpiar la conexión cuando el componente se desmonta
     return () => {
       socket.disconnect();
