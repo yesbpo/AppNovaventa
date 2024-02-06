@@ -1031,6 +1031,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
 
        // Escucha el evento 'cambio' para obtener el idMessage
       const idMessage = responseData.messageId;
+
      const mensajesaliente1 = {
         content: inputValue,
         type_comunication: 'message-event', // Puedes ajustar este valor según tus necesidades
@@ -1040,6 +1041,22 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         timestamp: `${anio}-${mes}-${dia} ${hora}:${minutos}:${segundos}`,
         idMessage: idMessage // Puedes ajustar este valor según tus necesidades
       }
+      const agregarMensajeSaliente = () => {
+        socket.emit('message', mensajesaliente1)
+        // Verifica si el idMessage ya existe en mensajes1
+        const mensajeExistenteIndex = mensajes1.findIndex(mensaje => mensaje.idMessage === mensajesaliente1.idMessage);
+    
+        // Si el idMessage existe, elimina el mensaje existente
+        if (mensajeExistenteIndex !== -1) {
+          const nuevosMensajes = [...mensajes1];
+          nuevosMensajes.splice(mensajeExistenteIndex, 1);
+          setMensajes1(nuevosMensajes);
+        }
+    
+        // Agrega el nuevo mensaje al final del array
+        setMensajes1(prevMensajes => [...prevMensajes, mensajesaliente1]);
+      };
+      agregarMensajeSaliente()
       setInputValue('')
       socket.emit('message', mensajesaliente1)
       
