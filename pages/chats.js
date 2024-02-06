@@ -104,11 +104,9 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
   useEffect( async() => {
 
    
-     const status1 = 'in process'
-     const status2 = 'pending'
 
 
-try{
+
   
      
       const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
@@ -140,10 +138,7 @@ try{
       // Establece el desplazamiento en la parte inferior del contenedor
       messagelist.scrollTop = messagelist.scrollHeight;
     }
-  }
-  catch{
-
-  }
+  
   }, [mensajes1]);
  const [showPopup, setShowPopup] = useState('')
   // Función para abrir la ventana emergente
