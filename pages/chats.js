@@ -9,7 +9,7 @@ import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon, SearchIcon, RefreshIco
 const Chats = () => {
   const [latestData, setLatestData] = useState('')
   const { data: session } = useSession();
-  const [user, setUser] = useState('');
+  const [user, setUser] = useState([{type_user:'Asesor'}]);
   const intervalIdRef = React.useRef(null);
   const socketIOConnOpt = {
     'force new connection': true,
