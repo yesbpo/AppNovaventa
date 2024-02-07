@@ -100,7 +100,7 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
   useEffect( async() => {
 
    
-
+    handleEngestionClick();
 
 
   
