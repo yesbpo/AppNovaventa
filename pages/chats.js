@@ -1554,7 +1554,24 @@ margin-bottom: 5px;
 border-radius: 5px;
 `;
 
+const StyledSelect = styled.select`
+  width: 180px; /* Ajusta el tamaño según tus necesidades */
+  padding: 10px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border-color 0.3s;
 
+  &:hover {
+    border-color: #f7f7f7;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #4caf50;
+  }
+`;
 
 const InputContainer = styled.div`
 margin-top: 15px;
