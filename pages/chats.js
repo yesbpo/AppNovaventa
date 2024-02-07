@@ -9,6 +9,7 @@ import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon, SearchIcon, RefreshIco
 const Chats = () => {
   const [latestData, setLatestData] = useState('')
   const { data: session } = useSession();
+  const [user, setUser] = useState([{type_user:'Asesor'}]);
   const intervalIdRef = React.useRef(null);
   const socketIOConnOpt = {
     'force new connection': true,
@@ -26,9 +27,7 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
     socket.on('message-into', (rows) => {
       setMensajes1(rows);
     });
-    socket.on('tablaData', (data) => {
-      setMensajes1(data);
-    });
+    
 
     // Limpiar la conexión cuando el componente se desmonta
     return () => {
@@ -42,9 +41,7 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
     socket.on('tablaData', (data) => {
       setMensajes1(data);
     });
-    socket.on('message-into', (rows) => {
-      setMensajes1(rows);
-    });
+   
     // Limpiar la conexión cuando el componente se desmonta
     return () => {
       socket.disconnect();
@@ -103,11 +100,9 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
   useEffect( async() => {
 
    
-     const status1 = 'in process'
-     const status2 = 'pending'
+    handleEngestionClick();
 
 
-try{
   
      
       const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
@@ -117,7 +112,9 @@ try{
 
      }
      const users = await responseUsers.json()
+     
      const Id = users.filter(d => d.usuario == session.user.name)
+     
      const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
      const chatsPending = await responseChatsin.json();
      
@@ -137,10 +134,7 @@ try{
       // Establece el desplazamiento en la parte inferior del contenedor
       messagelist.scrollTop = messagelist.scrollHeight;
     }
-  }
-  catch{
-
-  }
+  
   }, [mensajes1]);
  const [showPopup, setShowPopup] = useState('')
   // Función para abrir la ventana emergente
@@ -633,7 +627,7 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
   };
   const handleEngestionClick = async () => {
     conection();
-
+    console.log(user)
     console.log('entra')
     setStatuschats('Chats')
     
@@ -655,6 +649,8 @@ const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:
       const users = await responseUsers.json()
       setSession1(session.user.name)
       const Id = users.filter(d => d.usuario == session.user.name)
+      console.log(Id)
+      setUser(Id)
       const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
       const chatsPending = await responseChatsin.json();
       
@@ -1035,6 +1031,7 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
 
        // Escucha el evento 'cambio' para obtener el idMessage
       const idMessage = responseData.messageId;
+
      const mensajesaliente1 = {
         content: inputValue,
         type_comunication: 'message-event', // Puedes ajustar este valor según tus necesidades
@@ -1044,6 +1041,22 @@ const segundos = fechaActual.getSeconds().toString().padStart(2, '0');
         timestamp: `${anio}-${mes}-${dia} ${hora}:${minutos}:${segundos}`,
         idMessage: idMessage // Puedes ajustar este valor según tus necesidades
       }
+      const agregarMensajeSaliente = () => {
+        socket.emit('message', mensajesaliente1)
+        // Verifica si el idMessage ya existe en mensajes1
+        const mensajeExistenteIndex = mensajes1.findIndex(mensaje => mensaje.idMessage === mensajesaliente1.idMessage);
+    
+        // Si el idMessage existe, elimina el mensaje existente
+        if (mensajeExistenteIndex !== -1) {
+          const nuevosMensajes = [...mensajes1];
+          nuevosMensajes.splice(mensajeExistenteIndex, 1);
+          setMensajes1(nuevosMensajes);
+        }
+    
+        // Agrega el nuevo mensaje al final del array
+        setMensajes1(prevMensajes => [...prevMensajes, mensajesaliente1]);
+      };
+      agregarMensajeSaliente()
       setInputValue('')
       socket.emit('message', mensajesaliente1)
       
@@ -1241,8 +1254,8 @@ fetchMensajes()
             <CustomButton onClick={handleEngestionClick}>{"Chats: "+contactos1.length}</CustomButton>
              {/* Mostrar Activos si 'mostrarActivos' es true */}
 
-            {session.user.type_user === 'Asesor1' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
-            {session.user.type_user === 'Coordinador' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
+            {user[0].type_user === 'Asesor1' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
+           
           </ButtonContainer>
         </Box>
         <Container>
