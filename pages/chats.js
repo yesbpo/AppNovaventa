@@ -24,7 +24,6 @@ const Chats = () => {
 const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', socketIOConnOpt );
   
   useEffect(() => {
-
     socket.on('message-into', (rows) => {
       setMensajes1(rows);
     });
@@ -1199,7 +1198,12 @@ fetchMensajes()
         onChange={(e) => handleNumericInputChange(e.target.value)}
         className="mt-1 p-2 border border-gray-300 rounded-md"
       />
-     
+     <button
+        onClick={handleAgregarNumeroClick}
+        className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Agregar Número
+      </button>
 
       <h2 className="mt-4 text-lg font-semibold">Plantillas:</h2>
       <select
@@ -1240,12 +1244,6 @@ fetchMensajes()
             </div>
           )
       )}
-
-      <button
-        onClick={handleAgregarNumeroClick}
-        className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        Agregar Número
-      </button>
     </div>
   </div>}
         <Layout className='big-box'>
@@ -1382,7 +1380,7 @@ fetchMensajes()
       <label>Selecciona una respuesta rápida:</label>
       <select>
         {respuestasRapidas.map(respuesta => (
-          <option key={respuesta.name} value={respuesta.contentn}onClick={setInputValue(respuesta.contentn)}>
+          <option key={respuesta.name} value={respuesta.contentn}onClick={setInputValue}>
             {respuesta.name}:{respuesta.contentn}
           </option>
         ))}
