@@ -104,12 +104,11 @@ const { data: session } = useSession();
   const [webhookData, setWebhookData] = useState(null);
   const [mensajes1, setMensajes1] = useState([]);
   const [mensajes2, setMensajes2] = useState([]);
-     const handlePendientesClick = async (iduser) => {
-      conection();
-      
-    try {   const fechaActual = new Date();
+  const handlePendientesClick = async (iduser) => {
+    conection();
+      try {   const fechaActual = new Date();
       const options = { timeZone: 'America/Bogota', hour12: false };
-            const fechaInicio = new Date(fechaActual);
+      const fechaInicio = new Date(fechaActual);
       fechaInicio.setHours(fechaInicio.getHours() - 24);
       
       // Formatear la fecha de inicio
@@ -176,8 +175,8 @@ const { data: session } = useSession();
         
         const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
         
-              const status = 'in process';
-              const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}`);
+        const status = 'in process';
+        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}`);
         const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
        
         // El usuario está autenticado, puedes acceder a la sesión
@@ -747,33 +746,31 @@ setWebhookData(webhookText);
   if(session){
   return (
   <>
-    
-      <Layout>
+    <Layout>
       <Box onLoad={updateuser()}>
         <ButtonContainer>
         <div className="p-2 border border-gray-300 rounded">
-        
         <div>
-      <input
-        type="text"
-        
-        onChange={handleNumeroChange}
-        placeholder="Buscar por número"
-      />
+        <input
+          type="text"
+          
+          onChange={handleNumeroChange}
+          placeholder="Buscar por número"
+        />
 
-{valorbuscado !== '' && <ul>
- {datosbuscados.length > 0 ? (
-    datosbuscados.map((contacto) => (
-      <li key={contacto.idChat2} onClick={()=>handleClick(contacto.idChat2)}>
-        {/* Renderizar los datos del contacto */}
-        {nombreuser(contacto.userId)} - {contacto.idChat2} - {contacto.status === 'pending' ? 'Pendiente' : contacto.status === 'in process' ? 'En Atención' : contacto.status === 'expiredbyassesor' ? 'Expirado por Asesor' : contacto.status === 'expiredbyclient' ? 'Expirado por cliente' :'Finalizado'}
-      </li>
-    ))
-  ) : (
-    <li>No se encontraron resultados</li>
-  )}
-</ul>}
-    </div>
+        {valorbuscado !== '' && <ul>
+        {datosbuscados.length > 0 ? (
+            datosbuscados.map((contacto) => (
+              <li key={contacto.idChat2} onClick={()=>handleClick(contacto.idChat2)}>
+                {/* Renderizar los datos del contacto */}
+                {nombreuser(contacto.userId)} - {contacto.idChat2} - {contacto.status === 'pending' ? 'Pendiente' : contacto.status === 'in process' ? 'En Atención' : contacto.status === 'expiredbyassesor' ? 'Expirado por Asesor' : contacto.status === 'expiredbyclient' ? 'Expirado por cliente' :'Finalizado'}
+              </li>
+            ))
+          ) : (
+            <li>No se encontraron resultados</li>
+          )}
+        </ul>}
+        </div>
         {resultados.map((resultado, index) => (
           <CustomButton className="cursor-pointer" key={index}
             onClick={()=>{handlePendientesClick(resultado.asesor.id)}}>
@@ -789,7 +786,7 @@ setWebhookData(webhookText);
              {}Chats cerrados: {resultados2}
           </CustomButton>
     </div>
-        </ButtonContainer>
+    </ButtonContainer>
       </Box>
      {statuschats && <Container>
         <Box style={{ height: '30vw', width: '50vw'}}>
