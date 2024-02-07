@@ -333,16 +333,16 @@ useEffect(() => {
   const fetchData = async () => {
     try {
       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-contenido-seetemp');
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
+
       const data = await response.json();
 
       if (data.datos) {
-        // Aquí puedes hacer algo con los datos, por ejemplo, actualizar el estado en tu componente
-        console.log(data.datos);
         // Update the state with the fetched data
-        setTemplates(data.datos);
+        setTemplatesArray(data.datos);
       } else {
         console.log(data.mensaje);
       }
@@ -350,8 +350,11 @@ useEffect(() => {
       console.error(`Fetch error: ${error.message}`);
     }
   };
+
   fetchData();
 }, []);
+
+const [templatesArray, setTemplatesArray] = useState([]);
 
 
 //This is the application to delete the templates
@@ -587,24 +590,26 @@ useEffect(() => {
     
 
 <div className='CreatedTemplates'>
-        {error && <p>{error}</p>}
-        {currentTemplates.length > 0 && (
-          <ul>
-            {currentTemplates.map((template) => (
-              <li key={template.elementName}>
-                <strong>Categoria:</strong> {template.category}<br />
-                <strong>Tipo de plantilla:</strong> {getTemplateType(template.templateType)}<br />
-                <strong>Fecha de creación:</strong> {new Date(template.createdOn).toLocaleString()}<br />
-                <strong>Fecha de modificación:</strong> {new Date(template.modifiedOn).toLocaleString()}<br />
-                <strong>Contenido:</strong> {template.data}<br />
-                <strong>Nombre:</strong> {template.elementName}<br />
-                <strong>Idioma:</strong> {getLanguageText(template.languageCode)}<br />
-                <strong>Estado:</strong> {getStatusText(template.status)}<br />
-                <button onClick={() => handleDeleteTemplate(template.elementName)}>Eliminar Plantilla</button>
-                <hr />
-              </li>
-            ))}
-          </ul>
+  {error && <p>{error}</p>}
+  {currentTemplates.length > 0 && (
+    <ul>
+      {currentTemplates
+        .filter(template => templatesArray.some(t => t.elementName === template.elementName))
+        .map((template) => (
+          <li key={template.elementName}>
+            <strong>Categoria:</strong> {template.category}<br />
+            <strong>Tipo de plantilla:</strong> {getTemplateType(template.templateType)}<br />
+            <strong>Fecha de creación:</strong> {new Date(template.createdOn).toLocaleString()}<br />
+            <strong>Fecha de modificación:</strong> {new Date(template.modifiedOn).toLocaleString()}<br />
+            <strong>Contenido:</strong> {template.data}<br />
+            <strong>Nombre:</strong> {template.elementName}<br />
+            <strong>Idioma:</strong> {getLanguageText(template.languageCode)}<br />
+            <strong>Estado:</strong> {getStatusText(template.status)}<br />
+            <button onClick={() => handleDeleteTemplate(template.elementName)}>Eliminar Plantilla</button>
+            <hr />
+          </li>
+        ))}
+    </ul>
         )}
 
         {/* Pagination controls */}
