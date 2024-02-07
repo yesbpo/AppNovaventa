@@ -29,7 +29,7 @@ jobs:
         run: |
           docker build -t yesbpoconreg.azurecr.io/frontend:latest -f ./Dockerfile .
           docker tag yesbpoconreg.azurecr.io/frontend:latest yesbpoconreg.azurecr.io/frontend:latest
-          echo "${{ secrets.ACR_PASSWORD }}" | docker login yesbpoconreg.azurecr.io -u ${{ secrets.ACR_USERNAME }} --password-stdin
+          echo "${{ secrets.ACR_PASS }}" | docker login yesbpoconreg.azurecr.io -u ${{ secrets.ACR_USER }} --password-stdin
           docker push yesbpoconreg.azurecr.io/frontend:latest
         env:
           AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
