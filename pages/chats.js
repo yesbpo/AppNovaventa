@@ -514,7 +514,7 @@ const handleAgregarNumeroClick = () => {
   async function marcaLeido(id_chat2){
     setNumeroEspecifico(id_chat2)
     startFetchingChats(id_chat2);
-    conection()
+    
     try {
       
       
