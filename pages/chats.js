@@ -24,7 +24,7 @@ const Chats = () => {
 const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', socketIOConnOpt );
   
   useEffect(() => {
-    
+
     socket.on('message-into', (rows) => {
       setMensajes1(rows);
     });
@@ -1382,7 +1382,7 @@ fetchMensajes()
       <label>Selecciona una respuesta rápida:</label>
       <select>
         {respuestasRapidas.map(respuesta => (
-          <option key={respuesta.name} value={respuesta.contentn}onClick={setInputValue}>
+          <option key={respuesta.name} value={respuesta.contentn}onClick={setInputValue(respuesta.contentn)}>
             {respuesta.name}:{respuesta.contentn}
           </option>
         ))}
