@@ -18,7 +18,7 @@ const CrearUsuario = () => {
   useEffect(() => {
     const obtenerUsuarios = async () => {
       try {
-        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-usuarios');
+        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
 
         if (!response.ok) {
           throw new Error(`Error en la solicitud: ${response.status}`);

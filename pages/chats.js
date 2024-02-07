@@ -114,7 +114,7 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
      const users = await responseUsers.json()
      
      const Id = users.filter(d => d.usuario == session.user.name)
-     console.log(idMessage)
+     
      const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
      const chatsPending = await responseChatsin.json();
      
