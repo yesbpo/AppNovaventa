@@ -205,7 +205,7 @@ const { data: session } = useSession();
   
   const handleClick = async (iduser) => {
     setNumeroEspecifico(iduser)
-    
+    conection();
   try {   const fechaActual = new Date();
     const options = { timeZone: 'America/Bogota', hour12: false };
           const fechaInicio = new Date(fechaActual);
