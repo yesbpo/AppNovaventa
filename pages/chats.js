@@ -1376,18 +1376,18 @@ fetchMensajes()
     <div className='flex flex-row justify-between'>
       <BotonEnviar onClick={actualizarEstadoChat}>En atencion</BotonEnviar>
       <BotonEnviar onClick={actualizarEstadoChatCerrados}>Finalizar</BotonEnviar>
-      <div>
-      <label>Selecciona una respuesta rápida:</label>
-      <select>
+
+    </div>
+    <div>
+      <label htmlFor="respuestasRapidas">Selecciona una respuesta rápida:</label>
+      <StyledSelect id="respuestasRapidas" onChange={(e) => setInputValue(e.target.value)}>
         {respuestasRapidas.map(respuesta => (
-          <option key={respuesta.name} value={respuesta.contentn}onClick={setInputValue}>
-            {respuesta.name}:{respuesta.contentn}
+          <option key={respuesta.name} value={respuesta.contentn}>
+            {respuesta.name}: {respuesta.contentn}
           </option>
         ))}
-      </select>
+      </StyledSelect>
     </div>
-    </div>
-
     </Box>
 
     {/* Botones de acción */}
