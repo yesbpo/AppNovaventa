@@ -206,9 +206,20 @@ const handleCreateTemplate = async () => {
       setResponseData(responseData);
       showTemporaryMessage('Plantilla creada exitosamente.');
 
-      // Filtrar las plantillas según el elementName
-      const filteredTemplates = responseData.filter(template => template.elementName === elementName);
-      // Aquí puedes hacer algo con las plantillas filtradas, como actualizar el estado para mostrarlas en tu interfaz
+      // Agregar el elementoName a la tabla Seetemp
+      const addElementResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/agregar-elemento-seetemp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ elementName }), // Enviamos solo el elementName
+      });
+
+      if (addElementResponse.ok) {
+        console.log('Elemento agregado correctamente a Seetemp');
+      } else {
+        console.error('Error al agregar el elemento a Seetemp:', addElementResponse.status);
+      }
 
     } else {
       console.error('Error en la respuesta del servidor:', response.status, responseData);
