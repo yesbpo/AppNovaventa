@@ -197,7 +197,7 @@ const handleCreateTemplate = async () => {
         'Content-Type': 'application/json',
         // Include any additional headers here
       },
-      body: JSON.stringify(templateData.elementName),
+      body: JSON.stringify(templateData),
     });
 
     const responseData = await response.json();
@@ -212,7 +212,7 @@ const handleCreateTemplate = async () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ elementName }), // Enviamos solo el elementName
+        body: JSON.stringify( templateData.elementName ), // Enviamos solo el elementName
       });
 
       if (addElementResponse.ok) {
