@@ -5,7 +5,95 @@ import io from 'socket.io-client';
 import { useSession, signIn } from 'next-auth/react';
 
 const MonitoringPage = () => {
+  const [selectedTemplateId, setSelectedTemplateId] = useState('');
+  const [showPopup, setShowPopup] = useState('')
+  // Función para abrir la ventana emergente
+  const openPopup = () => {
+    setShowPopup(true);
+  };
+  const closePopup = () => {
+    setShowPopup(false);
+  };
+  const [numericInputValue, setNumericInputValue] = useState('');
+  const [templates, setTemplates] = useState([]);
+  const [error, setError] = useState(null);
+  const handleNumericInputChange = (value) => {
+    // Permite solo números y limita a 10 caracteres
+    const newValue = value.replace(/[^0-9]/g, '').slice(0, 10);
+    setNumericInputValue(newValue);
+    console.log('Valor numérico ingresado:', newValue);
+   };
+   const handleAgregarNumeroClick = () => {
+    // Llamamos a la función enviarSolicitud al hacer clic en el botón
+    enviarSolicitud();
+   
+   };
+   function contarOcurrencias(texto, patron) {
+    const regex = new RegExp(patron, 'g');
+    const coincidencias = texto.match(regex);
+    const componentes = Array.from({ length: coincidencias }, (v, index) => index);
+   
+    return coincidencias ? coincidencias : 0;
+   }
+   const handleParamChange = (param, value) => {
+    setTemplateParams((prevParams) => {
+      const updatedParams = {
+        ...prevParams,
+        [param]: value,
+      };
+      console.log('Updated Params:', updatedParams);
+      return updatedParams;
+    });
+   };
+   
+// GET TEMPLATES
+useEffect(() => {
+
+  // Traer las plantillas al cargar el componente
+  const fetchTemplates = async () => {
+    try {
+      // Utilizar el servidor proxy en lugar de la URL directa
+      const response = await fetch(process.env.NEXT_PUBLIC_API2+'/gupshup-templates');
+ 
+      if (!response.ok) {
+        throw new Error(HTTP `error! Status: ${response.status}`);
+      }
+ 
+      const data = await response.json();
+ 
+      if (data.status === "success") {
+        const processedTemplates = data.templates.map(template => ({
+          id: template.id, // Asegúrate de incluir el ID
+          category: template.category,
+          createdOn: template.createdOn,
+          data: template.data,
+          elementName: template.elementName,
+          languageCode: template.languageCode,
+          status: template.status,
+          templateType: template.templateType,
+          modifiedOn: template.modifiedOn,
+          params: template.params || [], // Asegúrate de que tu plantilla tenga una propiedad params
+        }));
+ 
+        setTemplates(processedTemplates);
+      } else {
+        setError(`Error: ${data.message}`);
+      }
+    } catch (error) {
+      setError(Fetch `error: ${error.message}`);
+    }
+  };
+ 
   
+  fetchTemplates();
+  
+  // Llama a fetchMensajes cada segundo
+ 
+ 
+  // Limpia el intervalo al desmontar el componente
+ 
+ 
+ }, []);
   useEffect(() => {
     // Lógica que se ejecutará después del montaje del componente
     updateuser();
@@ -79,22 +167,11 @@ useEffect(() => {
   obtenerMensajes();
 }, []);
 const { data: session } = useSession();
-  const manejarPresionarEnter = (event) => {
-    if (event.key === 'Enter') {
-      enviarMensaje();
-    }
-  };
+  
 
-  const [emojis, setEmojis] = useState([]);
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const handleAddEmoji = (emoji) => {
-    setInputValue(`${inputValue} ${emoji}`);
-    setEmojis([...emojis, emoji]);
-    setShowEmojiPicker(false); // Ocultar el EmojiPicker después de seleccionar un emoji
-  };
-  const toggleEmojiPicker = () => {
-    setShowEmojiPicker((prevShow) => !prevShow);
-  };
+  
+  
+  
   const [contactos2, setContactos2] = useState([]);
 
   const [contactos1, setContactos1] = useState([]);
@@ -746,6 +823,76 @@ setWebhookData(webhookText);
   if(session){
   return (
   <>
+  <CustomButton onClick={openPopup}>Agregar Número</CustomButton>
+   {showPopup &&  <div className="fixed inset-0 flex items-center justify-center overflow-y-auto">
+
+<div className="bg-black bg-opacity-50 " ></div>
+<div className="bg-white p-6 rounded shadow-lg w-96">
+<button
+    onClick={closePopup}
+    className="mb-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+  >
+    Cerrar
+  </button>
+
+  <label htmlFor="destinationInput" className="block text-sm font-medium text-gray-700">
+    Número de destino (máximo 10 dígitos):
+  </label>
+  <input
+    type="text"
+    id="destinationInput"
+    value={numericInputValue}
+    onChange={(e) => handleNumericInputChange(e.target.value)}
+    className="mt-1 p-2 border border-gray-300 rounded-md"
+  />
+ <button
+    onClick={handleAgregarNumeroClick}
+    className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+  >
+    Agregar Número
+  </button>
+
+  <h2 className="mt-4 text-lg font-semibold">Plantillas:</h2>
+  <select
+    value={selectedTemplateId}
+    onChange={handleTemplateChange}
+    className="mt-1 p-2 border border-gray-300 rounded-md"
+  >
+    <option value="" disabled>Select a template</option>
+
+    {templates.map((template) => (
+
+      <option key={template.id} value={template.id}>
+        {template.data}{contarOcurrencias(template.data, '{{.*?}}')}
+      </option>
+    ))}
+
+  </select>
+
+  {templates.map(
+    (template) =>
+      template.id === selectedTemplateId &&
+      template.params && (
+        <div key={template.id} className="mt-4">
+          <h3 className="text-lg font-semibold">Parámetros:</h3>
+          {contarOcurrencias(template.data, '{{.*?}}').length > 0 && contarOcurrencias(template.data, '{{.*?}}').map((param) => (
+            <div key={param} className="mt-2">
+              <label htmlFor={param} className="block text-sm font-medium text-gray-700">
+                {param}:
+              </label>
+              <input
+                type="text"
+                id={param}
+                onChange={(e) => handleParamChange(param, e.target.value)}
+                className="mt-1 p-2 border border-gray-300 rounded-md"
+              />
+            </div>
+          ))}
+        </div>
+      )
+  )}
+</div>
+</div>}
     <Layout>
       <Box onLoad={updateuser()}>
         <ButtonContainer>
