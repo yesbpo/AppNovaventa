@@ -579,14 +579,6 @@ const [templatesArray, setTemplatesArray] = useState([]);
       )}
     </div>
     <p>{mensaje}</p>
-
-    {templatesArray.map((template) => (
-  <div key={template.id}>
-    <strong>Element Name:</strong> {template.elementName}<br />
-    <hr />
-  </div>
-))}
-
     
 
 <div className='CreatedTemplates'>
