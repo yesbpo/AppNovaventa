@@ -594,7 +594,7 @@ const [templatesArray, setTemplatesArray] = useState([]);
   {currentTemplates.length > 0 && (
     <ul>
       {currentTemplates
-        .filter(template => templatesArray.some(t => t.elementName === template.elementName))
+        .filter(template => templatesArray.some(t => t.elementname === template.elementName))
         .map((template) => (
           <li key={template.elementName}>
             <strong>Categoria:</strong> {template.category}<br />
@@ -610,7 +610,8 @@ const [templatesArray, setTemplatesArray] = useState([]);
           </li>
         ))}
     </ul>
-        )}
+  )}
+
 
         {/* Pagination controls */}
         {templates.length > templatesPerPage && (
