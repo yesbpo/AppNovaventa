@@ -580,12 +580,12 @@ const [templatesArray, setTemplatesArray] = useState([]);
     </div>
     <p>{mensaje}</p>
 
-    {templates.map((template) => (
-            <div key={template.id}>
-              <strong>Element Name:</strong> {template.elementname}<br />
-              <hr />
-            </div>
-          ))}
+    {templatesArray.map((template) => (
+  <div key={template.id}>
+    <strong>Element Name:</strong> {template.elementName}<br />
+    <hr />
+  </div>
+))}
 
     
 
