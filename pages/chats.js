@@ -108,7 +108,7 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
       messagelist.scrollTop = messagelist.scrollHeight;
     }
   
-  }, [mensajes1]);
+  }, []);
  const [showPopup, setShowPopup] = useState('')
   // Función para abrir la ventana emergente
   const openPopup = () => {
