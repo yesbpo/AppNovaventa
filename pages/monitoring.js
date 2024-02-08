@@ -889,7 +889,7 @@ setWebhookData(webhookText);
   if(session){
   return (
   <>
-  <CustomButton onClick={openPopup}>Agregar Número</CustomButton>
+  
    {showPopup &&  <div className="fixed inset-0 flex items-center justify-center overflow-y-auto">
 
 <div className="bg-black bg-opacity-50 " ></div>
@@ -960,7 +960,7 @@ setWebhookData(webhookText);
 </div>
 </div>}
     <Layout>
-      <Box onLoad={updateuser()}>
+      <Box>
         <ButtonContainer>
         <div className="p-2 border border-gray-300 rounded">
         <div>
@@ -994,6 +994,7 @@ setWebhookData(webhookText);
     </div>
 
     <div className="p-2 border border-gray-300 rounded">
+    <CustomButton onClick={openPopup}>Agregar Número</CustomButton>
           <CustomButton className="cursor-pointer" 
           onClick={()=>{handleClosedClick()}}>
              {}Chats cerrados: {resultados2}
@@ -1022,7 +1023,6 @@ setWebhookData(webhookText);
                 mensaje.type_comunication === 'message-event' ? 'bg-white text-right shadow-lg p-4 bg-gray rounded-md' : 'bg-green text-left shadow-lg p-4 bg-gray rounded-md'
               } p-4 mb-4`}
             > 
-        
               { mensaje.type_message === 'image'  ? (
                 <img src={limpiarLink(mensaje.content) || mensaje.content}  alt="Imagen" className="w-15vw shadow-md p-4 bg-gray rounded-md" />
               ) : mensaje.type_message === 'audio' ? (
