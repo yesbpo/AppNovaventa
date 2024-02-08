@@ -7,6 +7,7 @@ import { useSession, signIn } from 'next-auth/react';
 const MonitoringPage = () => {
   const [selectedTemplateId, setSelectedTemplateId] = useState('');
   const [showPopup, setShowPopup] = useState('')
+  const [templateParams, setTemplateParams] = useState({}); // Nuevo estado para los parámetros
   // Función para abrir la ventana emergente
   const openPopup = () => {
     setShowPopup(true);
@@ -22,6 +23,67 @@ const MonitoringPage = () => {
     const newValue = value.replace(/[^0-9]/g, '').slice(0, 10);
     setNumericInputValue(newValue);
     console.log('Valor numérico ingresado:', newValue);
+   };
+   const enviarSolicitud = async () => {
+    if (!selectedTemplateId) {
+      console.error('Error: No se ha seleccionado ninguna plantilla.');
+      return;
+    }
+   
+    const selectedTemplate = templates.find((template) => template.id === selectedTemplateId);
+   
+    if (!selectedTemplate) {
+      console.error('Error: No se encontró la plantilla seleccionada.');
+      return;
+    }
+   
+    const url = 'https://api.gupshup.io/wa/api/v1/template/msg';
+    const apiKey = 'thpuawjbidnbbbfrp9bw7qg03eci6rdz';
+   
+    const data = new URLSearchParams();
+    data.append('channel', 'whatsapp');
+    data.append('source', process.env.NEXT_PUBLIC_CELLPHONE);
+    data.append('destination', numericInputValue);
+    data.append('src.name', process.env.NEXT_PUBLIC_NAMEAPP);
+    data.append('template', JSON.stringify({
+      id: selectedTemplate.id,
+      params: Object.values(templateParams) || [] // Asegúrate de que tu plantilla tenga una propiedad params
+    }));
+      
+    try {
+   setSelectedTemplateId('')
+      setNumericInputValue('')
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'apikey': apiKey,
+          'cache-control': 'no-cache',
+        },
+        body: data,
+      });
+     const guardarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
+               method: 'POST',
+               headers: {
+                 'Content-Type': 'application/json',
+               },
+               body: JSON.stringify(data),
+             });
+             
+             
+             
+             if (guardarMensajeResponse.ok) {
+               const guardarMensajeData = await guardarMensajeResponse.json();
+               console.log(guardarMensajeData)
+               conection()
+             }
+      const responseData = await response.json();
+      console.log('Respuesta:', Object.values(templateParams));
+   
+    } catch (error) {
+      console.error('Error al enviar la solicitud:', error);
+    }
    };
    const handleAgregarNumeroClick = () => {
     // Llamamos a la función enviarSolicitud al hacer clic en el botón
