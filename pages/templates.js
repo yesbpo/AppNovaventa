@@ -207,7 +207,7 @@ const handleCreateTemplate = async () => {
       showTemporaryMessage('Plantilla creada exitosamente.');
 
       // Agregar el elementoName a la tabla Seetemp
-      const addElementResponse = await fetch(process.env.NEXT_PUBLIC_BASE_API + '/agregar-elemento-seetemp', {
+      const addElementResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/agregar-elemento-seetemp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
