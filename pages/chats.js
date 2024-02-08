@@ -7,7 +7,7 @@ import EmojiPicker from 'emoji-picker-react';
 import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon, SearchIcon, RefreshIcon } from '@heroicons/react/solid';
 
 const Chats = () => {
-  const [latestData, setLatestData] = useState('')
+    const [mensajes1, setMensajes1] = useState([]);
   const { data: session } = useSession();
   const [user, setUser] = useState([{type_user:'Asesor'}]);
   const intervalIdRef = React.useRef(null);
@@ -82,9 +82,6 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
 
    
     handleEngestionClick();
-
-
-  
      
       const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
      // El usuario está autenticado, puedes acceder a la sesión
@@ -93,16 +90,11 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
 
      }
      const users = await responseUsers.json()
-     
      const Id = users.filter(d => d.usuario == session.user.name)
-     
      const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
      const chatsPending = await responseChatsin.json();
-     
      const withoutGest = chatsPending
-     
      console.log(Object.values(withoutGest)[0].filter(c => c.status == 'pending' || c.status == 'in process'))
-
      setContactos1(Object.values(withoutGest)[0].filter(c => c.status == 'pending' || c.status == 'in process'))
      fetchExpired(Object.values(withoutGest)[0])
      setEngestion(withoutGest.length)
@@ -569,7 +561,7 @@ const handleAgregarNumeroClick = () => {
     { user: null, fecha: null, mensajes: [{ tipomensaje: '', datemessage: '', content: '' }] },
   ]);
   const [webhookData, setWebhookData] = useState(null);
-  const [mensajes1, setMensajes1] = useState([]);
+  
 
      const handlePendientesClick = async () => {
 
