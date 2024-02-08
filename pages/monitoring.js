@@ -45,6 +45,10 @@ const MonitoringPage = () => {
       return updatedParams;
     });
    };
+   const handleTemplateChange = (event) => {
+    const selectedTemplateId = event.target.value;
+    setSelectedTemplateId(selectedTemplateId);
+   };
    
 // GET TEMPLATES
 useEffect(() => {
