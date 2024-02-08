@@ -197,7 +197,7 @@ const handleCreateTemplate = async () => {
         'Content-Type': 'application/json',
         // Include any additional headers here
       },
-      body: JSON.stringify({ templateData: elementName }),
+      body: JSON.stringify({ elementName }),
     });
 
     const responseData = await response.json();
