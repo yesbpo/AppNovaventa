@@ -174,7 +174,6 @@ const Reports = (props) => {
 
 //This function is to alert the user that the indicated fields are missing.  
 const handleCreateTemplate = async () => {
-
   const templateData = {
     elementName,
     languageCode,
@@ -206,8 +205,9 @@ const handleCreateTemplate = async () => {
     if (response.ok) {
       setResponseData(responseData);
       showTemporaryMessage('Plantilla creada exitosamente.');
-       // Agregar el elementoName a la tabla Seetemp
-       const addElementResponse = await fetch(process.env.NEXT_PUBLIC_BASE_API + '/agregar-elemento-seetemp', {
+
+      // Agregar el elementoName a la tabla Seetemp
+      const addElementResponse = await fetch(process.env.NEXT_PUBLIC_BASE_API + '/agregar-elemento-seetemp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -220,6 +220,7 @@ const handleCreateTemplate = async () => {
       } else {
         console.error('Error al agregar el elemento a Seetemp:', addElementResponse.status);
       }
+
     } else {
       console.error('Error en la respuesta del servidor:', response.status, responseData);
       showTemporaryMessage('Error al crear la plantilla. Por favor, inténtelo de nuevo.');
