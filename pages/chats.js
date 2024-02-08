@@ -49,7 +49,7 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
   }   
   const startFetchingChats = (id_chat2) => {
     console.log(id_chat2)
-    console.log(latestData)
+    
     
     intervalIdRef.current = setInterval(() => {
     handleEngestionClick();
@@ -57,26 +57,7 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
      // Llama a tu segunda función aquí
     }, 15000);
   };
-  async function obtenerMensaje(idMessage) {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_DB}/obtener-mensaje/${idMessage}`);
-  
-      if (!response.ok) {
-        throw new Error(`Error al obtener el mensaje: ${response.statusText}`);
-      }
-      
-      const data = await response.json();
-      
-    
-      console.log('Mensaje obtenido:', data);
-      // Aquí puedes trabajar con el mensaje obtenido
-    } catch (error) {
-      console.error('Error en la solicitud:', error.message);
-      // Manejar el error según sea necesario
-    }
-    console.log(mensajes1)
-  }
-  
+ 
   const [session1, setSession1 ]= useState('')
   const manejarCambio = (event) => {
     setInputValue(event.target.value);
@@ -488,7 +469,21 @@ const enviarSolicitud = async () => {
      },
      body: data,
    });
-
+   const guardarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  
+  
+  
+  if (guardarMensajeResponse.ok) {
+    const guardarMensajeData = await guardarMensajeResponse.json();
+    console.log(guardarMensajeData)
+    conection()
+  }
    const responseData = await response.json();
    console.log('Respuesta:', Object.values(templateParams));
    setSelectedTemplateId('')
