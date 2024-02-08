@@ -212,7 +212,7 @@ const handleCreateTemplate = async () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ elementName }), // Enviamos solo el elementName
+        body: JSON.stringify( templateData.elementName ), // Enviamos solo el elementName
       });
 
       if (addElementResponse.ok) {
