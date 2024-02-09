@@ -49,7 +49,7 @@ const MonitoringPage = () => {
       id: selectedTemplate.id,
       params: Object.values(templateParams) || [] // Asegúrate de que tu plantilla tenga una propiedad params
     }));
-      
+ 
     try {
    setSelectedTemplateId('')
       setNumericInputValue('')
@@ -63,21 +63,46 @@ const MonitoringPage = () => {
         },
         body: data,
       });
-     const guardarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
-               method: 'POST',
-               headers: {
-                 'Content-Type': 'application/json',
-               },
-               body: JSON.stringify(data),
-             });
-             
-             
-             
-             if (guardarMensajeResponse.ok) {
-               const guardarMensajeData = await guardarMensajeResponse.json();
-               console.log(guardarMensajeData)
-               conection()
-             }
+      const responseenvio = response.json(); 
+        // guardar template
+        const fechaActual = new Date();
+        const options = { timeZone: 'America/Bogota', hour12: false };
+        const anio = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
+        const mes = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
+        const dia = fechaActual.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
+        const hora = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+        const minutos = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
+        const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
+        const datosdenetrada = {
+          idmessageTemplate: responseenvio.messageId,
+          status: 'sent',
+          attachments: data.destination,
+          message: data.template,
+          timestamp:`${anio}-${mes}-${dia} ${hora}:${minutos}:${segundos}`,
+          campaign: 'envio unico'
+          };
+          try {
+            console.log(titleCampaign)
+            const responseguardar = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/insertar-datos-template', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                // Otros encabezados si es necesario
+              },
+              body: JSON.stringify(datosdenetrada), // Convierte los datos a formato JSON
+            });
+        
+            if (!responseguardar.ok) {
+              throw new Error(`Error en la solicitud: ${response.statusText}`);
+            }
+        
+            const data1 = await responseguardar.json(); // Parsea la respuesta como JSON
+            console.log('Respuesta del servidor:', data1);
+            // Puedes realizar acciones adicionales con la respuesta aquí
+          } catch (error) {
+            console.error('Error al realizar la solicitud:', error);
+            // Manejo de errores
+          }
       const responseData = await response.json();
       console.log('Respuesta:', Object.values(templateParams));
    
@@ -1005,10 +1030,6 @@ setWebhookData(webhookText);
      {statuschats && <Container>
         <Box style={{ height: '30vw', width: '50vw'}}>
         <h2>Chat {numeroEspecifico}</h2>
-          
-
-
-      
             {(() => {
           // Filtra los mensajes por el número específico y contenido no vacío
           const mensajesFiltrados = mensajes1
