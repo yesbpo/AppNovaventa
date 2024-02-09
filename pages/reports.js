@@ -278,19 +278,17 @@ function Reports() {
                       type="text" 
                       value={campaign} 
                       onChange={(e) => setCampaign(e.target.value)}
-                      className="border rounded p-2 ml-2"  
+                      className="border rounded p-2 ml-2 w-full"  
                     />
                   </div>
-                  <div className="w-full md:w-1/3">
+                  <div className="w-full md:w-1/3 flex flex-col">
                     <label className='block mb-2'>Fecha de inicio:</label>
                     <input 
                       type="datetime-local" 
                       value={fechaInicio} 
                       onChange={(e) => setFechaInicio(e.target.value)} 
-                      className='border rounded p-2 ml-2'
+                      className='border rounded p-2 ml-2 mb-4'
                     />
-                  </div>
-                  <div className="w-full md:w-1/3">
                     <label className='block mb-2'>Fecha de fin:</label>
                     <input 
                       type="datetime-local" 
@@ -299,12 +297,14 @@ function Reports() {
                       className='border rounded p-2 ml-2'
                     />
                   </div>
-                  <button 
-                    onClick={fetchData} 
-                    className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded'
-                  >
-                  Generar reporte de envios masivos
-                  </button>
+                  <div className='w-full md:w-1/3 flex justify-center items-end'>
+                    <button 
+                      onClick={fetchData} 
+                      className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded'
+                    >
+                    Generar reporte de envios masivos
+                    </button>
+                  </div>
                 </div>
               </div>
 
