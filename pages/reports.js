@@ -276,7 +276,9 @@ function Reports() {
               </div>
               </div>
               <div className='mb-8'> 
-                <h1 className="text-4xl font-bold mb-4 text-center">Reportes de campañas</h1>
+                <h1 className="text-3xl font-bold mb-3 text-center">
+                  Reportes de campañas
+                </h1>
                 <div className='flex flex-wrap gap-4'>
                   <div className='w-full md:w-1/3'>
                     <label className='block mb-2'>Campaña:</label>
