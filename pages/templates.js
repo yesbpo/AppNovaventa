@@ -233,6 +233,7 @@ const handleCreateTemplate = async () => {
 };
 
 
+
 //Request to obtain the templates
   useEffect(() => {
     const fetchData = async () => {
@@ -319,6 +320,8 @@ const handleCreateTemplate = async () => {
 
 
 //filter templates
+const [templatesArray, setTemplatesArray] = useState([]);
+
 useEffect(() => {
   const fetchData = async () => {
     try {
@@ -343,8 +346,6 @@ useEffect(() => {
 
   fetchData();
 }, []);
-
-const [templatesArray, setTemplatesArray] = useState([]);
 
 
 //This is the application to delete the templates
