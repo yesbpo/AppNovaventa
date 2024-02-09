@@ -301,7 +301,7 @@ function Reports() {
                   </div>
                   <button 
                     onClick={fetchData} 
-                    className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+                    className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded'
                   >
                   Generar reporte de envios masivos
                   </button>
