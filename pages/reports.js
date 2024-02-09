@@ -279,8 +279,9 @@ function Reports() {
                 <h1 className="text-3xl font-bold mb-3 text-center">
                   Reportes de campañas
                 </h1>
+                <div className='mb-7'>
                 <div className='flex flex-wrap gap-4'>
-                  <div className='w-full md:w-1/3'>
+                  <div className='w-full md:w-1/2'>
                     <label className='block mb-2'>Campaña:</label>
                     <input 
                       type="text" 
@@ -289,6 +290,7 @@ function Reports() {
                       className="border rounded p-2 ml-2 w-full"  
                     />
                   </div>
+                  <div className='mb-8'>
                   <div className="w-full md:w-1/3">
                     <div className="flex flex-col">
                       <label className='block mb-2'>Fecha de inicio:</label>
@@ -318,6 +320,8 @@ function Reports() {
                     </button>
                   </div>
                 </div>
+              </div>
+              </div>
               </div>
 
               <div className='mb-8'>
