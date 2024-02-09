@@ -230,7 +230,7 @@ function Reports() {
         <Layout>
           <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-black p-8 bg-opacity-80">
             <div className='w-full'>
-              <h1 className="text-3xl font-bold mb-3">
+              <h1 className="text-3xl font-bold mb-3 text-center">
                 Reportes Mensajeria WhatsApp
               </h1>
               
