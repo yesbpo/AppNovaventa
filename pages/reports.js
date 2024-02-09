@@ -233,27 +233,25 @@ function Reports() {
               <h1 className="text-3xl font-bold mb-3 text-center">
                 Reportes Mensajeria WhatsApp
               </h1>
-              
+              <div className='mb-8'>
               <div className='flex flex-wrap gap-4'>
                 <div className='w-full md:w-1/2'>  
-                  <label className="block mb-2">
-                    Fecha de Inicio:
+                  <label className="block mb-2">Fecha de Inicio:</label>
                     <input
                       type="datetime-local"
                       value={fechaInicio}
                       onChange={(e) => setFechaInicio(e.target.value)}
-                      className="border rounded p-2 ml-2"
+                      className="border rounded p-2 ml-2 w-full"
                     />
-                  </label>
-                  <label className="block mb-2">
-                    Fecha de Fin:
+                </div>
+                <div className="w-full md:w-1/2">
+                  <label className="block mb-2">Fecha de Fin: </label>
                     <input
                       type="datetime-local"
                       value={fechaFin}
                       onChange={(e) => setFechaFin(e.target.value)}
-                      className="border rounded p-2 ml-2"
+                      className="border rounded p-2 ml-2 w-full"
                     />
-                  </label>
                 </div>
                 <div className='w-full md:w-1/2'>
                   <label className="block mb-2">
@@ -276,7 +274,7 @@ function Reports() {
                   </button>
                 </div>
               </div>
-
+              </div>
               <div className='mb-8'> 
                 <h1 className="text-4xl font-bold mb-4">Reportes de campañas</h1>
                 <div className='flex flex-wrap gap-4'>
