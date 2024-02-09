@@ -229,7 +229,7 @@ function Reports() {
       {session ? (
         <Layout>
           <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-black p-8 bg-opacity-80">
-            <div className='w-full'>
+            <div className='w-full max-w-lg'>
               <h1 className="text-3xl font-bold mb-3 text-center">
                 Reportes Mensajeria WhatsApp
               </h1>
@@ -266,13 +266,16 @@ function Reports() {
                       <option value="salientes">Salientes</option>
                     </select>
                   </label>
+                  </div>
+                  <div>
                   <button
                     onClick={generarReporte}
                     className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
                   >
                     Generar reporte de mensajeria
                   </button>
-                </div>
+                  </div>
+                
               </div>
               </div>
               <div className='mb-8'> 
