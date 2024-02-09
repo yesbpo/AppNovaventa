@@ -174,6 +174,7 @@ const Reports = (props) => {
 
 //This function is to alert the user that the indicated fields are missing.  
 const handleCreateTemplate = async () => {
+
   const templateData = {
     elementName,
     languageCode,
@@ -197,7 +198,7 @@ const handleCreateTemplate = async () => {
         'Content-Type': 'application/json',
         // Include any additional headers here
       },
-      body: JSON.stringify({ elementName }),
+      body: JSON.stringify(templateData), // Envía todo el objeto templateData
     });
 
     const responseData = await response.json();
@@ -212,7 +213,7 @@ const handleCreateTemplate = async () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify( templateData.elementName ), // Enviamos solo el elementName
+        body: JSON.stringify({ elementName }), // Envía solo el elementName
       });
 
       if (addElementResponse.ok) {
