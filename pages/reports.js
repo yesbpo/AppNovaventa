@@ -338,9 +338,10 @@ function Reports() {
                       type="datetime-local" 
                       value={fechaFin} 
                       onChange={(e) => setFechaFin(e.target.value)} 
-                      className='border rounded p-2 ml-2'
+                      className='border rounded p-2 ml-2 w-full'
                     />
                   </div>
+                  <div className='w-full md:w-1/3 flex justify-center items-end'>
                   <button 
                     onClick={ObtenerConversaciones} 
                     className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
@@ -362,6 +363,7 @@ function Reports() {
             {mensaje && <p>{mensaje}</p>}
           </div>*/}
             </div>
+          </div>
           </div>
            {/* Formulario para ingresar los parámetros */}
         </Layout>
