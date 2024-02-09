@@ -575,11 +575,11 @@ useEffect(() => {
 <div className='CreatedTemplates'>
   {error && <p>{error}</p>}
   {currentTemplates.length > 0 && (
-    <ul>
-      {currentTemplates
-        .filter(template => templatesArray.some(t => t.elementname === template.elementName))
-        .map((template) => (
-          <li key={template.elementName}>
+  <ul>
+    {currentTemplates
+      .filter(template => templatesArray.some(t => t.elementName === template.elementName))
+      .map((template) => (
+        <li key={template.elementName}>
             <strong>Categoria:</strong> {template.category}<br />
             <strong>Tipo de plantilla:</strong> {getTemplateType(template.templateType)}<br />
             <strong>Fecha de creación:</strong> {new Date(template.createdOn).toLocaleString()}<br />
