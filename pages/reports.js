@@ -229,7 +229,7 @@ function Reports() {
       {session ? (
         <Layout>
           <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-black p-8 bg-opacity-80">
-            <div className='w-full max-w-lg'>
+            <div className='w-full'>
               <h1 className="text-3xl font-bold mb-3">
                 Reportes Mensajeria WhatsApp
               </h1>
