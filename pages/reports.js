@@ -115,7 +115,7 @@ function Reports() {
 
       // Parsear la respuesta a JSON
       const data = await response.json();
-      const { conversaciones } = await response.json();
+      const { conversaciones } = data
   
       // Crear un libro de Excel
       
