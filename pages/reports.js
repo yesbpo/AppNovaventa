@@ -276,7 +276,7 @@ function Reports() {
               </div>
               </div>
               <div className='mb-8'> 
-                <h1 className="text-4xl font-bold mb-4">Reportes de campañas</h1>
+                <h1 className="text-4xl font-bold mb-4 text-center">Reportes de campañas</h1>
                 <div className='flex flex-wrap gap-4'>
                   <div className='w-full md:w-1/3'>
                     <label className='block mb-2'>Campaña:</label>
@@ -319,7 +319,7 @@ function Reports() {
               </div>
 
               <div className='mb-8'>
-                <h1 className="text-4xl font-bold mb-4">Reportes de conversaciones</h1>
+                <h1 className="text-4xl font-bold mb-4 text-center">Reportes de conversaciones</h1>
                 <div className='flex flex-wrap gap-4'>
                   <div className='w-full md:w-1/2'>
                     <label className='block mb-2'>Fecha de inicio:</label>
