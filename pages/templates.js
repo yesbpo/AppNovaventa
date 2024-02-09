@@ -232,33 +232,6 @@ const handleCreateTemplate = async () => {
   }
 };
 
-useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-contenido-seetemp');
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const data = await response.json();
-
-      if (data.datos) {
-        // Update the state with the fetched data
-        setTemplates(data.datos);
-        console.log(data.data)
-      } else {
-        console.log(data.mensaje);
-      }
-    } catch (error) {
-      console.error(`Fetch error: ${error.message}`);
-    }
-  };
-
-  fetchData();
-}, []);
-
-
 
 //Request to obtain the templates
   useEffect(() => {
