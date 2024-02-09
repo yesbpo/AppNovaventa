@@ -105,12 +105,16 @@ function Reports() {
   };
   const ObtenerConversaciones = async () => {
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-conversaciones');
-  
+      // Realizar la solicitud a la API utilizando fetch
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_DB}/obtener-conversaciones-fecha?fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`);
+
+      // Verificar si la solicitud fue exitosa
       if (!response.ok) {
-        throw new Error(`Error en la solicitud: ${response.status}`);
+        throw new Error(`Error: ${response.status} - ${response.statusText}`);
       }
-  
+
+      // Parsear la respuesta a JSON
+      const data = await response.json();
       const { conversaciones } = await response.json();
   
       // Crear un libro de Excel
@@ -157,9 +161,13 @@ function Reports() {
         // Guardar el libro como un archivo Excel (descargar el archivo)
         XLSX.writeFile(workbook, 'informe.xlsx');
         console.log('Informe Excel generado y descargado correctamente.');
-      } catch (error) {
-        console.error('Error durante la solicitud:', error.message);
-      }
+
+      // Actualizar el estado con las conversaciones obtenidas
+      
+    } catch (error) {
+      console.error('Error al obtener conversaciones:', error.message);
+    }
+
   };
   const [fecha, setFecha] = useState(''); // Asigna el valor deseado
   const [idchat, setIdchat] = useState(''); // Asigna el valor deseado
