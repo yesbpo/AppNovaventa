@@ -7,7 +7,7 @@ import EmojiPicker from 'emoji-picker-react';
 import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon, SearchIcon, RefreshIcon } from '@heroicons/react/solid';
 
 const Chats = () => {
-  const [latestData, setLatestData] = useState('')
+    const [mensajes1, setMensajes1] = useState([]);
   const { data: session } = useSession();
   const [user, setUser] = useState([{type_user:'Asesor'}]);
   const intervalIdRef = React.useRef(null);
@@ -49,7 +49,7 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
   }   
   const startFetchingChats = (id_chat2) => {
     console.log(id_chat2)
-    console.log(latestData)
+    
     
     intervalIdRef.current = setInterval(() => {
     handleEngestionClick();
@@ -57,26 +57,7 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
      // Llama a tu segunda función aquí
     }, 15000);
   };
-  async function obtenerMensaje(idMessage) {
-    try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_DB}/obtener-mensaje/${idMessage}`);
-  
-      if (!response.ok) {
-        throw new Error(`Error al obtener el mensaje: ${response.statusText}`);
-      }
-      
-      const data = await response.json();
-      
-    
-      console.log('Mensaje obtenido:', data);
-      // Aquí puedes trabajar con el mensaje obtenido
-    } catch (error) {
-      console.error('Error en la solicitud:', error.message);
-      // Manejar el error según sea necesario
-    }
-    console.log(mensajes1)
-  }
-  
+ 
   const [session1, setSession1 ]= useState('')
   const manejarCambio = (event) => {
     setInputValue(event.target.value);
@@ -101,9 +82,6 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
 
    
     handleEngestionClick();
-
-
-  
      
       const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
      // El usuario está autenticado, puedes acceder a la sesión
@@ -112,16 +90,11 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
 
      }
      const users = await responseUsers.json()
-     
      const Id = users.filter(d => d.usuario == session.user.name)
-     
      const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar-chats/${Id[0].id}`);
      const chatsPending = await responseChatsin.json();
-     
      const withoutGest = chatsPending
-     
      console.log(Object.values(withoutGest)[0].filter(c => c.status == 'pending' || c.status == 'in process'))
-
      setContactos1(Object.values(withoutGest)[0].filter(c => c.status == 'pending' || c.status == 'in process'))
      fetchExpired(Object.values(withoutGest)[0])
      setEngestion(withoutGest.length)
@@ -135,7 +108,7 @@ const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL+'/socket.io/', so
       messagelist.scrollTop = messagelist.scrollHeight;
     }
   
-  }, [mensajes1]);
+  }, []);
  const [showPopup, setShowPopup] = useState('')
   // Función para abrir la ventana emergente
   const openPopup = () => {
@@ -488,7 +461,21 @@ const enviarSolicitud = async () => {
      },
      body: data,
    });
-
+   const guardarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(data),
+  });
+  
+  
+  
+  if (guardarMensajeResponse.ok) {
+    const guardarMensajeData = await guardarMensajeResponse.json();
+    console.log(guardarMensajeData)
+    conection()
+  }
    const responseData = await response.json();
    console.log('Respuesta:', Object.values(templateParams));
    setSelectedTemplateId('')
@@ -514,6 +501,7 @@ const handleAgregarNumeroClick = () => {
   async function marcaLeido(id_chat2){
     setNumeroEspecifico(id_chat2)
     startFetchingChats(id_chat2);
+    
     try {
       
       
@@ -573,7 +561,7 @@ const handleAgregarNumeroClick = () => {
     { user: null, fecha: null, mensajes: [{ tipomensaje: '', datemessage: '', content: '' }] },
   ]);
   const [webhookData, setWebhookData] = useState(null);
-  const [mensajes1, setMensajes1] = useState([]);
+  
 
      const handlePendientesClick = async () => {
 
@@ -1198,7 +1186,12 @@ fetchMensajes()
         onChange={(e) => handleNumericInputChange(e.target.value)}
         className="mt-1 p-2 border border-gray-300 rounded-md"
       />
-     
+     <button
+        onClick={handleAgregarNumeroClick}
+        className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+      >
+        Agregar Número
+      </button>
 
       <h2 className="mt-4 text-lg font-semibold">Plantillas:</h2>
       <select
@@ -1239,12 +1232,6 @@ fetchMensajes()
             </div>
           )
       )}
-
-      <button
-        onClick={handleAgregarNumeroClick}
-        className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-        Agregar Número
-      </button>
     </div>
   </div>}
         <Layout className='big-box'>
@@ -1377,18 +1364,18 @@ fetchMensajes()
     <div className='flex flex-row justify-between'>
       <BotonEnviar onClick={actualizarEstadoChat}>En atencion</BotonEnviar>
       <BotonEnviar onClick={actualizarEstadoChatCerrados}>Finalizar</BotonEnviar>
-      <div>
-      <label>Selecciona una respuesta rápida:</label>
-      <select>
+
+    </div>
+    <div>
+      <label htmlFor="respuestasRapidas">Selecciona una respuesta rápida:</label>
+      <StyledSelect id="respuestasRapidas" onChange={(e) => setInputValue(e.target.value)}>
         {respuestasRapidas.map(respuesta => (
-          <option key={respuesta.name} value={respuesta.contentn}onClick={setInputValue}>
-            {respuesta.name}:{respuesta.contentn}
+          <option key={respuesta.name} value={respuesta.contentn}>
+            {respuesta.name}: {respuesta.contentn}
           </option>
         ))}
-      </select>
+      </StyledSelect>
     </div>
-    </div>
-
     </Box>
 
     {/* Botones de acción */}
@@ -1555,7 +1542,24 @@ margin-bottom: 5px;
 border-radius: 5px;
 `;
 
+const StyledSelect = styled.select`
+  width: 180px; /* Ajusta el tamaño según tus necesidades */
+  padding: 10px;
+  font-size: 13px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: border-color 0.3s;
 
+  &:hover {
+    border-color: #f7f7f7;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #4caf50;
+  }
+`;
 
 const InputContainer = styled.div`
 margin-top: 15px;

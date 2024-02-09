@@ -276,7 +276,7 @@ const CrearUsuario = () => {
             <span className='mr-2'>{usuario.complete_name}</span>
             <div className='flex items-center'>
             <button 
-              onClick={() => handleUsuarioSeleccionado(usuario)} 
+              onClick={() => setUsuarioSeleccionado(usuario)} 
               className="bg-blue-500 text-white p-2 rounded-md mr-2">Modificar</button>
             <button 
                 onClick={() => handleEliminarUsuario(usuario)}

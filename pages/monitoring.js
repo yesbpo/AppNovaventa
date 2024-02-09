@@ -5,7 +5,161 @@ import io from 'socket.io-client';
 import { useSession, signIn } from 'next-auth/react';
 
 const MonitoringPage = () => {
+  const [selectedTemplateId, setSelectedTemplateId] = useState('');
+  const [showPopup, setShowPopup] = useState('')
+  const [templateParams, setTemplateParams] = useState({}); // Nuevo estado para los parámetros
+  // Función para abrir la ventana emergente
+  const openPopup = () => {
+    setShowPopup(true);
+  };
+  const closePopup = () => {
+    setShowPopup(false);
+  };
+  const [numericInputValue, setNumericInputValue] = useState('');
+  const [templates, setTemplates] = useState([]);
+  const [error, setError] = useState(null);
+  const handleNumericInputChange = (value) => {
+    // Permite solo números y limita a 10 caracteres
+    const newValue = value.replace(/[^0-9]/g, '').slice(0, 10);
+    setNumericInputValue(newValue);
+    console.log('Valor numérico ingresado:', newValue);
+   };
+   const enviarSolicitud = async () => {
+    if (!selectedTemplateId) {
+      console.error('Error: No se ha seleccionado ninguna plantilla.');
+      return;
+    }
+   
+    const selectedTemplate = templates.find((template) => template.id === selectedTemplateId);
+   
+    if (!selectedTemplate) {
+      console.error('Error: No se encontró la plantilla seleccionada.');
+      return;
+    }
+   
+    const url = 'https://api.gupshup.io/wa/api/v1/template/msg';
+    const apiKey = 'thpuawjbidnbbbfrp9bw7qg03eci6rdz';
+   
+    const data = new URLSearchParams();
+    data.append('channel', 'whatsapp');
+    data.append('source', process.env.NEXT_PUBLIC_CELLPHONE);
+    data.append('destination', numericInputValue);
+    data.append('src.name', process.env.NEXT_PUBLIC_NAMEAPP);
+    data.append('template', JSON.stringify({
+      id: selectedTemplate.id,
+      params: Object.values(templateParams) || [] // Asegúrate de que tu plantilla tenga una propiedad params
+    }));
+      
+    try {
+   setSelectedTemplateId('')
+      setNumericInputValue('')
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Cache-Control': 'no-cache',
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'apikey': apiKey,
+          'cache-control': 'no-cache',
+        },
+        body: data,
+      });
+     const guardarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
+               method: 'POST',
+               headers: {
+                 'Content-Type': 'application/json',
+               },
+               body: JSON.stringify(data),
+             });
+             
+             
+             
+             if (guardarMensajeResponse.ok) {
+               const guardarMensajeData = await guardarMensajeResponse.json();
+               console.log(guardarMensajeData)
+               conection()
+             }
+      const responseData = await response.json();
+      console.log('Respuesta:', Object.values(templateParams));
+   
+    } catch (error) {
+      console.error('Error al enviar la solicitud:', error);
+    }
+   };
+   const handleAgregarNumeroClick = () => {
+    // Llamamos a la función enviarSolicitud al hacer clic en el botón
+    enviarSolicitud();
+   
+   };
+   function contarOcurrencias(texto, patron) {
+    const regex = new RegExp(patron, 'g');
+    const coincidencias = texto.match(regex);
+    const componentes = Array.from({ length: coincidencias }, (v, index) => index);
+   
+    return coincidencias ? coincidencias : 0;
+   }
+   const handleParamChange = (param, value) => {
+    setTemplateParams((prevParams) => {
+      const updatedParams = {
+        ...prevParams,
+        [param]: value,
+      };
+      console.log('Updated Params:', updatedParams);
+      return updatedParams;
+    });
+   };
+   const handleTemplateChange = (event) => {
+    const selectedTemplateId = event.target.value;
+    setSelectedTemplateId(selectedTemplateId);
+   };
+   
+// GET TEMPLATES
+useEffect(() => {
+
+  // Traer las plantillas al cargar el componente
+  const fetchTemplates = async () => {
+    try {
+      // Utilizar el servidor proxy en lugar de la URL directa
+      const response = await fetch(process.env.NEXT_PUBLIC_API2+'/gupshup-templates');
+ 
+      if (!response.ok) {
+        throw new Error(HTTP `error! Status: ${response.status}`);
+      }
+ 
+      const data = await response.json();
+ 
+      if (data.status === "success") {
+        const processedTemplates = data.templates.map(template => ({
+          id: template.id, // Asegúrate de incluir el ID
+          category: template.category,
+          createdOn: template.createdOn,
+          data: template.data,
+          elementName: template.elementName,
+          languageCode: template.languageCode,
+          status: template.status,
+          templateType: template.templateType,
+          modifiedOn: template.modifiedOn,
+          params: template.params || [], // Asegúrate de que tu plantilla tenga una propiedad params
+        }));
+ 
+        setTemplates(processedTemplates);
+      } else {
+        setError(`Error: ${data.message}`);
+      }
+    } catch (error) {
+      setError(Fetch `error: ${error.message}`);
+    }
+  };
+ 
   
+  fetchTemplates();
+  
+  // Llama a fetchMensajes cada segundo
+ 
+ 
+  // Limpia el intervalo al desmontar el componente
+ 
+ 
+ }, []);
   useEffect(() => {
     // Lógica que se ejecutará después del montaje del componente
     updateuser();
@@ -79,22 +233,11 @@ useEffect(() => {
   obtenerMensajes();
 }, []);
 const { data: session } = useSession();
-  const manejarPresionarEnter = (event) => {
-    if (event.key === 'Enter') {
-      enviarMensaje();
-    }
-  };
+  
 
-  const [emojis, setEmojis] = useState([]);
-  const [showEmojiPicker, setShowEmojiPicker] = useState(false);
-  const handleAddEmoji = (emoji) => {
-    setInputValue(`${inputValue} ${emoji}`);
-    setEmojis([...emojis, emoji]);
-    setShowEmojiPicker(false); // Ocultar el EmojiPicker después de seleccionar un emoji
-  };
-  const toggleEmojiPicker = () => {
-    setShowEmojiPicker((prevShow) => !prevShow);
-  };
+  
+  
+  
   const [contactos2, setContactos2] = useState([]);
 
   const [contactos1, setContactos1] = useState([]);
@@ -104,12 +247,11 @@ const { data: session } = useSession();
   const [webhookData, setWebhookData] = useState(null);
   const [mensajes1, setMensajes1] = useState([]);
   const [mensajes2, setMensajes2] = useState([]);
-     const handlePendientesClick = async (iduser) => {
-      conection();
-      
-    try {   const fechaActual = new Date();
+  const handlePendientesClick = async (iduser) => {
+    conection();
+      try {   const fechaActual = new Date();
       const options = { timeZone: 'America/Bogota', hour12: false };
-            const fechaInicio = new Date(fechaActual);
+      const fechaInicio = new Date(fechaActual);
       fechaInicio.setHours(fechaInicio.getHours() - 24);
       
       // Formatear la fecha de inicio
@@ -176,8 +318,8 @@ const { data: session } = useSession();
         
         const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
         
-              const status = 'in process';
-              const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}`);
+        const status = 'in process';
+        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}`);
         const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
        
         // El usuario está autenticado, puedes acceder a la sesión
@@ -205,7 +347,7 @@ const { data: session } = useSession();
   
   const handleClick = async (iduser) => {
     setNumeroEspecifico(iduser)
-    
+    conection();
   try {   const fechaActual = new Date();
     const options = { timeZone: 'America/Bogota', hour12: false };
           const fechaInicio = new Date(fechaActual);
@@ -747,33 +889,101 @@ setWebhookData(webhookText);
   if(session){
   return (
   <>
-    
-      <Layout>
-      <Box onLoad={updateuser()}>
+  
+   {showPopup &&  <div className="fixed inset-0 flex items-center justify-center overflow-y-auto">
+
+<div className="bg-black bg-opacity-50 " ></div>
+<div className="bg-white p-6 rounded shadow-lg w-96">
+<button
+    onClick={closePopup}
+    className="mb-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+  >
+    Cerrar
+  </button>
+
+  <label htmlFor="destinationInput" className="block text-sm font-medium text-gray-700">
+    Número de destino (máximo 10 dígitos):
+  </label>
+  <input
+    type="text"
+    id="destinationInput"
+    value={numericInputValue}
+    onChange={(e) => handleNumericInputChange(e.target.value)}
+    className="mt-1 p-2 border border-gray-300 rounded-md"
+  />
+ <button
+    onClick={handleAgregarNumeroClick}
+    className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+  >
+    Agregar Número
+  </button>
+
+  <h2 className="mt-4 text-lg font-semibold">Plantillas:</h2>
+  <select
+    value={selectedTemplateId}
+    onChange={handleTemplateChange}
+    className="mt-1 p-2 border border-gray-300 rounded-md"
+  >
+    <option value="" disabled>Select a template</option>
+
+    {templates.map((template) => (
+
+      <option key={template.id} value={template.id}>
+        {template.data}{contarOcurrencias(template.data, '{{.*?}}')}
+      </option>
+    ))}
+
+  </select>
+
+  {templates.map(
+    (template) =>
+      template.id === selectedTemplateId &&
+      template.params && (
+        <div key={template.id} className="mt-4">
+          <h3 className="text-lg font-semibold">Parámetros:</h3>
+          {contarOcurrencias(template.data, '{{.*?}}').length > 0 && contarOcurrencias(template.data, '{{.*?}}').map((param) => (
+            <div key={param} className="mt-2">
+              <label htmlFor={param} className="block text-sm font-medium text-gray-700">
+                {param}:
+              </label>
+              <input
+                type="text"
+                id={param}
+                onChange={(e) => handleParamChange(param, e.target.value)}
+                className="mt-1 p-2 border border-gray-300 rounded-md"
+              />
+            </div>
+          ))}
+        </div>
+      )
+  )}
+</div>
+</div>}
+    <Layout>
+      <Box>
         <ButtonContainer>
         <div className="p-2 border border-gray-300 rounded">
-        
         <div>
-      <input
-        type="text"
-        
-        onChange={handleNumeroChange}
-        placeholder="Buscar por número"
-      />
+        <input
+          type="text"
+          
+          onChange={handleNumeroChange}
+          placeholder="Buscar por número"
+        />
 
-{valorbuscado !== '' && <ul>
- {datosbuscados.length > 0 ? (
-    datosbuscados.map((contacto) => (
-      <li key={contacto.idChat2} onClick={()=>handleClick(contacto.idChat2)}>
-        {/* Renderizar los datos del contacto */}
-        {nombreuser(contacto.userId)} - {contacto.idChat2} - {contacto.status === 'pending' ? 'Pendiente' : contacto.status === 'in process' ? 'En Atención' : contacto.status === 'expiredbyassesor' ? 'Expirado por Asesor' : contacto.status === 'expiredbyclient' ? 'Expirado por cliente' :'Finalizado'}
-      </li>
-    ))
-  ) : (
-    <li>No se encontraron resultados</li>
-  )}
-</ul>}
-    </div>
+        {valorbuscado !== '' && <ul>
+        {datosbuscados.length > 0 ? (
+            datosbuscados.map((contacto) => (
+              <li key={contacto.idChat2} onClick={()=>handleClick(contacto.idChat2)}>
+                {/* Renderizar los datos del contacto */}
+                {nombreuser(contacto.userId)} - {contacto.idChat2} - {contacto.status === 'pending' ? 'Pendiente' : contacto.status === 'in process' ? 'En Atención' : contacto.status === 'expiredbyassesor' ? 'Expirado por Asesor' : contacto.status === 'expiredbyclient' ? 'Expirado por cliente' :'Finalizado'}
+              </li>
+            ))
+          ) : (
+            <li>No se encontraron resultados</li>
+          )}
+        </ul>}
+        </div>
         {resultados.map((resultado, index) => (
           <CustomButton className="cursor-pointer" key={index}
             onClick={()=>{handlePendientesClick(resultado.asesor.id)}}>
@@ -784,12 +994,13 @@ setWebhookData(webhookText);
     </div>
 
     <div className="p-2 border border-gray-300 rounded">
+    <CustomButton onClick={openPopup}>Agregar Número</CustomButton>
           <CustomButton className="cursor-pointer" 
           onClick={()=>{handleClosedClick()}}>
              {}Chats cerrados: {resultados2}
           </CustomButton>
     </div>
-        </ButtonContainer>
+    </ButtonContainer>
       </Box>
      {statuschats && <Container>
         <Box style={{ height: '30vw', width: '50vw'}}>
@@ -812,7 +1023,6 @@ setWebhookData(webhookText);
                 mensaje.type_comunication === 'message-event' ? 'bg-white text-right shadow-lg p-4 bg-gray rounded-md' : 'bg-green text-left shadow-lg p-4 bg-gray rounded-md'
               } p-4 mb-4`}
             > 
-        
               { mensaje.type_message === 'image'  ? (
                 <img src={limpiarLink(mensaje.content) || mensaje.content}  alt="Imagen" className="w-15vw shadow-md p-4 bg-gray rounded-md" />
               ) : mensaje.type_message === 'audio' ? (
