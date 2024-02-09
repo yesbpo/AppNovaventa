@@ -235,7 +235,7 @@ function Reports() {
               </h1>
               <div className='mb-8'>
               <div className='flex flex-wrap gap-4'>
-                <div className='w-full md:w-1/2'>  
+                <div className='w-full md:w-1/3'>  
                   <label className="block mb-2">Fecha de Inicio:</label>
                     <input
                       type="datetime-local"
@@ -244,7 +244,7 @@ function Reports() {
                       className="border rounded p-2 ml-2 w-full"
                     />
                 </div>
-                <div className="w-full md:w-1/2">
+                <div className="w-full md:w-1/3">
                   <label className="block mb-2">Fecha de Fin: </label>
                     <input
                       type="datetime-local"
