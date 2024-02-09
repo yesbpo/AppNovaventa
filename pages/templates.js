@@ -232,6 +232,31 @@ const handleCreateTemplate = async () => {
   }
 };
 
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-contenido-seetemp');
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      const data = await response.json();
+
+      if (data.datos) {
+        // Update the state with the fetched data
+        setTemplates(data.datos);
+      } else {
+        console.log(data.mensaje);
+      }
+    } catch (error) {
+      console.error(`Fetch error: ${error.message}`);
+    }
+  };
+
+  fetchData();
+}, []);
+
 
 
 //Request to obtain the templates
@@ -320,8 +345,6 @@ const handleCreateTemplate = async () => {
 
 
 //filter templates
-const [templatesArray, setTemplatesArray] = useState([]);
-
 useEffect(() => {
   const fetchData = async () => {
     try {
@@ -346,6 +369,8 @@ useEffect(() => {
 
   fetchData();
 }, []);
+
+const [templatesArray, setTemplatesArray] = useState([]);
 
 
 //This is the application to delete the templates
@@ -575,11 +600,11 @@ useEffect(() => {
 <div className='CreatedTemplates'>
   {error && <p>{error}</p>}
   {currentTemplates.length > 0 && (
-  <ul>
-    {currentTemplates
-      .filter(template => templatesArray.some(t => t.elementName === template.elementName))
-      .map((template) => (
-        <li key={template.elementName}>
+    <ul>
+      {currentTemplates
+        .filter(template => templatesArray.some(t => t.elementname === template.elementName))
+        .map((template) => (
+          <li key={template.elementName}>
             <strong>Categoria:</strong> {template.category}<br />
             <strong>Tipo de plantilla:</strong> {getTemplateType(template.templateType)}<br />
             <strong>Fecha de creación:</strong> {new Date(template.createdOn).toLocaleString()}<br />
