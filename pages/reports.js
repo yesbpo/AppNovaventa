@@ -221,81 +221,136 @@ function Reports() {
       {session ? (
         <Layout>
           <div className="min-h-screen bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-black p-8 bg-opacity-80">
-            <h1 className="text-4xl font-bold mb-4">
-              Reportes Mensajeria WhatsApp
-            </h1>
-            <label className="block mb-4">
-              Fecha de Inicio:
-              <input
-                type="datetime-local"
-                value={fechaInicio}
-                onChange={(e) => setFechaInicio(e.target.value)}
-                className="border rounded p-2 ml-2"
-              />
-            </label>
-            <label className="block mb-4">
-              Fecha de Fin:
-              <input
-                type="datetime-local"
-                value={fechaFin}
-                onChange={(e) => setFechaFin(e.target.value)}
-                className="border rounded p-2 ml-2"
-              />
-            </label>
-            <label className="block mb-4">
-            </label>
-            <label className="block mb-4">
-              Tipo de Mensajes:
-              <select
-                value={tipoMensajes}
-                onChange={(e) => setTipoMensajes(e.target.value)}
-                className="border rounded p-2 ml-2"
-              >
-                <option value="ambos">Todos</option>
-                <option value="entrantes">Entrantes</option>
-                <option value="salientes">Salientes</option>
-              </select>
-            </label>
-            <button
-              onClick={generarReporte}
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-            >
-              Generar reporte de mensajeria
-            </button>
-            <div>
-            <h1 className="text-4xl font-bold mb-4">
-              Reportes de campañas
-            </h1>
-        <label>Campaña:</label>
-        <input type="text" value={campaign} onChange={(e) => setCampaign(e.target.value)} />
+            <div className='w-full max-w-lg'>
+              <h1 className="text-4xl font-bold mb-4">
+                Reportes Mensajeria WhatsApp
+              </h1>
+              <div className='flex flex-wrap gap-4'>
+                <div className='w-full md:w-1/2'>  
+                  <label className="block mb-2">
+                    Fecha de Inicio:
+                    <input
+                      type="datetime-local"
+                      value={fechaInicio}
+                      onChange={(e) => setFechaInicio(e.target.value)}
+                      className="border rounded p-2 ml-2"
+                    />
+                  </label>
+                  <label className="block mb-2">
+                    Fecha de Fin:
+                    <input
+                      type="datetime-local"
+                      value={fechaFin}
+                      onChange={(e) => setFechaFin(e.target.value)}
+                      className="border rounded p-2 ml-2"
+                    />
+                  </label>
+                </div>
+                <div className='w-full md:w-1/2'>
+                  <label className="block mb-2">
+                    Tipo de Mensajes:
+                    <select
+                      value={tipoMensajes}
+                      onChange={(e) => setTipoMensajes(e.target.value)}
+                      className="border rounded p-2 ml-2"
+                    >
+                      <option value="ambos">Todos</option>
+                      <option value="entrantes">Entrantes</option>
+                      <option value="salientes">Salientes</option>
+                    </select>
+                  </label>
+                  <button
+                    onClick={generarReporte}
+                    className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                  >
+                    Generar reporte de mensajeria
+                  </button>
+                </div>
+              </div>
 
-        <label>Fecha de inicio:</label>
-        <input type="datetime-local" value={fechaInicio} onChange={(e) => setFechaInicio(e.target.value)} />
+              <div className='mb-8'> 
+                <h1 className="text-4xl font-bold mb-4">Reportes de campañas</h1>
+                <div className='flex flex-wrap gap-4'>
+                  <div className='w-full md:w-1/3'>
+                    <label className='block mb-2'>Campaña:</label>
+                    <input 
+                      type="text" 
+                      value={campaign} 
+                      onChange={(e) => setCampaign(e.target.value)}
+                      className="border rounded p-2 ml-2"  
+                    />
+                  </div>
+                  <div className="w-full md:w-1/3">
+                    <label className='block mb-2'>Fecha de inicio:</label>
+                    <input 
+                      type="datetime-local" 
+                      value={fechaInicio} 
+                      onChange={(e) => setFechaInicio(e.target.value)} 
+                      className='border rounded p-2 ml-2'
+                    />
+                  </div>
+                  <div className="w-full md:w-1/3">
+                    <label className='block mb-2'>Fecha de fin:</label>
+                    <input 
+                      type="datetime-local" 
+                      value={fechaFin} 
+                      onChange={(e) => setFechaFin(e.target.value)} 
+                      className='border rounded p-2 ml-2'
+                    />
+                  </div>
+                  <button 
+                    onClick={fetchData} 
+                    className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+                  >
+                  Generar reporte de envios masivos
+                  </button>
+                </div>
+              </div>
 
-        <label>Fecha de fin:</label>
-        <input type="datetime-local" value={fechaFin} onChange={(e) => setFechaFin(e.target.value)} />
-
-        <button onClick={fetchData} >Generar reporte de envios masivos </button>
-      </div>
-      <div>
-      <button onClick={ObtenerConversaciones}>Obtener Conversaciones</button>
-    </div>
-    <h2>Consulta de Conversación</h2>
-      <p>Fecha: <input type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} /></p>
-      <p>ID Chat: <input type="text" value={idchat} onChange={(e) => setIdchat(e.target.value)} /></p>
-      <p>User ID: <input type="text" value={userid} onChange={(e) => setUserid(e.target.value)} /></p>
-      <button onClick={consultarConversacion}>Consultar Conversación</button>
-      <button onClick={descargarPDF}>Descargar PDF</button>
-      <div>
-        <h3>Resultado:</h3>
-        {conversacion && <pre>{conversacion}</pre>}
-        {mensaje && <p>{mensaje}</p>}
-      </div>
-      <div></div>
-    
+              <div className='mb-8'>
+                <h1 className="text-4xl font-bold mb-4">Reportes de conversaciones</h1>
+                <div className='flex flex-wrap gap-4'>
+                  <div className='w-full md:w-1/3'>
+                    <label className='block mb-2'>Fecha de inicio:</label>
+                    <input 
+                      type="datetime-local" 
+                      value={fechaInicio} 
+                      onChange={(e) => setFechaInicio(e.target.value)} 
+                      className='border rounded p-2 ml-2'
+                    />
+                  </div>
+                  <div className="w-full md:w-1/3">
+                    <label className='block mb-2'>Fecha de finalización:</label>
+                    <input 
+                      type="datetime-local" 
+                      value={fechaFin} 
+                      onChange={(e) => setFechaFin(e.target.value)} 
+                      className='border rounded p-2 ml-2'
+                    />
+                  </div>
+                  <button 
+                    onClick={ObtenerConversaciones} 
+                    className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
+                  >
+                  Obtener Conversaciones
+                  </button>
+                </div>
+              </div>
+          
+              {/*<h2 className=''>Consulta de Conversación</h2>
+          <p>Fecha: <input type="date" value={fecha} onChange={(e) => setFecha(e.target.value)} /></p>
+          <p>ID Chat: <input type="text" value={idchat} onChange={(e) => setIdchat(e.target.value)} /></p>
+          <p>User ID: <input type="text" value={userid} onChange={(e) => setUserid(e.target.value)} /></p>
+          <button onClick={consultarConversacion}>Consultar Conversación</button>
+          <button onClick={descargarPDF}>Descargar PDF</button>
+          <div>
+            <h3>Resultado:</h3>
+            {conversacion && <pre>{conversacion}</pre>}
+            {mensaje && <p>{mensaje}</p>}
+          </div>*/}
+            </div>
           </div>
            {/* Formulario para ingresar los parámetros */}
-         
         </Layout>
       ) : (
         <div className="flex flex-col items-center justify-center h-screen">
