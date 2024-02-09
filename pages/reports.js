@@ -323,7 +323,7 @@ function Reports() {
               <div className='mb-8'>
                 <h1 className="text-4xl font-bold mb-4">Reportes de conversaciones</h1>
                 <div className='flex flex-wrap gap-4'>
-                  <div className='w-full md:w-1/3'>
+                  <div className='w-full md:w-1/2'>
                     <label className='block mb-2'>Fecha de inicio:</label>
                     <input 
                       type="datetime-local" 
@@ -332,7 +332,7 @@ function Reports() {
                       className='border rounded p-2 ml-2'
                     />
                   </div>
-                  <div className="w-full md:w-1/3">
+                  <div className="w-full md:w-1/2">
                     <label className='block mb-2'>Fecha de finalización:</label>
                     <input 
                       type="datetime-local" 
@@ -341,7 +341,7 @@ function Reports() {
                       className='border rounded p-2 ml-2 w-full'
                     />
                   </div>
-                  <div className='w-full md:w-1/3 flex justify-center items-end'>
+                  <div className='w-full flex justify-center items-end'>
                   <button 
                     onClick={ObtenerConversaciones} 
                     className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
