@@ -198,10 +198,11 @@ useEffect(() => {
       const chatGestion = chatsengestion.map((chat) => chat.userId);
       const chatsPendings = chats.map((chat) => chat.userId);
       setResultadost(chats)
-      console.log(chatsPendings)
+      
       // pendientes
       const frecuencias = {};
       chatsPendings.forEach((id) => {
+        console.log(chatsPendings)
         frecuencias[id] = (frecuencias[id] || 0) + 1;
       });
 
