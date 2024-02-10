@@ -196,13 +196,13 @@ useEffect(() => {
       const chatsExpiredByClient = chats.filter((valor) => valor.status === 'expiredbyclient');
       const chatCerrado = chatscerrados.map((chat) => chat.userId);
       const chatGestion = chatsengestion.map((chat) => chat.userId);
-      const chatsPendings = chats.map((chat) => chat.userId);
+      const chatsPendings = Object.values(chats).map((chat) => chat.userId);
       setResultadost(chats)
-      
+      console.log(chatsPendings, 'hola')
       // pendientes
       const frecuencias = {};
       chatsPendings.forEach((id) => {
-        console.log(Object.values(chatsPendings), 'hola')
+        
         frecuencias[id] = (frecuencias[id] || 0) + 1;
       });
 
