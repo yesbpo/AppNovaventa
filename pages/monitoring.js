@@ -11,7 +11,6 @@ const MonitoringPage = () => {
   const [numericInputValue, setNumericInputValue] = useState('');
   const [templates, setTemplates] = useState([]);
   const [error, setError] = useState(null);
- 
   // Función para abrir la ventana emergente
   const openPopup = () => {
     setShowPopup(true);
@@ -30,7 +29,7 @@ const MonitoringPage = () => {
         console.error('Error: No se ha seleccionado ninguna plantilla.');
       return;
       }
-   
+      
       const selectedTemplate = templates.find((template) => template.id === selectedTemplateId);
    
       if (!selectedTemplate) {
@@ -486,114 +485,8 @@ const [url, setUrl] = useState('');
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
-
-  const handleUpload = async () => {
-    if (!file) {
-      alert('Selecciona un archivo primero.');
-      return;
-    }
-
-    const formData = new FormData();
-    formData.append('archivo', file);
-
-    try {
-      const response = await fetch('https://3d29bmtd-8080.use2.devtunnels.ms/upload', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-
-        // Actualizar el mensajeData para incluir información del archivo
-        const mensajeData = {
-          channel: 'whatsapp',
-          source: process.env.NEXT_PUBLIC_CELLPHONE,
-          'src.name': process.env.NEXT_PUBLIC_NAMEAPP,
-          destination: numeroEspecifico,
-          message: JSON.stringify({
-            type: 'image', // Puedes ajustar esto según el tipo de archivo
-            originalUrl: data.url, // URL generada después de la carga del archivo
-            previewUrl: data.url, // Puedes ajustar esto según tus necesidades
-            caption: 'Envío de imagen',
-          }),
-          disablePreview: true,
-        };
-
-        const responseEnvio = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/api/envios', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: new URLSearchParams(mensajeData).toString(),
-        });
-
-        if (!responseEnvio.ok) {
-          throw new Error(`Error en la solicitud: ${responseEnvio.status} ${responseEnvio.statusText}`);
-        }
-
-        const responseData = await responseEnvio.json();
-        console.log('Respuesta del servidor:', responseData);
-
-        const idMessage = responseData.messageId;
-
-        const actualizarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/mensajeenviado', {
-          method: 'PUT',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            content: mensajeData.message,
-            idMessage,
-          }),
-        });
-
-        if (actualizarMensajeResponse.ok) {
-          const actualizarMensajeData = await actualizarMensajeResponse.json();
-          console.log('Respuesta de la actualización del mensaje:', actualizarMensajeData);
-        } else {
-          console.error('Error al actualizar el mensaje:', actualizarMensajeResponse.status);
-          // Resto del código para guardar el mensaje en el servidor...
-        }
-      } else {
-        alert(`Error al subir el archivo: ${response.status} ${response.statusText}`);
-      }
-    } catch (error) {
-      console.error('Error en la solicitud:', error);
-    }
-  };
-
-
   const [numeroEspecifico, setNumeroEspecifico] = useState('');
-  const actualizarEstadoChat = async (estado) => {
-    try {
-      const idChat2 = numeroEspecifico; // Asegúrate de obtener el idChat2 según tu lógica
-      const nuevoEstado = 'in process'; // Asegúrate de obtener el nuevoEstado según tu lógica
 
-      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/actualizar-estado-chat', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ idChat2, nuevoEstado }), // Ajusta la estructura del cuerpo según tus necesidades
-      });
-
-      if (response.ok) {
-        const resultado = await response.json();
-        console.log('Respuesta de la actualización:', resultado);
-        // Manejar la respuesta exitosa según tus necesidades
-      } else if (response.status === 404) {
-        console.error('Chat no encontrado');
-        // Manejar el caso de chat no encontrado según tus necesidades
-      } else {
-        console.error('Error interno del servidor');
-        // Manejar otros errores según tus necesidades
-      }
-    } catch (error) {
-      console.error('Error en la solicitud:', error);
-      // Manejar errores generales según tus necesidades
-    }
-  };
    // Reemplaza esto con el número que necesites
   const [inputValue, setInputValue] = useState('')
   const [msg, setMsg] = useState([]);
@@ -601,15 +494,6 @@ const [url, setUrl] = useState('');
   const socket = io(process.env.NEXT_PUBLIC_SOCKET); 
   socket.on( async (data) => { 
     
-    
-    
-  // Manejar la conexión del socket al montar el componente
-  // Reemplaza con la URL de tu servidor Socket.IO
-
-  // Manejar la desconexión del socket al desmontar el componente
-  
- // Asegúrate de tener un array vacío como dependencia para que solo se ejecute al montar y desmontar el componente
-
     try {
       const fechaActual = new Date();
       const options = { timeZone: 'America/Bogota', hour12: false };
@@ -710,100 +594,6 @@ setWebhookData(webhookText);
 
 })
 }
-  
-  const enviarMensaje = async () => {
-    
-    if (!inputValue.trim()){
-      console.log('Mensaje vacío, no se enviará.');
-      return;
-    }
-    try {
-      const mensajeData = {
-        channel: 'whatsapp',
-        source: process.env.NEXT_PUBLIC_CELLPHONE,
-        'src.name': process.env.NEXT_PUBLIC_NAMEAPP,
-        destination: numeroEspecifico,
-        message: inputValue,
-        disablePreview: true,
-      };
-      console.log(mensajes)
-      setMsg((prevMsg) => [...prevMsg, inputValue]);
-      
-      setMensajes((prevMensajes) => (
-        [
-          ...prevMensajes,
-          {
-            numero: mensajeData.destination,
-            tipo: 'message-event',
-            contenido: mensajeData.message,
-            date: new Date().toLocaleString(),
-          },
-        ]
-      ));
-      const response = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/api/envios', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        body: new URLSearchParams(mensajeData).toString(),
-      });
-      
-      if (!response.ok) {
-        throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
-      }
-      const responseData = await response.json();
-      console.log('Respuesta del servidor:', responseData);
-       // Escucha el evento 'cambio' para obtener el idMessage
-      const idMessage = responseData.messageId;
-
-      // Actualiza el mensaje en el servidor
-      const actualizarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/mensajeenviado', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          content: mensajeData.message,
-          idMessage,
-        }),
-      });
-      if (actualizarMensajeResponse.ok) {
-        const actualizarMensajeData = actualizarMensajeResponse.json();
-        console.log('Respuesta de la actualización del mensaje:', actualizarMensajeData);
-      } else {
-        console.error('Error al actualizar el mensaje:', actualizarMensajeResponse.status);
-          // Guarda el mensaje en el servidor
-    const guardarMensajeResponse = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/guardar-mensajes', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        content: mensajeData.message,
-        type_comunication: 'message-event', // Puedes ajustar este valor según tus necesidades
-        status: 'sent', // Puedes ajustar este valor según tus necesidades
-        number: numeroEspecifico,
-        type_message: 'text',
-        timestamp: new Date().toISOString().slice(0, 19).replace('T', ' '),
-        idMessage: idMessage // Puedes ajustar este valor según tus necesidades
-      }),
-    });
-
-    if (guardarMensajeResponse.ok) {
-      const guardarMensajeData = await guardarMensajeResponse.json();
-      console.log('Respuesta de guardar mensaje en la base de datos:', guardarMensajeData);
-    } else {
-      console.error('Error al guardar el mensaje:', guardarMensajeResponse.status);
-    }conection()
-      }
-    
-      setInputValue('')
-      
-    } catch (error) {
-      console.error('Error al realizar la solicitud:', error);
-    }
-  };
-
   useEffect(() => {
     const apiUrl2 = process.env.NEXT_PUBLIC_BASE_API+"/api/users";
     fetch(apiUrl2, {
@@ -829,62 +619,19 @@ setWebhookData(webhookText);
         console.error('Error:', error);
       });  
   }, []);
-  const updateuser = async () => {
-    const usuario = session.user.name; // Reemplaza con el nombre de usuario que deseas actualizar
-    const nuevoDato = 'Activo'; // Reemplaza con el nuevo valor que deseas asignar
-    
-    try {
-      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/actualizar/usuario', {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          nuevoDato: nuevoDato,
-          usuario: usuario
-        }),
-      });
-  
-      if (response.ok) {
-        const data = await response.json();
-         // Aquí puedes manejar la respuesta del servidor
-      } else {
-        console.error('Error al actualizar el usuario:', response.statusText);
-      }
-      try {
-        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes');
-
-        if (!response.ok) {
-          throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
-        }
-
-        const data1 = await response.json();
-        setMensajes1(data1);
-      } catch (error) {
-        console.error('Error al obtener mensajes:', error);
-        // Puedes manejar el error según tus necesidades
-      }
-    
-    } catch (error) {
-      console.error('Error de red:', error.message);
-    }
-  };
   function limpiarLink(dataString) {
     const match = dataString.match(/"file":"([^"]*)"/);
     return match ? match[1] : null;
   }
   const handleNumeroChange = (e) => {
-    
     console.log(asesores.filter((contacto) => contacto.id == 4))
     setValorbuscado(e.target.value)
     const resultadosFiltrados = resultadost.filter(
       (contacto) => contacto.idChat2.includes(e.target.value) || nombreuser(contacto.userId).includes(e.target.value) );
-            
     setDatosbuscados(resultadosFiltrados);
   };
   const nombreuser = (idus) => {
     const asesorEncontrado = asesores.find((contacto) => contacto.id === idus);
-  
     // Verifica si se encontró el asesor antes de intentar acceder a la propiedad
     return asesorEncontrado ? asesorEncontrado.complete_name : 'Nombre no encontrado';
   };
@@ -892,76 +639,69 @@ setWebhookData(webhookText);
   if(session){
   return (
   <>
-  
-   {showPopup &&  <div className="fixed inset-0 flex items-center justify-center overflow-y-auto">
-
-<div className="bg-black bg-opacity-50 " ></div>
-<div className="bg-white p-6 rounded shadow-lg w-96">
-<button
-    onClick={closePopup}
-    className="mb-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-  >
-    Cerrar
-  </button>
-
-  <label htmlFor="destinationInput" className="block text-sm font-medium text-gray-700">
-    Número de destino (máximo 10 dígitos):
-  </label>
-  <input
-    type="text"
-    id="destinationInput"
-    value={numericInputValue}
-    onChange={(e) => handleNumericInputChange(e.target.value)}
-    className="mt-1 p-2 border border-gray-300 rounded-md"
-  />
- <button
-    onClick={handleAgregarNumeroClick}
-    className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-  >
-    Agregar Número
-  </button>
-
-  <h2 className="mt-4 text-lg font-semibold">Plantillas:</h2>
-  <select
-    value={selectedTemplateId}
-    onChange={handleTemplateChange}
-    className="mt-1 p-2 border border-gray-300 rounded-md"
-  >
-    <option value="" disabled>Select a template</option>
-
-    {templates.map((template) => (
-
-      <option key={template.id} value={template.id}>
-        {template.data}{contarOcurrencias(template.data, '{{.*?}}')}
-      </option>
-    ))}
-
-  </select>
-
-  {templates.map(
-    (template) =>
-      template.id === selectedTemplateId &&
-      template.params && (
-        <div key={template.id} className="mt-4">
-          <h3 className="text-lg font-semibold">Parámetros:</h3>
-          {contarOcurrencias(template.data, '{{.*?}}').length > 0 && contarOcurrencias(template.data, '{{.*?}}').map((param) => (
-            <div key={param} className="mt-2">
-              <label htmlFor={param} className="block text-sm font-medium text-gray-700">
-                {param}:
-              </label>
-              <input
+    {showPopup && 
+      <div className="fixed inset-0 flex items-center justify-center overflow-y-auto">
+        <div className="bg-black bg-opacity-50 " ></div>
+          <div className="bg-white p-6 rounded shadow-lg w-96">
+            <button
+            onClick={closePopup}
+            className="mb-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            >
+            Cerrar
+            </button>
+            <label htmlFor="destinationInput" className="block text-sm font-medium text-gray-700">
+            Número de destino (máximo 10 dígitos):
+            </label>
+            <input
+              type="text"
+              id="destinationInput"
+              value={numericInputValue}
+              onChange={(e) => handleNumericInputChange(e.target.value)}
+              className="mt-1 p-2 border border-gray-300 rounded-md"
+            />
+            <button
+              onClick={handleAgregarNumeroClick}
+              className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+            >
+            Agregar Número
+            </button>
+            <h2 className="mt-4 text-lg font-semibold">Plantillas:</h2>
+            <select
+            value={selectedTemplateId}
+            onChange={handleTemplateChange}
+            className="mt-1 p-2 border border-gray-300 rounded-md"
+            >
+              <option value="" disabled>Select a template</option>
+                {templates.map((template) => (
+                <option key={template.id} value={template.id}>
+                  {template.data}{contarOcurrencias(template.data, '{{.*?}}')}
+                </option>
+              ))}
+            </select>
+            {templates.map(
+            (template) =>
+            template.id === selectedTemplateId &&
+            template.params && (
+            <div key={template.id} className="mt-4">
+              <h3 className="text-lg font-semibold">Parámetros:</h3>
+              {contarOcurrencias(template.data, '{{.*?}}').length > 0 && contarOcurrencias(template.data, '{{.*?}}').map((param) => (
+              <div key={param} className="mt-2">
+                <label htmlFor={param} className="block text-sm font-medium text-gray-700">
+                  {param}:
+                </label>
+                <input
                 type="text"
                 id={param}
                 onChange={(e) => handleParamChange(param, e.target.value)}
                 className="mt-1 p-2 border border-gray-300 rounded-md"
-              />
+                />
+              </div>
+              ))}
             </div>
-          ))}
-        </div>
-      )
-  )}
-</div>
-</div>}
+            )
+          )}
+      </div>
+    </div>}
     <Layout>
       <Box>
         <ButtonContainer>
@@ -997,6 +737,12 @@ setWebhookData(webhookText);
     </div>
 
     <div className="p-2 border border-gray-300 rounded">
+    <select>
+  <option value="Hoy">Hoy</option>
+  <option value="EstaSemana">Esta semana</option>
+  <option value="EsteMes">Este mes</option>
+</select>
+
     <CustomButton onClick={openPopup}>Agregar Número</CustomButton>
           <CustomButton className="cursor-pointer" 
           onClick={()=>{handleClosedClick()}}>
