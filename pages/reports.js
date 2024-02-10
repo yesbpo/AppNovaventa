@@ -233,6 +233,18 @@ function Reports() {
               <h1 className="text-3xl font-bold mb-3 text-center">
                 Reportes Mensajeria WhatsApp
               </h1>
+              <label className="block mb-2">
+                    Tipo de Mensajes:
+                    <select
+                      value={tipoMensajes}
+                      onChange={(e) => setTipoMensajes(e.target.value)}
+                      className="border rounded p-2 ml-2"
+                    >
+                      <option value="ambos">Todos</option>
+                      <option value="entrantes">Entrantes</option>
+                      <option value="salientes">Salientes</option>
+                    </select>
+                  </label>
               <div className='mb-8'>
               <div className='flex flex-wrap gap-4'>
                 <div className='w-full md:w-1/3'>  
@@ -254,18 +266,7 @@ function Reports() {
                     />
                 </div>
                 <div className='w-full md:w-1/2'>
-                  <label className="block mb-2">
-                    Tipo de Mensajes:
-                    <select
-                      value={tipoMensajes}
-                      onChange={(e) => setTipoMensajes(e.target.value)}
-                      className="border rounded p-2 ml-2"
-                    >
-                      <option value="ambos">Todos</option>
-                      <option value="entrantes">Entrantes</option>
-                      <option value="salientes">Salientes</option>
-                    </select>
-                  </label>
+                  
                   <button
                     onClick={generarReporte}
                     className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
