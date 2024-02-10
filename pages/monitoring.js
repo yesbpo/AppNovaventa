@@ -202,7 +202,7 @@ useEffect(() => {
       // pendientes
       const frecuencias = {};
       chatsPendings.forEach((id) => {
-        console.log(chatsPendings)
+        console.log(Object.values(chatsPendings), 'hola')
         frecuencias[id] = (frecuencias[id] || 0) + 1;
       });
 
