@@ -185,7 +185,7 @@ useEffect(() => {
       }
       const data = await response.json();
       const chats = await responseChats.json();
-      console.log(chats)
+      console.log(Object.values(chats).map((chat) => chat.userId))
       const asesores = data.filter((d) => d.type_user === 'Asesor' ||  d.type_user === 'Asesor1' );
       setAsesores(asesores);
       console.log(asesores)
