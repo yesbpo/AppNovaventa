@@ -189,20 +189,19 @@ useEffect(() => {
       const asesores = data.filter((d) => d.type_user === 'Asesor' ||  d.type_user === 'Asesor1' );
       setAsesores(asesores);
       console.log(asesores)
-      const chatspendientes = chats.filter((valor) => valor.status === 'pending');
-      const chatsengestion = chats.filter((valor) => valor.status === 'in process');
-      const chatscerrados = chats.filter((valor) => valor.status === 'closed');
-      const chatsExpiredByAsesor = chats.filter((valor) => valor.status === 'expiredbyasesor');
-      const chatsExpiredByClient = chats.filter((valor) => valor.status === 'expiredbyclient');
+      const chatspendientes = Object.values(chats)[0].filter((valor) => valor.status === 'pending');
+      const chatsengestion = Object.values(chats)[0].filter((valor) => valor.status === 'in process');
+      const chatscerrados = Object.values(chats)[0].filter((valor) => valor.status === 'closed');
+      const chatsExpiredByAsesor = Object.values(chats)[0].filter((valor) => valor.status === 'expiredbyasesor');
+      const chatsExpiredByClient = Object.values(chats)[0].filter((valor) => valor.status === 'expiredbyclient');
       const chatCerrado = chatscerrados.map((chat) => chat.userId);
       const chatGestion = chatsengestion.map((chat) => chat.userId);
       const chatsPendings = Object.values(chats)[0].map((chat) => chat.userId);
       setResultadost(chats)
-      console.log(chatsPendings, 'hola')
+      
       // pendientes
       const frecuencias = {};
       chatsPendings.forEach((id) => {
-        
         frecuencias[id] = (frecuencias[id] || 0) + 1;
       });
 
