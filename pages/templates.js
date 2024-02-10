@@ -246,7 +246,6 @@ useEffect(() => {
       if (data.datos) {
         // Update the state with the fetched data
         setTemplates(data.datos);
-        console.log(data.data)
       } else {
         console.log(data.mensaje);
       }

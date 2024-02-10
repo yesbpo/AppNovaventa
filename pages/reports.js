@@ -229,31 +229,29 @@ function Reports() {
       {session ? (
         <Layout>
           <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-black p-8 bg-opacity-80">
-            <div className='w-full max-w-lg'>
-              <h1 className="text-4xl font-bold mb-4">
+            <div className='w-full'>
+              <h1 className="text-3xl font-bold mb-3 text-center">
                 Reportes Mensajeria WhatsApp
               </h1>
-              
+              <div className='mb-8'>
               <div className='flex flex-wrap gap-4'>
-                <div className='w-full md:w-1/2'>  
-                  <label className="block mb-2">
-                    Fecha de Inicio:
+                <div className='w-full md:w-1/3'>  
+                  <label className="block mb-2">Fecha de Inicio:</label>
                     <input
                       type="datetime-local"
                       value={fechaInicio}
                       onChange={(e) => setFechaInicio(e.target.value)}
-                      className="border rounded p-2 ml-2"
+                      className="border rounded p-2 ml-2 w-full"
                     />
-                  </label>
-                  <label className="block mb-2">
-                    Fecha de Fin:
+                </div>
+                <div className="w-full md:w-1/3">
+                  <label className="block mb-2">Fecha de Fin: </label>
                     <input
                       type="datetime-local"
                       value={fechaFin}
                       onChange={(e) => setFechaFin(e.target.value)}
-                      className="border rounded p-2 ml-2"
+                      className="border rounded p-2 ml-2 w-full"
                     />
-                  </label>
                 </div>
                 <div className='w-full md:w-1/2'>
                   <label className="block mb-2">
@@ -276,11 +274,14 @@ function Reports() {
                   </button>
                 </div>
               </div>
-
+              </div>
               <div className='mb-8'> 
-                <h1 className="text-4xl font-bold mb-4">Reportes de campañas</h1>
+                <h1 className="text-3xl font-bold mb-3 text-center">
+                  Reportes de campañas
+                </h1>
+                <div className='mb-7'>
                 <div className='flex flex-wrap gap-4'>
-                  <div className='w-full md:w-1/3'>
+                  <div className='w-full md:w-1/2'>
                     <label className='block mb-2'>Campaña:</label>
                     <input 
                       type="text" 
@@ -289,21 +290,26 @@ function Reports() {
                       className="border rounded p-2 ml-2 w-full"  
                     />
                   </div>
-                  <div className="w-full md:w-1/3 flex flex-col">
-                    <label className='block mb-2'>Fecha de inicio:</label>
-                    <input 
-                      type="datetime-local" 
-                      value={fechaInicio} 
-                      onChange={(e) => setFechaInicio(e.target.value)} 
-                      className='border rounded p-2 ml-2 mb-4'
-                    />
-                    <label className='block mb-2'>Fecha de fin:</label>
-                    <input 
-                      type="datetime-local" 
-                      value={fechaFin} 
-                      onChange={(e) => setFechaFin(e.target.value)} 
-                      className='border rounded p-2 ml-2'
-                    />
+                  <div className='mb-8'>
+                  <div className="w-full md:w-1/3">
+                    <div className="flex flex-col">
+                      <label className='block mb-2'>Fecha de inicio:</label>
+                      <input 
+                        type="datetime-local" 
+                        value={fechaInicio} 
+                        onChange={(e) => setFechaInicio(e.target.value)} 
+                        className='border rounded p-2 ml-2 mb-4'
+                      />
+                    </div>
+                    <div className="flex flex-col">
+                      <label className='block mb-2'>Fecha de fin:</label>
+                      <input 
+                        type="datetime-local" 
+                        value={fechaFin} 
+                        onChange={(e) => setFechaFin(e.target.value)} 
+                        className='border rounded p-2 ml-2'
+                      />
+                    </div>
                   </div>
                   <div className='w-full md:w-1/3 flex justify-center items-end'>
                     <button 
@@ -315,11 +321,13 @@ function Reports() {
                   </div>
                 </div>
               </div>
+              </div>
+              </div>
 
               <div className='mb-8'>
-                <h1 className="text-4xl font-bold mb-4">Reportes de conversaciones</h1>
+                <h1 className="text-4xl font-bold mb-4 text-center">Reportes de conversaciones</h1>
                 <div className='flex flex-wrap gap-4'>
-                  <div className='w-full md:w-1/3'>
+                  <div className='w-full md:w-1/2'>
                     <label className='block mb-2'>Fecha de inicio:</label>
                     <input 
                       type="datetime-local" 
@@ -328,15 +336,16 @@ function Reports() {
                       className='border rounded p-2 ml-2'
                     />
                   </div>
-                  <div className="w-full md:w-1/3">
+                  <div className="w-full md:w-1/2">
                     <label className='block mb-2'>Fecha de finalización:</label>
                     <input 
                       type="datetime-local" 
                       value={fechaFin} 
                       onChange={(e) => setFechaFin(e.target.value)} 
-                      className='border rounded p-2 ml-2'
+                      className='border rounded p-2 ml-2 w-full'
                     />
                   </div>
+                  <div className='w-full flex justify-center items-end'>
                   <button 
                     onClick={ObtenerConversaciones} 
                     className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
@@ -358,6 +367,7 @@ function Reports() {
             {mensaje && <p>{mensaje}</p>}
           </div>*/}
             </div>
+          </div>
           </div>
            {/* Formulario para ingresar los parámetros */}
         </Layout>
