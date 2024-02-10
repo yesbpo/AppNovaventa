@@ -8,6 +8,10 @@ const MonitoringPage = () => {
   const [selectedTemplateId, setSelectedTemplateId] = useState('');
   const [showPopup, setShowPopup] = useState('')
   const [templateParams, setTemplateParams] = useState({}); // Nuevo estado para los parámetros
+  const [numericInputValue, setNumericInputValue] = useState('');
+  const [templates, setTemplates] = useState([]);
+  const [error, setError] = useState(null);
+ 
   // Función para abrir la ventana emergente
   const openPopup = () => {
     setShowPopup(true);
@@ -15,9 +19,6 @@ const MonitoringPage = () => {
   const closePopup = () => {
     setShowPopup(false);
   };
-  const [numericInputValue, setNumericInputValue] = useState('');
-  const [templates, setTemplates] = useState([]);
-  const [error, setError] = useState(null);
   const handleNumericInputChange = (value) => {
     // Permite solo números y limita a 10 caracteres
     const newValue = value.replace(/[^0-9]/g, '').slice(0, 10);
@@ -25,54 +26,52 @@ const MonitoringPage = () => {
     console.log('Valor numérico ingresado:', newValue);
    };
    const enviarSolicitud = async () => {
-    if (!selectedTemplateId) {
-      console.error('Error: No se ha seleccionado ninguna plantilla.');
+      if (!selectedTemplateId) {
+        console.error('Error: No se ha seleccionado ninguna plantilla.');
       return;
-    }
+      }
    
-    const selectedTemplate = templates.find((template) => template.id === selectedTemplateId);
+      const selectedTemplate = templates.find((template) => template.id === selectedTemplateId);
    
-    if (!selectedTemplate) {
-      console.error('Error: No se encontró la plantilla seleccionada.');
+      if (!selectedTemplate) {
+        console.error('Error: No se encontró la plantilla seleccionada.');
       return;
-    }
+      }
    
-    const url = 'https://api.gupshup.io/wa/api/v1/template/msg';
-    const apiKey = 'thpuawjbidnbbbfrp9bw7qg03eci6rdz';
-   
-    const data = new URLSearchParams();
-    data.append('channel', 'whatsapp');
-    data.append('source', process.env.NEXT_PUBLIC_CELLPHONE);
-    data.append('destination', numericInputValue);
-    data.append('src.name', process.env.NEXT_PUBLIC_NAMEAPP);
-    data.append('template', JSON.stringify({
-      id: selectedTemplate.id,
-      params: Object.values(templateParams) || [] // Asegúrate de que tu plantilla tenga una propiedad params
-    }));
- 
+      const url = 'https://api.gupshup.io/wa/api/v1/template/msg';
+      const apiKey = 'thpuawjbidnbbbfrp9bw7qg03eci6rdz';
+      const data = new URLSearchParams();
+        data.append('channel', 'whatsapp');
+        data.append('source', process.env.NEXT_PUBLIC_CELLPHONE);
+        data.append('destination', numericInputValue);
+        data.append('src.name', process.env.NEXT_PUBLIC_NAMEAPP);
+        data.append('template', JSON.stringify({
+                      id: selectedTemplate.id,
+                      params: Object.values(templateParams) || [] // Asegúrate de que tu plantilla tenga una propiedad params
+                    }));
     try {
-   setSelectedTemplateId('')
+      setSelectedTemplateId('')
       setNumericInputValue('')
-      const response = await fetch(url, {
-        method: 'POST',
-        headers: {
-          'Cache-Control': 'no-cache',
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'apikey': apiKey,
-          'cache-control': 'no-cache',
-        },
-        body: data,
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: {
+            'Cache-Control': 'no-cache',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'apikey': apiKey,
+            'cache-control': 'no-cache',
+          },
+          body: data,
       });
-      const responseenvio = response.json(); 
+        const responseenvio = response.json(); 
         // guardar template
         const fechaActual = new Date();
         const options = { timeZone: 'America/Bogota', hour12: false };
-        const anio = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
-        const mes = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
-        const dia = fechaActual.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
-        const hora = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
-        const minutos = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
-        const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
+          const anio = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
+          const mes = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
+          const dia = fechaActual.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
+          const hora = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
+          const minutos = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
+          const segundos = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
         const datosdenetrada = {
           idmessageTemplate: responseenvio.messageId,
           status: 'sent',
@@ -80,9 +79,8 @@ const MonitoringPage = () => {
           message: data.template,
           timestamp:`${anio}-${mes}-${dia} ${hora}:${minutos}:${segundos}`,
           campaign: 'envio unico'
-          };
+        };
           try {
-            console.log(titleCampaign)
             const responseguardar = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/insertar-datos-template', {
               method: 'POST',
               headers: {
@@ -95,31 +93,27 @@ const MonitoringPage = () => {
             if (!responseguardar.ok) {
               throw new Error(`Error en la solicitud: ${response.statusText}`);
             }
-        
             const data1 = await responseguardar.json(); // Parsea la respuesta como JSON
             console.log('Respuesta del servidor:', data1);
             // Puedes realizar acciones adicionales con la respuesta aquí
-          } catch (error) {
+              } catch (error) {
             console.error('Error al realizar la solicitud:', error);
             // Manejo de errores
-          }
-      const responseData = await response.json();
-      console.log('Respuesta:', Object.values(templateParams));
-   
-    } catch (error) {
-      console.error('Error al enviar la solicitud:', error);
-    }
-   };
-   const handleAgregarNumeroClick = () => {
+              }
+            const responseData = await response.json();
+            console.log('Respuesta:', Object.values(templateParams));
+        } catch (error) {
+            console.error('Error al enviar la solicitud:', error);
+        }
+      };
+      const handleAgregarNumeroClick = () => {
     // Llamamos a la función enviarSolicitud al hacer clic en el botón
-    enviarSolicitud();
-   
+      enviarSolicitud();
    };
    function contarOcurrencias(texto, patron) {
     const regex = new RegExp(patron, 'g');
     const coincidencias = texto.match(regex);
     const componentes = Array.from({ length: coincidencias }, (v, index) => index);
-   
     return coincidencias ? coincidencias : 0;
    }
    const handleParamChange = (param, value) => {
@@ -132,26 +126,21 @@ const MonitoringPage = () => {
       return updatedParams;
     });
    };
-   const handleTemplateChange = (event) => {
-    const selectedTemplateId = event.target.value;
-    setSelectedTemplateId(selectedTemplateId);
-   };
-   
+const handleTemplateChange = (event) => {
+  const selectedTemplateId = event.target.value;
+  setSelectedTemplateId(selectedTemplateId);
+};
 // GET TEMPLATES
 useEffect(() => {
-
   // Traer las plantillas al cargar el componente
   const fetchTemplates = async () => {
     try {
       // Utilizar el servidor proxy en lugar de la URL directa
       const response = await fetch(process.env.NEXT_PUBLIC_API2+'/gupshup-templates');
- 
       if (!response.ok) {
         throw new Error(HTTP `error! Status: ${response.status}`);
       }
- 
       const data = await response.json();
- 
       if (data.status === "success") {
         const processedTemplates = data.templates.map(template => ({
           id: template.id, // Asegúrate de incluir el ID
@@ -173,22 +162,11 @@ useEffect(() => {
     } catch (error) {
       setError(Fetch `error: ${error.message}`);
     }
-  };
- 
-  
+  }; 
   fetchTemplates();
-  
   // Llama a fetchMensajes cada segundo
- 
- 
-  // Limpia el intervalo al desmontar el componente
- 
- 
- }, []);
-  useEffect(() => {
-    // Lógica que se ejecutará después del montaje del componente
-    updateuser();
-  }, []); // El array vacío asegura que el efecto se ejecute solo una vez al montar el componente
+  }, []);
+
 const [statuschats, setStatuschats] = useState('')
 const [asesores, setAsesores] = useState([]);
 const [resultados, setResultados] = useState([]);
@@ -201,21 +179,20 @@ useEffect(() => {
   const obtenerMensajes = async () => {
     try {
       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
-      const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-chats');
-
+      const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/consultar-chats-hoy');
       if (!response.ok || !responseChats.ok) {
         throw new Error(`Error en la solicitud`);
       }
-
       const data = await response.json();
       const chats = await responseChats.json();
-
       const asesores = data.filter((d) => d.type_user === 'Asesor' ||  d.type_user === 'Asesor1' );
       setAsesores(asesores);
       console.log(asesores)
       const chatspendientes = chats.filter((valor) => valor.status === 'pending');
       const chatsengestion = chats.filter((valor) => valor.status === 'in process');
       const chatscerrados = chats.filter((valor) => valor.status === 'closed');
+      const chatsExpiredByAsesor = chats.filter((valor) => valor.status === 'expiredbyasesor');
+      const chatsExpiredByClient = chats.filter((valor) => valor.status === 'expiredbyclient');
       const chatCerrado = chatscerrados.map((chat) => chat.userId);
       const chatGestion = chatsengestion.map((chat) => chat.userId);
       const chatsPendings = chats.map((chat) => chat.userId);
