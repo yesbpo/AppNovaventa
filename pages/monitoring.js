@@ -193,6 +193,7 @@ const obtenerMensajes = async (tiempo) => {
     const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/consultar-chats-'+tiempo);
     const timeResponseFetch = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes-tiemporespuesta-'+tiempo)
     const time = await timeResponseFetch.json()
+    console.log(time)
     setTimeResponse(time)
     if (!response.ok || !responseChats.ok) {
       throw new Error(`Error en la solicitud`);
