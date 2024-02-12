@@ -185,9 +185,7 @@ const [contactos, setContactos] = useState([
 const [webhookData, setWebhookData] = useState(null);
 const [mensajes1, setMensajes1] = useState([]);
 const [mensajes2, setMensajes2] = useState([]);
-const changeTimeFilter =  (tiempo)=>{
-  obtenerMensajes(tiempo)
-}
+
 const obtenerMensajes = async (tiempo) => {
   try {
     const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
@@ -277,7 +275,7 @@ const handlePendientesClick = async (iduser) => {
       
             const status = 'pending';
             const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}`);      
-            const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
+            const responseChats = resultadost.filter(r=>r.status == 'pending')
       
       // El usuario está autenticado, puedes acceder a la sesión
       
@@ -744,7 +742,7 @@ setWebhookData(webhookText);
       }}
     >
       <option value="hoy" >Hoy</option>
-      <option value="semana" >Esta semana</option>
+      <option value="semana">Esta semana</option>
       <option value="mes" >Este mes</option>
     </select>
     <CustomButton onClick={openPopup}>Agregar Número</CustomButton>
