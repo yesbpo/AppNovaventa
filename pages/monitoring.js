@@ -805,7 +805,7 @@ setWebhookData(webhookText);
           <div className="chat-container">
             <h1>{statuschats}</h1>
             <ul>
-              {contactos1.map((contacto, index) => (
+              {resultadost.map((contacto, index) => (
                 <li key={index}>
                   
                   <CustomButton onClick={() => setNumeroEspecifico(contacto.idChat2)}>Usuario:{contacto.idChat2}</CustomButton>
