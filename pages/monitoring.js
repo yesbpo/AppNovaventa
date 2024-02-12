@@ -803,7 +803,7 @@ setWebhookData(webhookText);
         <Box style={{ height: '30vw', width: '15vw'}}>
         
           <div className="chat-container">
-            <h1>{statuschats}</h1>
+            <h1>{chats}</h1>
             <ul>
               {contactos1.map((contacto, index) => (
                 <li key={index}>
