@@ -736,10 +736,16 @@ setWebhookData(webhookText);
     </div>
 
     <div className="p-2 border border-gray-300 rounded">
-    <select>
-      <option value="Hoy" onChange={()=>obtenerMensajes('hoy')}>Hoy</option>
-      <option value="EstaSemana" onChange={()=>obtenerMensajes('semana')} >Esta semana</option>
-      <option value="EsteMes" onChange={()=>obtenerMensajes('mes')}>Este mes</option>
+    <select value={timeFilter}
+      onChange={(e) => {
+        const newValue = e.target.value;
+        setTimeFilter(newValue);
+        obtenerMensajes(newValue);
+      }}
+    >
+      <option value="hoy" >Hoy</option>
+      <option value="semana" >Esta semana</option>
+      <option value="mes" >Este mes</option>
     </select>
     <CustomButton onClick={openPopup}>Agregar Número</CustomButton>
           <CustomButton className="cursor-pointer" 
