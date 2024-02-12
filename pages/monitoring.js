@@ -318,7 +318,7 @@ const handlePendientesClick = async (iduser) => {
         const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
         
         const status = 'in process';
-        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}`);
+        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes-'+timeFilter);
         const responseChats = Object.values(resultadost)[0].filter(r=>r.status == 'in process')
        
         // El usuario está autenticado, puedes acceder a la sesión
