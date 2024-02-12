@@ -259,52 +259,67 @@ useEffect(() => {
 
 
 
-//Request to obtain the templates
 useEffect(() => {
-  const fetchData = async () => {
+  const fetchTemplates = async () => {
     try {
-      const response = await fetch(process.env.NEXT_PUBLIC_BASE_API + '/gupshup-templates');
-
+      const response = await fetch('/sa/gupshup-templates');
       if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
+        throw new Error('Failed to fetch templates');
       }
-
       const data = await response.json();
-
-      if (data.status === "success") {
-        // Filtrar las plantillas por algún criterio, por ejemplo, por el nombre del elemento
-        const filteredTemplates = data.templates.filter(template => {
-          // Aquí debes agregar la lógica de filtrado según tus necesidades
-          // Por ejemplo, puedes filtrar por un array de nombres de elementos
-          return tuArrayDeElementos.includes(template.elementName);
-        });
-
-        const processedTemplates = filteredTemplates.map(template => ({
-          appId: template.appId,
-          category: template.category,
-          createdOn: template.createdOn,
-          data: template.data,
-          elementName: template.elementName,
-          languageCode: template.languageCode,
-          status: template.status,
-          templateType: template.templateType,
-          modifiedOn: template.modifiedOn,
-        }));
-
-        const sortedTemplates = processedTemplates.sort((a, b) => a.elementName.localeCompare(b.elementName));
-
-        setTemplates(sortedTemplates);
+      if (data.status === 'success') {
+        setTemplates(data.templates);
       } else {
-        setError(`Error: ${data.message}`);
+        setError(data.error);
       }
     } catch (error) {
-      setError(`Fetch error: ${error.message}`);
+      setError(error.message);
     }
   };
 
-  fetchData();
+  fetchTemplates();
 }, []);
 
+
+
+//Request to obtain the templates
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/gupshup-templates');
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+
+        const data = await response.json();
+
+        if (data.status === "success") {
+          const processedTemplates = data.templates.map(template => ({
+            appId: template.appId,
+            category: template.category,
+            createdOn: template.createdOn,
+            data: template.data,
+            elementName: template.elementName,
+            languageCode: template.languageCode,
+            status: template.status,
+            templateType: template.templateType,
+            modifiedOn: template.modifiedOn,
+          }));
+
+          const sortedTemplates = processedTemplates.sort((a, b) => a.elementName.localeCompare(b.elementName));
+
+          setTemplates(sortedTemplates);
+        } else {
+          setError(`Error: ${data.message}`);
+        }
+      } catch (error) {
+        setError(`Fetch error: ${error.message}`);
+      }
+    };
+
+    fetchData();
+  }, []);
   
 
   
@@ -639,6 +654,25 @@ useEffect(() => {
           </Pagination>
         )}
       </div>
+
+      <div>
+      {error && <p>{error}</p>}
+      <h2>Templates</h2>
+      <ul>
+        {templates.map(template => (
+          <li key={template.elementName}>
+            <strong>Categoria:</strong> {template.category}<br />
+            <strong>Tipo de plantilla:</strong> {template.templateType}<br />
+            <strong>Fecha de creación:</strong> {new Date(template.createdOn).toLocaleString()}<br />
+            <strong>Fecha de modificación:</strong> {new Date(template.modifiedOn).toLocaleString()}<br />
+            <strong>Contenido:</strong> {template.data}<br />
+            <strong>Nombre:</strong> {template.elementName}<br />
+            <strong>Idioma:</strong> {template.languageCode}<br />
+            <strong>Estado:</strong> {template.status}<br />
+          </li>
+        ))}
+      </ul>
+    </div>
 
 
     </Layout>
