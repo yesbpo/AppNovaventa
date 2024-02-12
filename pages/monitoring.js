@@ -800,7 +800,7 @@ setWebhookData(webhookText);
         })()}
       
         </Box>
-        <Box style={{ height: '30vw', width: '15vw'}}>
+        <Box style={{ height: '30vw', width: '30vw'}}>
         
           <div className="chat-container">
             <h1>{'chats'}</h1>
