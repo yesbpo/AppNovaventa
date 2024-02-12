@@ -133,6 +133,7 @@ const handleTemplateChange = (event) => {
 };
 // GET TEMPLATES
 useEffect(() => {
+  
   // Traer las plantillas al cargar el componente
   const fetchTemplates = async () => {
     try {
@@ -185,11 +186,15 @@ const [contactos, setContactos] = useState([
 const [webhookData, setWebhookData] = useState(null);
 const [mensajes1, setMensajes1] = useState([]);
 const [mensajes2, setMensajes2] = useState([]);
-
+const [timeResponse, setTimeResponse] = useState('')
 const obtenerMensajes = async (tiempo) => {
   try {
     const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
     const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/consultar-chats-'+tiempo);
+    const timeResponseFetch = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes-tiemporespuesta-'+tiempo)
+    const time = await timeResponseFetch.json()
+    console.log(time)
+    setTimeResponse(time)
     if (!response.ok || !responseChats.ok) {
       throw new Error(`Error en la solicitud`);
     }
@@ -750,6 +755,7 @@ setWebhookData(webhookText);
           onClick={()=>{handleClosedClick()}}>
              {}Chats cerrados: {resultados2}
           </CustomButton>
+          <h1>tiempo de respuesta: {Object.values(timeResponse)[0]}</h1>
     </div>
     </ButtonContainer>
       </Box>
