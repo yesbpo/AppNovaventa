@@ -773,7 +773,7 @@ setWebhookData(webhookText);
     </div>
     </ButtonContainer>
       </Box>
-     {contactos1 && <Container>
+     {resultadost && <Container>
         <Box style={{ height: '30vw', width: '50vw'}}>
         <h2>Chat {numeroEspecifico}</h2>
             {(() => {
@@ -826,6 +826,13 @@ setWebhookData(webhookText);
             <h1>{'chats'}</h1>
             <ul>
               {contactos1.filter(c => statuschats === '' || c.status === statuschats).map((contacto, index) => (
+                <li key={index}>
+                  
+                  <CustomButton onClick={() => setNumeroEspecifico(contacto.idChat2)}>{contacto.idChat2} Asesor:{nombreuser(contacto.userId)}Estado:{contacto.status}</CustomButton>
+                   
+                </li>
+              ))}
+              {!contactos && Object.values(resultadost)[0].filter(c => statuschats === '' || c.status === statuschats).map((contacto, index) => (
                 <li key={index}>
                   
                   <CustomButton onClick={() => setNumeroEspecifico(contacto.idChat2)}>{contacto.idChat2} Asesor:{nombreuser(contacto.userId)}Estado:{contacto.status}</CustomButton>
