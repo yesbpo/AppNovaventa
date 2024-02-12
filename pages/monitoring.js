@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import io from 'socket.io-client';
 import { useSession, signIn } from 'next-auth/react';
 
+
 const MonitoringPage = () => {
   const [selectedTemplateId, setSelectedTemplateId] = useState('');
   const [showPopup, setShowPopup] = useState('')
@@ -11,6 +12,7 @@ const MonitoringPage = () => {
   const [numericInputValue, setNumericInputValue] = useState('');
   const [templates, setTemplates] = useState([]);
   const [error, setError] = useState(null);
+  const [timeFilter, setTimeFilter] = useState ('hoy')
   // Función para abrir la ventana emergente
   const openPopup = () => {
     setShowPopup(true);
@@ -174,82 +176,79 @@ const [resultados2, setResultados2] = useState([]);
 const [resultadost, setResultadost] = useState([]);
 const [datosbuscados, setDatosbuscados] = useState('');
 const [valorbuscado, setValorbuscado] = useState('');
-useEffect(() => {
-  const obtenerMensajes = async () => {
-    try {
-      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
-      const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/consultar-chats-hoy');
-      if (!response.ok || !responseChats.ok) {
-        throw new Error(`Error en la solicitud`);
-      }
-      const data = await response.json();
-      const chats = await responseChats.json();
-      console.log(Object.values(chats)[0].map((chat) => chat.userId))
-      const asesores = data.filter((d) => d.type_user === 'Asesor' ||  d.type_user === 'Asesor1' );
-      setAsesores(asesores);
-      console.log(asesores)
-      const chatspendientes = Object.values(chats)[0].filter((valor) => valor.status === 'pending');
-      const chatsengestion = Object.values(chats)[0].filter((valor) => valor.status === 'in process');
-      const chatscerrados = Object.values(chats)[0].filter((valor) => valor.status === 'closed');
-      const chatsExpiredByAsesor = Object.values(chats)[0].filter((valor) => valor.status === 'expiredbyasesor');
-      const chatsExpiredByClient = Object.values(chats)[0].filter((valor) => valor.status === 'expiredbyclient');
-      const chatCerrado = chatscerrados.map((chat) => chat.userId);
-      const chatGestion = chatsengestion.map((chat) => chat.userId);
-      const chatsPendings = Object.values(chats)[0].map((chat) => chat.userId);
-      setResultadost(chats)
-      
-      // pendientes
-      const frecuencias = {};
-      chatsPendings.forEach((id) => {
-        frecuencias[id] = (frecuencias[id] || 0) + 1;
-      });
-
-      const resultados = asesores.map((asesor) => ({
-        asesor,
-        frecuencia: frecuencias[asesor.id] || 0,
-      }));
-
-      setResultados(resultados);
-      // en gestion
-      const frecuencias1 = {};
-      chatGestion.forEach((id) => {
-        frecuencias1[id] = (frecuencias1[id] || 0) + 1;
-      });
-      const resultados1 = asesores.map((asesor) => ({
-        asesor,
-        frecuencia: frecuencias1[asesor.id] || 0,
-      }));
-      setResultados1(resultados1);
-      // cerrados
-      const frecuencias2 = chatscerrados.length
-
-      const resultados2 = frecuencias2
-      setResultados2(resultados2);
-      
-    } catch (error) {
-      console.error('Error al obtener mensajes:', error);
-      // Puedes manejar el error según tus necesidades
-    }
-  };
-
-  obtenerMensajes();
-}, []);
-const { data: session } = useSession();
-  
-
-  
-  
-  
-  const [contactos2, setContactos2] = useState([]);
-
-  const [contactos1, setContactos1] = useState([]);
-  const [contactos, setContactos] = useState([
+const { data: session } = useSession();  
+const [contactos2, setContactos2] = useState([]);
+const [contactos1, setContactos1] = useState([]);
+const [contactos, setContactos] = useState([
     { user: null, fecha: null, mensajes: [{ tipomensaje: '', datemessage: '', content: '' }] },
   ]);
-  const [webhookData, setWebhookData] = useState(null);
-  const [mensajes1, setMensajes1] = useState([]);
-  const [mensajes2, setMensajes2] = useState([]);
-  const handlePendientesClick = async (iduser) => {
+const [webhookData, setWebhookData] = useState(null);
+const [mensajes1, setMensajes1] = useState([]);
+const [mensajes2, setMensajes2] = useState([]);
+const changeTimeFilter =  (tiempo)=>{
+  obtenerMensajes(tiempo)
+}
+const obtenerMensajes = async (tiempo) => {
+  try {
+    const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
+    const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/consultar-chats-'+tiempo);
+    if (!response.ok || !responseChats.ok) {
+      throw new Error(`Error en la solicitud`);
+    }
+    const data = await response.json();
+    const chats = await responseChats.json();
+    console.log(Object.values(chats)[0].map((chat) => chat.userId))
+    const asesores = data.filter((d) => d.type_user === 'Asesor' ||  d.type_user === 'Asesor1' );
+    setAsesores(asesores);
+    console.log(asesores)
+    const chatspendientes = Object.values(chats)[0].filter((valor) => valor.status === 'pending');
+    const chatsengestion = Object.values(chats)[0].filter((valor) => valor.status === 'in process');
+    const chatscerrados = Object.values(chats)[0].filter((valor) => valor.status === 'closed');
+    const chatsExpiredByAsesor = Object.values(chats)[0].filter((valor) => valor.status === 'expiredbyasesor');
+    const chatsExpiredByClient = Object.values(chats)[0].filter((valor) => valor.status === 'expiredbyclient');
+    const chatCerrado = chatscerrados.map((chat) => chat.userId);
+    const chatGestion = chatsengestion.map((chat) => chat.userId);
+    const chatsPendings = Object.values(chats)[0].map((chat) => chat.userId);
+    setResultadost(chats)
+    
+    // pendientes
+    const frecuencias = {};
+    chatsPendings.forEach((id) => {
+      frecuencias[id] = (frecuencias[id] || 0) + 1;
+    });
+
+    const resultados = asesores.map((asesor) => ({
+      asesor,
+      frecuencia: frecuencias[asesor.id] || 0,
+    }));
+
+    setResultados(resultados);
+    // en gestion
+    const frecuencias1 = {};
+    chatGestion.forEach((id) => {
+      frecuencias1[id] = (frecuencias1[id] || 0) + 1;
+    });
+    const resultados1 = asesores.map((asesor) => ({
+      asesor,
+      frecuencia: frecuencias1[asesor.id] || 0,
+    }));
+    setResultados1(resultados1);
+    // cerrados
+    const frecuencias2 = chatscerrados.length
+
+    const resultados2 = frecuencias2
+    setResultados2(resultados2);
+    
+  } catch (error) {
+    console.error('Error al obtener mensajes:', error);
+    // Puedes manejar el error según tus necesidades
+  }
+};
+useEffect(() => {
+  obtenerMensajes(timeFilter);
+}, []);
+
+const handlePendientesClick = async (iduser) => {
     conection();
       try {   const fechaActual = new Date();
       const options = { timeZone: 'America/Bogota', hour12: false };
@@ -738,11 +737,10 @@ setWebhookData(webhookText);
 
     <div className="p-2 border border-gray-300 rounded">
     <select>
-  <option value="Hoy">Hoy</option>
-  <option value="EstaSemana">Esta semana</option>
-  <option value="EsteMes">Este mes</option>
-</select>
-
+      <option value="Hoy" onChange={()=>obtenerMensajes('hoy')}>Hoy</option>
+      <option value="EstaSemana" onChange={()=>obtenerMensajes('semana')} >Esta semana</option>
+      <option value="EsteMes" onChange={()=>obtenerMensajes('mes')}>Este mes</option>
+    </select>
     <CustomButton onClick={openPopup}>Agregar Número</CustomButton>
           <CustomButton className="cursor-pointer" 
           onClick={()=>{handleClosedClick()}}>
