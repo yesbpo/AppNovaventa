@@ -259,29 +259,6 @@ useEffect(() => {
 
 
 
-useEffect(() => {
-  const fetchTemplates = async () => {
-    try {
-      const response = await fetch('/sa/gupshup-templates');
-      if (!response.ok) {
-        throw new Error('Failed to fetch templates');
-      }
-      const data = await response.json();
-      if (data.status === 'success') {
-        setTemplates(data.templates);
-      } else {
-        setError(data.error);
-      }
-    } catch (error) {
-      setError(error.message);
-    }
-  };
-
-  fetchTemplates();
-}, []);
-
-
-
 //Request to obtain the templates
   useEffect(() => {
     const fetchData = async () => {
@@ -620,7 +597,7 @@ useEffect(() => {
     <p>{mensaje}</p>
     
 
-    <div className='CreatedTemplates'>
+<div className='CreatedTemplates'>
   {error && <p>{error}</p>}
   {currentTemplates.length > 0 && (
     <ul>
@@ -654,25 +631,6 @@ useEffect(() => {
           </Pagination>
         )}
       </div>
-
-      <div>
-      {error && <p>{error}</p>}
-      <h2>Templates</h2>
-      <ul>
-        {templates.map(template => (
-          <li key={template.elementName}>
-            <strong>Categoria:</strong> {template.category}<br />
-            <strong>Tipo de plantilla:</strong> {template.templateType}<br />
-            <strong>Fecha de creación:</strong> {new Date(template.createdOn).toLocaleString()}<br />
-            <strong>Fecha de modificación:</strong> {new Date(template.modifiedOn).toLocaleString()}<br />
-            <strong>Contenido:</strong> {template.data}<br />
-            <strong>Nombre:</strong> {template.elementName}<br />
-            <strong>Idioma:</strong> {template.languageCode}<br />
-            <strong>Estado:</strong> {template.status}<br />
-          </li>
-        ))}
-      </ul>
-    </div>
 
 
     </Layout>
