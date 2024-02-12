@@ -815,17 +815,7 @@ setWebhookData(webhookText);
             </ul>
           </div>
         </Box>
-        <Box style={{ height: '30vw', width: '15vw'}}>
-          <div className="chat-container">
-            <h1>En gestion</h1>
-            <ul>
-              {contactos2.map((contacto, index) => (
-                <li key={index}>
-                  <CustomButton onClick={() => setNumeroEspecifico(contacto.idChat2)}>Usuario:{contacto.idChat2}</CustomButton>
-                </li>
-              ))}
-            </ul>
-          </div></Box>
+       
       </Container>}
     </Layout>
       </>
