@@ -275,7 +275,7 @@ const handlePendientesClick = async (iduser) => {
       
             const status = 'pending';
             const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}`);      
-            const responseChats = resultadost.filter(r=>r.status == 'pending')
+            const responseChats = Object.values(resultadost)[0].filter(r=>r.status == 'pending')
       
       // El usuario está autenticado, puedes acceder a la sesión
       
