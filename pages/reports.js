@@ -265,8 +265,7 @@ function Reports() {
                       className="border rounded p-2 ml-2 w-full"
                     />
                 </div>
-                <div className='w-full md:w-1/2'>
-                  
+                <div className='w-full md:w-1/3'>                  
                   <button
                     onClick={generarReporte}
                     className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
