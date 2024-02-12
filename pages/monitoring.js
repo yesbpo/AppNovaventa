@@ -296,7 +296,7 @@ const handlePendientesClick = async (iduser) => {
       const data = await response.json();
       setMensajes1(Object.values(data)[0]);
       setContactos1(withoutGest);
-      setStatuschats('Pendientes');
+
       try {   const fechaActual = new Date();
         const options = { timeZone: 'America/Bogota', hour12: false };
               const fechaInicio = new Date(fechaActual);
@@ -450,7 +450,7 @@ const handlePendientesClick = async (iduser) => {
   // closed chats
   const handleClosedClick = async () => {
     conection();
-    setStatuschats('Cerrados')
+    
     try {
       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes');
       const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-chats');
@@ -750,6 +750,20 @@ setWebhookData(webhookText);
       <option value="semana">Esta semana</option>
       <option value="mes" >Este mes</option>
     </select>
+    <select value={statuschats}
+      onChange={(e) => {
+        const newValue = e.target.value;
+        setStatuschats(newValue);
+        
+      }}
+    > 
+      <option value="" >Todos</option>
+      <option value="pending" >Pendientes</option>
+      <option value="in process">En atencion</option>
+      <option value="expiredbyasesor" >Expirados por asesor</option>
+      <option value="expiredbyclient" >Expirados por cliente</option>
+      <option value="closed" >Finalizados</option>
+    </select>
     <CustomButton onClick={openPopup}>Agregar Número</CustomButton>
           <CustomButton className="cursor-pointer" 
           onClick={()=>{handleClosedClick()}}>
@@ -759,7 +773,7 @@ setWebhookData(webhookText);
     </div>
     </ButtonContainer>
       </Box>
-     {statuschats && <Container>
+     {contactos1 && <Container>
         <Box style={{ height: '30vw', width: '50vw'}}>
         <h2>Chat {numeroEspecifico}</h2>
             {(() => {
@@ -811,7 +825,7 @@ setWebhookData(webhookText);
           <div className="chat-container">
             <h1>{'chats'}</h1>
             <ul>
-              {contactos1.map((contacto, index) => (
+              {contactos1.filter(c => statuschats === '' || c.status === statuschats).map((contacto, index) => (
                 <li key={index}>
                   
                   <CustomButton onClick={() => setNumeroEspecifico(contacto.idChat2)}>{contacto.idChat2} Asesor:{nombreuser(contacto.userId)}Estado:{contacto.status}</CustomButton>
