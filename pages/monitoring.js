@@ -808,7 +808,7 @@ setWebhookData(webhookText);
               {contactos1.map((contacto, index) => (
                 <li key={index}>
                   
-                  <CustomButton onClick={() => setNumeroEspecifico(contacto.idChat2)}>Usuario:{contacto.idChat2}Asesor:{nombreuser(contacto.userId)}</CustomButton>
+                  <CustomButton onClick={() => setNumeroEspecifico(contacto.idChat2)}>Usuario:{contacto.idChat2}Asesor:{nombreuser(contacto.userId)}Estado:{contacto.status}</CustomButton>
                    
                 </li>
               ))}
