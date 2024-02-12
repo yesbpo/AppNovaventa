@@ -275,7 +275,7 @@ const handlePendientesClick = async (iduser) => {
       
             const status = 'pending';
             const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes-'+timeFilter);      
-            const responseChats = Object.values(resultadost)[0].filter(r=>r.status == 'pending')
+            const responseChats = Object.values(resultadost)[0]
       
       // El usuario está autenticado, puedes acceder a la sesión
       
@@ -805,7 +805,7 @@ setWebhookData(webhookText);
           <div className="chat-container">
             <h1>{statuschats}</h1>
             <ul>
-              {Object.values(resultadost)[0].map((contacto, index) => (
+              {contactos1.map((contacto, index) => (
                 <li key={index}>
                   
                   <CustomButton onClick={() => setNumeroEspecifico(contacto.idChat2)}>Usuario:{contacto.idChat2}</CustomButton>
@@ -821,9 +821,7 @@ setWebhookData(webhookText);
             <ul>
               {contactos2.map((contacto, index) => (
                 <li key={index}>
-                  
                   <CustomButton onClick={() => setNumeroEspecifico(contacto.idChat2)}>Usuario:{contacto.idChat2}</CustomButton>
-                   
                 </li>
               ))}
             </ul>
