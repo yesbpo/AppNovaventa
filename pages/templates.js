@@ -345,32 +345,32 @@ useEffect(() => {
 
 
 //filter templates
-//useEffect(() => {
-  //const fetchData = async () => {
-   // try {
-    //  const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-contenido-seetemp');
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-contenido-seetemp');
 
-    //  if (!response.ok) {
-     //   throw new Error(`HTTP error! Status: ${response.status}`);
-     // }
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
 
-     // const data = await response.json();
+      const data = await response.json();
 
-     // if (data.datos) {
+      if (data.datos) {
         // Update the state with the fetched data
-       // setTemplatesArray(data.datos);
-     // } else {
-      //  console.log(data.mensaje);
-     // }
-    //} catch (error) {
-     // console.error(`Fetch error: ${error.message}`);
-   // }
- // };
+        setTemplatesArray(data.datos);
+      } else {
+        console.log(data.mensaje);
+      }
+    } catch (error) {
+      console.error(`Fetch error: ${error.message}`);
+    }
+  };
 
- // fetchData();
-//}, []);
+  fetchData();
+}, []);
 
-//const [templatesArray, setTemplatesArray] = useState([]);
+const [templatesArray, setTemplatesArray] = useState([]);
 
 
 //This is the application to delete the templates
@@ -601,20 +601,22 @@ useEffect(() => {
   {error && <p>{error}</p>}
   {currentTemplates.length > 0 && (
     <ul>
-      {currentTemplates.map((template) => (
-        <li key={template.elementName}>
-          <strong>Categoria:</strong> {template.category}<br />
-          <strong>Tipo de plantilla:</strong> {getTemplateType(template.templateType)}<br />
-          <strong>Fecha de creación:</strong> {new Date(template.createdOn).toLocaleString()}<br />
-          <strong>Fecha de modificación:</strong> {new Date(template.modifiedOn).toLocaleString()}<br />
-          <strong>Contenido:</strong> {template.data}<br />
-          <strong>Nombre:</strong> {template.elementName}<br />
-          <strong>Idioma:</strong> {getLanguageText(template.languageCode)}<br />
-          <strong>Estado:</strong> {getStatusText(template.status)}<br />
-          <button onClick={() => handleDeleteTemplate(template.elementName)}>Eliminar Plantilla</button>
-          <hr />
-        </li>
-      ))}
+      {currentTemplates
+        .filter(template => templatesArray.some(t => t.elementname === template.elementName))
+        .map((template) => (
+          <li key={template.elementName}>
+            <strong>Categoria:</strong> {template.category}<br />
+            <strong>Tipo de plantilla:</strong> {getTemplateType(template.templateType)}<br />
+            <strong>Fecha de creación:</strong> {new Date(template.createdOn).toLocaleString()}<br />
+            <strong>Fecha de modificación:</strong> {new Date(template.modifiedOn).toLocaleString()}<br />
+            <strong>Contenido:</strong> {template.data}<br />
+            <strong>Nombre:</strong> {template.elementName}<br />
+            <strong>Idioma:</strong> {getLanguageText(template.languageCode)}<br />
+            <strong>Estado:</strong> {getStatusText(template.status)}<br />
+            <button onClick={() => handleDeleteTemplate(template.elementName)}>Eliminar Plantilla</button>
+            <hr />
+          </li>
+        ))}
     </ul>
   )}
 
