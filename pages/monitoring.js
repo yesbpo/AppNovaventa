@@ -185,9 +185,7 @@ const [contactos, setContactos] = useState([
 const [webhookData, setWebhookData] = useState(null);
 const [mensajes1, setMensajes1] = useState([]);
 const [mensajes2, setMensajes2] = useState([]);
-const changeTimeFilter =  (tiempo)=>{
-  obtenerMensajes(tiempo)
-}
+
 const obtenerMensajes = async (tiempo) => {
   try {
     const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
@@ -276,8 +274,8 @@ const handlePendientesClick = async (iduser) => {
       const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
       
             const status = 'pending';
-            const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}`);      
-            const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
+            const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes-'+timeFilter);      
+            const responseChats = Object.values(resultadost)[0]
       
       // El usuario está autenticado, puedes acceder a la sesión
       
@@ -287,7 +285,7 @@ const handlePendientesClick = async (iduser) => {
       
       const Id = iduser
        
-      const chatsPending = await responseChats.json();
+      const chatsPending = responseChats
       const withoutGest = chatsPending.filter(d => d.userId == Id )
       console.log(Id)
       const data = await response.json();
@@ -320,8 +318,8 @@ const handlePendientesClick = async (iduser) => {
         const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
         
         const status = 'in process';
-        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/obtener-mensajes-por-fecha?fechaInicio=${fechaInicioString}&fechaFin=${fechaFinString}`);
-        const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB+`/consultar_por_status?status=${status}`);
+        const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-mensajes-'+timeFilter);
+        const responseChats = Object.values(resultadost)[0].filter(r=>r.status == 'in process')
        
         // El usuario está autenticado, puedes acceder a la sesión
         
@@ -330,7 +328,7 @@ const handlePendientesClick = async (iduser) => {
         }
         
         const Id = iduser
-        const chatsPending = await responseChats.json();
+        const chatsPending = responseChats
         const withoutGest = chatsPending.filter(d => d.userId == Id )
         console.log(Id)
         const data = await response.json();
@@ -625,7 +623,7 @@ setWebhookData(webhookText);
   const handleNumeroChange = (e) => {
     console.log(asesores.filter((contacto) => contacto.id == 4))
     setValorbuscado(e.target.value)
-    const resultadosFiltrados = resultadost.filter(
+    const resultadosFiltrados = Object.values(resultadost)[0].filter(
       (contacto) => contacto.idChat2.includes(e.target.value) || nombreuser(contacto.userId).includes(e.target.value) );
     setDatosbuscados(resultadosFiltrados);
   };
@@ -744,7 +742,7 @@ setWebhookData(webhookText);
       }}
     >
       <option value="hoy" >Hoy</option>
-      <option value="semana" >Esta semana</option>
+      <option value="semana">Esta semana</option>
       <option value="mes" >Este mes</option>
     </select>
     <CustomButton onClick={openPopup}>Agregar Número</CustomButton>
@@ -802,34 +800,22 @@ setWebhookData(webhookText);
         })()}
       
         </Box>
-        <Box style={{ height: '30vw', width: '15vw'}}>
+        <Box style={{ height: '30vw', width: '30vw'}}>
         
           <div className="chat-container">
-            <h1>{statuschats}</h1>
+            <h1>{'chats'}</h1>
             <ul>
               {contactos1.map((contacto, index) => (
                 <li key={index}>
                   
-                  <CustomButton onClick={() => setNumeroEspecifico(contacto.idChat2)}>Usuario:{contacto.idChat2}</CustomButton>
+                  <CustomButton onClick={() => setNumeroEspecifico(contacto.idChat2)}>{contacto.idChat2} Asesor:{nombreuser(contacto.userId)}Estado:{contacto.status}</CustomButton>
                    
                 </li>
               ))}
             </ul>
           </div>
         </Box>
-        <Box style={{ height: '30vw', width: '15vw'}}>
-          <div className="chat-container">
-            <h1>En gestion</h1>
-            <ul>
-              {contactos2.map((contacto, index) => (
-                <li key={index}>
-                  
-                  <CustomButton onClick={() => setNumeroEspecifico(contacto.idChat2)}>Usuario:{contacto.idChat2}</CustomButton>
-                   
-                </li>
-              ))}
-            </ul>
-          </div></Box>
+       
       </Container>}
     </Layout>
       </>
