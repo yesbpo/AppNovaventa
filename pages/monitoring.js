@@ -285,7 +285,7 @@ const handlePendientesClick = async (iduser) => {
       
       const Id = iduser
        
-      const chatsPending = await responseChats.json();
+      const chatsPending = responseChats
       const withoutGest = chatsPending.filter(d => d.userId == Id )
       console.log(Id)
       const data = await response.json();
