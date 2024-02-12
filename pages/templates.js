@@ -260,43 +260,51 @@ useEffect(() => {
 
 
 //Request to obtain the templates
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(process.env.NEXT_PUBLIC_BASE_API+'/gupshup-templates');
+useEffect(() => {
+  const fetchData = async () => {
+    try {
+      const response = await fetch(process.env.NEXT_PUBLIC_BASE_API + '/gupshup-templates');
 
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        if (data.status === "success") {
-          const processedTemplates = data.templates.map(template => ({
-            appId: template.appId,
-            category: template.category,
-            createdOn: template.createdOn,
-            data: template.data,
-            elementName: template.elementName,
-            languageCode: template.languageCode,
-            status: template.status,
-            templateType: template.templateType,
-            modifiedOn: template.modifiedOn,
-          }));
-
-          const sortedTemplates = processedTemplates.sort((a, b) => a.elementName.localeCompare(b.elementName));
-
-          setTemplates(sortedTemplates);
-        } else {
-          setError(`Error: ${data.message}`);
-        }
-      } catch (error) {
-        setError(`Fetch error: ${error.message}`);
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-    };
 
-    fetchData();
-  }, []);
+      const data = await response.json();
+
+      if (data.status === "success") {
+        // Filtrar las plantillas por algún criterio, por ejemplo, por el nombre del elemento
+        const filteredTemplates = data.templates.filter(template => {
+          // Aquí debes agregar la lógica de filtrado según tus necesidades
+          // Por ejemplo, puedes filtrar por un array de nombres de elementos
+          return tuArrayDeElementos.includes(template.elementName);
+        });
+
+        const processedTemplates = filteredTemplates.map(template => ({
+          appId: template.appId,
+          category: template.category,
+          createdOn: template.createdOn,
+          data: template.data,
+          elementName: template.elementName,
+          languageCode: template.languageCode,
+          status: template.status,
+          templateType: template.templateType,
+          modifiedOn: template.modifiedOn,
+        }));
+
+        const sortedTemplates = processedTemplates.sort((a, b) => a.elementName.localeCompare(b.elementName));
+
+        setTemplates(sortedTemplates);
+      } else {
+        setError(`Error: ${data.message}`);
+      }
+    } catch (error) {
+      setError(`Fetch error: ${error.message}`);
+    }
+  };
+
+  fetchData();
+}, []);
+
   
 
   
