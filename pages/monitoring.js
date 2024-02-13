@@ -832,7 +832,7 @@ setWebhookData(webhookText);
                    
                 </li>
               ))}
-              {contactos1.length == 0 && Object.values(resultadost)[0].filter(c => statuschats === '' || c.status === statuschats).map((contacto, index) => (
+              {contactos1.length == 0 && Object.values(resultadost)[0] !== undefined && Object.values(resultadost)[0].filter(c => statuschats === '' || c.status === statuschats).map((contacto, index) => (
                 <li key={index}>
                   
                   <CustomButton onClick={() => setNumeroEspecifico(contacto.idChat2)}>{contacto.idChat2} Asesor:{nombreuser(contacto.userId)}Estado:{contacto.status}</CustomButton>
