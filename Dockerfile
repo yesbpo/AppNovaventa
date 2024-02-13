@@ -10,6 +10,13 @@ COPY ./ .
 # Install dependencies
 RUN npm install
 
+# Migrate prisma
+RUN npx prisma db pull
+# RUN cd prisma/migrations/ && rm -rf *
+# RUN mkdir -p prisma/migrations/0_init
+# RUN npx prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma --script > prisma/migrations/0_init/migration.sql
+# RUN npx prisma migrate resolve --applied 0_init
+
 # Build the application
 RUN npm run build
 
