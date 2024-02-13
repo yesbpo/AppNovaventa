@@ -771,7 +771,7 @@ setWebhookData(webhookText);
           </CustomButton>
           {Object.values(timeResponse)[0] && <h1>tiempo de respuesta: {Object.values(Object.values(timeResponse)[0][0])[0]}</h1>}
           {Object.values(timeResponse)[0] && <h1>Asesores activos: {asesores.filter(a => a.session == 'Activo').length}</h1>}
-          {Object.values(timeResponse)[0] && <h1>Asesores activos: {asesores.filter(a => a.session == 'Inactivo').length}</h1>}
+          {Object.values(timeResponse)[0] && <h1>Asesores inactivos: {asesores.filter(a => a.session == 'Inactivo').length}</h1>}
           {Object.values(resultadost)[0] !== undefined && <h1>Sesiones iniciadas: {Object.values(resultadost)[0].length}</h1>}
           {Object.values(resultadost)[0] !== undefined && <h1>Sesiones atendidas: {Object.values(resultadost)[0].filter(a => a.status !== 'pending').length}</h1>}
     </div>
