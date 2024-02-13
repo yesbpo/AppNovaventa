@@ -769,7 +769,7 @@ setWebhookData(webhookText);
           onClick={()=>{handleClosedClick()}}>
              {}Chats cerrados: {resultados2}
           </CustomButton>
-          {Object.values(timeResponse)[0].length > 0 && <h1>tiempo de respuesta: {Object.values(Object.values(timeResponse)[0][0])[0]}</h1>}
+          {Object.values(timeResponse)[0] && <h1>tiempo de respuesta: {Object.values(Object.values(timeResponse)[0][0])[0]}</h1>}
     </div>
     </ButtonContainer>
       </Box>
