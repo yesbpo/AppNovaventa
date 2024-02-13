@@ -770,7 +770,8 @@ setWebhookData(webhookText);
              {}Chats cerrados: {resultados2}
           </CustomButton>
           {Object.values(timeResponse)[0] && <h1>tiempo de respuesta: {Object.values(Object.values(timeResponse)[0][0])[0]}</h1>}
-          {Object.values(timeResponse)[0] && <h1>Asesores activos: {asesores.length}</h1>}
+          {Object.values(timeResponse)[0] && <h1>Asesores activos: {asesores.filter(a => a.session == 'Activo').length}</h1>}
+          {Object.values(timeResponse)[0] && <h1>Asesores activos: {asesores.filter(a => a.session == 'Inactivo').length}</h1>}
     </div>
     </ButtonContainer>
       </Box>
