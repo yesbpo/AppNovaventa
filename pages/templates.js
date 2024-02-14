@@ -356,9 +356,6 @@ const Reports = (props) => {
 
     const [templatesArray, setTemplatesArray] = useState([]);
 
-    const [templatesArray, setTemplatesArray] = useState([]);
-
-
     //This is the application to delete the templates
     const handleDeleteTemplate = async(elementName) => {
         try {
