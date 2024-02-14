@@ -1164,7 +1164,7 @@ const Chats = () => {
 
         }
         if (session) {
-            return ( <
+            return <
                     >
                     {
                         showPopup && < div className = "fixed inset-0 flex items-center justify-center overflow-y-auto" >
@@ -1532,8 +1532,7 @@ const Chats = () => {
 
         </Container>
       </Layout>
-        </>
-    )}
+        </>;}
     return (
       <>
       <div className="flex flex-col items-center justify-center h-screen">

@@ -155,17 +155,17 @@ const Sidebar = (props) => {
               return (
                 // eslint-disable-next-line react/jsx-key
                 <div className={classes}>
-                  <Link href={menu.link}>
-                    <a className="flex py-4 px-3 items-center w-full h-full">
-                      <div>
-                        <Icon className="h-10 w-10 text-light-lighter mr-4" />
-                      </div>
-                      {!toggleCollapse && (
-                        <span className={classNames('text-lg font-medium text-text-frozen')}>
-                          {menu.label}
-                        </span>
-                      )}
-                    </a>
+                  <Link href={menu.link} className="flex py-4 px-3 items-center w-full h-full">
+
+                    <div>
+                      <Icon className="h-10 w-10 text-light-lighter mr-4" />
+                    </div>
+                    {!toggleCollapse && (
+                      <span className={classNames('text-lg font-medium text-text-frozen')}>
+                        {menu.label}
+                      </span>
+                    )}
+
                   </Link>
                 </div>
               );

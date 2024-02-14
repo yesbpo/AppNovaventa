@@ -2,7 +2,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import db from '../../../libs/db';
-import bcrypt from 'bcrypt'
+// import bcrypt from 'bcrypt'
 
 
 
@@ -29,7 +29,7 @@ export const authOptions = {
          console.log("USER FOUND:")
          console.log(userFound)
           
-         const matchPassword = await credentials.password == userFound.password;
+         const matchPassword = (await credentials.password) == userFound.password;
  
          if (!matchPassword) throw new Error('Wrong password')
          const updateuser = async () => {
