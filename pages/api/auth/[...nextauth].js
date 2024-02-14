@@ -14,6 +14,7 @@ export const authOptions = {
           usuario: { label: "Usuario", type: "text", placeholder: "jsmith" },
           password: { label: "Password", type: "password", placeholder: "*****" },
         },   async authorize(credentials, req) {
+         console.log("AUTHORIZE")
          console.log(credentials)
  
          const userFound = await db.user.findFirst({
@@ -24,7 +25,8 @@ export const authOptions = {
          })
  
          if (!userFound) throw new Error('No user found')
- 
+
+         console.log("USER FOUND:")
          console.log(userFound)
           
          const matchPassword = await credentials.password == userFound.password;
@@ -48,14 +50,15 @@ export const authOptions = {
         
             if (response.ok) {
               const data = await response.json();
-              
+              console.log("JSON PUT:")
+              console.log(data)
              // Aquí puedes manejar la respuesta del servidor
             } else {
               console.error('Error al actualizar el usuario:', response.statusText);
             }
             
           } catch (error) {
-            
+            console.log("Error en auth")
           }
         };
         updateuser()
