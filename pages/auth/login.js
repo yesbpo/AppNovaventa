@@ -22,10 +22,14 @@ function LoginPage() {
       redirect: false,
        // Ajusta la ruta según tu configuración
     });
+
+    console.log("RESPONSE SIGN IN:")
     console.log(res)
     if (res.error) {
+      console.log("REDIRECT: /auth/login")
       router.push('/auth/login')
     } else {
+      console.log("REDIRECT: /")
       router.push('/')
       
     }
