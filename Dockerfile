@@ -21,4 +21,4 @@ EXPOSE 3000
 EXPOSE 80
 
 # Specify the command to run your application
-CMD ["npm", "start"]
+CMD ["npx", "next", "dev"]
