@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "start": "next start",
+    "start": "npx next dev",
     "start:https": "HTTPS=true next start",
     "build": "next build",
-    "dev": "npm run start"
+    "dev": "npm run dev"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
