@@ -30,7 +30,7 @@ jobs:
 
       - name: Build and Push Docker Image
         run: |
-          echo "${ENV_FILE}" | base64 -d > .env
+          echo "${ENV_FILE}" > .env
           docker build -t yesbpoconreg.azurecr.io/frontend:latest -f ./Dockerfile .
           docker tag yesbpoconreg.azurecr.io/frontend:latest yesbpoconreg.azurecr.io/frontend:latest
           echo "${{ secrets.ACR_PASS }}" | docker login yesbpoconreg.azurecr.io -u ${{ secrets.ACR_USER }} --password-stdin
