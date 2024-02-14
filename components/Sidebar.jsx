@@ -93,6 +93,8 @@ const Sidebar = (props) => {
     const usuario = userown // Reemplaza con el nombre de usuario que deseas actualizar
     const nuevoDato = 'Inactivo'; // Reemplaza con el nuevo valor que deseas asignar
 
+    signOut();
+
     try {
       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/actualizar/usuario', {
         method: 'PUT',

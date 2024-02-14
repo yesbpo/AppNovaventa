@@ -3,6 +3,7 @@ import Sidebar from "./Sidebar";
 import { useSession,signIn, signOut } from 'next-auth/react';
 const Layout = ({children}) => {
   const { data: session } = useSession()
+  console.log("Session en Layout: " + session)
   if (session) {
     return (
         <div className="h-screen flex">
