@@ -18,7 +18,7 @@ module.exports = {
             NEXT_PUBLIC_PARTNERAPPTOKEN: 'sk_3cf52c6b3c5d408b742d46c6ab3845d',
             NEXT_PUBLIC_URL_GUPSHUP: 'https://api.gupshup.io/wa/api/v1/template/msg',
             DATABASE_URL: 'mysql://yesdbadmin:qBABt797iNHu9Zx@yesappcenterdb.mysql.database.azure.com:3306/dbappnovaventa',
-            NEXTAUTH_URL: 'http://localhost:3000/auth/login',
+            NEXTAUTH_URL: 'https://front.appcenteryes.com/auth/login',
             TEMPLATE_SEND: 'https://api.gupshup.io/wa/api/v1/template/msg'
         }
     }],

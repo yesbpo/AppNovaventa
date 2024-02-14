@@ -356,9 +356,6 @@ const Reports = (props) => {
 
     const [templatesArray, setTemplatesArray] = useState([]);
 
-    const [templatesArray, setTemplatesArray] = useState([]);
-
-
     //This is the application to delete the templates
     const handleDeleteTemplate = async(elementName) => {
         try {
@@ -621,8 +618,8 @@ const Reports = (props) => {
                 message && ( <
                     div >
                     <
-                    p > { message } < /p> <
-                    /div>
+                    p > { message } < /p> < /
+                    div >
                 )
             }
 
@@ -649,9 +646,10 @@ const Reports = (props) => {
                 input type = "text"
                 value = { name }
                 onChange = {
-                    (e) => setName(e.target.value) }
-                /> <
-                /label> <
+                    (e) => setName(e.target.value)
+                }
+                /> < /
+                label > <
                 br / >
                 <
                 label >
@@ -660,17 +658,18 @@ const Reports = (props) => {
                 input type = "text"
                 value = { contentn }
                 onChange = {
-                    (e) => setContentn(e.target.value) }
-                /> <
-                /label> <
+                    (e) => setContentn(e.target.value)
+                }
+                /> < /
+                label > <
                 br / >
                 <
-                button onClick = { handleAgregarContenido } > Agregar respuesta rapida < /button> <
-                /div>
+                button onClick = { handleAgregarContenido } > Agregar respuesta rapida < /button> < /
+                div >
             )
         } <
         /div> <
-        p > { mensaje } < /p>
+    p > { mensaje } < /p>
 
     {
         templates.map((template) => ( <
@@ -689,62 +688,63 @@ const Reports = (props) => {
     <
     div className = 'CreatedTemplates' > {
         error && < p > { error } < /p>} {
-            currentTemplates.length > 0 && ( <
-                ul > {
-                    currentTemplates
-                    .filter(template => templatesArray.some(t => t.elementName === template.elementName))
-                    .map((template) => ( <
-                        li key = { template.elementName } >
-                        <
-                        strong > Categoria: < /strong> {template.category}<br / >
-                        <
-                        strong > Tipo de plantilla: < /strong> {getTemplateType(template.templateType)}<br / >
-                        <
-                        strong > Fecha de creación: < /strong> {new Date(template.createdOn).toLocaleString()}<br / >
-                        <
-                        strong > Fecha de modificación: < /strong> {new Date(template.modifiedOn).toLocaleString()}<br / >
-                        <
-                        strong > Contenido: < /strong> {template.data}<br / >
-                        <
-                        strong > Nombre: < /strong> {template.elementName}<br / >
-                        <
-                        strong > Idioma: < /strong> {getLanguageText(template.languageCode)}<br / >
-                        <
-                        strong > Estado: < /strong> {getStatusText(template.status)}<br / >
-                        <
-                        button onClick = {
-                            () => handleDeleteTemplate(template.elementName) } > Eliminar Plantilla < /button> <
-                        hr / >
-                        <
-                        /li>
-                    ))
-                } <
-                /ul>
-            )
-        }
+        currentTemplates.length > 0 && ( <
+            ul > {
+                currentTemplates
+                .filter(template => templatesArray.some(t => t.elementName === template.elementName))
+                .map((template) => ( <
+                    li key = { template.elementName } >
+                    <
+                    strong > Categoria: < /strong> {template.category}<br / >
+                    <
+                    strong > Tipo de plantilla: < /strong> {getTemplateType(template.templateType)}<br / >
+                    <
+                    strong > Fecha de creación: < /strong> {new Date(template.createdOn).toLocaleString()}<br / >
+                    <
+                    strong > Fecha de modificación: < /strong> {new Date(template.modifiedOn).toLocaleString()}<br / >
+                    <
+                    strong > Contenido: < /strong> {template.data}<br / >
+                    <
+                    strong > Nombre: < /strong> {template.elementName}<br / >
+                    <
+                    strong > Idioma: < /strong> {getLanguageText(template.languageCode)}<br / >
+                    <
+                    strong > Estado: < /strong> {getStatusText(template.status)}<br / >
+                    <
+                    button onClick = {
+                        () => handleDeleteTemplate(template.elementName)
+                    } > Eliminar Plantilla < /button> <
+                    hr / >
+                    <
+                    /li>
+                ))
+            } <
+            /ul>
+        )
+    }
 
-        { /* Pagination controls */ } {
-            templates.length > templatesPerPage && ( <
-                Pagination >
-                <
-                button onClick = { handlePrevPage }
-                disabled = { currentPage === 1 } >
-                Anterior <
-                /button> <
-                span > { `Página ${currentPage} de ${totalPages}` } < /span> <
-                button onClick = { handleNextPage }
-                disabled = { currentPage === totalPages } >
-                Siguiente <
-                /button> < /
-                Pagination >
-            )
-        } <
-        /div>
+    { /* Pagination controls */ } {
+        templates.length > templatesPerPage && ( <
+            Pagination >
+            <
+            button onClick = { handlePrevPage }
+            disabled = { currentPage === 1 } >
+            Anterior <
+            /button> <
+            span > { `Página ${currentPage} de ${totalPages}` } < /span> <
+            button onClick = { handleNextPage }
+            disabled = { currentPage === totalPages } >
+            Siguiente <
+            /button> < /
+            Pagination >
+        )
+    } <
+    /div>
 
 
-        <
-        /Layout>
-    );
+    <
+    /Layout>
+);
 }
 return ( <
     >
