@@ -189,9 +189,20 @@ const MonitoringPage = () => {
         const [mensajes2, setMensajes2] = useState([]);
         const [timeResponse, setTimeResponse] = useState('')
         const obtenerMensajes = async(tiempo) => {
-            try {
+try {
+    const currentDateColombia = new Date();
+    currentDateColombia.toLocaleString('es-CO', { timeZone: 'America/Bogota' });
+
+    // Establecer la fecha de inicio de hoy a las 00:00:00
+    const startDate = new Date();
+    startDate.setHours(0, 0, 0);
+
+    // Establecer la fecha de finalización de hoy a las 23:59:59
+    const endDate = new Date();
+    endDate.setHours(23, 59, 59);
+
                 const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-usuarios');
-                const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/consultar-chats-' + tiempo);
+                const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/consultar-chats?startDate=' + startDate + '&endDate=' + endDate);
                 const timeResponseFetch = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-mensajes-tiemporespuesta-' + tiempo)
                 const time = await timeResponseFetch.json()
                 console.log(Object.values(Object.values(time)[0][0])[0])
