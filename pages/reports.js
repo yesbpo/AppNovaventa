@@ -275,21 +275,19 @@ function Reports() {
                 </div>
               </div>
               </div>
+              
               <div className='mb-8'> 
                 <h1 className="text-3xl font-bold mb-3 text-center">
                   Reportes de campañas
                 </h1>
-                <div className='mb-7'>
-                <div className='flex flex-wrap gap-4'>
-                  <div className='w-full md:w-1/2'>
-                    <label className='block mb-2'>Campaña:</label>
+                <label className='block mb-2'>Campaña:
                     <input 
                       type="text" 
                       value={campaign} 
                       onChange={(e) => setCampaign(e.target.value)}
                       className="border rounded p-2 ml-2 w-full"  
                     />
-                  </div>
+                    </label>
                   <div className='mb-8'>
                   <div className="w-full md:w-1/3">
                     <div className="flex flex-col">
@@ -321,8 +319,7 @@ function Reports() {
                   </div>
                 </div>
               </div>
-              </div>
-              </div>
+            
 
               <div className='mb-8'>
                 <h1 className="text-4xl font-bold mb-4 text-center">Reportes de conversaciones</h1>
