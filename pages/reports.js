@@ -276,7 +276,7 @@ function Reports() {
               </div>
               </div>
               
-              <div className='mb-8'> 
+              <div className='w-full'> 
                 <h1 className="text-3xl font-bold mb-3 text-center">
                   Reportes de campañas
                 </h1>
@@ -285,34 +285,34 @@ function Reports() {
                       type="text" 
                       value={campaign} 
                       onChange={(e) => setCampaign(e.target.value)}
-                      className="border rounded p-2 ml-2 w-full"  
+                      className="border rounded p-2 ml-2"  
                     />
                     </label>
                   <div className='mb-8'>
-                  <div className="w-full md:w-1/3">
-                    <div className="flex flex-col">
+                  <div className="flex flex-wrap gap-4">
+                    <div className="w-full md:w-1/3">
                       <label className='block mb-2'>Fecha de inicio:</label>
                       <input 
                         type="datetime-local" 
                         value={fechaInicio} 
                         onChange={(e) => setFechaInicio(e.target.value)} 
-                        className='border rounded p-2 ml-2 mb-4'
+                        className='border rounded p-2 ml-2 w-full'
                       />
                     </div>
-                    <div className="flex flex-col">
+                    <div className="w-full md:w-1/3">
                       <label className='block mb-2'>Fecha de fin:</label>
                       <input 
                         type="datetime-local" 
                         value={fechaFin} 
                         onChange={(e) => setFechaFin(e.target.value)} 
-                        className='border rounded p-2 ml-2'
+                        className='border rounded p-2 ml-2 w-full'
                       />
                     </div>
                   </div>
-                  <div className='w-full md:w-1/3 flex justify-center items-end'>
+                  <div className='w-full md:w-1/3'>
                     <button 
                       onClick={fetchData} 
-                      className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-2 rounded'
+                      className='bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded'
                     >
                     Generar reporte de envios masivos
                     </button>
