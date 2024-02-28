@@ -17,6 +17,7 @@ const MonitoringPage = () => {
         const openPopup = () => {
             setShowPopup(true);
         };
+        let startofDate;  
         const closePopup = () => {
             setShowPopup(false);
         };
@@ -188,14 +189,98 @@ const MonitoringPage = () => {
         const [mensajes1, setMensajes1] = useState([]);
         const [mensajes2, setMensajes2] = useState([]);
         const [timeResponse, setTimeResponse] = useState('')
-        const obtenerMensajes = async(tiempo) => {
+        const obtenerMensajes = async(timepo) => {
+            const currentDateColombia = new Date();
+            currentDateColombia.toLocaleString('es-CO', { timeZone: 'America/Bogota' });
+            // Establecer la fecha de inicio de hoy a las 00:00:00
+            let startofDate = new Date();
+            let startDate = startofDate.toISOString();
+            switch (timepo){
+                case "hoy":
+                    startofDate.setHours(0, 0, 0);
+                    startDate = startofDate.toISOString();
+                    break;
+                case "semana":
+                    startofDate.setDate(startofDate.getDate() - startofDate.getDay() + (startofDate.getDay() === 0 ? -6 : 1));
+                    startofDate.setHours(0, 0, 0);
+                    startDate = startofDate.toISOString();
+                    break;
+                case "mes":
+                    startofDate.setDate(1);
+                    startofDate.setHours(0, 0, 0);
+                    startDate = startofDate.toISOString();
+                    break;
+                default:
+                    startDate = startofDate.toISOString();
+                
+            }      
             try {
+                console.log('ingresa al try para obtener chats')
+                
+                // Establecer la fecha de finalización de hoy a las 23:59:59
+                const endofDate = new Date();
+                endofDate.setHours(23, 59, 59);
+                const endDate = endofDate.toISOString();
                 const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-usuarios');
-                const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/consultar-chats-' + tiempo);
-                const timeResponseFetch = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-mensajes-tiemporespuesta-' + tiempo)
-                const time = await timeResponseFetch.json()
-                console.log(Object.values(Object.values(time)[0][0])[0])
-                setTimeResponse(time)
+                const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/consultar-chats?startDate=' + startDate + '&endDate=' + endDate);
+                const responseMessages = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-mensajes-por-fecha?fechaInicio='+startDate+'&fechaFin='+endDate);
+                const msgByDate = await responseMessages.json();
+                const msgByDate1 = Object.values(msgByDate)[0]                
+
+// Objeto para almacenar los primeros mensajes por número
+let primerosMensajesPorNumero = {};
+// Itera sobre cada número en el conjunto de objetos
+const numerosUnicosSet = msgByDate1.reduce((numerosSet, mensaje) => {
+    numerosSet.add(mensaje.number);
+    return numerosSet;
+  }, new Set());
+  
+  // Convierte el Set a un array
+  const numerosUnicosArray = [...numerosUnicosSet];
+numerosUnicosArray.forEach ((n) =>{
+    
+    
+    
+    // Encuentra el primer mensaje "message-event" para el número actual
+    let primerMensajeMessageEvent = msgByDate1.find((m) => m.type_comunication === 'message-event' && m.number === n);
+    if(primerMensajeMessageEvent == undefined){
+        const horaColombia1 = new Date();
+        horaColombia1.setUTCHours(horaColombia1.getUTCHours() - 5);
+        primerMensajeMessageEvent = {timestamp: horaColombia1.toISOString()}
+    }
+    // Encuentra el primer mensaje "message" para el número actual
+    let primerMensajeMessage = msgByDate1.find((m) => m.type_comunication === 'message' && m.number === n && m.timestamp > primerMensajeMessageEvent.timestamp);
+    if(primerMensajeMessage == undefined){
+        const horaColombia = new Date();
+        horaColombia.setUTCHours(horaColombia.getUTCHours() - 5);
+        primerMensajeMessage = {timestamp: horaColombia.toISOString()}
+    }
+    let tiempoRespuesta = 0;
+    if (new Date(primerMensajeMessage.timestamp).getDate() > new Date(primerMensajeMessageEvent.timestamp).getDate()){
+     tiempoRespuesta = 0;   
+    }else{
+        tiempoRespuesta = (new Date(primerMensajeMessage.timestamp).getTime() - new Date(primerMensajeMessageEvent.timestamp).getTime()) /1000/60;
+     
+    }
+    
+    // Almacena los resultados en el objeto
+    primerosMensajesPorNumero[n] = {
+      primerMensajeMessage,
+      primerMensajeMessageEvent,
+      tiemporespuesta : tiempoRespuesta,
+
+    };
+  
+} 
+); 
+const tiempoRespuestaArray = Object.values(primerosMensajesPorNumero).map((item) => item.tiemporespuesta);
+const promedioTiempoRespuesta = tiempoRespuestaArray.reduce((total, valor) => total + valor, 0) / tiempoRespuestaArray.length;
+
+ 
+   
+                
+                
+                setTimeResponse(promedioTiempoRespuesta)
                 if (!response.ok || !responseChats.ok) {
                     throw new Error(`Error en la solicitud`);
                 }
@@ -204,7 +289,6 @@ const MonitoringPage = () => {
                 console.log(Object.values(chats)[0].map((chat) => chat.userId))
                 const asesores = data.filter((d) => d.type_user === 'Asesor' || d.type_user === 'Asesor1');
                 setAsesores(asesores);
-                console.log(asesores)
                 const chatspendientes = Object.values(chats)[0].filter((valor) => valor.status === 'pending');
                 const chatsengestion = Object.values(chats)[0].filter((valor) => valor.status === 'in process');
                 const chatscerrados = Object.values(chats)[0].filter((valor) => valor.status === 'closed');
@@ -214,7 +298,9 @@ const MonitoringPage = () => {
                 const chatGestion = chatsengestion.map((chat) => chat.userId);
                 const chatsPendings = Object.values(chats)[0].map((chat) => chat.userId);
                 setResultadost(chats)
-
+                setMensajes1(Object.values(msgByDate)[0]);
+                setContactos1(Object.values(chats)[0]);
+                console.log(msgByDate)  
                 // pendientes
                 const frecuencias = {};
                 chatsPendings.forEach((id) => {
@@ -269,7 +355,7 @@ const MonitoringPage = () => {
                 const segundosInicio = fechaInicio.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
 
                 const fechaInicioString = `${anioInicio}-${mesInicio}-${diaInicio} ${horaInicio}:${minutosInicio}:${segundosInicio}`;
-
+                
                 // Formatear la fecha actual
                 const anioFin = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
                 const mesFin = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
@@ -390,9 +476,7 @@ const MonitoringPage = () => {
                 if (!response.ok) {
                     throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
                 }
-
                 const Id = iduser
-
                 const chatsPending = await responseChats.json();
                 const withoutGest = chatsPending.filter(d => d.idChat2 == Id)
                 console.log(Id)
@@ -423,7 +507,6 @@ const MonitoringPage = () => {
                     const horaFin = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
                     const minutosFin = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
                     const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
-
                     const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
 
                     const status = 'in process';
@@ -461,16 +544,12 @@ const MonitoringPage = () => {
                 const responseChats = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-chats');
                 const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-usuarios');
                 // El usuario está autenticado, puedes acceder a la sesión
-
                 if (!response.ok) {
                     throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
                 }
                 const users = await responseUsers.json()
-
                 const dataChats = await responseChats.json();
                 const chatsPending = dataChats.filter(d => d.status == 'closed')
-
-
                 const data = await response.json();
                 setMensajes1(data);
                 setContactos1(chatsPending);
@@ -486,12 +565,8 @@ const MonitoringPage = () => {
             ]
         );
 
-        const [file, setFile] = useState(null);
-        const [url, setUrl] = useState('');
 
-        const handleFileChange = (e) => {
-            setFile(e.target.files[0]);
-        };
+
         const [numeroEspecifico, setNumeroEspecifico] = useState('');
 
         // Reemplaza esto con el número que necesites
@@ -647,8 +722,7 @@ const MonitoringPage = () => {
             return ( <
                     > {
                         showPopup &&
-                        <
-                        div className = "fixed inset-0 flex items-center justify-center overflow-y-auto" >
+                        <div className = "fixed inset-0 flex items-center justify-center overflow-y-auto" >
                         <
                         div className = "bg-black bg-opacity-50 " > < /div> <
                         div className = "bg-white p-6 rounded shadow-lg w-96" >
@@ -780,9 +854,9 @@ const MonitoringPage = () => {
                                 }
                             } >
                             <
-                            option value = "hoy" > Hoy < /option> <
-                            option value = "semana" > Esta semana < /option> <
-                            option value = "mes" > Este mes < /option> <
+                            option value = {"hoy"} > Hoy < /option> <
+                            option value = {"semana"}  > Esta semana < /option> <
+                            option value = {"mes"} > Este mes < /option> <
                             /select> <
                             select value = { statuschats }
                             onChange = {
@@ -806,9 +880,9 @@ const MonitoringPage = () => {
                                 () => { handleClosedClick() } } > {}
                             Chats cerrados: { resultados2 } <
                             /CustomButton> {
-                                Object.values(timeResponse)[0] && < h1 > tiempo de respuesta: { Object.values(Object.values(timeResponse)[0][0])[0] } < /h1>} {
-                                        Object.values(timeResponse)[0] && < h1 > Asesores activos: { asesores.filter(a => a.session == 'Activo').length } < /h1>} {
-                                                Object.values(timeResponse)[0] && < h1 > Asesores inactivos: { asesores.filter(a => a.session == 'Inactivo').length } < /h1>} {
+                                timeResponse && < h1 > tiempo de respuesta en minutos: {parseFloat(timeResponse).toFixed(2)   } < /h1>} {
+                                        timeResponse && < h1 > Asesores activos: { asesores.filter(a => a.session == 'Activo').length } < /h1>} {
+                                                timeResponse && < h1 > Asesores inactivos: { asesores.filter(a => a.session == 'Inactivo').length } < /h1>} {
                                                     Object.values(resultadost)[0] !== undefined && < h1 > Sesiones iniciadas: { Object.values(resultadost)[0].length } < /h1>} {
                                                         Object.values(resultadost)[0] !== undefined && < h1 > Sesiones atendidas: { Object.values(resultadost)[0].filter(a => a.status !== 'pending').length } < /h1>} <
                                                             /div> <
