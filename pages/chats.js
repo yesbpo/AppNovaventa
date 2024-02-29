@@ -431,9 +431,10 @@ const Chats = () => {
         };
 
         const enviarSolicitud = async() => {
+
             if (!selectedTemplateId) {
                 console.error('Error: No se ha seleccionado ninguna plantilla.');
-                return;
+                return 
             }
 
             const selectedTemplate = templates.find((template) => template.id === selectedTemplateId);
@@ -1164,160 +1165,119 @@ const Chats = () => {
 
         }
         if (session) {
-            return <
-                    >
+            return <>
                     {
                         showPopup && < div className = "fixed inset-0 flex items-center justify-center overflow-y-auto" >
 
-                        <
-                        div className = "bg-black bg-opacity-50 " > < /div> <
-                        div className = "bg-white p-6 rounded shadow-lg w-96" >
-                        <
-                        button
-                        onClick = { closePopup }
+                        <div className = "bg-black bg-opacity-50 " > </div> 
+                        <div className = "bg-white p-6 rounded shadow-lg w-96" >
+                        <button onClick = { closePopup }
                         className = "mb-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" >
-                        Cerrar <
-                        /button>
+                        Cerrar </button>
 
-                        <
-                        label htmlFor = "destinationInput"
+                        <label htmlFor = "destinationInput"
                         className = "block text-sm font-medium text-gray-700" >
                         Número de destino(máximo 10 dígitos):
-                            <
-                            /label> <
-                        input
+                            </label> 
+                        <input
                         type = "text"
                         id = "destinationInput"
                         value = { numericInputValue }
                         onChange = {
                             (e) => handleNumericInputChange(e.target.value)
                         }
-                        className = "mt-1 p-2 border border-gray-300 rounded-md" /
-                        >
-                        <
-                        button
+                        className = "mt-1 p-2 border border-gray-300 rounded-md" />
+                        <button
                         onClick = { handleAgregarNumeroClick }
                         className = "mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" >
-                        Agregar Número <
-                        /button>
+                        Agregar Número </button>
 
-                        <
-                        h2 className = "mt-4 text-lg font-semibold" > Plantillas: < /h2> <
-                        select
+                        <h2 className = "mt-4 text-lg font-semibold" > Plantillas: </h2> 
+                        <select
                         value = { selectedTemplateId }
                         onChange = { handleTemplateChange }
                         className = "mt-1 p-2 border border-gray-300 rounded-md" >
-                        <
-                        option value = ""
-                        disabled > Select a template < /option>
+                        <option value = ""
+                        disabled > Select a template </option>
 
                         {
                             templates.map((template) => (
 
-                                <
-                                option key = { template.id }
-                                value = { template.id } > { template.data } { contarOcurrencias(template.data, '{{.*?}}') } <
-                                /option>
+                                <option key = { template.id }
+                                value = { template.id } > { template.data } { contarOcurrencias(template.data, '{{.*?}}') } 
+                                </option>
                             ))
                         }
 
-                        <
-                        /select>
+                        </select>
 
                         {
                             templates.map(
                                 (template) =>
                                 template.id === selectedTemplateId &&
-                                template.params && ( <
-                                    div key = { template.id }
+                                template.params && ( <div key = { template.id }
                                     className = "mt-4" >
-                                    <
-                                    h3 className = "text-lg font-semibold" > Variables: < /h3> {
-                                    contarOcurrencias(template.data, '{{.*?}}').length > 0 && contarOcurrencias(template.data, '{{.*?}}').map((param) => ( <
-                                        div key = { param }
+                                    <h3 className = "text-lg font-semibold" > Variables: </h3> {
+                                    contarOcurrencias(template.data, '{{.*?}}').length > 0 && contarOcurrencias(template.data, '{{.*?}}').map((param) => ( 
+                                        <div key = { param }
                                         className = "mt-2" >
-                                        <
-                                        label htmlFor = { param }
+                                        <label htmlFor = { param }
                                         className = "block text-sm font-medium text-gray-700" > { param }:
-                                        <
-                                        /label> <
+                                        </label> <
                                         input type = "text"
                                         id = { param }
                                         onChange = {
                                             (e) => handleParamChange(param, e.target.value)
                                         }
-                                        className = "mt-1 p-2 border border-gray-300 rounded-md" /
-                                        >
-                                        <
-                                        /div>
+                                        className = "mt-1 p-2 border border-gray-300 rounded-md" />
+                                        </div>
                                     ))
-                                } <
-                                /div>
+                                } </div>
                             )
                         )
-                    } <
-                    /div> < /
-                    div >
-                } <
-                Layout className = 'big-box' >
+                    } </div> </div >
+                } <Layout className = 'big-box' >
 
-                <
-                Box className = 'estados' >
-                <
-                ButtonContainer >
-                <
-                CustomButton onClick = { handleEngestionClick } > { "Chats: " + contactos1.length } < /CustomButton> { /* Mostrar Activos si 'mostrarActivos'
+                <Box className = 'estados' >
+                <ButtonContainer>
+                <CustomButton onClick = { handleEngestionClick } > { "Chats: " + contactos1.length } </CustomButton> { /* Mostrar Activos si 'mostrarActivos'
             es true */ }
 
             {
-                user[0].type_user === 'Asesor1' && < CustomButton onClick = { openPopup } > Agregar Número < /CustomButton>}
+                user[0].type_user === 'Asesor1' && <CustomButton onClick = { openPopup } > Agregar Número </CustomButton>}
 
-                <
-                /ButtonContainer> < /
-                Box > <
-                    Container >
+                </ButtonContainer> 
+                </Box> 
+                <Container >
 
                     { /* Contenedor del chat */ }
 
 
-                <
-                Box className = "bg-primary" >
-                    <
-                    h2 className = 'text-white' > Chat { numeroEspecifico } < /h2> <
-                div className = 'h-80vw' > {
-                    numeroEspecifico !== '' && < button onClick = { asignarChat } > Transferir Chat < /button>} {
-                    msg.length > 0 && ( <
-                        div className = "fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 transition-opacity duration-300" >
-                        <
-                        div className = "bg-white p-4 rounded-md relative" >
-                        <
-                        button onClick = {
+                <Box className = "bg-primary" >
+                    <h2 className = 'text-white' > Chat { numeroEspecifico } </h2> <div className = 'h-80vw' > {
+                    numeroEspecifico !== '' && < button onClick = { asignarChat } > Transferir Chat </button>} {
+                    msg.length > 0 && ( <div className = "fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 transition-opacity duration-300" >
+                        <div className = "bg-white p-4 rounded-md relative" >
+                        <button onClick = {
                             () => setMsg('')
                         } >
-                        X <
-                        /button> <
-                        p className = "mb-4" > Selecciona un asesor para asignar el chat < /p> <
-                        ul > {
-                            msg.map(user => ( <
-                                li key = { user.id }
+                        X </button> <p className = "mb-4" > Selecciona un asesor para asignar el chat </p> <ul > {
+                            msg.map(user => ( <li key = { user.id }
                                 onClick = {
                                     () => trasladarChat(user.id)
                                 }
-                                className = "cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-2" > { user.complete_name }, { user.session } <
-                                /li>
+                                className = "cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-2" > { user.complete_name }, { user.session } 
+                                </li>
                             ))
-                        } <
-                        /ul> < /
-                        div > <
-                        /div>
+                        } </ul> 
+                        </div> 
+                        </div>
                     )
                 }
 
-                <
-                /div> <
-                ContainerBox className = 'bg-primary' >
-                    <
-                    div className = 'messagelist h-100 overflow-y-auto' > {
+                </div> 
+                <ContainerBox className = 'bg-primary' >
+                    <div className = 'messagelist h-100 overflow-y-auto'> {
                         (() => {
                             // Filtra los mensajes por el número específico y contenido no vacío
                             const mensajesFiltrados = mensajes1
@@ -1327,129 +1287,109 @@ const Chats = () => {
                             // Mapea y renderiza los mensajes ordenados
                             return mensajesFiltrados.map((mensaje, index) => (
 
-                                <
-                                div key = { index }
+                                <div key = { index }
                                 className = { `mensaje ${mensaje.type_message} ${
                 mensaje.type_comunication === 'message-event' ? 'bg-white text-right shadow-lg p-4 bg-gray rounded-md' : 'bg-green text-left shadow-lg p-4 bg-gray rounded-md'
-              } p-4 mb-4` }
-
-                                >
+              } p-4 mb-4` }>
 
                                 {
-                                    mensaje.type_message === 'image' ? ( <
-                                        img src = { limpiarLink(mensaje.content) || mensaje.content }
+                                    mensaje.type_message === 'image' ? ( 
+                                    <img src = { limpiarLink(mensaje.content) || mensaje.content }
                                         alt = "Imagen"
-                                        className = "w-15vw shadow-md p-4 bg-gray rounded-md" / >
-                                    ) : mensaje.type_message === 'image' ? ( <
-                                        img src = { limpiarLink(mensaje.content) }
+                                        className = "w-15vw shadow-md p-4 bg-gray rounded-md" />
+                                    ) : mensaje.type_message === 'image' ? ( 
+                                        <img src = { limpiarLink(mensaje.content) }
                                         alt = "Imagen"
-                                        className = "w-15vw" / >
-                                    ) : mensaje.type_message === 'audio' ? ( <
-                                        audio controls >
-                                        <
-                                        source src = { mensaje.content }
-                                        type = "audio/mp3" / >
-                                        Tu navegador no soporta el elemento de audio. <
-                                        /audio>
-                                    ) : mensaje.type_message === 'sticker' ? ( <
-                                        img src = { mensaje.content }
+                                        className = "w-15vw"/>
+                                    ) : mensaje.type_message === 'audio' ? ( 
+                                        <audio controls >
+                                        <source src = { mensaje.content }
+                                        type = "audio/mp3" />
+                                        Tu navegador no soporta el elemento de audio. 
+                                        </audio>
+                                    ) : mensaje.type_message === 'sticker' ? ( 
+                                        <img src = { mensaje.content }
                                         alt = "Sticker"
-                                        className = "w-15vw" / >
-                                    ) : mensaje.type_message === 'video' ? ( <
-                                        video controls className = "w-15vw" >
-                                        <
-                                        source src = { limpiarLink(mensaje.content) || mensaje.content }
-                                        type = "video/mp4" / >
-                                        Tu navegador no soporta el elemento de video. <
-                                        /video>
-                                    ) : mensaje.type_message === 'file' ? ( <
-                                        a href = { limpiarLink(mensaje.content) || mensaje.content }
+                                        className = "w-15vw" />
+                                    ) : mensaje.type_message === 'video' ? ( 
+                                        <video controls className = "w-15vw" >
+                                        <source src = { limpiarLink(mensaje.content) || mensaje.content }
+                                        type = "video/mp4" />
+                                        Tu navegador no soporta el elemento de video. 
+                                        </video>
+                                    ) : mensaje.type_message === 'file' ? ( 
+                                        <a href = { limpiarLink(mensaje.content) || mensaje.content }
                                         target = "_blank"
                                         rel = "noopener noreferrer"
                                         className = "text-blue" >
-                                        Descargar documento <
-                                        /a>
-                                    ) : ( <
-                                        >
-                                        <
-                                        p className = "mb-2" > { mensaje.content && mensaje.content.trim() } < /p> <
-                                        span > { mensaje.status + " " + mensaje.timestamp } < /span> < / >
+                                        Descargar documento 
+                                        </a>
+                                    ) : ( <>
+                                        <p className = "mb-2" > { mensaje.content && mensaje.content.trim() } </p> 
+                                        <span > { mensaje.status + " " + mensaje.timestamp } 
+                                        </span> 
+                                        </>
                                     )
                                 }
 
-                                <
-                                /div>
+                                </div>
                             ));
                         })()
-                    } < /div>
+                    } </div>
 
-                <
-                /ContainerBox > { / * Contenedor de entrada y botones * / } <
-                div className = 'input-container' >
-                    <
-                    InputContainer className = 'input-box' >
-                    <
-                    InputMensaje
+                </ContainerBox> { / * Contenedor de entrada y botones * / } 
+                <div className = 'input-container' >
+                    <InputContainer className = 'input-box' >
+                    <InputMensaje
                 type = "text"
                 placeholder = "Escribe un mensaje..."
                 value = { inputValue }
                 onKeyDown = { manejarPresionarEnter }
-                onChange = { manejarCambio }
-                /> <
-                BotonEnviar onClick = { enviarMensaje } > < PaperAirplaneIcon className = "h-5 w-5" / > < /BotonEnviar> <
-                button onClick = { toggleEmojiPicker } > 😊 < /button> <
-                label className = "custom-file-input-label"
+                onChange = { manejarCambio }/> 
+                <BotonEnviar onClick = { enviarMensaje } > < PaperAirplaneIcon className = "h-5 w-5" /> </BotonEnviar> 
+                <button onClick = { toggleEmojiPicker } > 😊 </button> 
+                <label className = "custom-file-input-label"
                 onClick = { handleButtonClick } >
-                    <
-                    PaperClipIcon className = "w-5 h-10 mr-2" / > { file.name } <
-                    /label> <
-                input
+                    <PaperClipIcon className = "w-5 h-10 mr-2" /> { file.name } 
+                    </label> 
+                    <input
                 type = "file"
                 ref = { fileInputRef }
                 style = {
                     { display: 'none' }
                 }
                 onChange = { handleFileChange }
-                    // Puedes ajustar las extensiones permitidas
-                />
+                    // Puedes ajustar las extensiones permitidas                    
+                    />
 
 
-                <
-                /InputContainer> {
-                showEmojiPicker && ( <
-                    EmojiPicker onEmojiClick = {
+                </InputContainer> {
+                showEmojiPicker && ( <EmojiPicker onEmojiClick = {
                         (emoji) => handleAddEmoji(emoji.emoji)
-                    }
-                    disableAutoFocus /
-                    >
+                    }disableAutoFocus/>
                 )
-            } <
-            /div>
+            } </div>
 
-            <
-            div className = 'flex flex-row justify-between' >
-                <
-                BotonEnviar onClick = { actualizarEstadoChat } > En atencion < /BotonEnviar> <
-            BotonEnviar onClick = { actualizarEstadoChatCerrados } > Finalizar < /BotonEnviar>
+            <div className = 'flex flex-row justify-between' >
+                <BotonEnviar onClick = { actualizarEstadoChat } > En atencion 
+                </BotonEnviar> 
+                <BotonEnviar onClick = { actualizarEstadoChatCerrados } > Finalizar </BotonEnviar>
 
-            <
-            /div> <
-            div >
-                <
-                label htmlFor = "respuestasRapidas" > Selecciona una respuesta rápida: < /label> <
-            StyledSelect id = "respuestasRapidas"
+            </div> 
+            <div>
+                <label htmlFor = "respuestasRapidas" > Selecciona una respuesta rápida: </label> 
+                <StyledSelect id = "respuestasRapidas"
             onChange = {
                     (e) => setInputValue(e.target.value)
-                } > {
-                    respuestasRapidas.map(respuesta => ( <
-                        option key = { respuesta.name }
-                        value = { respuesta.contentn } > { respuesta.name }: { respuesta.contentn } <
-                        /option>
+                }> {
+                    respuestasRapidas.map(respuesta => ( 
+                    <option key = { respuesta.name }
+                        value = { respuesta.contentn } > { respuesta.name }: { respuesta.contentn } 
+                        </option>
                     ))
-                } <
-                /StyledSelect> < /
-            div > <
-                /Box>
+                } </StyledSelect> 
+                </div> 
+                </Box>
 
             { /* Botones de acción */ }
 
@@ -1458,44 +1398,33 @@ const Chats = () => {
             { /* Contenedor de contactos */ }
 
 
-            <
-            ContainerBox2 >
-                <
-                InputMensaje
+            <ContainerBox2>
+                <InputMensaje
             type = "text"
             placeholder = "Ingrese un número"
             value = { numeroBuscado }
-            onChange = { handleNumeroChange }
-            /> <
-            Box className = 'bg-blue-900' >
-                <
-                div className = "contact-list-container" >
-                <
-                h1 > { statuschats } < /h1> <
-            ul > {!Array.isArray(contactos1) && ( <
-                        li >
-                        <
-                        CustomButton2 onClick = {
+            onChange = { handleNumeroChange }/> 
+            <Box className = 'bg-blue-900'>
+                <div className = "contact-list-container" >
+                <h1 > { statuschats } </h1> <ul> {!Array.isArray(contactos1) && ( 
+                <li >
+                        <CustomButton2 onClick = {
                             () => marcaLeido(contactos1.idChat2)
                         }
                         className = { `p-2 rounded ${
           (contactos1.status == 'in process' ? 'bg-gray text-black' : 'bg-green text-white'  )
         }` } >
-                        <
-                        UserGroupIcon className = "w-5 h-10" / > { contactos1.idChat2 } {
-                            contactos1.resolved && ( <
-                                span className = "text-red" > Mensaje nuevo < /span>
+                        <UserGroupIcon className = "w-5 h-10" /> { contactos1.idChat2 } {
+                            contactos1.resolved && ( 
+                            <span className = "text-red" > Mensaje nuevo </span>
                             )
-                        } <
-                        /CustomButton2> < /
-                        li >
+                        } </CustomButton2> 
+                        </li>
                     )
                 } {
                     Array.isArray(contactos1) &&
-                        contactos1.map((contacto, index) => ( <
-                                li key = { index } >
-                                <
-                                CustomButton2 onClick = {
+                        contactos1.map((contacto, index) => ( <li key = { index } >
+                                <CustomButton2 onClick = {
                                     () => marcaLeido(contacto.idChat2)
                                 }
                                 className = { `p-2 rounded ${

@@ -5,6 +5,7 @@ import io from 'socket.io-client';
 import { useSession, signIn } from 'next-auth/react';
 
 
+
 const MonitoringPage = () => {
         const [selectedTemplateId, setSelectedTemplateId] = useState('');
         const [showPopup, setShowPopup] = useState('')
@@ -27,10 +28,11 @@ const MonitoringPage = () => {
             setNumericInputValue(newValue);
             console.log('Valor numérico ingresado:', newValue);
         };
+        const [errorSendTemplate, setErrorSendTemplate] = useState(null); 
         const enviarSolicitud = async() => {
             if (!selectedTemplateId) {
                 console.error('Error: No se ha seleccionado ninguna plantilla.');
-                return;
+                setErrorSendTemplate('No se ha seleccionado ninguna plantilla. Por favor, selecciona una plantilla.');
             }
 
             const selectedTemplate = templates.find((template) => template.id === selectedTemplateId);
@@ -765,7 +767,11 @@ const promedioTiempoRespuesta = tiempoRespuestaArray.reduce((total, valor) => to
                                 /option>
                             ))
                         } <
-                        /select> {
+                        /select>
+                        {errorSendTemplate &&  setTimeout(() => {
+                            <p className="text-red text-sm mt-2">{errorSendTemplate}</p>
+                        }, 5000)} 
+                        {
                             templates.map(
                                 (template) =>
                                 template.id === selectedTemplateId &&

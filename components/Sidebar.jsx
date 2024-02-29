@@ -23,6 +23,7 @@ const menuItems = [
   { id: 3, label: 'Reportes', icon: DocumentReportIcon, link: '/reports' },
   { id: 4, label: 'Plantillas', icon: TemplateIcon, link: '/templates' },
   { id: 6, label: 'Envíos', icon: PaperAirplaneIcon, link: '/sends' },
+  { id: 7, label: 'Configuracion', icon: PaperAirplaneIcon, link: '/config' },
   
 ]
 const menuItems1 = [
