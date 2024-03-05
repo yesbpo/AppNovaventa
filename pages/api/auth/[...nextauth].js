@@ -14,7 +14,7 @@ export const authOptions = {
           usuario: { label: "Usuario", type: "text", placeholder: "jsmith" },
           password: { label: "Password", type: "password", placeholder: "*****" },
         },   async authorize(credentials, req) {
-         console.log("AUTHORIZE")
+         console.log("AUTHORIZE", process.env.NEXT_PUBLIC_BASE_DB)
          console.log(credentials)
  
          const userFound = await db.user.findFirst({

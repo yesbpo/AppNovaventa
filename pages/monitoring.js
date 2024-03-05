@@ -3,9 +3,11 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import io from 'socket.io-client';
 import { useSession, signIn } from 'next-auth/react';
+import { useRouter } from "next/router";
 
 
 const MonitoringPage = () => {
+        const router = useRouter();
         const [selectedTemplateId, setSelectedTemplateId] = useState('');
         const [showPopup, setShowPopup] = useState('')
         const [templateParams, setTemplateParams] = useState({}); // Nuevo estado para los parámetros
@@ -27,10 +29,11 @@ const MonitoringPage = () => {
             setNumericInputValue(newValue);
             console.log('Valor numérico ingresado:', newValue);
         };
+        const [errorSendTemplate, setErrorSendTemplate] = useState(null); 
         const enviarSolicitud = async() => {
             if (!selectedTemplateId) {
                 console.error('Error: No se ha seleccionado ninguna plantilla.');
-                return;
+                setErrorSendTemplate('No se ha seleccionado ninguna plantilla. Por favor, selecciona una plantilla.');
             }
 
             const selectedTemplate = templates.find((template) => template.id === selectedTemplateId);
@@ -718,7 +721,11 @@ const promedioTiempoRespuesta = tiempoRespuestaArray.reduce((total, valor) => to
             return asesorEncontrado ? asesorEncontrado.complete_name : 'Nombre no encontrado';
         };
 
-        if (session) {
+        function signin() {
+        router.push('/auth/login');
+        }
+
+        if (localStorage.getItem('token')) {
             return ( <
                     > {
                         showPopup &&
@@ -765,7 +772,11 @@ const promedioTiempoRespuesta = tiempoRespuestaArray.reduce((total, valor) => to
                                 /option>
                             ))
                         } <
-                        /select> {
+                        /select>
+                        {errorSendTemplate &&  setTimeout(() => {
+                            <p className="text-red text-sm mt-2">{errorSendTemplate}</p>
+                        }, 5000)} 
+                        {
                             templates.map(
                                 (template) =>
                                 template.id === selectedTemplateId &&
@@ -995,24 +1006,23 @@ const promedioTiempoRespuesta = tiempoRespuestaArray.reduce((total, valor) => to
                                                                 /Container>} <
                                                                 /Layout> <
                                                                 />
-                                                            )
-                                                    }
-                                                    return ( <
-                                                        >
-                                                        <
-                                                        div className = "flex flex-col items-center justify-center h-screen" >
-                                                        <
-                                                        p className = "mb-4" > Not signed in < /p> <
-                                                        button onClick = {
-                                                            () => signIn() }
-                                                        className = "bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded" >
-                                                        Sign in
-                                                        <
-                                                        /button> <
-                                                        /div> <
-                                                        />
-
-                                                    )
+                                                            )}
+                                                            return (
+                                                                <>
+                                                                <div className="flex flex-col items-center justify-center h-screen">
+                                                                  <p className="mb-4">Not signed in</p>
+                                                                  <button
+                                                                    onClick={() => signin()}
+                                                                    className="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
+                                                                  >
+                                                                    Sign in
+                                                                  </button>
+                                                                </div>
+                                                              </>
+                                                          
+                                                                )
+                                                    
+                                                    
                                                 };
 
                                                 const Box = styled.div `

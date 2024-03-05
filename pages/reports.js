@@ -4,7 +4,9 @@ import Layout from '../components/Layout';
 import { useSession, signIn } from 'next-auth/react';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { useRouter } from 'next/router';
 function Reports() {
+  const router = useRouter();
   const { data: session } = useSession();
   const [informes, setInformes] = useState([]);
   const [campaign, setCampaign] = useState('');
@@ -223,10 +225,14 @@ function Reports() {
       console.error('Error al generar el PDF:', error);
     }
   };
-  
+  function signin() {
+    router.push('/auth/login');
+    }
+
+    
   return (
     <>
-      {session ? (
+      {localStorage.getItem('token') ? (
         <Layout>
           <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-black p-8 bg-opacity-80">
             <div className='w-full'>
@@ -375,7 +381,7 @@ function Reports() {
         <div className="flex flex-col items-center justify-center h-screen">
           <p className="mb-4">Not signed in</p>
           <button
-            onClick={() => signIn()}
+            onClick={() => signin()}
             className="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
           >
             Sign in
