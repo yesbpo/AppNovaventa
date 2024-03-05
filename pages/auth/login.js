@@ -1,47 +1,56 @@
-"use client";
-import { useForm } from "react-hook-form";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import {useState} from 'react'
 
 function LoginPage() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
-  const router = useRouter()
-  const [error, setError] = useState(null)
-  
-  const onSubmit = handleSubmit(async (data) => {
-    console.log(data);
-
-    const res = await signIn("credentials", {
-      usuario: data.usuario,
-      password: data.password,
-      redirect: false,
-       // Ajusta la ruta según tu configuración
+  const router = useRouter();
+  const [username, setUsername ] = useState('');
+  const [password, setPassword] = useState('');
+const handleLogin = async () => {
+  try {
+    const response = await fetch('http://localhost:3003/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ username, password }),
     });
 
-    console.log("RESPONSE SIGN IN:")
-    console.log(res)
-    if (res.error) {
-      console.log("REDIRECT: /auth/login")
-      router.push('/auth/login')
-    } else {
-      console.log("REDIRECT: /")
-      router.push('/')
+    const data = await response.json();
+    console.log('Token recibido:', data.token);
+       // Almacenar el token y el nombre de usuario en localStorage
+       localStorage.setItem('token', data.token);
+       localStorage.setItem('username', data.username);
+       localStorage.setItem('type_user', data.type_user);
+       const token = localStorage.getItem('token');
+       const responseautenticate = await fetch('http://localhost:3003/protected', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
+
+      if (responseautenticate.ok) {
+        
+        router.push('/monitoring');
+      } else {
+        console.error('Error al acceder a la ruta protegida:', response.statusText);
+      }
       
-    }
-  });
+  } catch (error) {
+    console.error('Error al realizar la solicitud:', error);
+  }
+
+  
+
+
+  
+}
 
   return (
     <div className="h-[calc(100vh-7rem)] flex justify-center items-center">
-      <form onSubmit={onSubmit} className="w-1/4">
+      
 
-        {error && (
-          <p className="bg-red-500 text-lg text-white p-3 rounded mb-2">{error}</p>
-        )}
 
         
         <img className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 mx-auto my-auto" src="https://1bb437.a2cdn1.secureserver.net/wp-content/uploads/2023/08/Logo-500-full-150x150.jpg" alt="Logo" />
@@ -50,46 +59,34 @@ function LoginPage() {
           Usuario:
         </label>
         <input
-          type="usuario"
-          {...register("usuario", {
-            required: {
-              value: true,
-              message: "Usuario is required",
-            },
-          })}
+          type="text"
+          
+              
+          onChange={(e) => setUsername(e.target.value)}     
           className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
           placeholder="user@email.com"
         />
 
-        {errors.usuario && (
-          <span className="text-red-500 text-xs">{errors.usuario.message}</span>
-        )}
+        
 
         <label htmlFor="password" className="text-slate-500 mb-2 block text-sm">
           Password:
         </label>
         <input
           type="password"
-          {...register("password", {
-            required: {
-              value: true,
-              message: "Password is required",
-            },
-          })}
+          
+          onChange={(e) => setPassword(e.target.value)}
           className="p-3 rounded block mb-2 bg-slate-900 text-slate-300 w-full"
           placeholder="******"
         />
 
-        {errors.password && (
-          <span className="text-red-500 text-xs">
-            {errors.password.message}
-          </span>
-        )}
+        
 
-        <button className="w-full bg-blue-500 text-black p-3 rounded-lg mt-2">
+        <button className="w-full bg-blue-500 text-black p-3 rounded-lg mt-2"
+        onClick={handleLogin}>
           Login
         </button>
-      </form>
+      
     </div>
   );
 }

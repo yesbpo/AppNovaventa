@@ -5,8 +5,10 @@ import Layout from '../components/Layout';
 import styled from 'styled-components';
 import EmojiPicker from 'emoji-picker-react';
 import { useSession, signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const Reports = (props) => {
+    const router = useRouter();
     const { data: session } = useSession()
     const [responseData, setResponseData] = useState(null);
     const [elementName, setElementName] = useState('');
@@ -327,7 +329,7 @@ const Reports = (props) => {
         }
     };
 
-
+    
     //filter templates
     useEffect(() => {
         const fetchData = async() => {
@@ -388,8 +390,11 @@ const Reports = (props) => {
             clearTimeout(deleteMessageTimer);
         };
     }, [deleteMessage]);
+    function signin() {
+        router.push('/auth/login');
+        }
 
-    if (session) {
+    if (localStorage.getItem('token')) {
         return ( <
                 Layout >
                 <
@@ -753,7 +758,7 @@ return ( <
     <
     p className = "mb-4" > Not signed in < /p> <
     button onClick = {
-        () => signIn()
+        () => signin()
     }
     className = "bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded" >
     Sign in

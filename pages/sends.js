@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 import styled from "styled-components";
 import * as XLSX from 'xlsx';
 import axios from 'axios';
-
+import { useRouter } from 'next/router';
 const contarRepeticionesPatron = (str) => {
   const patron = /\{\{\d+\}\}/g;
   const contar = str.match(patron);
@@ -11,6 +11,7 @@ const contarRepeticionesPatron = (str) => {
 };
 
 const Sends = (props) => {
+  const router = useRouter();
   const [titleCampaign, setTitleCampaign] = useState('')
   const [templates, setTemplates] = useState([]);
   const [selectedTemplate, setSelectedTemplate] = useState("");
@@ -461,7 +462,12 @@ const Sends = (props) => {
 
     return replacedTemplate;
   };
+  function signin() {
+    router.push('/auth/login');
+    }
 
+    if (localStorage.getItem('token')) {
+   
   return (
     <Layout>
       <Box>
@@ -677,7 +683,20 @@ const Sends = (props) => {
         <button onClick={enviar}>Enviar</button>
       </Box>
     </Layout>
-  );
+  );}
+  else {
+    return (
+      <div className="h-[calc(100vh-7rem)] flex justify-center items-center">
+        <p className="mb-4">No has iniciado sesión</p>
+        <button
+          onClick={signin}
+          className="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
+        >
+          Iniciar sesión
+        </button>
+      </div>
+    );
+  }
 };
 
 const Box = styled.div`

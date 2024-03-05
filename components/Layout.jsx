@@ -4,7 +4,7 @@ import { useSession,signIn, signOut } from 'next-auth/react';
 const Layout = ({children}) => {
   const { data: session } = useSession()
   console.log("Session en Layout: " + session)
-  if (session) {
+  
     return (
         <div className="h-screen flex">
            <Sidebar/>
@@ -13,8 +13,8 @@ const Layout = ({children}) => {
            </div>
         </div>
     )
-  }
-  return (
+  
+  {/*return (
     <>
     <div className="flex flex-col items-center justify-center h-screen">
       <p className="mb-4">Not signed in</p>
@@ -27,7 +27,7 @@ const Layout = ({children}) => {
     </div>
   </>
   
-    )
+  )*/}
 
 };
 

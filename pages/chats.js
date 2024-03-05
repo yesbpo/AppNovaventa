@@ -5,8 +5,9 @@ import socketIOClient from 'socket.io-client';
 import { useSession, signIn } from 'next-auth/react';
 import EmojiPicker from 'emoji-picker-react';
 import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon, SearchIcon, RefreshIcon } from '@heroicons/react/solid';
-
+import { useRouter } from 'next/router';
 const Chats = () => {
+    const router = useRouter();
         const [mensajes1, setMensajes1] = useState([]);
         const { data: session } = useSession();
         const [user, setUser] = useState([{ type_user: 'Asesor' }]);
@@ -1163,7 +1164,10 @@ const Chats = () => {
             }
 
         }
-        if (session) {
+        function signin() {
+            router.push('/auth/login')
+        }
+        if (localStorage.getItem('token')) {
             return <
                     >
                     {
@@ -1538,7 +1542,7 @@ const Chats = () => {
       <div className="flex flex-col items-center justify-center h-screen">
         <p className="mb-4">Not signed in</p>
         <button
-          onClick={() => signIn()}
+          onClick={() => signin()}
           className="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
         >
           Sign in

@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import styled from 'styled-components';
 import { useSession, signIn } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
 const CrearUsuario = () => {
+  const router = useRouter();
   const [showCrear, setShowCrear] = useState(false);
   const [isChecked, setIsChecked] = useState(false);
   const handleChangeCrear = () => {
@@ -136,7 +138,12 @@ const CrearUsuario = () => {
       console.error('Error en la solicitud:', error.message);
     }
   };
-  if (sesion){
+
+  function signin() {
+    router.push('/auth/login');
+  }
+
+  if (localStorage.getItem('token')){
   return (
     
     <Layout>
@@ -301,7 +308,7 @@ const CrearUsuario = () => {
         <div className="flex flex-col items-center justify-center h-screen">
           <p className="mb-4">Not signed in</p>
           <button
-            onClick={() => signIn()}
+            onClick={() => signin()}
             className="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
           >
             Sign in

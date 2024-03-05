@@ -23,6 +23,7 @@ const menuItems = [
   { id: 3, label: 'Reportes', icon: DocumentReportIcon, link: '/reports' },
   { id: 4, label: 'Plantillas', icon: TemplateIcon, link: '/templates' },
   { id: 6, label: 'Envíos', icon: PaperAirplaneIcon, link: '/sends' },
+  { id: 7, label: 'Configuración', icon: PaperAirplaneIcon, link: '/config' },
   
 ]
 const menuItems1 = [
@@ -33,7 +34,7 @@ const Sidebar = (props) => {
   const [toggleCollapse, setToggleCollapse] = useState(false);
   const [isCollapsible, setIsCollapsible] = useState(false);
   const { data: session } = useSession();
-  const [userown, setUserown] = useState(session.user.name);
+  const [userown, setUserown] = useState(localStorage.getItem('username'));
   
   const [ users, setUsers] =useState([])
   useEffect(() => {
@@ -42,7 +43,7 @@ const Sidebar = (props) => {
       try {
         const generalUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/obtener-usuarios');
         const usersData = await generalUsers.json();
-        const currentUser = usersData.filter((u) => u.usuario == session.user.name)
+        const currentUser = usersData.filter((u) => u.usuario == userown)
         setUsers(currentUser[0]);
         console.log(currentUser[0].type_user)
       } catch (error) {
@@ -93,7 +94,7 @@ const Sidebar = (props) => {
     const usuario = userown // Reemplaza con el nombre de usuario que deseas actualizar
     const nuevoDato = 'Inactivo'; // Reemplaza con el nuevo valor que deseas asignar
 
-    signOut();
+    localStorage.removeItem('token');
 
     try {
       const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB+'/actualizar/usuario', {
@@ -125,7 +126,7 @@ const Sidebar = (props) => {
 
   
 
-  if (session) {
+  
     // TODO: - Change the icon for an actual logo
     return (
       <div
@@ -140,7 +141,7 @@ const Sidebar = (props) => {
           <div className="flex items-center justify-between relative">
             <div className="flex items-center ml-8">
               <BadgeCheckIcon className="h-24 w-24 text-light-lighter" />
-              <h1>{session.user.name}</h1>
+              <h1>{userown}</h1>
 
             </div>
             {isCollapsible && (
@@ -186,20 +187,8 @@ const Sidebar = (props) => {
         </div>
       </div>
     );
-  }
-  return (
-    <>
-      <div className="flex flex-col items-center justify-center h-screen">
-        <p className="mb-4">Not signed in</p>
-        <button
-          onClick={() => signIn()}
-          className="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
-        >
-          Sign in
-        </button>
-      </div>
-    </>
-  );
+  
+  
 };
 
 export default Sidebar;
