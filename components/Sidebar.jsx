@@ -24,6 +24,7 @@ const menuItems = [
   { id: 4, label: 'Plantillas', icon: TemplateIcon, link: '/templates' },
   { id: 6, label: 'Envíos', icon: PaperAirplaneIcon, link: '/sends' },
   { id: 7, label: 'Configuración', icon: PaperAirplaneIcon, link: '/config' },
+  { id: 8, label: 'Chatbot', icon: ChatIcon, link: '/Chatbot' },
   
 ]
 const menuItems1 = [
@@ -53,7 +54,7 @@ const Sidebar = (props) => {
 
     fetchData();
   }, []);
-  
+  console.log(users.type_user)
   const selectedItems = users.type_user === 'Coordinador' ? menuItems  :  menuItems1;
   // Routing.
   const router = useRouter();
@@ -129,6 +130,8 @@ const Sidebar = (props) => {
   
     // TODO: - Change the icon for an actual logo
     return (
+      <>
+      
       <div
         className={wrapperClasses}
         onMouseEnter={onMouseOver}
@@ -186,6 +189,8 @@ const Sidebar = (props) => {
           </button>
         </div>
       </div>
+
+      </>
     );
   
   
