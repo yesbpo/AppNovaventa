@@ -29,7 +29,7 @@ export function SortUpIcon({className}) {
           xmlns="http://www.w3.org/2000/svg"
       >
         <path
-            d="M279 224H41c-21.4 0-32.1-25.9-17-41L143 64c9.4-9.4 24.6-9.4 33.9 0l119 119c15.2 15.1 4.5 41-16.9 41z"></path>
+            d="M12 2L1 12h3v9h6v-6h6v6h6v-9h3L12 2zm0 2.828L18.172 9H5.828L12 4.828z"></path>
       </svg>
   );
 }

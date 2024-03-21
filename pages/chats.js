@@ -2,17 +2,15 @@ import Layout from '../components/Layout';
 import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import styled from 'styled-components';
 import socketIOClient from 'socket.io-client';
-import { useSession, signIn } from 'next-auth/react';
 import EmojiPicker from 'emoji-picker-react';
 import { PaperAirplaneIcon, PaperClipIcon, UserGroupIcon, SearchIcon, RefreshIcon } from '@heroicons/react/solid';
 import { useRouter } from 'next/router';
 const Chats = () => {
     const router = useRouter();
-        const [mensajes1, setMensajes1] = useState([]);
-        const { data: session } = useSession();
+        const [mensajes1, setMensajes1] = useState([]);        
         const [user, setUser] = useState([{ type_user: 'Asesor' }]);
         const intervalIdRef = React.useRef(null);
-        const socketIOConnOpt = {
+        const socketIOConnOpt = JSON.stringify({
             'force new connection': true,
             reconnection: true,
             reconnectionDelay: 10000,
@@ -21,14 +19,14 @@ const Chats = () => {
             timeout: 10000,
             transports: ['websocket', 'pooling'],
             resource: '/conversation-api/',
-        };
-        const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URL + '/socket.io/', socketIOConnOpt);
+        });
+
+        const socket = socketIOClient(process.env.NEXT_PUBLIC_BASE_URLSERVER, JSON.parse(socketIOConnOpt));
 
         useEffect(() => {
             socket.on('message-into', (rows) => {
                 setMensajes1(rows);
             });
-
 
             // Limpiar la conexión cuando el componente se desmonta
             return () => {
@@ -81,22 +79,14 @@ const Chats = () => {
 
         useEffect(async() => {
 
-
             handleEngestionClick();
-
-
-
-
             const responseUsers = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/obtener-usuarios');
             // El usuario está autenticado, puedes acceder a la sesión
-
             if (!responseUsers.ok) {
 
             }
             const users = await responseUsers.json()
-
-            const Id = users.filter(d => d.usuario == session.user.name)
-
+            const Id = users.filter(d => d.usuario == localStorage.getItem('username'))
             const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB + `/consultar-chats/${Id[0].id}`);
             const chatsPending = await responseChatsin.json();
             const withoutGest = chatsPending
@@ -104,10 +94,7 @@ const Chats = () => {
             setContactos1(Object.values(withoutGest)[0].filter(c => c.status == 'pending' || c.status == 'in process'))
             fetchExpired(Object.values(withoutGest)[0])
             setEngestion(withoutGest.length)
-
-
             const messagelist = messagelistRef.current;
-
             // Verifica si la referencia es null
             if (messagelist) {
                 // Establece el desplazamiento en la parte inferior del contenedor
@@ -235,7 +222,7 @@ const Chats = () => {
 
                 }
                 const users = await responseUsers.json()
-                const Id = users.filter(d => d.usuario == session.user.name)
+                const Id = users.filter(d => d.usuario == localStorage.getItem('username'))
                 const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB + `/consultar-chats/${Id[0].id}`);
 
                 const chatsPending = await responseChatsin.json();
@@ -394,7 +381,7 @@ const Chats = () => {
 
             }
             const users = await responseUsers.json()
-            const Id = users.filter(d => d.usuario == session.user.name)
+            const Id = users.filter(d => d.usuario == localStorage.getItem('username'))
 
 
 
@@ -608,7 +595,7 @@ const Chats = () => {
 
                 if (!responseUsers.ok) {}
                 const users = await responseUsers.json()
-                const Id = users.filter(d => d.usuario == session.user.name)
+                const Id = users.filter(d => d.usuario == localStorage.getItem('username'))
 
 
                 const withoutGest = chatsPending.filter(d => d.userId == Id[0].id)
@@ -641,8 +628,8 @@ const Chats = () => {
 
             }
             const users = await responseUsers.json()
-            setSession1(session.user.name)
-            const Id = users.filter(d => d.usuario == session.user.name)
+            setSession1(localStorage.getItem('username'))
+            const Id = users.filter(d => d.usuario == localStorage.getItem('username'))
             console.log(Id)
             setUser(Id)
             const responseChatsin = await fetch(process.env.NEXT_PUBLIC_BASE_DB + `/consultar-chats/${Id[0].id}`);
@@ -691,7 +678,7 @@ const Chats = () => {
 
             const idChat2 = numeroEspecifico;
             const nuevoEstado = 'closed';
-            const nuevoUserId = session.user.id
+            const nuevoUserId = localStorage.getItem('id');
             try {
                 const response = await fetch(process.env.NEXT_PUBLIC_BASE_DB + '/actualizar-estado-chat', {
                     method: 'PUT',
@@ -706,10 +693,28 @@ const Chats = () => {
                 });
 
                 if (response.ok) {
-                    const data = await response.json();
-
-
-                    try {
+                   const  sendMessageClosed = async () => {  
+                    const getResponseClosed = await fetch("http://localhost:3001/obtener-respuestaconversacionfinalizada");
+                    const data = await getResponseClosed.json();
+                    const mensajeData = {
+                        channel: 'whatsapp',
+                        source: process.env.NEXT_PUBLIC_CELLPHONE,
+                        'src.name': process.env.NEXT_PUBLIC_NAMEAPP,
+                        destination: numeroEspecifico,
+                        message: data[0].respuesta,
+                        disablePreview: true,
+                    };
+                    // Enviar mensaje a través de la API de envíos
+                    const envioResponse = await fetch(process.env.NEXT_PUBLIC_API2 + '/api/envios', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams(mensajeData).toString(),
+                    });
+                } 
+                sendMessageClosed()
+                try {
 
                         const fechaActual = new Date();
                         const options = { timeZone: 'America/Bogota', hour12: false };
@@ -744,7 +749,7 @@ const Chats = () => {
 
                         }
                         const users = await responseUsers.json()
-                        const Id = users.filter(d => d.usuario == session.user.name)
+                        const Id = users.filter(d => d.usuario == localStorage.getItem('username'))
 
                         const chatsPending = await responseChatsin.json();
                         const withoutGest = chatsPending;
@@ -1080,7 +1085,7 @@ const Chats = () => {
 
         };
         const updateuser = async() => {
-            const usuario = session.user.name; // Reemplaza con el nombre de usuario que deseas actualizar
+            const usuario = localStorage.getItem('username'); // Reemplaza con el nombre de usuario que deseas actualizar
             const nuevoDato = 'Activo'; // Reemplaza con el nuevo valor que deseas asignar
             if (numeroEspecifico !== '') {
                 const fechaActual = new Date();
@@ -1089,35 +1094,11 @@ const Chats = () => {
                 fechaInicio.setDate(fechaInicio.getDate() - 1);
                 let horaInicio;
                 // Formatear la fecha de inicio
-                const anioInicio = fechaInicio.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
-                const mesInicio = fechaInicio.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
-                const diaInicio = fechaInicio.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
                 if (fechaInicio.getHours() >= 24) {
                     horaInicio = 0;
                 }
-                horaInicio = fechaInicio.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
-                const minutosInicio = fechaInicio.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
-                const segundosInicio = fechaInicio.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
-
-                const fechaInicioString = `${anioInicio}-${mesInicio}-${diaInicio} ${horaInicio}:${minutosInicio}:${segundosInicio}`;
-
-                // Formatear la fecha actual
-                const anioFin = fechaActual.toLocaleString('en-US', { year: 'numeric', timeZone: options.timeZone });
-                const mesFin = fechaActual.toLocaleString('en-US', { month: '2-digit', timeZone: options.timeZone });
-                const diaFin = fechaActual.toLocaleString('en-US', { day: '2-digit', timeZone: options.timeZone });
-                const horaFin = fechaActual.toLocaleString('en-US', { hour: '2-digit', hour12: false, timeZone: options.timeZone });
-                const minutosFin = fechaActual.toLocaleString('en-US', { minute: '2-digit', timeZone: options.timeZone });
-                const segundosFin = fechaActual.toLocaleString('en-US', { second: '2-digit', timeZone: options.timeZone });
-
-                const fechaFinString = `${anioFin}-${mesFin}-${diaFin} ${horaFin}:${minutosFin}:${segundosFin}`;
-
                 fetchMensajes()
-
-
-                // Configurar el intervalo para realizar la consulta cada 30 segundos
-
             }
-
         }
 
         function limpiarLink(dataString) {
@@ -1167,468 +1148,293 @@ const Chats = () => {
         function signin() {
             router.push('/auth/login')
         }
-        if (localStorage.getItem('token')) {
-            return <
-                    >
-                    {
-                        showPopup && < div className = "fixed inset-0 flex items-center justify-center overflow-y-auto" >
-
-                        <
-                        div className = "bg-black bg-opacity-50 " > < /div> <
-                        div className = "bg-white p-6 rounded shadow-lg w-96" >
-                        <
-                        button
-                        onClick = { closePopup }
-                        className = "mb-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" >
-                        Cerrar <
-                        /button>
-
-                        <
-                        label htmlFor = "destinationInput"
-                        className = "block text-sm font-medium text-gray-700" >
-                        Número de destino(máximo 10 dígitos):
-                            <
-                            /label> <
-                        input
-                        type = "text"
-                        id = "destinationInput"
-                        value = { numericInputValue }
-                        onChange = {
-                            (e) => handleNumericInputChange(e.target.value)
-                        }
-                        className = "mt-1 p-2 border border-gray-300 rounded-md" /
-                        >
-                        <
-                        button
-                        onClick = { handleAgregarNumeroClick }
-                        className = "mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" >
-                        Agregar Número <
-                        /button>
-
-                        <
-                        h2 className = "mt-4 text-lg font-semibold" > Plantillas: < /h2> <
-                        select
-                        value = { selectedTemplateId }
-                        onChange = { handleTemplateChange }
-                        className = "mt-1 p-2 border border-gray-300 rounded-md" >
-                        <
-                        option value = ""
-                        disabled > Select a template < /option>
-
-                        {
-                            templates.map((template) => (
-
-                                <
-                                option key = { template.id }
-                                value = { template.id } > { template.data } { contarOcurrencias(template.data, '{{.*?}}') } <
-                                /option>
-                            ))
-                        }
-
-                        <
-                        /select>
-
-                        {
-                            templates.map(
-                                (template) =>
-                                template.id === selectedTemplateId &&
-                                template.params && ( <
-                                    div key = { template.id }
-                                    className = "mt-4" >
-                                    <
-                                    h3 className = "text-lg font-semibold" > Variables: < /h3> {
-                                    contarOcurrencias(template.data, '{{.*?}}').length > 0 && contarOcurrencias(template.data, '{{.*?}}').map((param) => ( <
-                                        div key = { param }
-                                        className = "mt-2" >
-                                        <
-                                        label htmlFor = { param }
-                                        className = "block text-sm font-medium text-gray-700" > { param }:
-                                        <
-                                        /label> <
-                                        input type = "text"
-                                        id = { param }
-                                        onChange = {
-                                            (e) => handleParamChange(param, e.target.value)
-                                        }
-                                        className = "mt-1 p-2 border border-gray-300 rounded-md" /
-                                        >
-                                        <
-                                        /div>
-                                    ))
-                                } <
-                                /div>
-                            )
-                        )
-                    } <
-                    /div> < /
-                    div >
-                } <
-                Layout className = 'big-box' >
-
-                <
-                Box className = 'estados' >
-                <
-                ButtonContainer >
-                <
-                CustomButton onClick = { handleEngestionClick } > { "Chats: " + contactos1.length } < /CustomButton> { /* Mostrar Activos si 'mostrarActivos'
-            es true */ }
-
-            {
-                user[0].type_user === 'Asesor1' && < CustomButton onClick = { openPopup } > Agregar Número < /CustomButton>}
-
-                <
-                /ButtonContainer> < /
-                Box > <
-                    Container >
-
-                    { /* Contenedor del chat */ }
-
-
-                <
-                Box className = "bg-primary" >
-                    <
-                    h2 className = 'text-white' > Chat { numeroEspecifico } < /h2> <
-                div className = 'h-80vw' > {
-                    numeroEspecifico !== '' && < button onClick = { asignarChat } > Transferir Chat < /button>} {
-                    msg.length > 0 && ( <
-                        div className = "fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 transition-opacity duration-300" >
-                        <
-                        div className = "bg-white p-4 rounded-md relative" >
-                        <
-                        button onClick = {
-                            () => setMsg('')
-                        } >
-                        X <
-                        /button> <
-                        p className = "mb-4" > Selecciona un asesor para asignar el chat < /p> <
-                        ul > {
-                            msg.map(user => ( <
-                                li key = { user.id }
-                                onClick = {
-                                    () => trasladarChat(user.id)
-                                }
-                                className = "cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-2" > { user.complete_name }, { user.session } <
-                                /li>
-                            ))
-                        } <
-                        /ul> < /
-                        div > <
-                        /div>
-                    )
-                }
-
-                <
-                /div> <
-                ContainerBox className = 'bg-primary' >
-                    <
-                    div className = 'messagelist h-100 overflow-y-auto' > {
-                        (() => {
-                            // Filtra los mensajes por el número específico y contenido no vacío
+        
+        if(localStorage.getItem('token')){
+            return (
+              <>
+                {showPopup && (
+                  <div className="fixed inset-0 flex items-center justify-center overflow-y-auto">
+                    <div className="bg-black bg-opacity-50"></div>
+                    <div className="bg-white p-6 rounded shadow-lg w-96">
+                      <button onClick={closePopup} className="mb-4 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                        Cerrar
+                      </button>
+                      <label htmlFor="destinationInput" className="block text-sm font-medium text-gray-700">
+                        Número de destino (máximo 10 dígitos):
+                      </label>
+                      <input
+                        type="text"
+                        id="destinationInput"
+                        value={numericInputValue}
+                        onChange={(e) => handleNumericInputChange(e.target.value)}
+                        className="mt-1 p-2 border border-gray-300 rounded-md"
+                      />
+                      <button onClick={handleAgregarNumeroClick} className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                        Agregar Número
+                      </button>
+                      <h2 className="mt-4 text-lg font-semibold">Plantillas:</h2>
+                      <select value={selectedTemplateId} onChange={handleTemplateChange} className="mt-1 p-2 border border-gray-300 rounded-md">
+                        <option value="" disabled>Select a template</option>
+                        {templates.map((template) => (
+                          <option key={template.id} value={template.id}>
+                            {template.data} {contarOcurrencias(template.data, '{{.*?}}')}
+                          </option>
+                        ))}
+                      </select>
+                      {templates.map(
+                        (template) =>
+                          template.id === selectedTemplateId &&
+                          template.params && (
+                            <div key={template.id} className="mt-4">
+                              <h3 className="text-lg font-semibold">Variables:</h3>
+                              {contarOcurrencias(template.data, '{{.*?}}').length > 0 &&
+                                contarOcurrencias(template.data, '{{.*?}}').map((param) => (
+                                  <div key={param} className="mt-2">
+                                    <label htmlFor={param} className="block text-sm font-medium text-gray-700">
+                                      {param}:
+                                    </label>
+                                    <input
+                                      type="text"
+                                      id={param}
+                                      onChange={(e) => handleParamChange(param, e.target.value)}
+                                      className="mt-1 p-2 border border-gray-300 rounded-md"
+                                    />
+                                  </div>
+                                ))
+                              }
+                            </div>
+                          )
+                      )}
+                    </div>
+                  </div>
+                )}
+                <Layout>
+    <div className="flex w-full">
+        {/* Contenedor de mensajes */}
+        <div className="mr-1vw rounded-lg shadow-md" style={{ width: '70vw' }}>
+            <h2 className='text-white'>Chat {numeroEspecifico}</h2>
+            <div className='h-80vw w-70vw'>
+                {numeroEspecifico !== '' && <button onClick={asignarChat}>Transferir Chat</button>}
+                {msg.length > 0 && (
+                    <div className="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 transition-opacity duration-300">
+                        <div className="bg-white p-4 rounded-md relative">
+                            <button onClick={() => setMsg('')}>X</button>
+                            <p className="mb-4">Selecciona un asesor para asignar el chat</p>
+                            <ul>
+                                {msg.map(user => (
+                                    <li key={user.id} onClick={() => trasladarChat(user.id)} className="cursor-pointer hover:bg-gray-200 p-2 rounded-md mb-2">
+                                        {user.complete_name}, {user.session}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+                )}
+            </div>
+            <ContainerBox className='bg-primary'>
+                <div className='messagelist h-100 overflow-y-auto'>
+                    {/* Resto del contenido del contenedor de mensajes */}
+                    {(() => {
                             const mensajesFiltrados = mensajes1
-                                .filter((mensaje) => mensaje.number === numeroEspecifico && mensaje.content && mensaje.content.trim() !== '')
-                                .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp)); // Ordena los mensajes por fecha
-
-                            // Mapea y renderiza los mensajes ordenados
+                              .filter((mensaje) => mensaje.number === numeroEspecifico && mensaje.content && mensaje.content.trim() !== '')
+                              .sort((a, b) => new Date(a.timestamp) - new Date(b.timestamp));
+          
                             return mensajesFiltrados.map((mensaje, index) => (
-
-                                <
-                                div key = { index }
-                                className = { `mensaje ${mensaje.type_message} ${
-                mensaje.type_comunication === 'message-event' ? 'bg-white text-right shadow-lg p-4 bg-gray rounded-md' : 'bg-green text-left shadow-lg p-4 bg-gray rounded-md'
-              } p-4 mb-4` }
-
-                                >
-
-                                {
-                                    mensaje.type_message === 'image' ? ( <
-                                        img src = { limpiarLink(mensaje.content) || mensaje.content }
-                                        alt = "Imagen"
-                                        className = "w-15vw shadow-md p-4 bg-gray rounded-md" / >
-                                    ) : mensaje.type_message === 'image' ? ( <
-                                        img src = { limpiarLink(mensaje.content) }
-                                        alt = "Imagen"
-                                        className = "w-15vw" / >
-                                    ) : mensaje.type_message === 'audio' ? ( <
-                                        audio controls >
-                                        <
-                                        source src = { mensaje.content }
-                                        type = "audio/mp3" / >
-                                        Tu navegador no soporta el elemento de audio. <
-                                        /audio>
-                                    ) : mensaje.type_message === 'sticker' ? ( <
-                                        img src = { mensaje.content }
-                                        alt = "Sticker"
-                                        className = "w-15vw" / >
-                                    ) : mensaje.type_message === 'video' ? ( <
-                                        video controls className = "w-15vw" >
-                                        <
-                                        source src = { limpiarLink(mensaje.content) || mensaje.content }
-                                        type = "video/mp4" / >
-                                        Tu navegador no soporta el elemento de video. <
-                                        /video>
-                                    ) : mensaje.type_message === 'file' ? ( <
-                                        a href = { limpiarLink(mensaje.content) || mensaje.content }
-                                        target = "_blank"
-                                        rel = "noopener noreferrer"
-                                        className = "text-blue" >
-                                        Descargar documento <
-                                        /a>
-                                    ) : ( <
-                                        >
-                                        <
-                                        p className = "mb-2" > { mensaje.content && mensaje.content.trim() } < /p> <
-                                        span > { mensaje.status + " " + mensaje.timestamp } < /span> < / >
-                                    )
-                                }
-
-                                <
-                                /div>
+                              <div key={index} className={`mensaje ${mensaje.type_message} ${
+                                mensaje.type_comunication === 'message-event' ? 'bg-white text-right shadow-lg p-4 bg-gray rounded-md' : 'bg-green text-left shadow-lg p-4 bg-gray rounded-md'
+                              } p-4 mb-4`}>
+                                {mensaje.type_message === 'image' ? (
+                                  <img src={limpiarLink(mensaje.content) || mensaje.content} alt="Imagen" className="w-15vw shadow-md p-4 bg-gray rounded-md" />
+                                ) : mensaje.type_message === 'image' ? (
+                                  <img src={limpiarLink(mensaje.content)} alt="Imagen" className="w-15vw" />
+                                ) : mensaje.type_message === 'audio' ? (
+                                  <audio controls>
+                                    <source src={mensaje.content} type="audio/mp3" />
+                                    Tu navegador no soporta el elemento de audio.
+                                  </audio>
+                                ) : mensaje.type_message === 'sticker' ? (
+                                  <img src={mensaje.content} alt="Sticker" className="w-15vw" />
+                                ) : mensaje.type_message === 'video' ? (
+                                  <video controls className="w-15vw">
+                                    <source src={limpiarLink(mensaje.content) || mensaje.content} type="video/mp4" />
+                                    Tu navegador no soporta el elemento de video.
+                                  </video>
+                                ) : mensaje.type_message === 'file' ? (
+                                  <a href={limpiarLink(mensaje.content) || mensaje.content} target="_blank" rel="noopener noreferrer" className="text-blue">
+                                    Descargar documento
+                                  </a>
+                                ) : (
+                                  <>
+                                    <p className="mb-2">{mensaje.content && mensaje.content.trim()}</p>
+                                    <span>{mensaje.status + " " + mensaje.timestamp}</span>
+                                  </>
+                                )}
+                              </div>
                             ));
-                        })()
-                    } < /div>
+                          })()}
+                </div>
+            </ContainerBox>
+            {/* Contenedor de entrada y botones */}
+            <div className='input-container'>
+                {/* Resto del contenido del contenedor de entrada y botones */}
+                <InputContainer className='input-box'>
+                          <InputMensaje
+                            type="text"
+                            placeholder="Escribe un mensaje..."
+                            value={inputValue}
+                            onKeyDown={manejarPresionarEnter}
+                            onChange={manejarCambio}
+                          />
+                          <BotonEnviar onClick={enviarMensaje}><PaperAirplaneIcon className="h-5 w-5" /></BotonEnviar>
+                          <button onClick={toggleEmojiPicker}>😊</button>
+                          <label className="custom-file-input-label" onClick={handleButtonClick}>
+                            <PaperClipIcon className="w-5 h-10 mr-2" />{file.name}
+                          </label>
+                          <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleFileChange} />
+                        </InputContainer>
+                        {showEmojiPicker && <EmojiPicker onEmojiClick={(emoji) => handleAddEmoji(emoji.emoji)} disableAutoFocus />}
+                      </div>
+                      <div className='flex flex-row justify-between'>
+                        <BotonEnviar onClick={actualizarEstadoChat}>En atención</BotonEnviar>
+                        <BotonEnviar onClick={actualizarEstadoChatCerrados}>Finalizar</BotonEnviar>
+                      </div>
+                      <div>
+                        <label htmlFor="respuestasRapidas">Selecciona una respuesta rápida:</label>
+                        <StyledSelect id="respuestasRapidas" onChange={(e) => setInputValue(e.target.value)}>
+                          {Array.isArray(respuestasRapidas) && respuestasRapidas.map(respuesta => (
+                            <option key={respuesta.name} value={respuesta.contentn}>{respuesta.name}: {respuesta.contentn}</option>
+                          ))}
+                        </StyledSelect>
+                      
+            </div>
+            {/* Resto del contenido del contenedor de mensajes */}
+        </div>
 
-                <
-                /ContainerBox > { / * Contenedor de entrada y botones * / } <
-                div className = 'input-container' >
-                    <
-                    InputContainer className = 'input-box' >
-                    <
-                    InputMensaje
-                type = "text"
-                placeholder = "Escribe un mensaje..."
-                value = { inputValue }
-                onKeyDown = { manejarPresionarEnter }
-                onChange = { manejarCambio }
-                /> <
-                BotonEnviar onClick = { enviarMensaje } > < PaperAirplaneIcon className = "h-5 w-5" / > < /BotonEnviar> <
-                button onClick = { toggleEmojiPicker } > 😊 < /button> <
-                label className = "custom-file-input-label"
-                onClick = { handleButtonClick } >
-                    <
-                    PaperClipIcon className = "w-5 h-10 mr-2" / > { file.name } <
-                    /label> <
-                input
-                type = "file"
-                ref = { fileInputRef }
-                style = {
-                    { display: 'none' }
+        {/* Contenedor de chats */}
+        <div className="rounded-lg shadow-md p-6" style={{ width: '30vw' }}>
+            <ButtonContainer>
+                {/* Resto del contenido del contenedor de chats */}
+                <CustomButton onClick={handleEngestionClick}>{"Chats: " + contactos1.length}</CustomButton>
+          {user[0].type_user === 'Asesor1' && <CustomButton onClick={openPopup}>Agregar Número</CustomButton>}
+            </ButtonContainer>
+            <h1>{statuschats}</h1>
+            <select value={statuschats} onChange={(e) => setStatuschats(e.target.value)}>
+                <option value="pending">Pendientes</option>
+                <option value="in process">En gestion</option>
+                <option value="expiredbyagent">Expirados por agente</option>
+                <option value="expiredbyclient">Expirados por cliente</option>              
+                <option value="closed">Finalizados</option>
+            </select>
+            <ul>
+                {/* Resto del contenido de la lista de chats */}
+                {!Array.isArray(contactos1) && (
+        <li>
+          <CustomButton2 onClick={() => marcaLeido(contactos1.idChat2)} className={`p-2 rounded ${contactos1.status === 'in process' ? 'bg-gray text-black' : 'bg-green text-white'}`}>
+            <UserGroupIcon className="w-5 h-10" /> {contactos1.idChat2}
+            {contactos1.resolved && <span className="text-red">Mensaje nuevo</span>}
+          </CustomButton2>
+        </li>
+      )}
+      {Array.isArray(contactos1) &&
+        contactos1.map((contacto, index) => ( contacto.status === statuschats &&
+          <li key={index}>
+            <CustomButton2 onClick={() => marcaLeido(contacto.idChat2)} className={`p-2 rounded ${contacto.status === 'in process' ? 'bg-green text-black' : contacto.status === 'expiredbyagent' ? 'bg-red text-black' : contacto.status === 'expiredbyclient' ? 'bg-primary text-black' : 'bg-gray text-white'}`}>
+              {(() => {
+                switch (contacto.status) {
+                  case 'in process':
+                    return <span className="text-black">En atencion</span>;
+                  case 'expiredbyagent':
+                    return <span className="text-white">expirado asesor</span>;
+                  case 'expiredbyclient':
+                    return <span className="text-red">expirado cliente</span>;
+                  default:
+                    return <span className="text-white">Pendiente</span>;
                 }
-                onChange = { handleFileChange }
-                    // Puedes ajustar las extensiones permitidas
-                />
+              })()}
+              <UserGroupIcon className="w-5 h-10" /> {contacto.idChat2}
+              {!contacto.resolved && <span className="text-red">Mensaje nuevo</span>}
+            </CustomButton2>
+          </li>
+        ))}
+            </ul>
+        </div>
+    </div>
+</Layout>
 
-
-                <
-                /InputContainer> {
-                showEmojiPicker && ( <
-                    EmojiPicker onEmojiClick = {
-                        (emoji) => handleAddEmoji(emoji.emoji)
-                    }
-                    disableAutoFocus /
-                    >
-                )
-            } <
-            /div>
-
-            <
-            div className = 'flex flex-row justify-between' >
-                <
-                BotonEnviar onClick = { actualizarEstadoChat } > En atencion < /BotonEnviar> <
-            BotonEnviar onClick = { actualizarEstadoChatCerrados } > Finalizar < /BotonEnviar>
-
-            <
-            /div> <
-            div >
-                <
-                label htmlFor = "respuestasRapidas" > Selecciona una respuesta rápida: < /label> <
-            StyledSelect id = "respuestasRapidas"
-            onChange = {
-                    (e) => setInputValue(e.target.value)
-                } > {
-                    respuestasRapidas.map(respuesta => ( <
-                        option key = { respuesta.name }
-                        value = { respuesta.contentn } > { respuesta.name }: { respuesta.contentn } <
-                        /option>
-                    ))
-                } <
-                /StyledSelect> < /
-            div > <
-                /Box>
-
-            { /* Botones de acción */ }
-
-
-
-            { /* Contenedor de contactos */ }
-
-
-            <
-            ContainerBox2 >
-                <
-                InputMensaje
-            type = "text"
-            placeholder = "Ingrese un número"
-            value = { numeroBuscado }
-            onChange = { handleNumeroChange }
-            /> <
-            Box className = 'bg-blue-900' >
-                <
-                div className = "contact-list-container" >
-                <
-                h1 > { statuschats } < /h1> <
-            ul > {!Array.isArray(contactos1) && ( <
-                        li >
-                        <
-                        CustomButton2 onClick = {
-                            () => marcaLeido(contactos1.idChat2)
-                        }
-                        className = { `p-2 rounded ${
-          (contactos1.status == 'in process' ? 'bg-gray text-black' : 'bg-green text-white'  )
-        }` } >
-                        <
-                        UserGroupIcon className = "w-5 h-10" / > { contactos1.idChat2 } {
-                            contactos1.resolved && ( <
-                                span className = "text-red" > Mensaje nuevo < /span>
-                            )
-                        } <
-                        /CustomButton2> < /
-                        li >
-                    )
-                } {
-                    Array.isArray(contactos1) &&
-                        contactos1.map((contacto, index) => ( <
-                                li key = { index } >
-                                <
-                                CustomButton2 onClick = {
-                                    () => marcaLeido(contacto.idChat2)
-                                }
-                                className = { `p-2 rounded ${
-            `p-2 rounded ${
-              contacto.status === 'in process' ? 'bg-green text-black' :
-              contacto.status === 'expiredbyasesor' ? 'bg-red text-black' :
-              contacto.status === 'expiredbyclient' ? 'bg-primary text-black' :
-              'bg-gray text-white' // Estado por defecto
-            }`}`}
-        >{(() => {
-          switch (contacto.status) {
-            case 'in process':
-              return <span className="text-black">En atencion</span>;
-            case 'expiredbyasesor':
-              return <span className="text-white">expirado asesor</span>;
-            case 'expiredbyclient':
-              return <span className="text-red">expirado cliente</span>;
-            default:
-              return <span className="text-white">Pendiente</span>;
+              </>
+            );
+          } else {
+            return (
+              <>
+                <div className="flex flex-col items-center justify-center h-screen">
+                  <p className="mb-4">Not signed in</p>
+                  <button onClick={() => signin()} className="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded">
+                    Sign in
+                  </button>
+                </div>
+              </>
+            );
           }
-        })()}
-          <UserGroupIcon className="w-5 h-10" /> {contacto.idChat2}
-          {!contacto.resolved && (
-  <span className="text-red">Mensaje nuevo</span>
-)}
-        </CustomButton2>
-      </li>
-    ))}
-
-</ul>
-</div>
-  </Box>
-  </ContainerBox2>
-
-        </Container>
-      </Layout>
-        </>;}
-    return (
-      <>
-      <div className="flex flex-col items-center justify-center h-screen">
-        <p className="mb-4">Not signed in</p>
-        <button
-          onClick={() => signin()}
-          className="bg-blue-500 hover:bg-blue-700 text-black font-bold py-2 px-4 rounded"
-        >
-          Sign in
-        </button>
-      </div>
-    </>
-
-      )
-    };
-
-const Box = styled.div`
-
-padding: 1vw;
-margin: 2vw;
-border-radius: 10px;
-box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    }
+  const Box = styled.div
+ `padding: 0,5vw;
+  margin: 1vw;
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 `;
 
 const CustomButton = styled.button`
-background-color: #4caf50;
-color: white;
-padding: 10px 20px;
-font-size: 16px;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-transition: background-color 0.3s;
-width: 100%;
+  background-color: #4caf50;
+  color: green;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
 
-&:hover {
-  background-color: #45a049;
-}
+  &:hover {
+    background-color: #45a049;
+  }
 `;
+
 const CustomButton2 = styled.button`
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
 
-
-padding: 10px 20px;
-font-size: 16px;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-transition: background-color 0.3s;
-width: 100%;
-
-&:hover {
-  background-color: #45a049;
-}
+  &:hover {
+    background-color: #45a049;
+  }
 `;
+
 const ButtonContainer = styled.div`
-display: flex;
-gap: 10px;
+  display: flex;
+  gap: 10px;
 `;
 
-const Container = styled.div`
-display: flex;
-gap: 20px;
-`;
 
-const ContainerBox = styled.div`
-background-color: #f7f7f7;
-border-radius: 10px;
-overflow-y: scroll;
-height: 30vw;
-width: 50vw;
-scroll-behavior: smooth;
-`;
+
+
+
 const ContainerBox2 = styled.div`
-background-color: #f7f7f7;
-margin-top: 30px;
-margin-right: 30px;
-border-radius: 10px;
-overflow-y: scroll;
-height: 50vw;
-width: 100vw;
-scroll-behavior: smooth;
-`;
-const p = styled.div`
-background-color: ${(props) => (props.tipo === 'message-event' ? '#6e6e6' : '#4caf50')};
-color: ${(props) => (props.tipo === 'message-event' ? 'black' : 'white')};
-padding: 10px;
-margin-bottom: 5px;
-border-radius: 5px;
+  background-color: #f7f7f7;
+  margin-top: 30px;
+  margin-right: 30px;
+  border-radius: 10px;
+  overflow-y: scroll;
+  height: 50vw;
+  width: 100vw;
+  scroll-behavior: smooth;
 `;
 
 const StyledSelect = styled.select`
-  width: 180px; /* Ajusta el tamaño según tus necesidades */
+  width: 180px;
   padding: 10px;
   font-size: 13px;
   border: 1px solid #ccc;
@@ -1647,31 +1453,43 @@ const StyledSelect = styled.select`
 `;
 
 const InputContainer = styled.div`
-margin-top: 15px;
-display: flex;
-align-items: center;
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
 `;
 
 const InputMensaje = styled.input`
-flex: 1;
-padding: 10px;
-border: 1px solid #ddd;
-border-radius: 5px;
-margin-right: 10px;
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  margin-right: 10px;
 `;
 
 const BotonEnviar = styled.button`
-background-color: #4caf50;
-color: white;
-padding: 10px 20px;
-font-size: 16px;
-border: none;
-border-radius: 5px;
-cursor: pointer;
-transition: background-color 0.3s;
+  background-color: #4caf50;
+  color: green;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
 
-&:hover {
-  background-color: #45a049;
-}
+  &:hover {
+    background-color: #45a049;
+  }
 `;
-  export default Chats;
+
+
+
+
+const ContainerBox = styled.div`
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  overflow-y: scroll;
+  height: 30vw;
+  scroll-behavior: smooth;
+`;
+
+export default Chats;
